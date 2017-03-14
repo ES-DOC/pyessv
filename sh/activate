@@ -18,3 +18,5 @@ chmod a+x $PYESSV_LIB_HOME/sh/*.sh
 # ###############################################################
 
 alias pyessv-list-terms=$PYESSV_LIB_HOME/sh/list_terms.sh
+alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
+alias pyessv-exec-tests=$PYESSV_LIB_HOME/runtests.sh

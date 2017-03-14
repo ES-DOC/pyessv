@@ -18,12 +18,6 @@ import pyessv
 # Define command line options.
 _ARGS = argparse.ArgumentParser("Writes to stdout an authority's vocabularies.")
 _ARGS.add_argument(
-    "--source",
-    help="Archive path.",
-    dest="source",
-    type=str
-    )
-_ARGS.add_argument(
     "--authority",
     help="Authority to be displayed.",
     dest="authority",
@@ -49,11 +43,6 @@ def _main(args):
     """Main entry point.
 
     """
-    if not os.path.isdir(args.source):
-        raise ValueError("Archive directory does not exist")
-
-    pyessv.archive.set_directory(args.source)
-
     authority = pyessv.archive.load_authority(args.authority)
     for scope in authority:
         if args.scope and args.scope != scope.name:

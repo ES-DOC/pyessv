@@ -11,6 +11,13 @@
 
 
 """
+import os
+
+
+
+# Directory containing vocabulary archive.
+DIR_ARCHIVE = os.path.expanduser("~/.esdoc/pyessv")
+
 # Dictionary encoding.
 ENCODING_DICT = "dict"
 

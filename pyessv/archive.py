@@ -14,24 +14,12 @@
 import os
 
 from pyessv.io_mgr import read_authority
+from pyessv.constants import DIR_ARCHIVE
+
 
 
 # Cached loaded CV objects.
 _CACHE = {}
-
-# Directory containing archived collections.
-_DIRECTORY = os.getenv("PYESSV_ARCHIVE_HOME")
-
-
-def set_directory(dpath):
-	"""Sets directory to an archive.
-
-	"""
-	if not os.path.isdir(dpath):
-		raise ValueError("Directory is not a path")
-
-	global _DIRECTORY
-	_DIRECTORY = dpath
 
 
 def load_authority(authority):
@@ -96,8 +84,15 @@ def _cache_authority(name):
 	"""Caches an authority if necessary.
 
 	"""
-	if name not in _CACHE:
-		dpath = os.path.join(_DIRECTORY, name)
-		authority = read_authority(dpath)
-		if authority is not None:
-			_CACHE[name] = authority
+	if name in _CACHE:
+		return
+
+	dpath = os.path.join(DIR_ARCHIVE, name)
+	if not os.path.isdir(dpath):
+		raise ValueError("Authority ({}) archive not found".format(name))
+
+	authority = read_authority(dpath)
+	if authority is None:
+		raise ValueError("Authority ({}) archive not loaded".format(authority))
+
+	_CACHE[name] = authority
