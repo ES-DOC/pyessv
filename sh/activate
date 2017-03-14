@@ -1,0 +1,20 @@
+# ###############################################################
+# STANDARD-SECTION: SETUP
+# ###############################################################
+
+# Set home path
+export PYESSV_LIB_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export PYESSV_LIB_HOME="$( cd "$( dirname "${PYESSV_LIB_HOME[0]}" )" && pwd )"
+
+# ###############################################################
+# STANDARD-SECTION: OPERATIONS
+# ###############################################################
+
+# Ensure shell scripts are executable.
+chmod a+x $PYESSV_LIB_HOME/sh/*.sh
+
+# ###############################################################
+# STANDARD-SECTION: ALIASES
+# ###############################################################
+
+alias pyessv-list-terms=$PYESSV_LIB_HOME/sh/list_terms.sh
