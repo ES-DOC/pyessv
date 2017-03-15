@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.validation.py
+.. module:: pyessv._validation.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,9 +11,9 @@
 
 
 """
-from pyessv.constants import REGEX_CANONICAL_NAME
-from pyessv.model import TYPES
-from pyessv.model import TYPE_INFO
+from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv._model import TYPES
+from pyessv._model import TYPE_INFO
 
 
 

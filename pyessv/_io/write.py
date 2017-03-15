@@ -13,9 +13,10 @@
 """
 import os
 
-from pyessv import validation
-from pyessv.model import Authority
-from pyessv.codecs import to_json
+from pyessv._codecs import encode
+from pyessv._model import Authority
+from pyessv._validation import is_valid
+
 
 
 # Manifest file name.
@@ -34,7 +35,7 @@ def write_authority(dpath, authority):
         raise OSError("Invalid directory.")
     if not isinstance(authority, Authority):
         raise ValueError("Invalid authority: unknown type")
-    if not validation.is_valid(authority):
+    if not is_valid(authority):
         raise ValueError("Invalid authority: has validation errors")
 
     # Set directory.
@@ -46,7 +47,7 @@ def write_authority(dpath, authority):
 
     # Write manifest.
     with open(os.path.join(dpath, _MANIFEST), "w") as fstream:
-        fstream.write(to_json(authority))
+        fstream.write(encode(authority))
 
     # Write collections/terms.
     for scope in authority:
@@ -72,4 +73,4 @@ def _write_term(dpath, term):
 
     # Write term JSON file.
     with open(fpath, "w") as fstream:
-        fstream.write(to_json(term))
+        fstream.write(encode(term))

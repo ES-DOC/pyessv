@@ -16,8 +16,8 @@ import inspect
 import shutil
 import tempfile
 
-import pyesdoc.cv as LIB
-from tests.cv.utils_assert import assert_objects
+import pyessv as LIB
+from tests.utils_assert import assert_objects
 
 
 
@@ -80,7 +80,7 @@ def get_term_and_assert(assertion_callback):
         assertion_callback(term)
 
 
-def init(func, package, desc=None):
+def init(func, desc=None):
     """Initializes a test function prior to be executed.
 
     """
@@ -90,7 +90,7 @@ def init(func, package, desc=None):
     if desc[-1] == ".":
         desc = desc[:-1]
     desc = desc[0].lower() + desc[1:]
-    func.description = "pyesdoc-cv-tests: {0}: {1}".format(package, desc)
+    func.description = "pyesdoc-cv-tests: {}".format(desc)
 
 
 def setup():

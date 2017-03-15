@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.codecs.json.decoder.py
+.. module:: pyessv._codecs.json.decoder.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -11,8 +11,8 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-from pyessv.codecs.dictionary import decoder as dict_decoder
-from pyessv.utils import convert
+from pyessv._codecs.dictionary import decoder as dict_decoder
+from pyessv._utils import convert
 
 
 

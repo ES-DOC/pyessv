@@ -14,7 +14,9 @@ import inspect
 import os
 
 import pyessv
-from pyessv import constants
+from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
+from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
+from pyessv._constants import GOVERNANCE_STATUS_REJECTED
 from pyessv._partition_cache import PartitionCache
 from pyessv._partition_io import PartitionIO
 
@@ -103,16 +105,7 @@ class Partition(object):
         :param pyessv.Term term: Term being marked as accepted.
 
         """
-        return self._govern(term, constants.GOVERNANCE_STATUS_ACCEPTED)
-
-
-    def reject(self, term):
-        """Marks a term as rejected.
-
-        :param pyessv.Term term: Term being marked as rejected.
-
-        """
-        return self._govern(term, constants.GOVERNANCE_STATUS_REJECTED)
+        return self._govern(term, GOVERNANCE_STATUS_ACCEPTED)
 
 
     def deprecate(self, term):
@@ -121,7 +114,7 @@ class Partition(object):
         :param pyessv.Term term: Term being marked as deprecated.
 
         """
-        return self._govern(term, constants.GOVERNANCE_STATUS_DEPRECATED)
+        return self._govern(term, GOVERNANCE_STATUS_DEPRECATED)
 
 
     def destroy(self, term):
@@ -132,6 +125,15 @@ class Partition(object):
         """
         self.io.delete(term)
         self.cache.remove(term)
+
+
+    def reject(self, term):
+        """Marks a term as rejected.
+
+        :param pyessv.Term term: Term being marked as rejected.
+
+        """
+        return self._govern(term, GOVERNANCE_STATUS_REJECTED)
 
 
     def parse(self, kind, name):

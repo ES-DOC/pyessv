@@ -10,20 +10,30 @@
 .. moduleauthor:: IPSL (ES-DOC) <dev@esdocumentation.org>
 
 """
-from pyessv import archive
-from pyessv.io_mgr import read_authority
-from pyessv.io_mgr import write_authority
-from pyessv.codecs import from_dict
-from pyessv.codecs import from_json
-from pyessv.codecs import to_dict
-from pyessv.codecs import to_json
-from pyessv.constants import *
-from pyessv.exceptions import *
-from pyessv.factory import create_authority
-from pyessv.factory import create_scope
-from pyessv.factory import create_collection
-from pyessv.factory import create_term
-from pyessv.model import Term
-from pyessv.model import Authority
-from pyessv.model import Collection
-from pyessv.model import Scope
+from pyessv._archive import load
+
+from pyessv._codecs import decode
+from pyessv._codecs import encode
+
+from pyessv._constants import *
+
+from pyessv._exceptions import *
+
+from pyessv._factory import create_authority
+from pyessv._factory import create_collection
+from pyessv._factory import create_scope
+from pyessv._factory import create_term
+
+from pyessv._io import read_authority
+from pyessv._io import write_authority
+
+from pyessv._model import Authority
+from pyessv._model import Collection
+from pyessv._model import Scope
+from pyessv._model import Term
+
+from pyessv._parsing import parse
+
+from pyessv._validation import get_errors
+from pyessv._validation import is_valid
+from pyessv._validation import validate

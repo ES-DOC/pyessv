@@ -1,35 +1,37 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.model.collection.py
+.. module:: pyessv._model.scope.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: A vocabulary collection, e.g. institute-id.
+   :synopsis: A vocabulary scope, e.g. CMIP6.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 
 """
-from pyessv.model.entity import Entity
+from pyessv._constants import NAME_TYPE_SCOPE
+from pyessv._model.entity import Entity
 
 
 
-class Collection(Entity):
-    """A vocabulary term collection.
+class Scope(Entity):
+    """A scope managed by an authority.
 
     """
     def __init__(self):
         """Instance constructor.
 
         """
+        self.authority = None
+        self.collections = list()
         self.create_date = None
         self.description = None
         self.idx = None
         self.label = None
         self.name = None
-        self.scope = None
-        self.terms = list()
+        self.typeof = NAME_TYPE_SCOPE
         self.uid = None
         self.url = None
 
@@ -42,24 +44,24 @@ class Collection(Entity):
 
 
     def __len__(self):
-        """Returns number of terms in managed collection.
+        """Returns number of items in managed collection.
 
         """
-        return len(self.terms)
+        return len(self.collections)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.getiter(self.terms)
+        return Entity.getiter(self)
 
 
     def __getitem__(self, key):
         """Returns a child section item.
 
         """
-        return Entity.getitem(self.terms, key)
+        return Entity.getitem(self, key)
 
 
     def __contains__(self, key):
@@ -70,22 +72,11 @@ class Collection(Entity):
 
 
     @property
-    def authority(self):
-        """Gets associated governing authority.
-
-        """
-        return self.scope.authority
-
-
-    @property
     def namespace(self):
-        """Gets namespace.
+        """Returns full namespace of the term set.
 
         """
-        return ":".join([
-            self.scope.namespace,
-            self.name,
-            ])
+        return u":".join([self.authority.name, self.name])
 
 
     @property
@@ -93,15 +84,5 @@ class Collection(Entity):
         """Gets full computed idx.
 
         """
-        return u"{}.{}".format(
-            self.scope.idx,
-            self.idx
-            )
+        return unicode(self.idx)
 
-
-    @property
-    def partition(self):
-        """Returns associated partition.
-
-        """
-        return pyessv.get_partition(self.namespace)

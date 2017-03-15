@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.factory.py
+.. module:: pyessv._factory.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -14,13 +14,23 @@ import uuid
 
 import arrow
 
-from pyessv import constants
-from pyessv import validation as v
-from pyessv.exceptions import ValidationError
-from pyessv.model import Term
-from pyessv.model import Authority
-from pyessv.model import Collection
-from pyessv.model import Scope
+from pyessv._constants import GOVERNANCE_STATUS_PENDING
+from pyessv._exceptions import ValidationError
+from pyessv._model import Term
+from pyessv._model import Authority
+from pyessv._model import Collection
+from pyessv._model import Scope
+from pyessv._validation import validate
+from pyessv._validation import validate_authority_description
+from pyessv._validation import validate_authority_name
+from pyessv._validation import validate_authority_url
+from pyessv._validation import validate_collection_description
+from pyessv._validation import validate_collection_name
+from pyessv._validation import validate_scope_description
+from pyessv._validation import validate_scope_name
+from pyessv._validation import validate_scope_url
+from pyessv._validation import validate_term_data
+from pyessv._validation import validate_term_name
 
 
 
@@ -29,9 +39,9 @@ def create_authority(name, description, url, create_date=None):
 
 	"""
 	# Validate inputs.
-	v.validate_authority_name(name)
-	v.validate_authority_description(description)
-	v.validate_authority_url(url)
+	validate_authority_name(name)
+	validate_authority_description(description)
+	validate_authority_url(url)
 
 	# Format inputs.
 	name = unicode(name).strip()
@@ -64,10 +74,10 @@ def create_scope(authority, name, description, url, create_date=None):
 
 	"""
 	# Validate inputs.
-	v.validate(authority)
-	v.validate_scope_name(name)
-	v.validate_scope_description(description)
-	v.validate_scope_url(url)
+	validate(authority)
+	validate_scope_name(name)
+	validate_scope_description(description)
+	validate_scope_url(url)
 
 	# Format inputs.
 	name = unicode(name).strip()
@@ -105,9 +115,9 @@ def create_collection(scope, name, description, create_date=None):
 
 	"""
 	# Validate inputs.
-	v.validate(scope)
-	v.validate_collection_name(name)
-	v.validate_collection_description(description)
+	validate(scope)
+	validate_collection_name(name)
+	validate_collection_description(description)
 
 	# Format inputs.
 	name = unicode(name).strip()
@@ -143,10 +153,10 @@ def create_term(collection, name, data=None, create_date=None):
 
 	"""
 	# Validate inputs.
-	v.validate(collection)
-	v.validate_term_name(name)
+	validate(collection)
+	validate_term_name(name)
 	if data is not None:
-		v.validate_term_data(data)
+		validate_term_data(data)
 
 	# Format inputs.
 	name = unicode(name).strip()
@@ -157,7 +167,7 @@ def create_term(collection, name, data=None, create_date=None):
 	i.create_date = create_date or arrow.utcnow().datetime
 	i.label = name
 	i.name = name.lower()
-	i.status = constants.GOVERNANCE_STATUS_PENDING
+	i.status = GOVERNANCE_STATUS_PENDING
 	i.uid = uuid.uuid4()
 	i.data = data
 

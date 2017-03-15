@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.utils.logger.py
+.. module:: pyessv._utils.logger.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -12,8 +12,6 @@
 
 """
 import arrow
-
-from pyessv import constants
 
 
 

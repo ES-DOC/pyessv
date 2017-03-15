@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.model.term.py
+.. module:: pyessv._model.term.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,8 +11,8 @@
 
 
 """
-import pyessv
-from pyessv.model.entity import Entity
+from pyessv._constants import NAME_TYPE_TERM
+from pyessv._model.entity import Entity
 
 
 
@@ -31,7 +31,6 @@ class Term(Entity):
         self.create_date = None         # date term was created
         self.data = None                # associated data
         self.description = None         # descriptive text
-        self.io_path = None             # Path to I/O.
         self.idx = None                 # term integer based identifier
         self.io_path = None             # file system path
         self.label = None               # user interface label
@@ -39,6 +38,7 @@ class Term(Entity):
         self.parent = None              # parent term within collection
         self.status = None              # governance status
         self.synonyms = list()          # name synonyms
+        self.typeof = NAME_TYPE_TERM    # name type
         self.uid = None                 # universally unique identifier
         self.url = None                 # a url for further info
 
@@ -176,13 +176,6 @@ class Term(Entity):
         """
         return self.partition.is_written(self)
 
-
-    @property
-    def partition(self):
-        """Returns associated partition.
-
-        """
-        return pyessv.get_partition(self.domain)
 
 
     def accept(self):

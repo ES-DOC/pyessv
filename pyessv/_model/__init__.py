@@ -1,14 +1,14 @@
 import datetime
 import uuid
 
-from pyessv.constants import GOVERNANCE_STATUS_SET
-from pyessv.constants import REGEX_CANONICAL_NAME
-from pyessv.constants import REGEX_LABEL
-from pyessv.constants import REGEX_URL
-from pyessv.model.authority import Authority
-from pyessv.model.collection import Collection
-from pyessv.model.scope import Scope
-from pyessv.model.term import Term
+from pyessv._constants import GOVERNANCE_STATUS_SET
+from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv._constants import REGEX_LABEL
+from pyessv._constants import REGEX_URL
+from pyessv._model.authority import Authority
+from pyessv._model.collection import Collection
+from pyessv._model.scope import Scope
+from pyessv._model.term import Term
 
 
 # Set of supported types.

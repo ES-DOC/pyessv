@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.codecs.json.__init__.py
+.. module:: pyessv._codecs.dictionary.__init__.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
    :platform: Unix, Windows
-   :synopsis: Python json codec.
+   :synopsis: Python dictionary codec.
 
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-from pyessv.codecs.json.decoder import decode
-from pyessv.codecs.json.encoder import encode
+from pyessv._codecs.dictionary.decoder import decode
+from pyessv._codecs.dictionary.encoder import encode

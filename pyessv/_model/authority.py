@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.model.authority.py
+.. module:: pyessv._model.authority.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,7 +11,8 @@
 
 
 """
-from pyessv.model.entity import Entity
+from pyessv._constants import NAME_TYPE_AUTHORITY
+from pyessv._model.entity import Entity
 
 
 
@@ -25,9 +26,11 @@ class Authority(Entity):
         """
         self.create_date = None
         self.description = None
+        self.io_path = None
         self.label = None
         self.name = None
         self.scopes = list()
+        self.typeof = NAME_TYPE_AUTHORITY
         self.url = None
 
 
@@ -49,14 +52,14 @@ class Authority(Entity):
         """Instance iterator initializer.
 
         """
-        return Entity.getiter(self.scopes)
+        return Entity.getiter(self)
 
 
     def __getitem__(self, key):
         """Returns a child section item.
 
         """
-        return Entity.getitem(self.scopes, key)
+        return Entity.getitem(self, key)
 
 
     def __contains__(self, key):

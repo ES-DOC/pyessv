@@ -13,8 +13,8 @@
 """
 import os
 
-from pyessv.model import Authority
-from pyessv.model import Term
+from pyessv._model import Authority
+from pyessv._model import Term
 
 
 

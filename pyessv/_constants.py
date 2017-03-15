@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.constants.py
+.. module:: pyessv._constants.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,12 +11,8 @@
 
 
 """
-import os
-
-
-
 # Directory containing vocabulary archive.
-DIR_ARCHIVE = os.path.expanduser("~/.esdoc/pyessv")
+DIR_ARCHIVE = "~/.esdoc/pyessv"
 
 # Dictionary encoding.
 ENCODING_DICT = "dict"
@@ -25,7 +21,7 @@ ENCODING_DICT = "dict"
 ENCODING_JSON = "json"
 
 # Set of supported encodings.
-ENCODINGS = {
+ENCODING_SET = {
     ENCODING_DICT,
     ENCODING_JSON
 }
@@ -58,3 +54,23 @@ REGEX_LABEL = u"/&"
 
 # Regular expression for validating a url.
 REGEX_URL = u""
+
+# Name type - an authority governing vocabularies.
+NAME_TYPE_AUTHORITY = "authority"
+
+# Name type - a scope constraining collection of vocabularies.
+NAME_TYPE_SCOPE = "scope"
+
+# Name type - a collection constraining collection of term.
+NAME_TYPE_COLLECTION = "collection"
+
+# Name type - a term.
+NAME_TYPE_TERM = "term"
+
+# Set of allowed name types.
+NAME_TYPE_SET = set([
+  NAME_TYPE_AUTHORITY,
+  NAME_TYPE_COLLECTION,
+  NAME_TYPE_SCOPE,
+  NAME_TYPE_TERM
+  ])

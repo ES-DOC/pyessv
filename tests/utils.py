@@ -1,3 +1,3 @@
-from tests.cv.utils_assert import *
-from tests.cv.utils_cv import *
-from tests.cv.utils_factory import *
+from tests.utils_assert import *
+from tests.utils_cv import *
+from tests.utils_factory import *

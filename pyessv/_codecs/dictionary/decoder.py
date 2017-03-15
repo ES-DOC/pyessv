@@ -15,10 +15,10 @@ import uuid
 
 import arrow
 
-from pyessv.model import Term
-from pyessv.model import Authority
-from pyessv.model import Scope
-from pyessv.model import Collection
+from pyessv._model import Term
+from pyessv._model import Authority
+from pyessv._model import Scope
+from pyessv._model import Collection
 
 
 

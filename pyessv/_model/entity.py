@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.model.entity.py
+.. module:: pyessv._model.entity.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -13,8 +13,9 @@
 """
 import uuid
 
-from pyessv.constants import ENCODING_DICT
-from pyessv.constants import ENCODING_JSON
+from pyessv._constants import NAME_TYPE_AUTHORITY
+from pyessv._constants import NAME_TYPE_COLLECTION
+from pyessv._constants import NAME_TYPE_SCOPE
 
 
 
@@ -29,10 +30,10 @@ class Entity(object):
         :rtype: set
 
         """
-        # N.B. just-in-time import to avaoid circular references.
-        from pyessv import validation as v
+        # N.B. just-in-time import to avoid circular references.
+        from pyessv._validation import validate
 
-        return v.validate(self)
+        return validate(self)
 
 
     @property
@@ -51,43 +52,36 @@ class Entity(object):
         return len(self.validate()) == 0
 
 
-    @property
-    def as_dict(self):
-        """Returns dictionary representation of term.
+    @staticmethod
+    def getcollection(entity):
+        """Returns associated managed collection.
 
         """
-        return pyessv.encode(self, ENCODING_DICT)
-
-
-    @property
-    def as_json(self):
-        """Returns json representation of term.
-
-        """
-        return pyessv.encode(self, ENCODING_JSON)
-
-
-    @classmethod
-    def from_json(cls, encoded):
-        """Returns json representation of term.
-
-        """
-        return pyessv.decode(encoded, ENCODING_JSON)
+        if entity.typeof == NAME_TYPE_AUTHORITY:
+            return entity.scopes
+        elif entity.typeof == NAME_TYPE_COLLECTION:
+            return entity.terms
+        elif entity.typeof == NAME_TYPE_SCOPE:
+            return entity.collections
 
 
     @staticmethod
-    def getiter(items):
-        """Returns an iterator over a managed collection.
+    def getiter(entity):
+        """Returns an iterator over managed collection.
 
         """
+        items = Entity.getcollection(entity)
+
         return iter(sorted(items, key=lambda i: i if isinstance(i, (str, unicode)) else i.name))
 
 
     @staticmethod
-    def getitem(items, key):
-        """Returns an item from a managed collections.
+    def getitem(entity, key):
+        """Returns an item from managed collection.
 
         """
+        items = Entity.getcollection(entity)
+
         # Set comparator to be used.
         if isinstance(key, int):
             comparator = lambda i: i.idx
@@ -102,8 +96,13 @@ class Entity(object):
             else:
                 comparator = lambda i: unicode(i.uid)
 
-        # Return first matching item.
+        # Match against a attribute.
         for item in items:
             if comparator(item) == key:
                 return item
 
+        # Match against a synonym.
+        if entity.typeof == NAME_TYPE_COLLECTION:
+            for item in [i for i in items if i.synonyms]:
+                if key in item.synonyms:
+                    return item

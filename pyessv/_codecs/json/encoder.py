@@ -11,8 +11,8 @@
 
 
 """
-from pyessv.codecs.dictionary import encoder as dict_encoder
-from pyessv.utils import convert
+from pyessv._codecs.dictionary import encoder as dict_encoder
+from pyessv._utils import convert
 
 
 

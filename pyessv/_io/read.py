@@ -14,7 +14,8 @@
 import glob
 import os
 
-from pyessv.codecs import from_json
+from pyessv._codecs import decode
+from pyessv._constants import ENCODING_JSON
 
 
 # Manifest file name.
@@ -38,7 +39,7 @@ def read_authority(dpath):
     # Read authority from manifest.
     fpath = os.path.join(dpath, _MANIFEST)
     with open(fpath, "r") as fstream:
-        authority = from_json(fstream.read())
+        authority = decode(fstream.read(), ENCODING_JSON)
         authority.io_path = fpath
 
     # Read terms.
@@ -86,7 +87,7 @@ def _read_term(fpath):
     """
     # Decode term from JSON file.
     with open(fpath, "r") as fstream:
-        term = from_json(fstream.read())
+        term = decode(fstream.read(), ENCODING_JSON)
     term.io_path = fpath
 
     return term
