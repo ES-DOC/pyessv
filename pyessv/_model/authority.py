@@ -24,14 +24,9 @@ class Authority(Entity):
         """Instance constructor.
 
         """
-        self.create_date = None
-        self.description = None
-        self.io_path = None
-        self.label = None
-        self.name = None
+        super(Authority, self).__init__(pyessv.ENTITY_TYPE_AUTHORITY)
+
         self.scopes = list()
-        self.typeof = pyessv.ENTITY_TYPE_AUTHORITY
-        self.url = None
 
 
     def __repr__(self):

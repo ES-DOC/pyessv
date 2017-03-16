@@ -23,6 +23,22 @@ class Entity(object):
     """An entity within the pyessv domain model.
 
     """
+    def __init__(self, typeof):
+        """Instance constructor.
+
+        """
+        self.create_date = None
+        self.data = None
+        self.description = None
+        self.idx = None
+        self.io_path = None
+        self.label = None
+        self.name = None
+        self.typeof = typeof
+        self.url = None
+        self.uid = None
+
+
     def validate(self):
         """Validates instance.
 

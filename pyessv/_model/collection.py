@@ -24,16 +24,10 @@ class Collection(Entity):
         """Instance constructor.
 
         """
-        self.create_date = None
-        self.description = None
-        self.idx = None
-        self.label = None
-        self.name = None
+        super(Collection, self).__init__(pyessv.ENTITY_TYPE_COLLECTION)
+
         self.scope = None
         self.terms = list()
-        self.typeof = pyessv.ENTITY_TYPE_COLLECTION
-        self.uid = None
-        self.url = None
 
 
     def __repr__(self):

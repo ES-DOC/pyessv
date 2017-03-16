@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import ENTITY_TYPE_TERM
+import pyessv
 from pyessv._model.entity import Entity
 
 
@@ -24,23 +24,15 @@ class Term(Entity):
         """Instance constructor.
 
         """
+        super(Term, self).__init__(pyessv.ENTITY_TYPE_TERM)
+
         self.alternative_name = None    # primary synonym
         self.alternative_url = None     # an alternative URL
         self.associations = set()       # associated terms
         self.collection = None          # collection of which term is a member
-        self.create_date = None         # date term was created
-        self.data = None                # associated data
-        self.description = None         # descriptive text
-        self.idx = None                 # term integer based identifier
-        self.io_path = None             # file system path
-        self.label = None               # user interface label
-        self.name = None                # canonical name
         self.parent = None              # parent term within collection
         self.status = None              # governance status
         self.synonyms = list()          # name synonyms
-        self.typeof = ENTITY_TYPE_TERM  # name type
-        self.uid = None                 # universally unique identifier
-        self.url = None                 # a url for further info
 
 
     def __repr__(self):

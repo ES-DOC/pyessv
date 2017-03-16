@@ -24,16 +24,11 @@ class Scope(Entity):
         """Instance constructor.
 
         """
+        super(Scope, self).__init__(pyessv.ENTITY_TYPE_SCOPE)
+
         self.authority = None
         self.collections = list()
-        self.create_date = None
-        self.description = None
-        self.idx = None
-        self.label = None
-        self.name = None
-        self.typeof = pyessv.ENTITY_TYPE_SCOPE
-        self.uid = None
-        self.url = None
+
 
 
     def __repr__(self):
