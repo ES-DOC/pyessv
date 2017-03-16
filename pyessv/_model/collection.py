@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import NAME_TYPE_COLLECTION
+from pyessv._constants import ENTITY_TYPE_COLLECTION
 from pyessv._model.entity import Entity
 
 
@@ -31,7 +31,7 @@ class Collection(Entity):
         self.name = None
         self.scope = None
         self.terms = list()
-        self.typeof = NAME_TYPE_COLLECTION
+        self.typeof = ENTITY_TYPE_COLLECTION
         self.uid = None
         self.url = None
 

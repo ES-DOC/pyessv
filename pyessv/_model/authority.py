@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import NAME_TYPE_AUTHORITY
+from pyessv._constants import ENTITY_TYPE_AUTHORITY
 from pyessv._model.entity import Entity
 
 
@@ -30,7 +30,7 @@ class Authority(Entity):
         self.label = None
         self.name = None
         self.scopes = list()
-        self.typeof = NAME_TYPE_AUTHORITY
+        self.typeof = ENTITY_TYPE_AUTHORITY
         self.url = None
 
 

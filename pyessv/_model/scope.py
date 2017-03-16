@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import NAME_TYPE_SCOPE
+from pyessv._constants import ENTITY_TYPE_SCOPE
 from pyessv._model.entity import Entity
 
 
@@ -31,7 +31,7 @@ class Scope(Entity):
         self.idx = None
         self.label = None
         self.name = None
-        self.typeof = NAME_TYPE_SCOPE
+        self.typeof = ENTITY_TYPE_SCOPE
         self.uid = None
         self.url = None
 

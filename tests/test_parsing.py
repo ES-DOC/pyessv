@@ -35,47 +35,32 @@ def test_parse():
     """Test parsing of anmes at various levels.
 
     """
-    def _get_config(typeof, name, synonym):
-        result = [
-            (typeof, name, name, False, False),
-            (typeof, name, name, True, False),
-            (typeof, name.upper(), LIB.ParsingError, False, False),
-            (typeof, name.upper(), name, True, False),
-            (typeof, name.title(), LIB.ParsingError, False, False),
-            (typeof, name.title(), name, True, False)
+    def _get_config(typeof, name):
+        return [
+            (typeof, name, name, False),
+            (typeof, name, name, True),
+            (typeof, name.upper(), name, False),
+            (typeof, name.upper(), LIB.ParsingError, True),
+            (typeof, name.title(), name, False),
+            (typeof, name.title(), LIB.ParsingError, True)
         ]
-        if synonym is not None:
-            result += [
-                (typeof, synonym, name, False, True),
-                (typeof, synonym, name, True, True),
-                (typeof, synonym.upper(), LIB.ParsingError, False, True),
-                (typeof, synonym.upper(), name, True, True),
-                (typeof, synonym.title(), LIB.ParsingError, False, True),
-                (typeof, synonym.title(), name, True, True)
-            ]
-
-        return result
 
 
     def _test(cfg):
         """Inner test.
 
         """
-        typeof, name, expected, reformat, parse_synonyms = cfg
+        typeof, name, expected, strict = cfg
 
         try:
             if typeof == "authority":
-                result = LIB.parse(name, \
-                                   reformat=reformat, parse_synonyms=parse_synonyms)
+                result = LIB.parse(name, strict=strict)
             elif typeof == "scope":
-                result = LIB.parse(_AUTHORITY, name, \
-                                   reformat=reformat, parse_synonyms=parse_synonyms)
+                result = LIB.parse(_AUTHORITY, name, strict=strict)
             elif typeof == "collection":
-                result = LIB.parse(_AUTHORITY, _SCOPE, name, \
-                                   reformat=reformat, parse_synonyms=parse_synonyms)
+                result = LIB.parse(_AUTHORITY, _SCOPE, name, strict=strict)
             elif typeof == "term":
-                result = LIB.parse(_AUTHORITY, _SCOPE, _COLLECTION, name, \
-                                   reformat=reformat, parse_synonyms=parse_synonyms)
+                result = LIB.parse(_AUTHORITY, _SCOPE, _COLLECTION, name, strict=strict)
         except LIB.ParsingError:
             result = LIB.ParsingError
 
@@ -84,12 +69,17 @@ def test_parse():
 
 
     for typeof, name, synonym in [
-        (LIB.NAME_TYPE_AUTHORITY, _AUTHORITY, None),
-        (LIB.NAME_TYPE_SCOPE, _SCOPE, None),
-        (LIB.NAME_TYPE_COLLECTION, _COLLECTION, None),
-        (LIB.NAME_TYPE_TERM, _TERM, _TERM_SYNONYM),
+        (LIB.ENTITY_TYPE_AUTHORITY, _AUTHORITY, None),
+        (LIB.ENTITY_TYPE_SCOPE, _SCOPE, None),
+        (LIB.ENTITY_TYPE_COLLECTION, _COLLECTION, None),
+        # (LIB.ENTITY_TYPE_TERM, _TERM, _TERM_SYNONYM),
         ]:
-        for cfg in _get_config(typeof, name, synonym):
-            desc = "parse {}: {} [reformat={}, parse_synonyms={}]".format(cfg[0], cfg[1], cfg[3], cfg[4])
+
+        config = _get_config(typeof, name)
+        if synonym:
+            config += _get_config(typeof, synonym)
+
+        for cfg in config:
+            desc = "parse {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])
             tu.init(_test, desc)
             yield _test, cfg

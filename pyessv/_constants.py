@@ -26,6 +26,26 @@ ENCODING_SET = {
     ENCODING_JSON
 }
 
+# Entity type - an authority governing vocabularies.
+ENTITY_TYPE_AUTHORITY = "authority"
+
+# Entity type - a scope constraining collection of vocabularies.
+ENTITY_TYPE_SCOPE = "scope"
+
+# Entity type - a collection constraining collection of term.
+ENTITY_TYPE_COLLECTION = "collection"
+
+# Entity type - a term.
+ENTITY_TYPE_TERM = "term"
+
+# Set of allowed name types.
+ENTITY_TYPE_SET = (
+  ENTITY_TYPE_AUTHORITY,
+  ENTITY_TYPE_COLLECTION,
+  ENTITY_TYPE_SCOPE,
+  ENTITY_TYPE_TERM
+  )
+
 # Governance state - the term is pending review.
 GOVERNANCE_STATUS_PENDING = u'pending'
 
@@ -54,23 +74,3 @@ REGEX_LABEL = u"/&"
 
 # Regular expression for validating a url.
 REGEX_URL = u""
-
-# Name type - an authority governing vocabularies.
-NAME_TYPE_AUTHORITY = "authority"
-
-# Name type - a scope constraining collection of vocabularies.
-NAME_TYPE_SCOPE = "scope"
-
-# Name type - a collection constraining collection of term.
-NAME_TYPE_COLLECTION = "collection"
-
-# Name type - a term.
-NAME_TYPE_TERM = "term"
-
-# Set of allowed name types.
-NAME_TYPE_SET = set([
-  NAME_TYPE_AUTHORITY,
-  NAME_TYPE_COLLECTION,
-  NAME_TYPE_SCOPE,
-  NAME_TYPE_TERM
-  ])

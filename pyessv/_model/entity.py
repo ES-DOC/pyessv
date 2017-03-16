@@ -13,9 +13,9 @@
 """
 import uuid
 
-from pyessv._constants import NAME_TYPE_AUTHORITY
-from pyessv._constants import NAME_TYPE_COLLECTION
-from pyessv._constants import NAME_TYPE_SCOPE
+from pyessv._constants import ENTITY_TYPE_AUTHORITY
+from pyessv._constants import ENTITY_TYPE_COLLECTION
+from pyessv._constants import ENTITY_TYPE_SCOPE
 
 
 
@@ -57,11 +57,11 @@ class Entity(object):
         """Returns associated managed collection.
 
         """
-        if entity.typeof == NAME_TYPE_AUTHORITY:
+        if entity.typeof == ENTITY_TYPE_AUTHORITY:
             return entity.scopes
-        elif entity.typeof == NAME_TYPE_COLLECTION:
+        elif entity.typeof == ENTITY_TYPE_COLLECTION:
             return entity.terms
-        elif entity.typeof == NAME_TYPE_SCOPE:
+        elif entity.typeof == ENTITY_TYPE_SCOPE:
             return entity.collections
 
 
@@ -102,7 +102,7 @@ class Entity(object):
                 return item
 
         # Match against a synonym.
-        if entity.typeof == NAME_TYPE_COLLECTION:
+        if entity.typeof == ENTITY_TYPE_COLLECTION:
             for item in [i for i in items if i.synonyms]:
                 if key in item.synonyms:
                     return item
