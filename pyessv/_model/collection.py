@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import ENTITY_TYPE_COLLECTION
+import pyessv
 from pyessv._model.entity import Entity
 
 
@@ -31,7 +31,7 @@ class Collection(Entity):
         self.name = None
         self.scope = None
         self.terms = list()
-        self.typeof = ENTITY_TYPE_COLLECTION
+        self.typeof = pyessv.ENTITY_TYPE_COLLECTION
         self.uid = None
         self.url = None
 
@@ -107,3 +107,10 @@ class Collection(Entity):
 
         """
         return pyessv.get_partition(self.namespace)
+
+
+    def parse(self, term, strict=True):
+        """Parses an associated term name.
+
+        """
+        return pyessv.parse(self.authority, self.scope, self, term, strict=strict)

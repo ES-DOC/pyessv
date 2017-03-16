@@ -1,0 +1,53 @@
+Validate term name - combination
+
+	If target collection is CombinationCollection then validate name against combination:
+
+	E.G. CORDEX RCM Model: [wcrp:global:institute]-[rcm-name]
+	This is more complex as the validator will need to split the term name and validate each split member.
+
+Validate term name - regex
+
+	If target collection is RegExCollection then validate name against regular expression.
+
+	E.G. ensemble-variant: r%(digit)si%(digit)sp%(digit)s
+	Note that the above is not a pure regular expression but an 'ESG' regex, equivalent pure regular expression is: r[0-9]+i[0-9]+p[0-9]+
+
+	This is fairly simple as the Collection class can be extended with a regex that is applied at the point of term creation / validation.
+
+	ESG INI patterns:
+
+		filename_format = %(variable)s_%(cmor_table)s_%(model)s_%(experiment)s_%(ensemble)s[_%(period_start)s-%(period_end)s].nc
+
+		directory_format = %(root)s/%(project)s/%(product)s/%(institute)s/%(model)s/%(experiment)s/%(time_frequency)s/%(realm)s/%(cmor_table)s/%(ensemble)s/%(version)s/%(variable)s
+
+		dataset_id = cmip5.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s
+
+		Become regular expressions:
+
+		cmip5.[esgf.global.product].[wcrp.global.institute] ...etc
+
+Ensure term rewriting only occurs when term has changed
+
+	Need to ensure that writes only occur when the term information has been touched in some way otherwise there will be false commits
+
+Custom Collection for non-enumeration Terms
+
+	Some DRS facets are not an enumeration of allowed values but refers to a “pattern” or a combination of other facets:
+	Examples:
+	CMIP6 Ensemble -> r[0-9]i[0-9]p[0-9]f[0-9]
+	CORDEX RCM Model -> [institute]-[rcm_name]
+
+	Add a custom RegExCollection instance that would not have term files but rather a regular expression to constrain term names within the collection.
+	Add a custom CombineCollection instance that would not have term files but rather a collections uid pattern to build term names from other collections.
+	Those custom collection should be able to propagate the validation/check methods depending on the RegEx or the terms from the other collections.
+
+Add DRS info at Scope level 
+
+	Add DRS info at the Scope level about dataset ID, directory and filename format, through the MANIFEST:
+
+	Example:
+
+	cmip6 = pyesdoc.cv.load_scope('wcrp', 'cmip6')
+	print cmip6.data.dataset_id_template
+	print cmip6.data.directory_format
+	print cmip6.data.filename_format

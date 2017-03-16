@@ -26,23 +26,22 @@ def load(authority, scope=None, collection=None, term=None):
 	"""Loads a CV authority from archive.
 
 	"""
+	_set_cache(authority)
+	if term is not None:
+		return  _load_term(authority, scope, collection, term)
+	if collection is not None:
+		return  _load_collection(authority, scope, collection)
 	if scope is not None:
-		if collection is not None:
-			if term is not None:
-				return _load_term(authority, scope, collection, term)
-			return _load_collection(authority, scope, collection)
-		return _load_scope(authority, scope)
-	return _load_authority(authority)
+		return  _load_scope(authority, scope)
+	return  _load_authority(authority)
 
 
 def _load_authority(authority):
 	"""Loads a CV authority from archive.
 
 	"""
-	authority = _format_name(authority)
-	_cache_authority(authority)
 	try:
-		return _CACHE[authority]
+		return _CACHE[_format_name(authority)]
 	except KeyError:
 		pass
 
@@ -52,9 +51,8 @@ def _load_scope(authority, scope):
 
 	"""
 	authority = _load_authority(authority)
-	scope = _format_name(scope)
 	try:
-		return authority[scope]
+		return authority[_format_name(scope)]
 	except KeyError:
 		pass
 
@@ -64,9 +62,8 @@ def _load_collection(authority, scope, collection):
 
 	"""
 	scope = _load_scope(authority, scope)
-	collection = _format_name(collection)
 	try:
-		return scope[collection]
+		return scope[_format_name(collection)]
 	except KeyError:
 		pass
 
@@ -75,33 +72,28 @@ def _load_term(authority, scope, collection, term):
 	"""Loads a CV collection from archive.
 
 	"""
-	term = _format_name(term)
 	collection = _load_collection(authority, scope, collection)
 	try:
-		item = collection[term]
+		return collection[_format_name(term)]
 	except KeyError:
-		item = None
-
-	if item is None:
-		for item in collection:
-			if item.synonyms:
-				print "TODO: search synonyms", term, term in item.synonyms
-
-	return item
+		pass
 
 
-def _cache_authority(name):
-	"""Caches an authority if necessary.
+def _set_cache(name):
+	"""Caches set of  authority vocabs (if necessary).
 
 	"""
+	name = _format_name(name)
 	if name in _CACHE:
 		return
 
+	# Set path to authority archive.
 	dpath = os.path.expanduser(DIR_ARCHIVE)
 	dpath = os.path.join(dpath, name)
 	if not os.path.isdir(dpath):
 		raise ValueError("Authority ({}) archive not found".format(name))
 
+	# Read vocab files from file system.
 	authority = read_authority(dpath)
 	if authority is None:
 		raise ValueError("Authority ({}) archive not loaded".format(authority))

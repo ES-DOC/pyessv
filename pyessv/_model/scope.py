@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import ENTITY_TYPE_SCOPE
+import pyessv
 from pyessv._model.entity import Entity
 
 
@@ -31,7 +31,7 @@ class Scope(Entity):
         self.idx = None
         self.label = None
         self.name = None
-        self.typeof = ENTITY_TYPE_SCOPE
+        self.typeof = pyessv.ENTITY_TYPE_SCOPE
         self.uid = None
         self.url = None
 
@@ -86,3 +86,9 @@ class Scope(Entity):
         """
         return unicode(self.idx)
 
+
+    def parse(self, collection, strict=True):
+        """Parses an associated collection name.
+
+        """
+        return pyessv.parse(self.authority, self, collection, strict=strict)

@@ -37,6 +37,14 @@ from pyessv._validation import validate_term_name
 def create_authority(name, description, url, create_date=None):
 	"""Instantiates, initialises & returns a term authority.
 
+	:param str name: Authority name (must be unique within archive).
+	:param str description: Authority description.
+	:param str url: Authority further information URL.
+	:param datetime create_date: Date upon which authority was created.
+
+	:returns: A vocabulary authority, e.g. wcrp.
+	:rtype: pyessv.Authority
+
 	"""
 	# Validate inputs.
 	validate_authority_name(name)
@@ -56,11 +64,12 @@ def create_authority(name, description, url, create_date=None):
 	i.name = name.lower()
 	i.url = url
 
-	# Raise validation exception (if appropriate).
-	if not i.is_valid:
-		raise ValidationError(i.errors)
+	# Return if deemed valid.
+	if i.is_valid:
+		return i
 
-	return i
+	# Raise validation exception.
+	raise ValidationError(i.errors)
 
 
 def create_scope(authority, name, description, url, create_date=None):
@@ -71,6 +80,9 @@ def create_scope(authority, name, description, url, create_date=None):
 	param: str description: Scope description.
 	param: str url: Scope URL for further information.
 	param: datetime create_date: Date upon which scope was created.
+
+	:returns: A vocabulary scope, e.g. cmip6.
+	:rtype: pyessv.Scope
 
 	"""
 	# Validate inputs.
@@ -98,11 +110,12 @@ def create_scope(authority, name, description, url, create_date=None):
 	authority.scopes.append(i)
 	i.idx = len(authority.scopes)
 
-	# Raise validation exception (if appropriate).
-	if not i.is_valid:
-		raise ValidationError(i.errors)
+	# Return if deemed valid.
+	if i.is_valid:
+		return i
 
-	return i
+	# Raise validation exception.
+	raise ValidationError(i.errors)
 
 
 def create_collection(scope, name, description, create_date=None):
@@ -112,6 +125,9 @@ def create_collection(scope, name, description, create_date=None):
 	param: str name: Collection name (must be unique within scope).
 	param: str description: Collection description.
 	param: datetime create_date: Date upon which collection was created.
+
+	:returns: A vocabulary collection, e.g. insitution-id.
+	:rtype: pyessv.Collection
 
 	"""
 	# Validate inputs.
@@ -136,11 +152,12 @@ def create_collection(scope, name, description, create_date=None):
 	scope.collections.append(i)
 	i.idx = len(scope.collections)
 
-	# Raise validation exception (if appropriate).
-	if not i.is_valid:
-		raise ValidationError(i.errors)
+	# Return if deemed valid.
+	if i.is_valid:
+		return i
 
-	return i
+	# Raise validation exception.
+	raise ValidationError(i.errors)
 
 
 def create_term(collection, name, data=None, create_date=None):
@@ -150,6 +167,9 @@ def create_term(collection, name, data=None, create_date=None):
 	param: str name: Name of term.
 	param: dict data: Arbitrary data associated with term.
 	param: datetime create_date: Date upon which term was created.
+
+	:returns: A vocabulary term, e.g. ipsl.
+	:rtype: pyessv.Term
 
 	"""
 	# Validate inputs.
@@ -175,8 +195,9 @@ def create_term(collection, name, data=None, create_date=None):
 	collection.terms.append(i)
 	i.idx = len(collection.terms)
 
-	# Raise validation exception (if appropriate).
-	if not i.is_valid:
-		raise ValidationError(i.errors)
+	# Return if deemed valid.
+	if i.is_valid:
+		return i
 
-	return i
+	# Raise validation exception.
+	raise ValidationError(i.errors)

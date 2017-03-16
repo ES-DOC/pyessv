@@ -38,7 +38,7 @@ class Term(Entity):
         self.parent = None              # parent term within collection
         self.status = None              # governance status
         self.synonyms = list()          # name synonyms
-        self.typeof = ENTITY_TYPE_TERM    # name type
+        self.typeof = ENTITY_TYPE_TERM  # name type
         self.uid = None                 # universally unique identifier
         self.url = None                 # a url for further info
 

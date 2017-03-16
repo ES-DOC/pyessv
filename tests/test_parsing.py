@@ -35,14 +35,15 @@ def test_parse():
     """Test parsing of anmes at various levels.
 
     """
-    def _get_config(typeof, name):
+    def _get_config(typeof, name, synonym=None):
+        target = synonym or name
         return [
-            (typeof, name, name, False),
-            (typeof, name, name, True),
-            (typeof, name.upper(), name, False),
-            (typeof, name.upper(), LIB.ParsingError, True),
-            (typeof, name.title(), name, False),
-            (typeof, name.title(), LIB.ParsingError, True)
+            (typeof, target, name, False),
+            (typeof, target, LIB.ParsingError if synonym else name, True),
+            (typeof, target.upper(), name, False),
+            (typeof, target.upper(), LIB.ParsingError, True),
+            (typeof, target.title(), name, False),
+            (typeof, target.title(), LIB.ParsingError, True)
         ]
 
 
@@ -72,12 +73,12 @@ def test_parse():
         (LIB.ENTITY_TYPE_AUTHORITY, _AUTHORITY, None),
         (LIB.ENTITY_TYPE_SCOPE, _SCOPE, None),
         (LIB.ENTITY_TYPE_COLLECTION, _COLLECTION, None),
-        # (LIB.ENTITY_TYPE_TERM, _TERM, _TERM_SYNONYM),
+        (LIB.ENTITY_TYPE_TERM, _TERM, _TERM_SYNONYM),
         ]:
 
         config = _get_config(typeof, name)
         if synonym:
-            config += _get_config(typeof, synonym)
+            config += _get_config(typeof, name, synonym)
 
         for cfg in config:
             desc = "parse {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])

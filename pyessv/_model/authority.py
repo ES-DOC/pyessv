@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._constants import ENTITY_TYPE_AUTHORITY
+import pyessv
 from pyessv._model.entity import Entity
 
 
@@ -30,7 +30,7 @@ class Authority(Entity):
         self.label = None
         self.name = None
         self.scopes = list()
-        self.typeof = ENTITY_TYPE_AUTHORITY
+        self.typeof = pyessv.ENTITY_TYPE_AUTHORITY
         self.url = None
 
 
@@ -75,3 +75,10 @@ class Authority(Entity):
 
         """
         return self.name
+
+
+    def parse(self, scope, strict=True):
+        """Parses an associated scope name.
+
+        """
+        return pyessv.parse(self, scope, strict=strict)
