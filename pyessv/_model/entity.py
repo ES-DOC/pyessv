@@ -13,6 +13,8 @@
 """
 import uuid
 
+import arrow
+
 from pyessv._constants import ENTITY_TYPE_AUTHORITY
 from pyessv._constants import ENTITY_TYPE_COLLECTION
 from pyessv._constants import ENTITY_TYPE_SCOPE
@@ -27,17 +29,15 @@ class Entity(object):
         """Instance constructor.
 
         """
-        self.create_date = None
+        self.create_date = arrow.utcnow().datetime
         self.data = None
         self.description = None
-        self.idx = None
         self.io_path = None
         self.label = None
         self.name = None
-        self.status = None
         self.typeof = typeof
+        self.uid = uuid.uuid4()
         self.url = None
-        self.uid = None
 
 
     def __repr__(self):
@@ -78,7 +78,7 @@ class Entity(object):
 
     @property
     def is_valid(self):
-        """Gets flag indicating validity status.
+        """Gets flag indicating validity.
 
         """
         return len(self.validate()) == 0

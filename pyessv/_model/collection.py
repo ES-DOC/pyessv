@@ -74,17 +74,6 @@ class Collection(Entity):
         return self.scope.authority
 
 
-    @property
-    def full_idx(self):
-        """Gets full computed idx.
-
-        """
-        return u"{}.{}".format(
-            self.scope.idx,
-            self.idx
-            )
-
-
     def parse(self, term_name, strict=True):
         """Parses an associated term name.
 

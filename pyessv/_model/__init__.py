@@ -29,6 +29,7 @@ from pyessv._model.scope import Scope
 from pyessv._model.term import Term
 
 
+
 # Set of supported entity types.
 ENTITY_TYPES = (
     Authority,
@@ -37,12 +38,12 @@ ENTITY_TYPES = (
     Term,
 )
 
-# Map of entity type keys to types.
-ENTITY_TYPE_MAP = {
-    ENTITY_TYPE_AUTHORITY: Authority,
-    ENTITY_TYPE_COLLECTION: Collection,
-    ENTITY_TYPE_SCOPE: Scope,
-    ENTITY_TYPE_TERM: Term
+# Map of type keys to types.
+ENTITY_TYPE_KEY_MAP = {
+    Authority: ENTITY_TYPE_AUTHORITY,
+    Collection: ENTITY_TYPE_COLLECTION,
+    Scope: ENTITY_TYPE_SCOPE,
+    Term: ENTITY_TYPE_TERM
 }
 
 # Type information applying to all entities.
@@ -51,10 +52,9 @@ _STANDARD_TYPE_INFO = {
     ("description", unicode, "1.1"),
     ("label", unicode, "1.1"),
     ("name", unicode, "1.1", REGEX_CANONICAL_NAME),
-    ("status", unicode, "1.1", tuple(GOVERNANCE_STATUS_SET)),
     ("typeof", str, "1.1"),
     ("uid", uuid.UUID, "1.1"),
-    ("url", unicode, "1.1", REGEX_URL)
+    ("url", unicode, "0.1", REGEX_URL)
 }
 
 # Map of types to tuples containing validation info.
@@ -63,7 +63,6 @@ ENTITY_TYPE_INFO = {
         ("scopes", Scope, "0.N"),
     }),
     Collection: _STANDARD_TYPE_INFO.union({
-        ("idx", int, "1.1"),
         ("scope", Scope, "1.1"),
         ("terms", Term, "0.N"),
     }),
@@ -75,7 +74,9 @@ ENTITY_TYPE_INFO = {
         ("alternative_name", unicode, "0.1", REGEX_CANONICAL_NAME),
         ("alternative_url", unicode, "0.1", REGEX_URL),
         ("collection", Collection, "1.1"),
+        ("idx", int, "1.1"),
         ("parent", Term, "0.1"),
+        ("status", unicode, "1.1", tuple(GOVERNANCE_STATUS_SET)),
         ("synonyms", unicode, "0.N", REGEX_CANONICAL_NAME),
     })
 }

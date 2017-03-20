@@ -46,6 +46,18 @@ TEST_TERM_URL = "{}/{}".format(TEST_COLLECTION_URL, TEST_TERM_NAME)
 TEST_TERM_SYNONYMS = ["test-term-synonym-1", "test-term-synonym-2"]
 
 
+def reset_test_objects():
+    global TEST_AUTHORITY
+    global TEST_SCOPE
+    global TEST_COLLECTION
+    global TEST_TERM
+
+    TEST_AUTHORITY = None
+    TEST_SCOPE = None
+    TEST_COLLECTION = None
+    TEST_TERM = None
+
+
 def create_authority():
     """Creates & returns a test authority.
 
@@ -149,6 +161,7 @@ def teardown():
     """Performs teardown functions after running a test.
 
     """
+    reset_test_objects()
     try:
         shutil.rmtree(os.path.join(LIB.DIR_ARCHIVE, TEST_AUTHORITY_NAME))
     except OSError:

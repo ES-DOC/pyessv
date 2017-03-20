@@ -28,9 +28,11 @@ class Term(Entity):
 
         self.alternative_name = None    # primary synonym
         self.alternative_url = None     # an alternative URL
-        self.associations = set()       # associated terms
+        self.associations = list()      # associated terms
         self.collection = None          # collection of which term is a member
+        self.idx = None                 # collection ordinal
         self.parent = None              # parent term within collection
+        self.status = pyessv.GOVERNANCE_STATUS_PENDING
         self.synonyms = list()          # name synonyms
 
 
@@ -65,17 +67,6 @@ class Term(Entity):
 
         """
         return self.collection.scope
-
-
-    @property
-    def full_idx(self):
-        """Gets full computed idx.
-
-        """
-        return u"{}.{}".format(
-            self.collection.full_idx,
-            self.idx
-            )
 
 
     @property

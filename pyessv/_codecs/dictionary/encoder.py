@@ -30,80 +30,70 @@ def encode(instance):
 
     """
     try:
-        _ENCODERS[type(instance)]
+        encoder = _ENCODERS[type(instance)]
     except KeyError:
         raise TypeError("Type encoding unsupported: {}".format(type(instance)))
 
-    obj = _ENCODERS[type(instance)](instance)
-    obj['_type'] = unicode(instance.__module__)
+    obj = dict()
+    _encode_entity(instance, obj)
+    encoder(instance, obj)
 
     return obj
 
 
-def _encode_authority(instance):
+def _encode_authority(instance, obj):
     """Encodes a term authority as a dictionary.
 
     """
-    obj = dict()
-    if instance.data:
-        obj['data'] = instance.data
-    obj['description'] = instance.description
-    obj['label'] = instance.label
-    obj['name'] = instance.name
-    obj['scopes'] = [_encode_scope(i) for i in instance.scopes]
-    obj['url'] = instance.url
-
-    return obj
+    obj['scopes'] = [encode(i) for i in instance.scopes]
 
 
-def _encode_scope(instance):
+def _encode_scope(instance, obj):
     """Encodes a term scope as a dictionary.
 
     """
-    obj = dict()
-    obj['collections'] = [_encode_collection(i) for i in instance.collections]
-    if instance.data:
-        obj['data'] = instance.data
-    obj['description'] = instance.description
-    obj['idx'] = instance.idx
-    obj['label'] = instance.label
-    obj['name'] = instance.name
-    obj['uid'] = instance.uid
-    obj['url'] = instance.url
-
-    return obj
+    obj['collections'] = [encode(i) for i in instance.collections]
 
 
-def _encode_collection(instance):
+def _encode_collection(instance, obj):
     """Encodes a term collection as a dictionary.
 
     """
-    obj = dict()
-    obj['create_date'] = instance.create_date
-    if instance.data:
-        obj['data'] = instance.data
-    obj['description'] = instance.description
-    obj['idx'] = instance.idx
-    obj['label'] = instance.label
-    obj['name'] = instance.name
     obj['terms'] = ["{}:{}".format(i.name, i.uid) for i in instance.terms]
-    obj['uid'] = instance.uid
-    obj['url'] = instance.url
-
-    return obj
 
 
-def _encode_term(instance):
+def _encode_term(instance, obj):
     """Encodes a term as a dictionary.
 
     """
-    obj = instance.__dict__.copy()
-    del obj['collection']
-    del obj['io_path']
-    obj['parent'] = None if instance.parent is None else instance.parent.uid
-    obj['associations'] = [i.uid for i in instance.associations]
+    obj['idx'] = instance.idx
+    obj['status'] = instance.status
+    if instance.alternative_name is not None:
+        obj['alternative_name'] = instance.alternative_name
+    if instance.alternative_url is not None:
+        obj['alternative_url'] = instance.alternative_url
+    if instance.parent is not None:
+        obj['parent'] = instance.parent.uid
+    if len(instance.associations) > 0:
+        obj['associations'] = [i.uid for i in instance.associations]
+    if len(instance.synonyms) > 0:
+        obj['synonyms'] = instance.synonyms
 
-    return obj
+
+def _encode_entity(instance, obj):
+    """Encodes an entity instance to a dictionary representation.
+
+    """
+    obj['_type'] = unicode(instance.__module__)
+    obj['create_date'] = instance.create_date
+    obj['description'] = instance.description
+    obj['label'] = instance.label
+    obj['name'] = instance.name
+    obj['uid'] = instance.uid
+    if instance.data:
+        obj['data'] = instance.data
+    if instance.url is not None:
+        obj['url'] = instance.url
 
 
 # Map of supported types to encoding functions.

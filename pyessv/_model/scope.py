@@ -66,14 +66,6 @@ class Scope(Entity):
         return self.authority
 
 
-    @property
-    def full_idx(self):
-        """Gets full computed idx.
-
-        """
-        return unicode(self.idx)
-
-
     def parse(self, collection_name, strict=True):
         """Parses an associated collection name.
 

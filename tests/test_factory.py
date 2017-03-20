@@ -11,32 +11,18 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import inspect
-
 import nose
 import pyessv
 
 import tests.utils as tu
-import tests.utils_cv as tu_cv
 
 
 
-# def _setup():
-#     """Test runner setup.
-
-#     """
-#     tu.setup()
-#     count = pyessv.get_count()
-#     term = tu.create_term()
-#     pyessv.save(term)
-#     tu.assert_int(pyessv.get_count(), count + 1)
-
-
+@nose.with_setup(None, tu.teardown)
 def test_create():
     """Test creating an authority.
 
     """
-    @nose.with_setup(None, tu.teardown)
     def _test(factory, typeof):
         """Inner test.
 
@@ -50,7 +36,7 @@ def test_create():
         (tu.create_collection, pyessv.Collection),
         (tu.create_term, pyessv.Term)
         ):
-        desc = "create {}".format(str(typeof).split(".")[-1][0:-2].lower())
+        desc = "create --> {}".format(str(typeof).split(".")[-1][0:-2].lower())
         tu.init(_test, desc)
         yield _test, factory, typeof
 

@@ -31,109 +31,103 @@ def decode(obj):
     :rtype: pyessv.Term
 
     """
+    # Set type key.
     try:
-        _DECODERS[obj['_type']]
+        typekey = obj['_type']
     except KeyError:
-        raise TypeError("Decoding type unsupported: {}".format(obj['_type']))
+        raise TypeError("Decoding type key not found")
 
-    return _DECODERS[obj['_type']](obj)
+    # Set type.
+    try:
+        typeof = _TYPE_MAP[typekey]
+    except KeyError:
+        raise TypeError("Decoding type unsupported: {}".format(typekey))
+    else:
+        decoder = _DECODERS[typeof]
+
+    # Instantite & set attributes.
+    instance = typeof()
+    _decode_entity(obj, instance)
+    decoder(obj, instance)
+
+    return instance
 
 
-def _decode_authority(obj):
+def _decode_authority(obj, instance):
     """Decodes a termset from a dictionary.
 
     """
-    instance = Authority()
-    instance.data = obj.get('data', dict())
-    instance.description = obj['description']
-    instance.label = obj['label']
-    instance.name = obj['name']
-    instance.scopes = [_decode_scope(i) if isinstance(i, dict) else i
-                       for i in obj['scopes']]
-    instance.url = obj['url']
+    instance.scopes = [decode(i) for i in obj['scopes']]
 
     # Wire hierarchy.
     for scope in instance:
         if isinstance(scope, Scope):
             scope.authority = instance
 
-    return instance
 
-
-def _decode_scope(obj):
+def _decode_scope(obj, instance):
     """Decodes a termset from a dictionary.
 
     """
-    instance = Scope()
-    instance.collections = [_decode_collection(i) if isinstance(i, dict) else i
-                            for i in obj['collections']]
-    instance.data = obj.get('data', dict())
-    instance.description = obj['description']
-    instance.idx = obj['idx']
-    instance.label = obj['label']
-    instance.name = obj['name']
-    instance.uid = uuid.UUID(unicode(obj['uid']))
-    instance.url = obj['url']
+    instance.collections = [decode(i) for i in obj['collections']]
 
     # Wire hierarchy.
     for collection in instance:
         if isinstance(collection, Collection):
             collection.scope = instance
 
-    return instance
 
-
-def _decode_collection(obj):
+def _decode_collection(obj, instance):
     """Decodes a termset from a dictionary.
 
     """
-    instance = Collection()
-    instance.create_date = arrow.get(obj['create_date']).datetime
-    instance.data = obj.get('data', dict())
-    instance.description = obj['description']
-    instance.idx = obj['idx']
-    instance.label = obj['label']
-    instance.name = obj['name']
-    instance.terms = [_decode_term(i) if isinstance(i, dict) else i
-                      for i in obj['terms']]
-    instance.uid = uuid.UUID(unicode(obj['uid']))
-    instance.url = obj['url']
+    instance.terms = [decode(i) if isinstance(i, dict) else i for i in obj['terms']]
 
     # Wire hierarchy.
-    for term in instance:
+    for term in [instance]:
         if isinstance(term, Term):
             term.collection = instance
 
-    return instance
 
-
-def _decode_term(obj):
+def _decode_term(obj, instance):
     """Decodes a term from a dictionary.
 
     """
-    instance = Term()
-    instance.alternative_name = obj['alternative_name']
-    instance.alternative_url = obj['alternative_url']
-    instance.create_date = arrow.get(obj['create_date']).datetime
-    instance.data = obj.get('data', dict())
-    instance.description = obj['description']
+    instance.alternative_name = obj.get('alternative_name')
+    instance.alternative_url = obj.get('alternative_url')
+    instance.associations = obj.get('associations', [])
     instance.idx = obj['idx']
-    instance.label = obj['label']
-    instance.name = obj['name']
     instance.status = obj['status']
-    instance.synonyms = obj['synonyms']
-    instance.uid = uuid.UUID(unicode(obj['uid']))
-    instance.url = obj['url']
+    instance.synonyms = obj.get('synonyms', [])
     if instance.parent:
         instance.parent = uuid.UUID(unicode(obj['parent']))
 
-    return instance
+
+def _decode_entity(obj, instance):
+    """Decodes an entity instance from a dictionary representation.
+
+    """
+    instance.create_date = arrow.get(obj['create_date']).datetime
+    instance.data = obj.get('data', dict())
+    instance.description = obj['description']
+    instance.label = obj['label']
+    instance.name = obj['name']
+    instance.uid = uuid.UUID(unicode(obj['uid']))
+    instance.url = obj.get('url')
 
 
-# Map of supported type keys to decoding functions.
+# Map of supported types to decoding functions.
 _DECODERS = {
-    Authority.__module__: _decode_authority,
-    Collection.__module__: _decode_collection,
-    Scope.__module__: _decode_scope,
-    Term.__module__: _decode_term
+    Authority: _decode_authority,
+    Collection: _decode_collection,
+    Scope: _decode_scope,
+    Term: _decode_term
+}
+
+# Map of supported type keys to types.
+_TYPE_MAP = {
+    Authority.__module__: Authority,
+    Collection.__module__: Collection,
+    Scope.__module__: Scope,
+    Term.__module__: Term
 }

@@ -43,34 +43,24 @@ def read_authority(dpath):
         authority.io_path = fpath
 
     # Read terms.
+    term_cache = {}
     for scope in authority:
         for collection in scope:
-            collection.terms = []
-            collection.terms += _read_terms(dpath, scope, collection)
-
-    # Set inter-concept hierachy.
-    terms = {}
-    for scope in authority:
-        scope.authority = authority
-        for collection in scope:
-            collection.scope = scope
-            for term in collection:
-                term.collection = collection
-                terms[term.uid] = term
+            collection.terms = _read_terms(dpath, scope, collection, term_cache)
 
     # Set inter-term hierarchies.
-    for term in terms.values():
-        if term.parent in terms:
-            term.parent = terms[term.parent]
+    for term in term_cache.values():
+        if term.parent in term_cache:
+            term.parent = term_cache[term.parent]
 
     # Set intra-term hierarchies.
-    for term in [i for i in terms.values() if i.associations]:
-        term.associations = [terms[i] if i in terms else i for i in term.associations]
+    for term in [i for i in term_cache.values() if i.associations]:
+        term.associations = [term_cache[i] if i in term_cache else i for i in term.associations]
 
     return authority
 
 
-def _read_terms(dpath, scope, collection):
+def _read_terms(dpath, scope, collection, term_cache):
     """Reads terms from file system.
 
     """
@@ -78,16 +68,19 @@ def _read_terms(dpath, scope, collection):
     dpath = os.path.join(dpath, collection.name)
     dpath = os.path.join(dpath, "*")
 
-    return [_read_term(i) for i in glob.iglob(dpath)]
+    return [_read_term(i, collection, term_cache) for i in glob.iglob(dpath)]
 
 
-def _read_term(fpath):
+def _read_term(fpath, collection, term_cache):
     """Reads terms from file system.
 
     """
     # Decode term from JSON file.
     with open(fpath, "r") as fstream:
         term = decode(fstream.read(), ENCODING_JSON)
+    term.collection = collection
     term.io_path = fpath
+
+    term_cache[term.uid] = term
 
     return term
