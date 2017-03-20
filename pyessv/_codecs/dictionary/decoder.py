@@ -44,6 +44,7 @@ def _decode_authority(obj):
 
     """
     instance = Authority()
+    instance.data = obj.get('data', dict())
     instance.description = obj['description']
     instance.label = obj['label']
     instance.name = obj['name']
@@ -66,6 +67,7 @@ def _decode_scope(obj):
     instance = Scope()
     instance.collections = [_decode_collection(i) if isinstance(i, dict) else i
                             for i in obj['collections']]
+    instance.data = obj.get('data', dict())
     instance.description = obj['description']
     instance.idx = obj['idx']
     instance.label = obj['label']
@@ -87,6 +89,7 @@ def _decode_collection(obj):
     """
     instance = Collection()
     instance.create_date = arrow.get(obj['create_date']).datetime
+    instance.data = obj.get('data', dict())
     instance.description = obj['description']
     instance.idx = obj['idx']
     instance.label = obj['label']
@@ -112,7 +115,7 @@ def _decode_term(obj):
     instance.alternative_name = obj['alternative_name']
     instance.alternative_url = obj['alternative_url']
     instance.create_date = arrow.get(obj['create_date']).datetime
-    instance.data = obj['data']
+    instance.data = obj.get('data', dict())
     instance.description = obj['description']
     instance.idx = obj['idx']
     instance.label = obj['label']

@@ -30,33 +30,25 @@ class Scope(Entity):
         self.collections = list()
 
 
-
-    def __repr__(self):
-        """Instance representation.
-
-        """
-        return self.namespace
-
-
     def __len__(self):
         """Returns number of items in managed collection.
 
         """
-        return len(self.collections)
+        return Entity.get_count(self)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.getiter(self)
+        return Entity.get_iter(self)
 
 
     def __getitem__(self, key):
         """Returns a child section item.
 
         """
-        return Entity.getitem(self, key)
+        return Entity.get_item(self, key)
 
 
     def __contains__(self, key):
@@ -67,11 +59,11 @@ class Scope(Entity):
 
 
     @property
-    def namespace(self):
-        """Returns full namespace of the term set.
+    def owner(self):
+        """Gets owner within vocabulary model.
 
         """
-        return u":".join([self.authority.name, self.name])
+        return self.authority
 
 
     @property
@@ -82,8 +74,8 @@ class Scope(Entity):
         return unicode(self.idx)
 
 
-    def parse(self, collection, strict=True):
+    def parse(self, collection_name, strict=True):
         """Parses an associated collection name.
 
         """
-        return pyessv.parse(self.authority, self, collection, strict=strict)
+        return pyessv.parse(collection_name, self, strict=strict)

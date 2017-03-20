@@ -29,32 +29,25 @@ class Authority(Entity):
         self.scopes = list()
 
 
-    def __repr__(self):
-        """Instance representation.
-
-        """
-        return self.namespace
-
-
     def __len__(self):
         """Returns number of items in managed collection.
 
         """
-        return len(self.scopes)
+        return Entity.get_count(self)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.getiter(self)
+        return Entity.get_iter(self)
 
 
     def __getitem__(self, key):
         """Returns a child section item.
 
         """
-        return Entity.getitem(self, key)
+        return Entity.get_item(self, key)
 
 
     def __contains__(self, key):
@@ -64,16 +57,8 @@ class Authority(Entity):
         return self[key] is not None
 
 
-    @property
-    def namespace(self):
-        """Returns namespace used in I/O scenarios.
-
-        """
-        return self.name
-
-
-    def parse(self, scope, strict=True):
+    def parse(self, scope_name, strict=True):
         """Parses an associated scope name.
 
         """
-        return pyessv.parse(self, scope, strict=strict)
+        return pyessv.parse(scope_name, self, strict=strict)

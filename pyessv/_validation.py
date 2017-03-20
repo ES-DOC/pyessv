@@ -11,25 +11,12 @@
 
 
 """
+import datetime
+
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._model import TYPES
-from pyessv._model import TYPE_INFO
+from pyessv._model import ENTITY_TYPES
+from pyessv._model import ENTITY_TYPE_INFO
 
-
-
-def validate(instance):
-    """Validates an instance of a domain model class.
-
-    :param instance: Sub-class of pyessv.Entity
-
-    :returns: Set of instance validation errrors.
-    :rtype: set
-
-    """
-    if not isinstance(instance, TYPES):
-        raise NotImplementedError("Invalid instance: unknown type")
-
-    return _validate_instance(instance)
 
 
 def is_valid(instance):
@@ -39,7 +26,7 @@ def is_valid(instance):
     :rtype: bool
 
     """
-    return len(validate(instance)) == 0
+    return len(validate_entity(instance)) == 0
 
 
 def get_errors(instance):
@@ -49,22 +36,75 @@ def get_errors(instance):
     :rtype: list
 
     """
-    return sorted(list(validate(instance)))
+    return sorted(list(validate_entity(instance)))
 
 
-def _validate_instance(instance):
-    """Validates an instance.
+def validate_entity(instance):
+    """Validates an instance of a domain entity.
+
+    :param instance: Sub-class of pyessv.Entity
+
+    :returns: Set of instance validation errrors.
+    :rtype: set
 
     """
-    errs = set()
+    if not isinstance(instance, ENTITY_TYPES):
+        raise NotImplementedError("Invalid instance: unknown type")
 
-    for field_info in TYPE_INFO[type(instance)]:
+    errs = set()
+    for field_info in ENTITY_TYPE_INFO[type(instance)]:
         try:
             _validate_field(instance, field_info)
         except ValueError as err:
             errs.add("{}.{}".format(instance.__class__.__name__, err.message))
 
     return errs
+
+
+def validate_canonical_name(name, field):
+    """Validates a canonical name.
+
+    """
+    validate_unicode(name, field)
+    for char in REGEX_CANONICAL_NAME:
+        if name.find(char) > -1:
+            raise ValueError("invalid name: {}".format(field))
+
+
+def validate_data(data, field):
+    """Validates a term's data.
+
+    """
+    if not isinstance(data, dict):
+        raise ValueError("invalid term data: {}".format(field))
+
+
+def validate_date(val, field):
+    """Validates a date field value.
+
+    """
+    if not isinstance(val, datetime.datetime):
+        raise ValueError("invalid date: {}".format(field))
+
+
+def validate_unicode(val, field):
+    """Validates a unicode field value.
+
+    """
+    if val is None:
+        raise ValueError("undefined {}".format(field))
+    if not isinstance(val, basestring):
+        raise ValueError("invalid {} (unicode test failed)".format(field))
+    if not len(val.strip()):
+        raise ValueError("invalid {} (>0 length test failed)".format(field))
+
+
+def validate_url(val, field):
+    """Validates a url field value.
+
+    """
+    validate_unicode(val, field)
+    # TODO: apply regex
 
 
 def _validate_field(instance, type_info):
@@ -100,31 +140,6 @@ def _validate_field(instance, type_info):
         raise ValueError("{}: {}".format(field, err))
 
 
-def _validate_value(val, is_mandatory, typeof, misc):
-    """Validates an iterable field value.
-
-    """
-    # Error: mandatory.
-    if is_mandatory and val is None:
-        raise ValueError("undefined")
-
-    # Error: type mismatch.
-    if val is not None and not isinstance(val, typeof):
-        raise ValueError("type mismatch")
-
-    # Error: unicode length.
-    # TODO
-
-    # Error: enum.
-    if isinstance(misc, tuple) and val not in misc:
-        raise ValueError("not in enum")
-
-    # Error: regex.
-    if isinstance(misc, unicode):
-        # TODO: validate regex
-        pass
-
-
 def _validate_iterable(val, is_mandatory, typeof, misc):
     """Validates an iterable field value.
 
@@ -151,104 +166,26 @@ def _validate_iterable(val, is_mandatory, typeof, misc):
         pass
 
 
-def validate_authority_description(description):
-    """Validates a termset's description.
+def _validate_value(val, is_mandatory, typeof, misc):
+    """Validates an iterable field value.
 
     """
-    validate_unicode(description, "description")
+    # Error: mandatory.
+    if is_mandatory and val is None:
+        raise ValueError("undefined")
 
+    # Error: type mismatch.
+    if val is not None and not isinstance(val, typeof):
+        raise ValueError("type mismatch")
 
-def validate_authority_name(name):
-    """Validates a term's name.
+    # Error: unicode length.
+    # TODO
 
-    """
-    validate_unicode(name, "name")
-    for char in REGEX_CANONICAL_NAME:
-        if name.find(char) > -1:
-            raise ValueError('invalid name')
+    # Error: enum.
+    if isinstance(misc, tuple) and val not in misc:
+        raise ValueError("not in enum")
 
-
-def validate_authority_url(url):
-    """Validates a term's url.
-
-    """
-    validate_url(url, "url")
-
-
-def validate_collection_description(description):
-    """Validates a termset's description.
-
-    """
-    validate_unicode(description, "description")
-
-
-def validate_collection_name(name):
-    """Validates a term's name.
-
-    """
-    validate_unicode(name, "name")
-    for char in REGEX_CANONICAL_NAME:
-        if name.find(char) > -1:
-            raise ValueError('invalid name')
-
-
-def validate_scope_description(description):
-    """Validates a termset's description.
-
-    """
-    validate_unicode(description, "description")
-
-
-def validate_scope_name(name):
-    """Validates a term's name.
-
-    """
-    validate_unicode(name, "name")
-    for char in REGEX_CANONICAL_NAME:
-        if name.find(char) > -1:
-            raise ValueError('invalid name')
-
-
-def validate_scope_url(url):
-    """Validates a term's url.
-
-    """
-    validate_url(url, "url")
-
-
-def validate_term_data(data):
-    """Validates a term's data.
-
-    """
-    if not isinstance(data, dict):
-        raise ValueError("invalid term data")
-
-
-def validate_term_name(name):
-    """Validates a term's name.
-
-    """
-    validate_unicode(name, "name")
-    for char in REGEX_CANONICAL_NAME:
-        if name.find(char) > -1:
-            raise ValueError('invalid name')
-
-
-def validate_unicode(val, field):
-    """Validates a unicode field value.
-
-    """
-    if val is None:
-        raise ValueError("undefined {}".format(field))
-    if not isinstance(val, unicode):
-        raise ValueError("invalid {} (unicode test failed)".format(field))
-    if not len(val.strip()):
-        raise ValueError("invalid {} (>0 length test failed)".format(field))
-
-
-def validate_url(val, field):
-    """Validates a url field value.
-
-    """
-    validate_unicode(val, field)
-    # TODO: apply regex
+    # Error: regex.
+    if isinstance(misc, unicode):
+        # TODO: validate regex
+        pass

@@ -17,6 +17,22 @@ from pyessv._constants import ENTITY_TYPE_TERM
 from pyessv._archive import load
 from pyessv._exceptions import ParsingError
 
+_TYPE_BY_IDX = {
+    0: ENTITY_TYPE_AUTHORITY,
+    1: ENTITY_TYPE_SCOPE,
+    2: ENTITY_TYPE_COLLECTION,
+    3: ENTITY_TYPE_TERM
+}
+
+
+def parse_namespace(namespace, strict=True):
+    namespace = unicode(namespace).split(":")
+    if len(namespace) == 0 or len(namespace) > 4:
+        raise ValueError("Invalid namespace")
+
+    namespace = namespace + [None for i in range(4 - len(namespace))]
+
+    return parse(namespace[0], namespace[1], namespace[2], namespace[3], strict)
 
 
 def parse(authority, scope=None, collection=None, term=None, strict=True):

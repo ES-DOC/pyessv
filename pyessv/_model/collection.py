@@ -30,32 +30,25 @@ class Collection(Entity):
         self.terms = list()
 
 
-    def __repr__(self):
-        """Instance representation.
-
-        """
-        return self.namespace
-
-
     def __len__(self):
         """Returns number of terms in managed collection.
 
         """
-        return len(self.terms)
+        return Entity.get_count(self)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.getiter(self)
+        return Entity.get_iter(self)
 
 
     def __getitem__(self, key):
         """Returns a child section item.
 
         """
-        return Entity.getitem(self, key)
+        return Entity.get_item(self, key)
 
 
     def __contains__(self, key):
@@ -66,22 +59,19 @@ class Collection(Entity):
 
 
     @property
+    def owner(self):
+        """Gets owner within vocabulary model.
+
+        """
+        return self.scope
+
+
+    @property
     def authority(self):
         """Gets associated governing authority.
 
         """
         return self.scope.authority
-
-
-    @property
-    def namespace(self):
-        """Gets namespace.
-
-        """
-        return ":".join([
-            self.scope.namespace,
-            self.name,
-            ])
 
 
     @property
@@ -95,16 +85,8 @@ class Collection(Entity):
             )
 
 
-    @property
-    def partition(self):
-        """Returns associated partition.
-
-        """
-        return pyessv.get_partition(self.namespace)
-
-
-    def parse(self, term, strict=True):
+    def parse(self, term_name, strict=True):
         """Parses an associated term name.
 
         """
-        return pyessv.parse(self.authority, self.scope, self, term, strict=strict)
+        return pyessv.parse(term_name, self, strict=strict)

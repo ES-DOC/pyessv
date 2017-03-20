@@ -15,7 +15,7 @@ from pyessv._codecs import dictionary
 from pyessv._codecs import json
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
-from pyessv._model import TYPES
+from pyessv._model import ENTITY_TYPES
 
 
 
@@ -69,7 +69,7 @@ def encode(target, encoding=ENCODING_JSON):
     if encoding not in _CODECS:
         raise NotImplementedError('Invalid encoding: {}'.format(encoding))
 
-    if isinstance(target, TYPES):
+    if isinstance(target, ENTITY_TYPES):
         encoded = _CODECS[encoding].encode(target)
         if isinstance(encoded, basestring):
             encoded = encoded.strip()

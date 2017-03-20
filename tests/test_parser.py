@@ -47,7 +47,7 @@ def test_parse():
         ]
 
 
-    def _test(cfg):
+    def _test_parse_names(cfg):
         """Inner test.
 
         """
@@ -69,6 +69,31 @@ def test_parse():
                "Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.".format(typeof, name, result, expected)
 
 
+    def _test_parse_namespace(cfg):
+        """Inner test.
+
+        """
+        typeof, name, expected, strict = cfg
+
+        if typeof == "authority":
+            parts = []
+        elif typeof == "scope":
+            parts = [_AUTHORITY]
+        elif typeof == "collection":
+            parts = [_AUTHORITY, _SCOPE]
+        elif typeof == "term":
+            parts = [_AUTHORITY, _SCOPE, _COLLECTION]
+        parts.append(name)
+
+        try:
+            result = LIB.parse_namespace(":".join(parts), strict)
+        except LIB.ParsingError:
+            result = LIB.ParsingError
+
+        assert result == expected, \
+               "Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.".format(typeof, name, result, expected)
+
+
     for typeof, name, synonym in [
         (LIB.ENTITY_TYPE_AUTHORITY, _AUTHORITY, None),
         (LIB.ENTITY_TYPE_SCOPE, _SCOPE, None),
@@ -81,6 +106,10 @@ def test_parse():
             config += _get_config(typeof, name, synonym)
 
         for cfg in config:
-            desc = "parse {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])
-            tu.init(_test, desc)
-            yield _test, cfg
+            desc = "parse --> {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])
+            tu.init(_test_parse_names, desc)
+            yield _test_parse_names, cfg
+
+            desc = "parse namespace --> {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])
+            tu.init(_test_parse_namespace, desc)
+            yield _test_parse_namespace, cfg

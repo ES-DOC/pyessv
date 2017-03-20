@@ -13,96 +13,64 @@
 """
 import os
 
+import pyessv
 from pyessv._io import read_authority
-from pyessv._constants import DIR_ARCHIVE
 
 
 
-# Cached loaded CV objects.
+# Cached loaded vocabulary authorities objects.
 _CACHE = {}
 
 
 def load(authority, scope=None, collection=None, term=None):
-	"""Loads a CV authority from archive.
+    """Loads a CV authority from archive.
 
-	"""
-	_set_cache(authority)
-	if term is not None:
-		return  _load_term(authority, scope, collection, term)
-	if collection is not None:
-		return  _load_collection(authority, scope, collection)
-	if scope is not None:
-		return  _load_scope(authority, scope)
-	return  _load_authority(authority)
+    :param str authority: Vocabulary authority, e.g. wcrp.
+    :param str scope: Vocabulary scope, e.g. global.
+    :param str collection: Vocabulary collection, e.g. institute-id.
+    :param str term: Vocabulary term, e.g. ipsl.
 
+    """
+    # Format names.
+    names = [authority, scope, collection, term]
+    names = [_format_name(i) for i in names if i is not None]
 
-def _load_authority(authority):
-	"""Loads a CV authority from archive.
+    # JIT cache authority vocabularies.
+    if names[0] not in _CACHE:
+        _set_cache(names[0])
 
-	"""
-	try:
-		return _CACHE[_format_name(authority)]
-	except KeyError:
-		pass
-
-
-def _load_scope(authority, scope):
-	"""Loads a CV scope from archive.
-
-	"""
-	authority = _load_authority(authority)
-	try:
-		return authority[_format_name(scope)]
-	except KeyError:
-		pass
-
-
-def _load_collection(authority, scope, collection):
-	"""Loads a CV collection from archive.
-
-	"""
-	scope = _load_scope(authority, scope)
-	try:
-		return scope[_format_name(collection)]
-	except KeyError:
-		pass
-
-
-def _load_term(authority, scope, collection, term):
-	"""Loads a CV collection from archive.
-
-	"""
-	collection = _load_collection(authority, scope, collection)
-	try:
-		return collection[_format_name(term)]
-	except KeyError:
-		pass
+    # Recursively load.
+    result = _CACHE[names[0]]
+    try:
+        for name in names[1:]:
+            result = result[name]
+    except KeyError:
+        pass
+    else:
+        return result
 
 
 def _set_cache(name):
-	"""Caches set of  authority vocabs (if necessary).
+    """Caches set of  authority vocabs (if necessary).
 
-	"""
-	name = _format_name(name)
-	if name in _CACHE:
-		return
+    """
+    # Set path to authority archive.
+    dpath = os.path.expanduser(pyessv.DIR_ARCHIVE)
+    dpath = os.path.join(dpath, name)
+    if not os.path.isdir(dpath):
+        raise ValueError("Authority ({}) archive not found".format(name))
 
-	# Set path to authority archive.
-	dpath = os.path.expanduser(DIR_ARCHIVE)
-	dpath = os.path.join(dpath, name)
-	if not os.path.isdir(dpath):
-		raise ValueError("Authority ({}) archive not found".format(name))
+    # Read vocab files from file system.
+    authority = read_authority(dpath)
+    if authority is None:
+        raise ValueError("Authority ({}) archive not loaded".format(authority))
 
-	# Read vocab files from file system.
-	authority = read_authority(dpath)
-	if authority is None:
-		raise ValueError("Authority ({}) archive not loaded".format(authority))
-
-	_CACHE[name] = authority
+    _CACHE[name] = authority
 
 
 def _format_name(name):
-	"""Formats a name prior to accessing archive.
+    """Formats a name prior to accessing archive.
 
-	"""
-	return unicode(name).strip().lower()
+    """
+    if name is not None:
+        return unicode(name).strip().lower()

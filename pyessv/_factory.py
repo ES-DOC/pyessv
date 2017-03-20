@@ -14,190 +14,136 @@ import uuid
 
 import arrow
 
+import pyessv
+
+from pyessv._constants import ENTITY_TYPE_AUTHORITY
+from pyessv._constants import ENTITY_TYPE_COLLECTION
+from pyessv._constants import ENTITY_TYPE_SCOPE
+from pyessv._constants import ENTITY_TYPE_TERM
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._exceptions import ValidationError
-from pyessv._model import Term
-from pyessv._model import Authority
-from pyessv._model import Collection
-from pyessv._model import Scope
-from pyessv._validation import validate
-from pyessv._validation import validate_authority_description
-from pyessv._validation import validate_authority_name
-from pyessv._validation import validate_authority_url
-from pyessv._validation import validate_collection_description
-from pyessv._validation import validate_collection_name
-from pyessv._validation import validate_scope_description
-from pyessv._validation import validate_scope_name
-from pyessv._validation import validate_scope_url
-from pyessv._validation import validate_term_data
-from pyessv._validation import validate_term_name
+from pyessv._model import ENTITY_TYPE_MAP
+from pyessv._model import Entity
+from pyessv._validation import validate_canonical_name
+from pyessv._validation import validate_data
+from pyessv._validation import validate_date
+from pyessv._validation import validate_entity
+from pyessv._validation import validate_unicode
+from pyessv._validation import validate_url
 
 
 
-def create_authority(name, description, url, create_date=None):
+def create_authority(canonical_name, description, url, data=None, create_date=None):
 	"""Instantiates, initialises & returns a term authority.
 
-	:param str name: Authority name (must be unique within archive).
+	:param str canonical_name: Canonical authority name.
 	:param str description: Authority description.
 	:param str url: Authority further information URL.
+	:param dict data: Arbirtrary data associated with authority.
 	:param datetime create_date: Date upon which authority was created.
 
 	:returns: A vocabulary authority, e.g. wcrp.
 	:rtype: pyessv.Authority
 
 	"""
-	# Validate inputs.
-	validate_authority_name(name)
-	validate_authority_description(description)
-	validate_authority_url(url)
-
-	# Format inputs.
-	name = unicode(name).strip()
-	description = unicode(description).strip()
-	url = unicode(url).strip()
-
-	# Instantiate.
-	i = Authority()
-	i.create_date = create_date or arrow.utcnow().datetime
-	i.description = description
-	i.label = name
-	i.name = name.lower()
-	i.url = url
-
-	# Return if deemed valid.
-	if i.is_valid:
-		return i
-
-	# Raise validation exception.
-	raise ValidationError(i.errors)
+	return _create(ENTITY_TYPE_AUTHORITY, canonical_name, description, url, data, create_date, None)
 
 
-def create_scope(authority, name, description, url, create_date=None):
+def create_scope(authority, canonical_name, description, url, data=None, create_date=None):
 	"""Instantiates, initialises & returns a term scope.
 
-	param: pyessv.Authority authority: CV authority to which scope is bound.
-	param: str name: Scope name (must be unique within authority).
-	param: str description: Scope description.
-	param: str url: Scope URL for further information.
-	param: datetime create_date: Date upon which scope was created.
+	:param pyessv.Authority authority: CV authority to which scope is bound.
+	:param str canonical_name: Canonical scope name.
+	:param str description: Scope description.
+	:param str url: Scope URL for further information.
+	:param dict data: Arbirtrary data associated with scope.
+	:param datetime create_date: Date upon which scope was created.
 
 	:returns: A vocabulary scope, e.g. cmip6.
 	:rtype: pyessv.Scope
 
 	"""
-	# Validate inputs.
-	validate(authority)
-	validate_scope_name(name)
-	validate_scope_description(description)
-	validate_scope_url(url)
-
-	# Format inputs.
-	name = unicode(name).strip()
-	description = unicode(description).strip()
-	url = unicode(url).strip()
-
-	# Instantiate.
-	i = Scope()
-	i.authority = authority
-	i.create_date = create_date or arrow.utcnow().datetime
-	i.description = description
-	i.label = name
-	i.name = name.lower()
-	i.uid = uuid.uuid4()
-	i.url = url
-
-	# Append to parent & set idx.
-	authority.scopes.append(i)
-	i.idx = len(authority.scopes)
-
-	# Return if deemed valid.
-	if i.is_valid:
-		return i
-
-	# Raise validation exception.
-	raise ValidationError(i.errors)
+	return _create(ENTITY_TYPE_SCOPE, canonical_name, description, url, data, create_date, authority)
 
 
-def create_collection(scope, name, description, create_date=None):
+def create_collection(scope, canonical_name, description, url, data=None, create_date=None):
 	"""Instantiates, initialises & returns a term collection.
 
-	param: pyessv.Scope scope: CV scope to which collection is bound.
-	param: str name: Collection name (must be unique within scope).
-	param: str description: Collection description.
-	param: datetime create_date: Date upon which collection was created.
+	:param pyessv.Scope scope: CV scope to which collection is bound.
+	:param str canonical_name: Canonical collection name.
+	:param str description: Collection description.
+	:param str url: Collection URL for further information.
+	:param dict data: Arbirtrary data associated with collection.
+	:param datetime create_date: Date upon which collection was created.
 
 	:returns: A vocabulary collection, e.g. insitution-id.
 	:rtype: pyessv.Collection
 
 	"""
-	# Validate inputs.
-	validate(scope)
-	validate_collection_name(name)
-	validate_collection_description(description)
-
-	# Format inputs.
-	name = unicode(name).strip()
-	description = unicode(description).strip()
-
-	# Instantiate.
-	i = Collection()
-	i.create_date = create_date or arrow.utcnow().datetime
-	i.description = description
-	i.label = name
-	i.name = name.lower()
-	i.scope = scope
-	i.uid = uuid.uuid4()
-
-	# Append to parent & set idx.
-	scope.collections.append(i)
-	i.idx = len(scope.collections)
-
-	# Return if deemed valid.
-	if i.is_valid:
-		return i
-
-	# Raise validation exception.
-	raise ValidationError(i.errors)
+	return _create(ENTITY_TYPE_COLLECTION, canonical_name, description, url, data, create_date, scope)
 
 
-def create_term(collection, name, data=None, create_date=None):
+def create_term(collection, canonical_name, description, url, data=None, create_date=None):
 	"""Instantiates, initialises & returns a term.
 
-	param: pyessv.Collection collection: The collection to which the term belongs.
-	param: str name: Name of term.
-	param: dict data: Arbitrary data associated with term.
-	param: datetime create_date: Date upon which term was created.
+	:param pyessv.Collection collection: The collection to which the term belongs.
+	:param str canonical_name: Canonical term name.
+	:param str description: Term description.
+	:param dict data: Arbitrary data associated with term.
+	:param str url: Term URL for further information.
+	:param datetime create_date: Date upon which term was created.
 
 	:returns: A vocabulary term, e.g. ipsl.
 	:rtype: pyessv.Term
 
 	"""
+	return _create(ENTITY_TYPE_TERM, canonical_name, description, url, data, create_date, collection)
+
+
+def _create(typekey, canonical_name, description, url, data, create_date, owner):
+	"""Instantiates, initialises & returns an entity.
+
+	"""
 	# Validate inputs.
-	validate(collection)
-	validate_term_name(name)
+	validate_canonical_name(canonical_name, "{}-canonical-name".format(typekey))
+	validate_unicode(description, "{}-description".format(typekey))
+	validate_url(url, "{}-url".format(typekey))
 	if data is not None:
-		validate_term_data(data)
+		validate_data(data, "{}-data".format(typekey))
+	if create_date is not None:
+		validate_date(create_date, "{}-date".format(typekey))
+	if owner is not None:
+		validate_entity(owner)
 
 	# Format inputs.
-	name = unicode(name).strip()
+	canonical_name = unicode(canonical_name).strip()
+	description = unicode(description).strip()
+	url = unicode(url).strip()
 
-	# Instantiate.
-	i = Term()
-	i.collection = collection
-	i.create_date = create_date or arrow.utcnow().datetime
-	i.label = name
-	i.name = name.lower()
-	i.status = GOVERNANCE_STATUS_PENDING
-	i.uid = uuid.uuid4()
-	i.data = data
+	# Set core attributes.
+	instance = ENTITY_TYPE_MAP[typekey]()
+	instance.create_date = create_date or arrow.utcnow().datetime
+	instance.description = description
+	instance.data = data or dict()
+	instance.label = canonical_name
+	instance.name = canonical_name.lower()
+	instance.status = GOVERNANCE_STATUS_PENDING
+	instance.uid = uuid.uuid4()
+	instance.url = url
 
-	# Append to parent & set idx.
-	collection.terms.append(i)
-	i.idx = len(collection.terms)
+	# Set associative attributes.
+	if owner is not None:
+		if typekey == ENTITY_TYPE_SCOPE:
+			instance.authority = owner
+		elif typekey == ENTITY_TYPE_COLLECTION:
+			instance.scope = owner
+		elif typekey == ENTITY_TYPE_TERM:
+			instance.collection = owner
+		Entity.get_collection(owner).append(instance)
+		instance.idx = Entity.get_count(owner)
 
-	# Return if deemed valid.
-	if i.is_valid:
-		return i
+	# If in error, raise validation exception.
+	if not instance.is_valid:
+		raise ValidationError(instance.errors)
 
-	# Raise validation exception.
-	raise ValidationError(i.errors)
+	return instance

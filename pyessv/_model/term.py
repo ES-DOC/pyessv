@@ -31,15 +31,7 @@ class Term(Entity):
         self.associations = set()       # associated terms
         self.collection = None          # collection of which term is a member
         self.parent = None              # parent term within collection
-        self.status = None              # governance status
         self.synonyms = list()          # name synonyms
-
-
-    def __repr__(self):
-        """Instance representation.
-
-        """
-        return u"{} -> [{}]".format(self.namespace, self.status)
 
 
     def __contains__(self, key):
@@ -49,6 +41,14 @@ class Term(Entity):
         key = unicode(key).strip().lower()
 
         return key in self.all_names
+
+
+    @property
+    def owner(self):
+        """Gets owner within vocabulary model.
+
+        """
+        return self.collection
 
 
     @property
@@ -65,17 +65,6 @@ class Term(Entity):
 
         """
         return self.collection.scope
-
-
-    @property
-    def namespace(self):
-        """Gets namespace.
-
-        """
-        return ":".join([
-            self.collection.namespace,
-            self.name
-            ])
 
 
     @property
@@ -123,14 +112,6 @@ class Term(Entity):
         return result
 
 
-    @property
-    def sort_key(self):
-        """Gets the term's sort key
-
-        """
-        return u"{}::{}".format(self.namespace, self.name).lower()
-
-
     def add_synonym(self, new_synonym):
         """Adds a new synonym to the term's synnym set.
 
@@ -151,23 +132,6 @@ class Term(Entity):
 
         # Save term.
         # self.partition.save(self)
-
-
-    @property
-    def is_cached(self):
-        """Returns flag indicating whether the term is cached or not.
-
-        """
-        return self.partition.is_cached(self)
-
-
-    @property
-    def is_written(self):
-        """Returns flag indicating whether the term is written to file system or not.
-
-        """
-        return self.partition.is_written(self)
-
 
 
     def accept(self):

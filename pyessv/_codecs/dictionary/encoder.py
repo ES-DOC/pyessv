@@ -45,6 +45,8 @@ def _encode_authority(instance):
 
     """
     obj = dict()
+    if instance.data:
+        obj['data'] = instance.data
     obj['description'] = instance.description
     obj['label'] = instance.label
     obj['name'] = instance.name
@@ -60,6 +62,8 @@ def _encode_scope(instance):
     """
     obj = dict()
     obj['collections'] = [_encode_collection(i) for i in instance.collections]
+    if instance.data:
+        obj['data'] = instance.data
     obj['description'] = instance.description
     obj['idx'] = instance.idx
     obj['label'] = instance.label
@@ -76,6 +80,8 @@ def _encode_collection(instance):
     """
     obj = dict()
     obj['create_date'] = instance.create_date
+    if instance.data:
+        obj['data'] = instance.data
     obj['description'] = instance.description
     obj['idx'] = instance.idx
     obj['label'] = instance.label

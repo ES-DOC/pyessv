@@ -13,63 +13,108 @@
 """
 import contextlib
 import inspect
+import os
 import shutil
-import tempfile
 
 import pyessv as LIB
 from tests.utils_assert import assert_objects
 
 
 
-# Test term domain.
-TERM_DOMAIN = "earth-system"
-
-# Test term sub-domain.
-TERM_SUBDOMAIN = "vegetation"
-
-# Test term kind.
-TERM_KIND = "tree"
-
-# Test term kind.
-TERM_NAME = "oak"
-
-# Set of term attributes.
-TERM_ATTRIBUTES = {
-    'domain',
-    'subdomain',
-    'kind',
-    'create_date',
-    'status'
-}
+# Test entities.
+TEST_AUTHORITY = None
+TEST_SCOPE = None
+TEST_COLLECTION = None
+TEST_TERM = None
 
 
-def assert_terms(term1, term2):
-    """Assers equality of 2 terms.
+TEST_AUTHORITY_NAME = "test-authority"
+TEST_AUTHORITY_DESCRIPTION = "test-authority-description"
+TEST_AUTHORITY_URL = "https://github.com/ES-DOC/pyesssv-archive/{}".format(TEST_AUTHORITY_NAME)
 
-    :param Term term1: A term to be compared against another.
-    :param Term term2: A term to be compared against another.
+TEST_SCOPE_NAME = "test-scope"
+TEST_SCOPE_DESCRIPTION = "test-scope-description"
+TEST_SCOPE_URL = "{}/{}".format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
+
+TEST_COLLECTION_NAME = "test-collection"
+TEST_COLLECTION_DESCRIPTION = "test-collection-description"
+TEST_COLLECTION_URL = "{}/{}".format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
+
+TEST_TERM_NAME = "test-term"
+TEST_TERM_DESCRIPTION = "test-term-description"
+TEST_TERM_URL = "{}/{}".format(TEST_COLLECTION_URL, TEST_TERM_NAME)
+TEST_TERM_SYNONYMS = ["test-term-synonym-1", "test-term-synonym-2"]
+
+
+def create_authority():
+    """Creates & returns a test authority.
 
     """
-    assert_objects(term1, term2, LIB.Term)
-    assert _get_object_attribute_values(term1) == _get_object_attribute_values(term1)
+    global TEST_AUTHORITY
+
+    if TEST_AUTHORITY is None:
+        TEST_AUTHORITY = LIB.create_authority(
+            TEST_AUTHORITY_NAME,
+            TEST_AUTHORITY_DESCRIPTION,
+            TEST_AUTHORITY_URL
+            )
+
+    return TEST_AUTHORITY
+
+
+def create_scope():
+    """Creates & returns a test scope.
+
+    """
+    global TEST_SCOPE
+
+    if TEST_SCOPE is None:
+        TEST_SCOPE = LIB.create_scope(
+            TEST_AUTHORITY,
+            TEST_SCOPE_NAME,
+            TEST_SCOPE_DESCRIPTION,
+            TEST_SCOPE_URL
+            )
+
+    return TEST_SCOPE
+
+
+def create_collection():
+    """Creates & returns a test collection.
+
+    """
+    global TEST_COLLECTION
+
+    if TEST_COLLECTION is None:
+        TEST_COLLECTION = LIB.create_collection(
+            TEST_SCOPE,
+            TEST_COLLECTION_NAME,
+            TEST_COLLECTION_DESCRIPTION,
+            TEST_COLLECTION_URL
+            )
+
+    return TEST_COLLECTION
 
 
 def create_term():
     """Creates & returns a test term.
 
     """
-    return LIB.create(TERM_DOMAIN, TERM_SUBDOMAIN, TERM_KIND, TERM_NAME)
+    global TEST_TERM
 
+    if TEST_TERM is None:
+        TEST_TERM = LIB.create_term(
+            TEST_COLLECTION,
+            TEST_TERM_NAME,
+            TEST_TERM_DESCRIPTION,
+            TEST_TERM_URL
+            )
 
-def get_term():
-    """Returns a test term.
-
-    """
-    return LIB.get_term(TERM_DOMAIN, TERM_SUBDOMAIN, TERM_KIND, TERM_NAME)
+    return TEST_TERM
 
 
 @contextlib.contextmanager
-def get_term_and_assert(assertion_callback):
+def get_term_and_assert(callback):
     """Returns a term for testing and applies assertion callback.
 
     """
@@ -77,7 +122,7 @@ def get_term_and_assert(assertion_callback):
     try:
         yield term
     finally:
-        assertion_callback(term)
+        callback(term)
 
 
 def init(func, desc=None):
@@ -93,57 +138,32 @@ def init(func, desc=None):
     func.description = "pyesdoc-cv-tests: {}".format(desc)
 
 
-def setup():
-    """Performs setup functions before running a test.
-
-    """
-    LIB.init(_create_options())
-
-
-def setup_and_create_termset():
-    """Performs setup functions and then creates a termset prior to running a test.
-
-    """
-    setup()
-    # TODO create a termset
-
-
 def setup_and_create_term():
     """Performs setup functions and then creates a term prior to running a test.
 
     """
-    setup()
-    LIB.save(create_term())
+    create_term()
 
 
 def teardown():
     """Performs teardown functions after running a test.
 
     """
-    shutil.rmtree(LIB.get_option(LIB.OPT_IO_DIR))
-    LIB.cache.empty()
-
-
-@contextlib.contextmanager
-def get_options():
-    """Returns set of options to use when running a test.
-
-    """
-    opts = _create_options()
     try:
-        yield opts
-    finally:
-        shutil.rmtree(opts['io_dir'])
+        shutil.rmtree(os.path.join(LIB.DIR_ARCHIVE, TEST_AUTHORITY_NAME))
+    except OSError:
+        pass
 
 
-def _create_options():
-    """Returns set of options to use when running a test.
+def assert_terms(term1, term2):
+    """Assers equality of 2 terms.
+
+    :param Term term1: A term to be compared against another.
+    :param Term term2: A term to be compared against another.
 
     """
-    return {
-        'io_dir': tempfile.mkdtemp(),
-        'verbose': False
-    }
+    assert_objects(term1, term2, LIB.Term)
+    assert _get_object_attribute_values(term1) == _get_object_attribute_values(term1)
 
 
 def _get_object_attribute_values(obj):
@@ -151,6 +171,3 @@ def _get_object_attribute_values(obj):
 
     """
     return [getattr(obj, k) for k in dir(obj) if k not in dir(obj.__class__)]
-
-
-

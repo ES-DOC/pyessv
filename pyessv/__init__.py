@@ -33,7 +33,9 @@ from pyessv._model import Scope
 from pyessv._model import Term
 
 from pyessv._parser import parse
+from pyessv._parser import parse_namespace
 
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
-from pyessv._validation import validate
+from pyessv._validation import validate_entity as validate
+
