@@ -43,15 +43,17 @@ def _main(args):
     """Main entry point.
 
     """
-    authority = pyessv.archive.load_authority(args.authority)
-    for scope in authority:
+    if args.authority is None or len(args.authority.strip()) == 0:
+        raise ValueError("Authority is a required parameter")
+
+    for scope in pyessv.load(args.authority):
         if args.scope and args.scope != scope.name:
             continue
         for collection in scope:
             if args.collection and args.collection != collection.name:
                 continue
             for term in collection:
-                print authority.name, "->", scope.name, "->", collection.name, "->", term.name
+                print term.namespace.replace(":", " -> ")
 
 
 # Entry point.

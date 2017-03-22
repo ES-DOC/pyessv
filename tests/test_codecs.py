@@ -25,7 +25,6 @@ _ENCODING_REPRESENTATION_TYPE = {
 
 
 
-
 @nose.with_setup(None, tu.teardown)
 def test_encode():
     """pyesdoc-cv-tests: encode.

@@ -46,18 +46,6 @@ TEST_TERM_URL = "{}/{}".format(TEST_COLLECTION_URL, TEST_TERM_NAME)
 TEST_TERM_SYNONYMS = ["test-term-synonym-1", "test-term-synonym-2"]
 
 
-def reset_test_objects():
-    global TEST_AUTHORITY
-    global TEST_SCOPE
-    global TEST_COLLECTION
-    global TEST_TERM
-
-    TEST_AUTHORITY = None
-    TEST_SCOPE = None
-    TEST_COLLECTION = None
-    TEST_TERM = None
-
-
 def create_authority():
     """Creates & returns a test authority.
 
@@ -121,20 +109,9 @@ def create_term():
             TEST_TERM_DESCRIPTION,
             TEST_TERM_URL
             )
+        TEST_TERM.synonyms = TEST_TERM_SYNONYMS
 
     return TEST_TERM
-
-
-@contextlib.contextmanager
-def get_term_and_assert(callback):
-    """Returns a term for testing and applies assertion callback.
-
-    """
-    term = get_term()
-    try:
-        yield term
-    finally:
-        callback(term)
 
 
 def init(func, desc=None):
@@ -150,18 +127,34 @@ def init(func, desc=None):
     func.description = "pyesdoc-cv-tests: {}".format(desc)
 
 
-def setup_and_create_term():
+def setup():
     """Performs setup functions and then creates a term prior to running a test.
 
     """
+    teardown()
+    create_authority()
+    create_scope()
+    create_collection()
     create_term()
+    LIB.cache(TEST_AUTHORITY)
 
 
 def teardown():
     """Performs teardown functions after running a test.
 
     """
-    reset_test_objects()
+    global TEST_AUTHORITY
+    global TEST_SCOPE
+    global TEST_COLLECTION
+    global TEST_TERM
+
+    LIB.uncache(TEST_AUTHORITY)
+
+    TEST_AUTHORITY = None
+    TEST_SCOPE = None
+    TEST_COLLECTION = None
+    TEST_TERM = None
+
     try:
         shutil.rmtree(os.path.join(LIB.DIR_ARCHIVE, TEST_AUTHORITY_NAME))
     except OSError:

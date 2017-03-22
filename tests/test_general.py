@@ -51,6 +51,10 @@ _EXCEPTIONS = {
 _FUNCS = {
     # ... archive
     'load',
+    # ... cache
+    'cache',
+    'get_cached',
+    'uncache',
     # ... codecs
     'decode',
     'encode',
@@ -60,10 +64,11 @@ _FUNCS = {
     'create_scope',
     'create_term',
     # ... I/O
-    'read_authority',
-    'write_authority',
+    'read',
+    'write',
     # ... parsing
     'parse',
+    'parse_namespace',
     # ... validation
     'get_errors',
     'is_valid',
@@ -89,8 +94,8 @@ def test_library_exports():
         (_EXCEPTIONS, 'exception'),
         (_FUNCS, 'function'),
         ):
-        for member in members:
-            desc = "library exposes a {} called {}".format(member_type, member)
+        for member in sorted(members):
+            desc = "library exposes {} --> {}".format(member_type, member)
             tu.init(_test_member, desc)
             yield _test_member, member, member_type
 

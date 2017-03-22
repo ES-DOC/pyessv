@@ -12,8 +12,9 @@
 """
 from pyessv._archive import load
 
-from pyessv._cache import cache_authority
-from pyessv._cache import uncache_authority
+from pyessv._cache import cache
+from pyessv._cache import get_cached
+from pyessv._cache import uncache
 
 from pyessv._codecs import decode
 from pyessv._codecs import encode
@@ -27,8 +28,8 @@ from pyessv._factory import create_collection
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
 
-from pyessv._io import read_authority
-from pyessv._io import write_authority
+from pyessv._io import read
+from pyessv._io import write
 
 from pyessv._model import Authority
 from pyessv._model import Collection
@@ -41,4 +42,3 @@ from pyessv._parser import parse_namespace
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
 from pyessv._validation import validate_entity as validate
-

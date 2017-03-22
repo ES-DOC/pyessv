@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._cache import get_cached_authority
+from pyessv._cache import get_cached
 
 
 
@@ -29,7 +29,7 @@ def load(authority, scope=None, collection=None, term=None):
     names = [_format_name(i) for i in names if i is not None]
 
     # Set authority (JIT lods cache).
-    result = get_cached_authority(names[0])
+    result = get_cached(names[0])
     if result is None:
         return
 

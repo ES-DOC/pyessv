@@ -11,26 +11,29 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
+import nose
+
 import pyessv as LIB
 import tests.utils as tu
 
 
 # Test authority.
-_AUTHORITY = 'wcrp'
+_AUTHORITY = 'test-authority'
 
 # Test scope.
-_SCOPE = 'cmip6'
+_SCOPE = 'test-scope'
 
 # Test collection.
-_COLLECTION = 'realm'
+_COLLECTION = 'test-collection'
 
 # Test term.
-_TERM = 'ocnbgchem'
+_TERM = 'test-term'
 
 # Test term.
-_TERM_SYNONYM = 'ocean-bgc'
+_TERM_SYNONYM = 'test-term-synonym-1'
 
 
+@nose.with_setup(tu.setup, tu.teardown)
 def test_parse():
     """Test parsing of anmes at various levels.
 
@@ -100,7 +103,6 @@ def test_parse():
         (LIB.ENTITY_TYPE_COLLECTION, _COLLECTION, None),
         (LIB.ENTITY_TYPE_TERM, _TERM, _TERM_SYNONYM),
         ]:
-
         config = _get_config(typeof, name)
         if synonym:
             config += _get_config(typeof, name, synonym)

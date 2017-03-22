@@ -11,8 +11,6 @@
 
 
 """
-import os
-
 import pyessv
 
 
@@ -21,7 +19,7 @@ import pyessv
 _DATA = {}
 
 
-def cache_authority(target):
+def cache(target):
     """Caches authority vocabularies.
 
     """
@@ -30,13 +28,13 @@ def cache_authority(target):
     elif isinstance(target, pyessv.Authority):
         _DATA[target.name] = target
     else:
-        authority = pyessv.read_authority(target)
+        authority = pyessv.read(target)
         if authority is None:
             raise ValueError("Authority ({}) archive not loaded".format(target))
         _DATA[authority.name] = authority
 
 
-def get_cached_authority(target):
+def get_cached(target):
     """Caches authority vocabularies.
 
     :param str target: Authority name.
@@ -45,14 +43,14 @@ def get_cached_authority(target):
     :rtype: pyessv.Authority
 
     """
-    cache_authority(target)
+    cache(target)
     try:
         return _DATA[target]
     except KeyError:
         pass
 
 
-def uncache_authority(target):
+def uncache(target):
     """Uncaches authority vocabularies.
 
     :param str target: Authority instance or name.
