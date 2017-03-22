@@ -11,15 +11,8 @@
 
 
 """
-import os
+from pyessv._cache import get_cached_authority
 
-import pyessv
-from pyessv._io import read_authority
-
-
-
-# Cached loaded vocabulary authorities objects.
-_CACHE = {}
 
 
 def load(authority, scope=None, collection=None, term=None):
@@ -35,12 +28,12 @@ def load(authority, scope=None, collection=None, term=None):
     names = [authority, scope, collection, term]
     names = [_format_name(i) for i in names if i is not None]
 
-    # JIT cache authority vocabularies.
-    if names[0] not in _CACHE:
-        _set_cache(names[0])
+    # Set authority (JIT lods cache).
+    result = get_cached_authority(names[0])
+    if result is None:
+        return
 
-    # Recursively load.
-    result = _CACHE[names[0]]
+    # Return last loaded sub-collection.
     try:
         for name in names[1:]:
             result = result[name]
@@ -48,24 +41,6 @@ def load(authority, scope=None, collection=None, term=None):
         pass
     else:
         return result
-
-
-def _set_cache(name):
-    """Caches set of  authority vocabs (if necessary).
-
-    """
-    # Set path to authority archive.
-    dpath = os.path.expanduser(pyessv.DIR_ARCHIVE)
-    dpath = os.path.join(dpath, name)
-    if not os.path.isdir(dpath):
-        raise ValueError("Authority ({}) archive not found".format(name))
-
-    # Read vocab files from file system.
-    authority = read_authority(dpath)
-    if authority is None:
-        raise ValueError("Authority ({}) archive not loaded".format(authority))
-
-    _CACHE[name] = authority
 
 
 def _format_name(name):

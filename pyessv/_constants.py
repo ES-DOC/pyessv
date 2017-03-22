@@ -12,7 +12,7 @@
 
 """
 # Directory containing vocabulary archive.
-DIR_ARCHIVE = "~/.esdoc/pyessv"
+DIR_ARCHIVE = "~/.esdoc/pyessv-archive"
 
 # Dictionary encoding.
 ENCODING_DICT = "dict"

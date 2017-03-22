@@ -15,6 +15,7 @@ import glob
 import os
 
 from pyessv._codecs import decode
+from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_JSON
 
 
@@ -22,7 +23,7 @@ from pyessv._constants import ENCODING_JSON
 _MANIFEST = "MANIFEST"
 
 
-def read_authority(dpath):
+def read_authority(target):
     """Reads authority CV data from file system.
 
     :param str dpath: Path to directory to which a CV hierarchy has been written.
@@ -31,8 +32,16 @@ def read_authority(dpath):
     :rtype: pyessv.Authority
 
     """
-    if not os.path.isdir(dpath):
-        raise OSError("Invalid directory.")
+    # Set path to directory in which authority vocabulary files reside.
+    if os.path.isdir(target):
+        dpath = target
+    else:
+        dpath = os.path.expanduser(DIR_ARCHIVE)
+        dpath = os.path.join(dpath, target)
+        if not os.path.isdir(dpath):
+            raise OSError("Invalid directory.")
+
+    # MANIFEST file must exist.
     if not os.path.isfile(os.path.join(dpath, _MANIFEST)):
         raise OSError("Invalid MANIFEST.")
 

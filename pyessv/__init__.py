@@ -12,6 +12,9 @@
 """
 from pyessv._archive import load
 
+from pyessv._cache import cache_authority
+from pyessv._cache import uncache_authority
+
 from pyessv._codecs import decode
 from pyessv._codecs import encode
 
