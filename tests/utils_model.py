@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_utils_other.py
+.. module:: utils_cv.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -11,7 +11,6 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import contextlib
 import inspect
 import os
 import shutil
@@ -21,29 +20,32 @@ from tests.utils_assert import assert_objects
 
 
 
-# Test entities.
+# Test authority.
 TEST_AUTHORITY = None
+TEST_AUTHORITY_NAME = u"test-authority"
+TEST_AUTHORITY_DESCRIPTION = u"test-authority-description"
+TEST_AUTHORITY_URL = u"https://github.com/ES-DOC/pyesssv-archive/{}".format(TEST_AUTHORITY_NAME)
+TEST_AUTHORITY_ALTERNATIVE_NAME = u"test-authority-alternative-name"
+TEST_AUTHORITY_ALTERNATIVE_URL = u"https://github.com/ES-DOC/pyesssv-archive/{}".format(TEST_AUTHORITY_NAME)
+
+# Test scope.
 TEST_SCOPE = None
+TEST_SCOPE_NAME = u"test-scope"
+TEST_SCOPE_DESCRIPTION = u"test-scope-description"
+TEST_SCOPE_URL = u"{}/{}".format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
+
+# Test collection.
 TEST_COLLECTION = None
+TEST_COLLECTION_NAME = u"test-collection"
+TEST_COLLECTION_DESCRIPTION = u"test-collection-description"
+TEST_COLLECTION_URL = u"{}/{}".format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
+
+# Test term.
 TEST_TERM = None
-
-
-TEST_AUTHORITY_NAME = "test-authority"
-TEST_AUTHORITY_DESCRIPTION = "test-authority-description"
-TEST_AUTHORITY_URL = "https://github.com/ES-DOC/pyesssv-archive/{}".format(TEST_AUTHORITY_NAME)
-
-TEST_SCOPE_NAME = "test-scope"
-TEST_SCOPE_DESCRIPTION = "test-scope-description"
-TEST_SCOPE_URL = "{}/{}".format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
-
-TEST_COLLECTION_NAME = "test-collection"
-TEST_COLLECTION_DESCRIPTION = "test-collection-description"
-TEST_COLLECTION_URL = "{}/{}".format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
-
-TEST_TERM_NAME = "test-term"
-TEST_TERM_DESCRIPTION = "test-term-description"
-TEST_TERM_URL = "{}/{}".format(TEST_COLLECTION_URL, TEST_TERM_NAME)
-TEST_TERM_SYNONYMS = ["test-term-synonym-1", "test-term-synonym-2"]
+TEST_TERM_NAME = u"test-term"
+TEST_TERM_DESCRIPTION = u"test-term-description"
+TEST_TERM_URL = u"{}/{}".format(TEST_COLLECTION_URL, TEST_TERM_NAME)
+TEST_TERM_SYNONYMS = [u"test-term-synonym-1", u"test-term-synonym-2"]
 
 
 def create_authority():
@@ -70,7 +72,7 @@ def create_scope():
 
     if TEST_SCOPE is None:
         TEST_SCOPE = LIB.create_scope(
-            TEST_AUTHORITY,
+            TEST_AUTHORITY or create_authority(),
             TEST_SCOPE_NAME,
             TEST_SCOPE_DESCRIPTION,
             TEST_SCOPE_URL

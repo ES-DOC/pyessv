@@ -66,9 +66,8 @@ def validate_canonical_name(name, field):
 
     """
     validate_unicode(name, field)
-    for char in REGEX_CANONICAL_NAME:
-        if name.find(char) > -1:
-            raise ValueError("invalid name: {}".format(field))
+    if REGEX_CANONICAL_NAME.match(name) is None:
+        raise ValueError("invalid name: {}".format(field))
 
 
 def validate_data(data, field):

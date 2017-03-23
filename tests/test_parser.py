@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_parsing.py
+.. module:: test_parser.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
    :platform: Unix, Windows
-   :synopsis: Executes pyessv parsing tests.
+   :synopsis: Executes pyessv parser tests.
 
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
@@ -16,21 +16,6 @@ import nose
 import pyessv as LIB
 import tests.utils as tu
 
-
-# Test authority.
-_AUTHORITY = 'test-authority'
-
-# Test scope.
-_SCOPE = 'test-scope'
-
-# Test collection.
-_COLLECTION = 'test-collection'
-
-# Test term.
-_TERM = 'test-term'
-
-# Test term.
-_TERM_SYNONYM = 'test-term-synonym-1'
 
 
 @nose.with_setup(tu.setup, tu.teardown)
@@ -60,11 +45,11 @@ def test_parse():
             if typeof == "authority":
                 result = LIB.parse(name, strict=strict)
             elif typeof == "scope":
-                result = LIB.parse(_AUTHORITY, name, strict=strict)
+                result = LIB.parse(tu.TEST_AUTHORITY_NAME, name, strict=strict)
             elif typeof == "collection":
-                result = LIB.parse(_AUTHORITY, _SCOPE, name, strict=strict)
+                result = LIB.parse(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, name, strict=strict)
             elif typeof == "term":
-                result = LIB.parse(_AUTHORITY, _SCOPE, _COLLECTION, name, strict=strict)
+                result = LIB.parse(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME, name, strict=strict)
         except LIB.ParsingError:
             result = LIB.ParsingError
 
@@ -81,11 +66,11 @@ def test_parse():
         if typeof == "authority":
             parts = []
         elif typeof == "scope":
-            parts = [_AUTHORITY]
+            parts = [tu.TEST_AUTHORITY_NAME]
         elif typeof == "collection":
-            parts = [_AUTHORITY, _SCOPE]
+            parts = [tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME]
         elif typeof == "term":
-            parts = [_AUTHORITY, _SCOPE, _COLLECTION]
+            parts = [tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME]
         parts.append(name)
 
         try:
@@ -98,10 +83,10 @@ def test_parse():
 
 
     for typeof, name, synonym in [
-        (LIB.ENTITY_TYPE_AUTHORITY, _AUTHORITY, None),
-        (LIB.ENTITY_TYPE_SCOPE, _SCOPE, None),
-        (LIB.ENTITY_TYPE_COLLECTION, _COLLECTION, None),
-        (LIB.ENTITY_TYPE_TERM, _TERM, _TERM_SYNONYM),
+        (LIB.ENTITY_TYPE_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
+        (LIB.ENTITY_TYPE_SCOPE, tu.TEST_SCOPE_NAME, None),
+        (LIB.ENTITY_TYPE_COLLECTION, tu.TEST_COLLECTION_NAME, None),
+        (LIB.ENTITY_TYPE_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
         ]:
         config = _get_config(typeof, name)
         if synonym:

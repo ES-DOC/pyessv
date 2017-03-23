@@ -5,7 +5,7 @@
    :copyright: @2015 IPSL (http://ipsl.fr)
    :license: GPL / CeCILL
    :platform: Unix
-   :synopsis: Python Earth Science Standard Vocabulary package intializer.
+   :synopsis: Python Earth Science Standard Vocabulary library intializer.
 
 .. moduleauthor:: IPSL (ES-DOC) <dev@esdocumentation.org>
 

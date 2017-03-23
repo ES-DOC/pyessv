@@ -49,6 +49,7 @@ ENTITY_TYPE_KEY_MAP = {
 # Type information applying to all entities.
 _STANDARD_TYPE_INFO = {
     ("create_date", datetime.datetime, "1.1"),
+    ("data", dict, "0.1"),
     ("description", unicode, "1.1"),
     ("label", unicode, "1.1"),
     ("name", unicode, "1.1", REGEX_CANONICAL_NAME),

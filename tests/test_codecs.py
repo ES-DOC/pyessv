@@ -18,11 +18,11 @@ import tests.utils as tu
 
 
 
+# Types of representation by encoding.
 _ENCODING_REPRESENTATION_TYPE = {
     LIB.ENCODING_DICT: dict,
     LIB.ENCODING_JSON: basestring,
 }
-
 
 
 @nose.with_setup(None, tu.teardown)

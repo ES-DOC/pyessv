@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_general.py
+.. module:: test_interface.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
    :platform: Unix, Windows
-   :synopsis: Executes pyesdoc.cv general tests.
+   :synopsis: Executes pyesdoc.cv interface tests.
 
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 

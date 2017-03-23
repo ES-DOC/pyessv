@@ -11,6 +11,9 @@
 
 
 """
+import re
+
+
 # Directory containing vocabulary archive.
 DIR_ARCHIVE = "~/.esdoc/pyessv-archive"
 
@@ -67,7 +70,7 @@ GOVERNANCE_STATUS_SET = set([
 ])
 
 # Regular expression for validating a canonical name.
-REGEX_CANONICAL_NAME = u"/&"
+REGEX_CANONICAL_NAME = re.compile(r"^[A-z0-9\-]*$")
 
 # Regular expression for validating a label.
 REGEX_LABEL = u"/&"
