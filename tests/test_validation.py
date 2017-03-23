@@ -24,7 +24,7 @@ _ENTITY_TEST_INFO = [
     ("data", {"a": 1}, ("", "  ", 123)),
     ("description", tu.TEST_AUTHORITY_DESCRIPTION, (None, "", "  ")),
     ("name", tu.TEST_AUTHORITY_NAME, (None, "", "  ", "invalid name")),
-    ("url", tu.TEST_AUTHORITY_URL, ("", "  ")),
+    ("url", tu.TEST_AUTHORITY_URL, ("", "  ", u"an-invalid-url")),
     ]
 
 

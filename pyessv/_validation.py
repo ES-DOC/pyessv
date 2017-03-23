@@ -12,10 +12,20 @@
 
 """
 import datetime
+import inspect
+import uuid
+from urlparse import urlparse
 
+from pyessv._constants import ENTITY_TYPE_SET
+from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv._constants import REGEX_LABEL
+from pyessv._constants import REGEX_URL
 from pyessv._model import ENTITY_TYPES
-from pyessv._model import ENTITY_TYPE_INFO
+from pyessv._model import Authority
+from pyessv._model import Collection
+from pyessv._model import Scope
+from pyessv._model import Term
 
 
 
@@ -52,7 +62,7 @@ def validate_entity(instance):
         raise NotImplementedError("Invalid instance: unknown type")
 
     errs = set()
-    for field_info in ENTITY_TYPE_INFO[type(instance)]:
+    for field_info in _ENTITY_TYPE_INFO[type(instance)]:
         try:
             _validate_field(instance, field_info)
         except ValueError as err:
@@ -103,7 +113,9 @@ def validate_url(val, field):
 
     """
     validate_unicode(val, field)
-    # TODO: apply regex
+    url = urlparse(val)
+    if not url.netloc or not url.scheme:
+        raise ValueError("invalid url: {}".format(field))
 
 
 def _validate_field(instance, type_info):
@@ -116,9 +128,6 @@ def _validate_field(instance, type_info):
     except ValueError:
         field, typeof, cardinality = type_info
         misc = None
-    if isinstance(misc, unicode):
-        pass
-        # print "TODO: validate {}.{} by regex".format(instance.__class__.__name__, field)
 
     # Error: unknown field.
     if not hasattr(instance, field):
@@ -134,12 +143,12 @@ def _validate_field(instance, type_info):
     val = getattr(instance, field)
     is_mandatory = (cardinality in {"1.1", "1.N"})
     try:
-        func(val, is_mandatory, typeof, misc)
+        func(field, val, is_mandatory, typeof, misc)
     except ValueError as err:
         raise ValueError("{}: {}".format(field, err))
 
 
-def _validate_iterable(val, is_mandatory, typeof, misc):
+def _validate_iterable(field, val, is_mandatory, typeof, misc):
     """Validates an iterable field value.
 
     """
@@ -151,40 +160,76 @@ def _validate_iterable(val, is_mandatory, typeof, misc):
     if is_mandatory and len(val) == 0:
         raise ValueError("undefined")
 
-    # Error: item type mismatch.
+    # Error: type mismatch.
     if [i for i in val if not isinstance(i, typeof)]:
         raise ValueError("item type mismatch")
 
     # Error: enum.
-    if isinstance(misc, tuple) and [i for i in val if i not in misc]:
-        raise ValueError("item not in enum")
+    if isinstance(misc, tuple):
+        if [i for i in val if i not in misc]:
+            raise ValueError("item not in enum")
 
-    # Error: regex.
-    if isinstance(misc, unicode):
-        # TODO: validate regex
-        pass
+    # Error: function.
+    if inspect.isfunction(misc):
+        for i in [i for i in val if i is not None]:
+            misc(i, field)
 
 
-def _validate_value(val, is_mandatory, typeof, misc):
+def _validate_value(field, val, is_mandatory, typeof, misc):
     """Validates an iterable field value.
 
     """
     # Error: mandatory.
-    if is_mandatory and val is None:
+    if val is None and is_mandatory:
         raise ValueError("undefined")
 
-    # Error: type mismatch.
-    if val is not None and not isinstance(val, typeof):
-        raise ValueError("type mismatch")
+    if val is not None:
+        # Error: type mismatch.
+        if not isinstance(val, typeof):
+            raise ValueError("type mismatch")
 
-    # Error: unicode length.
-    # TODO
+        # Error: enum.
+        if isinstance(misc, tuple):
+            if val not in misc:
+                raise ValueError("not in enum")
 
-    # Error: enum.
-    if isinstance(misc, tuple) and val not in misc:
-        raise ValueError("not in enum")
+        # Error: function.
+        if inspect.isfunction(misc):
+            misc(val, field)
 
-    # Error: regex.
-    if isinstance(misc, unicode):
-        # TODO: validate regex
-        pass
+
+# Type information applying to all entities.
+_STANDARD_TYPE_INFO = {
+    ("create_date", datetime.datetime, "1.1"),
+    ("data", dict, "0.1"),
+    ("description", unicode, "1.1"),
+    ("label", unicode, "1.1"),
+    ("name", unicode, "1.1", validate_canonical_name),
+    ("typeof", str, "1.1", tuple(ENTITY_TYPE_SET)),
+    ("uid", uuid.UUID, "1.1"),
+    ("url", unicode, "0.1", validate_url)
+}
+
+# Map of types to tuples containing validation info.
+_ENTITY_TYPE_INFO = {
+    Authority: _STANDARD_TYPE_INFO.union({
+        ("scopes", Scope, "0.N"),
+    }),
+    Collection: _STANDARD_TYPE_INFO.union({
+        ("scope", Scope, "1.1"),
+        ("terms", Term, "0.N"),
+    }),
+    Scope: _STANDARD_TYPE_INFO.union({
+        ("authority", Authority, "1.1"),
+        ("collections", Collection, "0.N"),
+    }),
+    Term: _STANDARD_TYPE_INFO.union({
+        ("alternative_name", unicode, "0.1", validate_canonical_name),
+        ("alternative_url", unicode, "0.1", validate_url),
+        ("collection", Collection, "1.1"),
+        ("idx", int, "1.1"),
+        ("parent", Term, "0.1"),
+        ("status", unicode, "1.1", tuple(GOVERNANCE_STATUS_SET)),
+        ("synonyms", unicode, "0.N", validate_canonical_name),
+    })
+}
