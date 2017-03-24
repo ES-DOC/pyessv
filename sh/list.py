@@ -1,7 +1,7 @@
     # -*- coding: utf-8 -*-
 
 """
-.. module:: list_terms.py.py
+.. module:: list.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
    :synopsis: Lists an authority's vocabulary entities.
@@ -37,7 +37,13 @@ _ARGS.add_argument(
     type=str,
     default=None
     )
-
+_ARGS.add_argument(
+    "--term",
+    help="Term to be displayed.",
+    dest="term",
+    type=str,
+    default=None
+    )
 
 def _main(args):
     """Main entry point.
@@ -53,6 +59,8 @@ def _main(args):
             if args.collection and args.collection != collection.name:
                 continue
             for term in collection:
+                if args.term and args.term != term.name:
+                    continue
                 print term.namespace.replace(":", " -> ")
 
 
