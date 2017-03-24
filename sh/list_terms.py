@@ -1,22 +1,22 @@
     # -*- coding: utf-8 -*-
 
 """
-.. module:: write_cv.py.py
+.. module:: list_terms.py.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: Maps raw WCRP CMIP6 vocab files to normalized pyessv format.
+   :synopsis: Lists an authority's vocabulary entities.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
 import argparse
-import os
 
 import pyessv
 
 
+
 # Define command line options.
-_ARGS = argparse.ArgumentParser("Writes to stdout an authority's vocabularies.")
+_ARGS = argparse.ArgumentParser("Writes an authority's vocabularies to stdout.")
 _ARGS.add_argument(
     "--authority",
     help="Authority to be displayed.",
