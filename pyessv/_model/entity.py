@@ -25,17 +25,16 @@ class Entity(object):
     """An entity within the pyessv domain model.
 
     """
-    def __init__(self, typeof):
+    def __init__(self, typekey):
         """Instance constructor.
 
         """
         self.create_date = arrow.utcnow().datetime
         self.data = None
         self.description = None
-        self.io_path = None
         self.label = None
         self.name = None
-        self.typeof = typeof
+        self.typekey = typekey
         self.uid = uuid.uuid4()
         self.url = None
 
@@ -97,13 +96,13 @@ class Entity(object):
         """Returns an entity's hierachy within the archive.
 
         """
-        if entity.typeof == ENTITY_TYPE_AUTHORITY:
+        if entity.typekey == ENTITY_TYPE_AUTHORITY:
             hierachy = []
-        elif entity.typeof == ENTITY_TYPE_SCOPE:
+        elif entity.typekey == ENTITY_TYPE_SCOPE:
             hierachy = Entity.get_hierarchy(entity.authority)
-        elif entity.typeof == ENTITY_TYPE_COLLECTION:
+        elif entity.typekey == ENTITY_TYPE_COLLECTION:
             hierachy = Entity.get_hierarchy(entity.scope)
-        elif entity.typeof == ENTITY_TYPE_TERM:
+        elif entity.typekey == ENTITY_TYPE_TERM:
             hierachy = Entity.get_hierarchy(entity.collection)
         hierachy.append(entity)
 
@@ -134,13 +133,13 @@ class Entity(object):
         """Returns associated managed collection.
 
         """
-        if entity.typeof == ENTITY_TYPE_AUTHORITY:
+        if entity.typekey == ENTITY_TYPE_AUTHORITY:
             return entity.scopes
-        elif entity.typeof == ENTITY_TYPE_COLLECTION:
+        elif entity.typekey == ENTITY_TYPE_COLLECTION:
             return entity.terms
-        elif entity.typeof == ENTITY_TYPE_SCOPE:
+        elif entity.typekey == ENTITY_TYPE_SCOPE:
             return entity.collections
-        elif entity.typeof == ENTITY_TYPE_TERM:
+        elif entity.typekey == ENTITY_TYPE_TERM:
             raise NotImplementedError()
 
 
@@ -197,3 +196,6 @@ class Entity(object):
             for item in items:
                 if key in item.synonyms:
                     return item
+
+
+

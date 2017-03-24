@@ -11,9 +11,12 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
+import inspect
 import nose
 
 import pyessv as LIB
+from pyessv._codecs import decode
+from pyessv._codecs import encode
 import tests.utils as tu
 
 
@@ -25,9 +28,17 @@ _ENCODING_REPRESENTATION_TYPE = {
 }
 
 
+def test_interface():
+    """pyessv-tests: codecs: interface.
+
+    """
+    assert inspect.isfunction(decode)
+    assert inspect.isfunction(encode)
+
+
 @nose.with_setup(None, tu.teardown)
 def test_encode():
-    """pyesdoc-cv-tests: encode.
+    """pyessv-tests: encode.
 
     """
     def _test(func, typeof, encoding):
@@ -37,7 +48,7 @@ def test_encode():
         instance = func()
         assert isinstance(instance, typeof)
 
-        representation = LIB.encode(instance, encoding)
+        representation = encode(instance, encoding)
         assert isinstance(representation, _ENCODING_REPRESENTATION_TYPE[encoding])
 
         if encoding == LIB.ENCODING_DICT:
@@ -64,7 +75,7 @@ def test_encode():
 
 @nose.with_setup(None, tu.teardown)
 def test_decode():
-    """pyesdoc-cv-tests: decode.
+    """pyessv-tests: decode.
 
     """
     def _test(func, typeof, encoding):
@@ -72,8 +83,8 @@ def test_decode():
 
         """
         instance = func()
-        representation = LIB.encode(instance, encoding)
-        decoded = LIB.decode(representation, encoding)
+        representation = encode(instance, encoding)
+        decoded = decode(representation, encoding)
         assert isinstance(decoded, typeof)
 
 

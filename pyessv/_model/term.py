@@ -125,39 +125,11 @@ class Term(Entity):
         # self.partition.save(self)
 
 
-    def accept(self):
-        """Marks as accepted.
-
-        """
-        self.partition.accept(self)
-
-
-    def reject(self):
-        """Marks as rejected.
-
-        """
-        self.partition.reject(self)
-
-
     def save(self):
         """Saves term to persistant state stores.
 
         """
         self.partition.save(self)
-
-
-    def deprecate(self):
-        """Marks as deprecated.
-
-        """
-        self.partition.deprecate(self)
-
-
-    def destroy(self):
-        """Destroys term from all persistant state stores.
-
-        """
-        self.partition.destroy(self)
 
 
     def associate(self, term):
@@ -167,3 +139,38 @@ class Term(Entity):
 
         """
         self.associations.add(term)
+
+
+    def accept(self):
+        """Marks entity as accepted.
+
+        """
+        self.status = pyessv.GOVERNANCE_STATUS_ACCEPTED
+
+
+    def deprecate(self):
+        """Marks entity as deprecated.
+
+        """
+        self.status = pyessv.GOVERNANCE_STATUS_DEPRECATED
+
+
+    def destroy(self):
+        """Marks entity for removal from all persistant state stores.
+
+        """
+        self.status = pyessv.GOVERNANCE_STATUS_DEPRECATED
+
+
+    def reject(self):
+        """Marks entity as rejected.
+
+        """
+        self.status = pyessv.GOVERNANCE_STATUS_REJECTED
+
+
+    def reset(self):
+        """Resets entity status.
+
+        """
+        self.status = pyessv.GOVERNANCE_STATUS_PENDING

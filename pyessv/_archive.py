@@ -28,7 +28,7 @@ def load(authority, scope=None, collection=None, term=None):
     names = [authority, scope, collection, term]
     names = [_format_name(i) for i in names if i is not None]
 
-    # Set authority (JIT lods cache).
+    # Set authority (JIT loads cache).
     result = get_cached(names[0])
     if result is None:
         return
@@ -41,6 +41,13 @@ def load(authority, scope=None, collection=None, term=None):
         pass
     else:
         return result
+
+
+def save():
+    """Saves archive to file system.
+
+    """
+    pass
 
 
 def _format_name(name):

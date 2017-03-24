@@ -71,3 +71,43 @@ class Scope(Entity):
 
         """
         return pyessv.parse(collection_name, self, strict=strict)
+
+
+    def accept(self):
+        """Marks entity as accepted.
+
+        """
+        for collection in self:
+            collection.accept()
+
+
+    def deprecate(self):
+        """Marks entity as deprecated.
+
+        """
+        for collection in self:
+            collection.deprecate()
+
+
+    def destroy(self):
+        """Marks entity for removal from all persistant state stores.
+
+        """
+        for collection in self:
+            collection.destroy()
+
+
+    def reject(self):
+        """Marks entity as rejected.
+
+        """
+        for collection in self:
+            collection.reject()
+
+
+    def reset(self):
+        """Resets entity status.
+
+        """
+        for collection in self:
+            collection.reset()

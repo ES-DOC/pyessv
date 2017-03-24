@@ -29,15 +29,10 @@ _CONSTANTS = {
     'DIR_ARCHIVE',
     'ENCODING_DICT',
     'ENCODING_JSON',
-    'ENCODING_SET',
     'GOVERNANCE_STATUS_ACCEPTED',
     'GOVERNANCE_STATUS_DEPRECATED',
     'GOVERNANCE_STATUS_PENDING',
-    'GOVERNANCE_STATUS_REJECTED',
-    'GOVERNANCE_STATUS_SET',
-    'REGEX_CANONICAL_NAME',
-    'REGEX_LABEL',
-    'REGEX_URL'
+    'GOVERNANCE_STATUS_REJECTED'
     }
 
 # Set of exceptions exposed by library.
@@ -51,21 +46,12 @@ _EXCEPTIONS = {
 _FUNCS = {
     # ... archive
     'load',
-    # ... cache
-    'cache',
-    'get_cached',
-    'uncache',
-    # ... codecs
-    'decode',
-    'encode',
+    'save',
     # ... factory
     'create_authority',
     'create_collection',
     'create_scope',
     'create_term',
-    # ... I/O
-    'read',
-    'write',
     # ... parsing
     'parse',
     'parse_namespace',

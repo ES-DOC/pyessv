@@ -62,3 +62,43 @@ class Authority(Entity):
 
         """
         return pyessv.parse(scope_name, self, strict=strict)
+
+
+    def accept(self):
+        """Marks entity as accepted.
+
+        """
+        for scope in self:
+            scope.accept()
+
+
+    def deprecate(self):
+        """Marks entity as deprecated.
+
+        """
+        for scope in self:
+            scope.deprecate()
+
+
+    def destroy(self):
+        """Marks entity for removal from all persistant state stores.
+
+        """
+        for scope in self:
+            scope.destroy()
+
+
+    def reject(self):
+        """Marks entity as rejected.
+
+        """
+        for scope in self:
+            scope.reject()
+
+
+    def reset(self):
+        """Resets entity status.
+
+        """
+        for scope in self:
+            scope.reset()

@@ -16,6 +16,8 @@ import os
 import shutil
 
 import pyessv as LIB
+from pyessv._cache import cache
+from pyessv._cache import uncache
 from tests.utils_assert import assert_objects
 
 
@@ -89,7 +91,7 @@ def create_collection():
 
     if TEST_COLLECTION is None:
         TEST_COLLECTION = LIB.create_collection(
-            TEST_SCOPE,
+            TEST_SCOPE or create_scope(),
             TEST_COLLECTION_NAME,
             TEST_COLLECTION_DESCRIPTION,
             TEST_COLLECTION_URL
@@ -106,7 +108,7 @@ def create_term():
 
     if TEST_TERM is None:
         TEST_TERM = LIB.create_term(
-            TEST_COLLECTION,
+            TEST_COLLECTION or create_collection(),
             TEST_TERM_NAME,
             TEST_TERM_DESCRIPTION,
             TEST_TERM_URL
@@ -126,7 +128,7 @@ def init(func, desc=None):
     if desc[-1] == ".":
         desc = desc[:-1]
     desc = desc[0].lower() + desc[1:]
-    func.description = "pyesdoc-cv-tests: {}".format(desc)
+    func.description = "pyessv-tests: {}".format(desc)
 
 
 def setup():
@@ -138,7 +140,7 @@ def setup():
     create_scope()
     create_collection()
     create_term()
-    LIB.cache(TEST_AUTHORITY)
+    cache(TEST_AUTHORITY)
 
 
 def teardown():
@@ -150,7 +152,7 @@ def teardown():
     global TEST_COLLECTION
     global TEST_TERM
 
-    LIB.uncache(TEST_AUTHORITY)
+    uncache(TEST_AUTHORITY)
 
     TEST_AUTHORITY = None
     TEST_SCOPE = None

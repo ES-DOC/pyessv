@@ -13,12 +13,15 @@
 """
 import glob
 import os
+import shutil
 
 from pyessv._codecs import decode
 from pyessv._codecs import encode
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_JSON
 from pyessv._model import Authority
+from pyessv._model import Collection
+from pyessv._model import Scope
 from pyessv._model import Term
 from pyessv._validation import is_valid
 
@@ -32,31 +35,56 @@ def delete(target):
     """Deletes vocabulary data from file system.
 
     """
-    if not isinstance(target, (Authority, Term)):
+    if not isinstance(target, (Authority, Scope, Collection, Term)):
         raise TypeError()
 
-    if target.io_path:
-        os.remove(target.io_path)
+    if isinstance(target, Authority):
+        action = shutil.rmtree
+        io_path = os.path.join(DIR_ARCHIVE, target.name)
+
+    if isinstance(target, Scope):
+        action = shutil.rmtree
+        io_path = os.path.join(DIR_ARCHIVE, target.authority.name)
+        io_path = os.path.join(io_path, target.name)
+
+    if isinstance(target, Collection):
+        action = shutil.rmtree
+        io_path = os.path.join(DIR_ARCHIVE, target.authority.name)
+        io_path = os.path.join(io_path, target.scope.name)
+        io_path = os.path.join(io_path, target.name)
+
+    if isinstance(target, Term):
+        action = os.remove
+        io_path = os.path.join(DIR_ARCHIVE, target.authority.name)
+        io_path = os.path.join(io_path, target.scope.name)
+        io_path = os.path.join(io_path, target.collection.name)
+        io_path = os.path.join(io_path, target.name)
+
+    try:
+        action(io_path)
+    except OSError:
+        pass
 
 
-def read(target):
+def read():
+    """Reads vocabularies from archive folder (~/.esdoc/pyessv-archive) upon file system.
+
+    :returns: List of vocabulary authorities loaded from archive folder.
+    :rtype: list
+
+    """
+    return [_read_authority(i) for i in glob.glob("{}/*".format(DIR_ARCHIVE))]
+
+
+def _read_authority(dpath):
     """Reads authority CV data from file system.
 
-    :param str dpath: Path to directory to which a CV hierarchy has been written.
+    :param str dpath: Path to a directory to which an authority's vocabularies have been written.
 
-    :returns: Authority CV data.
+    :returns: Authority vocabulary data.
     :rtype: pyessv.Authority
 
     """
-    # Set path to directory in which authority vocabulary files reside.
-    if os.path.isdir(target):
-        dpath = target
-    else:
-        dpath = os.path.expanduser(DIR_ARCHIVE)
-        dpath = os.path.join(dpath, target)
-        if not os.path.isdir(dpath):
-            raise OSError("Invalid directory.")
-
     # MANIFEST file must exist.
     if not os.path.isfile(os.path.join(dpath, _MANIFEST)):
         raise OSError("Invalid MANIFEST.")
@@ -65,7 +93,6 @@ def read(target):
     fpath = os.path.join(dpath, _MANIFEST)
     with open(fpath, "r") as fstream:
         authority = decode(fstream.read(), ENCODING_JSON)
-        authority.io_path = fpath
 
     # Read terms.
     term_cache = {}
@@ -104,29 +131,31 @@ def _read_term(fpath, collection, term_cache):
     with open(fpath, "r") as fstream:
         term = decode(fstream.read(), ENCODING_JSON)
     term.collection = collection
-    term.io_path = fpath
 
     term_cache[term.uid] = term
 
     return term
 
 
-def write(dpath, authority):
+def write(authority, dpath=None):
     """Writes authority CV data to file system.
 
-    :param str dpath: Path to directory to which the CV will be written.
     :param pyessv.Authority authority: Authority class instance to be written to file-system.
+    :param str dpath: Path to directory to which the CV will be written.
 
     """
     # Validate inputs.
-    if not os.path.isdir(dpath):
-        raise OSError("Invalid directory.")
     if not isinstance(authority, Authority):
         raise ValueError("Invalid authority: unknown type")
+    if dpath is not None:
+        if not os.path.isdir(dpath):
+            raise OSError("Invalid directory.")
     if not is_valid(authority):
         raise ValueError("Invalid authority: has validation errors")
 
     # Set directory.
+    if dpath is None:
+        dpath = DIR_ARCHIVE
     dpath = os.path.join(dpath, authority.name)
     try:
         os.makedirs(dpath)

@@ -11,11 +11,13 @@
 
 
 """
+import os
 import re
 
 
+
 # Directory containing vocabulary archive.
-DIR_ARCHIVE = "~/.esdoc/pyessv-archive"
+DIR_ARCHIVE = os.path.expanduser("~/.esdoc/pyessv-archive")
 
 # Dictionary encoding.
 ENCODING_DICT = "dict"
@@ -49,17 +51,17 @@ ENTITY_TYPE_SET = (
   ENTITY_TYPE_TERM
   )
 
-# Governance state - the term is pending review.
-GOVERNANCE_STATUS_PENDING = u'pending'
-
 # Governance state - the term is accepted.
 GOVERNANCE_STATUS_ACCEPTED = u'accepted'
 
-# Governance state - the term is rejected.
-GOVERNANCE_STATUS_REJECTED = u'rejected'
-
 # Governance state - the term is obsolete.
 GOVERNANCE_STATUS_DEPRECATED = u'obsolete'
+
+# Governance state - the term is pending review.
+GOVERNANCE_STATUS_PENDING = u'pending'
+
+# Governance state - the term is rejected.
+GOVERNANCE_STATUS_REJECTED = u'rejected'
 
 # Set of allowed governance states.
 GOVERNANCE_STATUS_SET = set([

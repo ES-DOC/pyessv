@@ -17,15 +17,15 @@ from pyessv._constants import ENTITY_TYPE_TERM
 from pyessv._archive import load
 from pyessv._exceptions import ParsingError
 
-_TYPE_BY_IDX = {
-    0: ENTITY_TYPE_AUTHORITY,
-    1: ENTITY_TYPE_SCOPE,
-    2: ENTITY_TYPE_COLLECTION,
-    3: ENTITY_TYPE_TERM
-}
 
 
 def parse_namespace(namespace, strict=True):
+    """Parses a namespace within a vocabulary hierachy.
+
+    :param str namespace: Vocabulary namespace, e.g. wcrp.
+    :param bool strict: Flag indicating whether to apply strict lookup rules.
+
+    """
     namespace = unicode(namespace).split(":")
     if len(namespace) == 0 or len(namespace) > 4:
         raise ValueError("Invalid namespace")
@@ -68,11 +68,11 @@ class _EntityInfo(object):
     """Information about an entity whose name is being parsed.
 
     """
-    def __init__(self, typeof, name, strict):
+    def __init__(self, typekey, name, strict):
         self.entity = None
         self.name = name
         self.strict = strict
-        self.typeof = typeof
+        self.typekey = typekey
 
 
     @property
@@ -102,8 +102,8 @@ class _EntityInfo(object):
 
         """
         if entity is None:
-            raise ParsingError(self.typeof, self.name)
+            raise ParsingError(self.typekey, self.name)
         if self.strict:
             if entity.name != self.name:
-                raise ParsingError(self.typeof, self.name)
+                raise ParsingError(self.typekey, self.name)
         self.entity = entity

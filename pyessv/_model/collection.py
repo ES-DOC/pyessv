@@ -79,3 +79,43 @@ class Collection(Entity):
 
         """
         return pyessv.parse(term_name, self, strict=strict)
+
+
+    def accept(self):
+        """Marks entity as accepted.
+
+        """
+        for term in self:
+            term.accept()
+
+
+    def deprecate(self):
+        """Marks entity as deprecated.
+
+        """
+        for term in self:
+            term.deprecate()
+
+
+    def destroy(self):
+        """Marks entity for removal from all persistant state stores.
+
+        """
+        for term in self:
+            term.destroy()
+
+
+    def reject(self):
+        """Marks entity as rejected.
+
+        """
+        for term in self:
+            term.reject()
+
+
+    def reset(self):
+        """Resets entity status.
+
+        """
+        for term in self:
+            term.reset()

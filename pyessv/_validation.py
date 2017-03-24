@@ -205,7 +205,7 @@ _STANDARD_TYPE_INFO = {
     ("description", unicode, "1.1"),
     ("label", unicode, "1.1"),
     ("name", unicode, "1.1", validate_canonical_name),
-    ("typeof", str, "1.1", tuple(ENTITY_TYPE_SET)),
+    ("typekey", str, "1.1", tuple(ENTITY_TYPE_SET)),
     ("uid", uuid.UUID, "1.1"),
     ("url", unicode, "0.1", validate_url)
 }
