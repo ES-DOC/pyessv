@@ -34,6 +34,8 @@ from pyessv._factory import create_collection
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
 
+from pyessv._initializer import init
+
 from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
@@ -49,5 +51,4 @@ from pyessv._validation import validate_entity as validate
 
 
 # Auto-initialize.
-from pyessv import _initializer
-_initializer.init()
+init()
