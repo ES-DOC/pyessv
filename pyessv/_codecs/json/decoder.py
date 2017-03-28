@@ -11,9 +11,17 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
+import datetime
+import uuid
+
 from pyessv._codecs.dictionary import decoder as dict_decoder
 from pyessv._utils import convert
+from pyessv._utils.compat import json
 
+
+
+# ISO date formats.
+_ISO_DATE_FORMATS = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S']
 
 
 def decode(as_json):
@@ -29,7 +37,78 @@ def decode(as_json):
     as_json = convert.str_to_unicode(as_json)
 
     # Convert to dictionary.
-    as_dict = convert.json_to_dict(as_json, convert.str_to_underscore_case)
+    as_dict = _JSONDecoder(convert.str_to_underscore_case).decode(as_json)
 
     # Decode from dictionary.
     return dict_decoder.decode(as_dict)
+
+
+class _JSONDecoder(json.JSONDecoder):
+    """Extends json decoder so as to handle extended types.
+
+    """
+    def __init__(self, key_formatter, to_namedtuple=False):
+        """Instance constructor.
+
+        """
+        json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
+        self.key_formatter = key_formatter
+        self.to_namedtuple = to_namedtuple
+        self.value_parsers = [
+            self._to_datetime,
+            self._to_uuid
+            ]
+
+
+    def dict_to_object(self, d):
+        """Converts a dictionary to an object.
+
+        """
+        # Parse values.
+        for k, v in d.items():
+            for parser in self.value_parsers:
+                if parser(d, k, v):
+                    break
+
+        # Format keys.
+        if self.key_formatter is not None:
+            d = convert.dict_keys(d, self.key_formatter)
+
+        # Return dictionary | named tuple.
+        return d
+
+
+    def _to_datetime(self, d, k, v):
+        """Converts a value to datetime.
+
+        """
+        if isinstance(v, str) and len(v):
+            try:
+                float(v)
+            except ValueError:
+                for format in _ISO_DATE_FORMATS:
+                    try:
+                        v = datetime.datetime.strptime(v, format)
+                    except (ValueError, TypeError):
+                        pass
+                    else:
+                        d[k] = v
+                        return True
+
+        return False
+
+
+    def _to_uuid(self, d, k, v):
+        """Converts a value to uuid.UUID.
+
+        """
+        if isinstance(v, basestring) and len(v):
+            try:
+                v = uuid.UUID(v)
+            except ValueError:
+                pass
+            else:
+                d[k] = v
+                return True
+
+        return False

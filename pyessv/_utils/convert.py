@@ -22,21 +22,8 @@ import arrow
 
 from pyessv._utils.compat import numeric_types
 from pyessv._utils.compat import basestring
+from pyessv._utils.compat import str
 
-
-# Set of data types to be ignored when encoding.
-_ENCODE_IGNOREABLE = tuple(list(numeric_types) + [type(None), str])
-
-# Set of data types to be converted to string when encoding.
-_ENCODE_STRING = (
-    basestring,
-    arrow.Arrow,
-    datetime.datetime,
-    uuid.UUID
-    )
-
-# ISO date formats.
-_ISO_DATE_FORMATS = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S']
 
 # Values considered to be abbreviations.
 _ABBREVIATIONS = ('id', 'uid', 'uuid')
@@ -155,119 +142,6 @@ def str_to_pascal_case(target, separator='_'):
                     r += s[1:]
 
     return r
-
-
-def _to_encodable(obj, key_formatter=str_to_camel_case):
-    """Converts data to encodeable representation.
-
-    """
-    if isinstance(obj, _ENCODE_IGNOREABLE):
-        return obj
-
-    elif isinstance(obj, _ENCODE_STRING):
-        return str(obj)
-
-    elif isinstance(obj, collections.Mapping):
-        return {str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
-
-    elif isinstance(obj, collections.Iterable):
-        return [_to_encodable(i) for i in obj]
-
-
-class _JSONDecoder(json.JSONDecoder):
-    """Extends json decoder so as to handle extended types.
-
-    """
-    def __init__(self, key_formatter, to_namedtuple=False):
-        """Instance constructor.
-
-        """
-        json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
-        self.key_formatter = key_formatter
-        self.to_namedtuple = to_namedtuple
-        self.value_parsers = [
-            self._to_datetime,
-            self._to_uuid
-            ]
-
-
-    def dict_to_object(self, d):
-        """Converts a dictionary to an object.
-
-        """
-        # Parse values.
-        for k, v in d.items():
-            for parser in self.value_parsers:
-                if parser(d, k, v):
-                    break
-
-        # Format keys.
-        if self.key_formatter is not None:
-            d = dict_keys(d, self.key_formatter)
-
-        # Return dictionary | named tuple.
-        return d
-
-
-    def _to_datetime(self, d, k, v):
-        """Converts a value to datetime.
-
-        """
-        if isinstance(v, str) and len(v):
-            try:
-                float(v)
-            except ValueError:
-                for format in _ISO_DATE_FORMATS:
-                    try:
-                        v = datetime.datetime.strptime(v, format)
-                    except (ValueError, TypeError):
-                        pass
-                    else:
-                        d[k] = v
-                        return True
-
-        return False
-
-
-    def _to_uuid(self, d, k, v):
-        """Converts a value to uuid.UUID.
-
-        """
-        if isinstance(v, basestring) and len(v):
-            try:
-                v = uuid.UUID(v)
-            except ValueError:
-                pass
-            else:
-                d[k] = v
-                return True
-
-        return False
-
-
-def json_to_dict(as_json, key_formatter=None):
-    """Converts a json encoded string to a dictionary.
-
-    :param str as_json: A json encoded string.
-    :param function key_formatter: Dictionary key formatter.
-
-    :returns: A dictionary.
-    :rtype: dict
-
-    """
-    return _JSONDecoder(key_formatter).decode(as_json)
-
-
-def dict_to_json(as_dict):
-    """Converts a dictionary to json.
-
-    :param dict as_dict: A dictionary.
-
-    :returns: A json encoded text blob.
-    :rtype: str
-
-    """
-    return json.dumps(_to_encodable(as_dict), indent=4, sort_keys=True)
 
 
 def dict_keys(as_dict, key_formatter=str_to_pascal_case):

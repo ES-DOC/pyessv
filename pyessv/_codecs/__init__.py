@@ -75,7 +75,3 @@ def encode(target, encoding=ENCODING_JSON):
         if isinstance(encoded, basestring):
             encoded = encoded.strip()
         return encoded
-
-    else:
-        return [_encode(d, encoding) for d in target]
-
