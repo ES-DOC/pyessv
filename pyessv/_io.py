@@ -12,6 +12,7 @@
 
 """
 import glob
+import io
 import os
 import shutil
 
@@ -28,7 +29,7 @@ from pyessv._validation import is_valid
 
 
 # Manifest file name.
-_MANIFEST = "MANIFEST"
+_MANIFEST = 'MANIFEST'
 
 
 def delete(target):
@@ -73,7 +74,7 @@ def read():
     :rtype: list
 
     """
-    return [_read_authority(i) for i in glob.glob("{}/*".format(DIR_ARCHIVE))]
+    return [_read_authority(i) for i in glob.glob('{}/*'.format(DIR_ARCHIVE))]
 
 
 def _read_authority(dpath):
@@ -87,11 +88,11 @@ def _read_authority(dpath):
     """
     # MANIFEST file must exist.
     if not os.path.isfile(os.path.join(dpath, _MANIFEST)):
-        raise OSError("Invalid MANIFEST.")
+        raise OSError('Invalid MANIFEST.')
 
     # Read authority from manifest.
     fpath = os.path.join(dpath, _MANIFEST)
-    with open(fpath, "r") as fstream:
+    with io.open(fpath, 'r') as fstream:
         authority = decode(fstream.read(), ENCODING_JSON)
 
     # Read terms.
@@ -118,7 +119,7 @@ def _read_terms(dpath, scope, collection, term_cache):
     """
     dpath = os.path.join(dpath, scope.name)
     dpath = os.path.join(dpath, collection.name)
-    dpath = os.path.join(dpath, "*")
+    dpath = os.path.join(dpath, '*')
 
     return [_read_term(i, collection, term_cache) for i in glob.iglob(dpath)]
 
@@ -128,7 +129,7 @@ def _read_term(fpath, collection, term_cache):
 
     """
     # Decode term from JSON file.
-    with open(fpath, "r") as fstream:
+    with io.open(fpath, 'r') as fstream:
         term = decode(fstream.read(), ENCODING_JSON)
     term.collection = collection
 
@@ -146,12 +147,12 @@ def write(authority, dpath=None):
     """
     # Validate inputs.
     if not isinstance(authority, Authority):
-        raise ValueError("Invalid authority: unknown type")
+        raise ValueError('Invalid authority: unknown type')
     if dpath is not None:
         if not os.path.isdir(dpath):
-            raise OSError("Invalid directory.")
+            raise OSError('Invalid directory.')
     if not is_valid(authority):
-        raise ValueError("Invalid authority: has validation errors")
+        raise ValueError('Invalid authority: has validation errors')
 
     # Set directory.
     if dpath is None:
@@ -163,7 +164,7 @@ def write(authority, dpath=None):
         pass
 
     # Write manifest.
-    with open(os.path.join(dpath, _MANIFEST), "w") as fstream:
+    with io.open(os.path.join(dpath, _MANIFEST), 'w') as fstream:
         fstream.write(encode(authority))
 
     # Write collections/terms.
@@ -189,5 +190,5 @@ def _write_term(dpath, term):
     fpath = os.path.join(dpath, term.name)
 
     # Write term JSON file.
-    with open(fpath, "w") as fstream:
+    with io.open(fpath, 'w') as fstream:
         fstream.write(encode(term))

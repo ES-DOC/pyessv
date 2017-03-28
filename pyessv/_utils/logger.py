@@ -24,11 +24,11 @@ LOG_LEVEL_CRITICAL = 'CRITICAL'
 LOG_LEVEL_FATAL = 'FATAL'
 
 # Defaults.
-_DEFAULT_APP = "PYESSV"
-_DEFAULT_INSTITUTE = "ES-DOC"
+_DEFAULT_APP = 'PYESSV'
+_DEFAULT_INSTITUTE = 'ES-DOC'
 
 # Text to display when passed a null message.
-_NULL_MSG = "-------------------------------------------------------------------------------"
+_NULL_MSG = '-------------------------------------------------------------------------------'
 
 
 def _get_formatted_message(msg, level, app, institute):
@@ -38,12 +38,12 @@ def _get_formatted_message(msg, level, app, institute):
     if msg is None:
         return _NULL_MSG
     else:
-        return "{0} [{1}] :: {2} {3} :: {4}".format(
-            unicode(arrow.get())[0:-6],
+        return '{0} [{1}] :: {2} {3} :: {4}'.format(
+            str(arrow.get())[0:-6],
             level,
             institute,
             app,
-            unicode(msg).strip()
+            str(msg).strip()
             )
 
 
@@ -61,8 +61,8 @@ def log(
     :param str institute: Institute emitting log message (e.g. libIGCM).
 
     """
-    # TODO use structlog.
-    print _get_formatted_message(msg, level, app, institute)
+    # TODO use structlog/logstash.
+    print(_get_formatted_message(msg, level, app, institute))
 
 
 def log_error(
@@ -78,8 +78,8 @@ def log_error(
     :param str institute: Institute emitting log message (e.g. libIGCM).
 
     """
-    msg = "!! RUNTIME ERROR !! :: "
+    msg = '!! RUNTIME ERROR !! :: '
     if issubclass(BaseException, err.__class__):
-        msg += "{} :: ".format(err.__class__)
-    msg += "{}".format(err)
+        msg += '{} :: '.format(err.__class__)
+    msg += '{}'.format(err)
     log(msg, LOG_LEVEL_ERROR, app, institute)

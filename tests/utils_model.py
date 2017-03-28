@@ -24,30 +24,30 @@ from tests.utils_assert import assert_objects
 
 # Test authority.
 TEST_AUTHORITY = None
-TEST_AUTHORITY_NAME = u"test-authority"
-TEST_AUTHORITY_DESCRIPTION = u"test-authority-description"
-TEST_AUTHORITY_URL = u"https://github.com/ES-DOC/pyesssv-archive/{}".format(TEST_AUTHORITY_NAME)
-TEST_AUTHORITY_ALTERNATIVE_NAME = u"test-authority-alternative-name"
-TEST_AUTHORITY_ALTERNATIVE_URL = u"https://github.com/ES-DOC/pyesssv-archive/{}".format(TEST_AUTHORITY_NAME)
+TEST_AUTHORITY_NAME = 'test-authority'
+TEST_AUTHORITY_DESCRIPTION = 'test-authority-description'
+TEST_AUTHORITY_URL = 'https://github.com/ES-DOC/pyesssv-archive/{}'.format(TEST_AUTHORITY_NAME)
+TEST_AUTHORITY_ALTERNATIVE_NAME = 'test-authority-alternative-name'
+TEST_AUTHORITY_ALTERNATIVE_URL = 'https://github.com/ES-DOC/pyesssv-archive/{}'.format(TEST_AUTHORITY_NAME)
 
 # Test scope.
 TEST_SCOPE = None
-TEST_SCOPE_NAME = u"test-scope"
-TEST_SCOPE_DESCRIPTION = u"test-scope-description"
-TEST_SCOPE_URL = u"{}/{}".format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
+TEST_SCOPE_NAME = 'test-scope'
+TEST_SCOPE_DESCRIPTION = 'test-scope-description'
+TEST_SCOPE_URL = '{}/{}'.format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
 
 # Test collection.
 TEST_COLLECTION = None
-TEST_COLLECTION_NAME = u"test-collection"
-TEST_COLLECTION_DESCRIPTION = u"test-collection-description"
-TEST_COLLECTION_URL = u"{}/{}".format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
+TEST_COLLECTION_NAME = 'test-collection'
+TEST_COLLECTION_DESCRIPTION = 'test-collection-description'
+TEST_COLLECTION_URL = '{}/{}'.format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
 
 # Test term.
 TEST_TERM = None
-TEST_TERM_NAME = u"test-term"
-TEST_TERM_DESCRIPTION = u"test-term-description"
-TEST_TERM_URL = u"{}/{}".format(TEST_COLLECTION_URL, TEST_TERM_NAME)
-TEST_TERM_SYNONYMS = [u"test-term-synonym-1", u"test-term-synonym-2"]
+TEST_TERM_NAME = 'test-term'
+TEST_TERM_DESCRIPTION = 'test-term-description'
+TEST_TERM_URL = '{}/{}'.format(TEST_COLLECTION_URL, TEST_TERM_NAME)
+TEST_TERM_SYNONYMS = ['test-term-synonym-1', 'test-term-synonym-2']
 
 
 def create_authority():
@@ -125,10 +125,10 @@ def init(func, desc=None):
     if desc is None:
         desc = inspect.getdoc(func)
     desc = desc.strip()
-    if desc[-1] == ".":
+    if desc[-1] == '.':
         desc = desc[:-1]
     desc = desc[0].lower() + desc[1:]
-    func.description = "pyessv-tests: {}".format(desc)
+    func.description = 'pyessv-tests: {}'.format(desc)
 
 
 def setup():

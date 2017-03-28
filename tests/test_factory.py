@@ -36,7 +36,7 @@ def test_create():
         (tu.create_collection, pyessv.Collection),
         (tu.create_term, pyessv.Term)
         ):
-        desc = "create --> {}".format(str(typeof).split(".")[-1][0:-2].lower())
+        desc = 'create --> {}'.format(str(typeof).split('.')[-1][0:-2].lower())
         tu.init(_test, desc)
         yield _test, factory, typeof
 
@@ -69,7 +69,7 @@ def test_create():
 
 #     def _update_domain(term):
 #         """Update term domain."""
-#         term.domain = tu.get_unicode(existing=term.domain)
+#         term.domain = tu.get_string(existing=term.domain)
 
 #     def _update_id(term):
 #         """Update term id."""
@@ -77,19 +77,19 @@ def test_create():
 
 #     def _update_kind(term):
 #         """Update term kind."""
-#         term.kind = tu.get_unicode(existing=term.kind)
+#         term.kind = tu.get_string(existing=term.kind)
 
 #     def _update_name(term):
 #         """Update term name."""
-#         term.name = tu.get_unicode(existing=term.name)
+#         term.name = tu.get_string(existing=term.name)
 
 #     def _update_status(term):
 #         """Update term status."""
-#         term.status = tu.get_unicode(existing=term.status)
+#         term.status = tu.get_string(existing=term.status)
 
 #     def _update_subdomain(term):
 #         """Update term subdomain."""
-#         term.subdomain = tu.get_unicode(existing=term.subdomain)
+#         term.subdomain = tu.get_string(existing=term.subdomain)
 
 #     def _update_uid(term):
 #         """Update term uid."""

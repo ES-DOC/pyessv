@@ -17,13 +17,13 @@ import re
 
 
 # Directory containing vocabulary archive.
-DIR_ARCHIVE = os.path.expanduser("~/.esdoc/pyessv-archive")
+DIR_ARCHIVE = os.path.expanduser('~/.esdoc/pyessv-archive')
 
 # Dictionary encoding.
-ENCODING_DICT = "dict"
+ENCODING_DICT = 'dict'
 
 # JSON encoding.
-ENCODING_JSON = "json"
+ENCODING_JSON = 'json'
 
 # Set of supported encodings.
 ENCODING_SET = {
@@ -32,16 +32,16 @@ ENCODING_SET = {
 }
 
 # Entity type - an authority governing vocabularies.
-ENTITY_TYPE_AUTHORITY = "authority"
+ENTITY_TYPE_AUTHORITY = 'authority'
 
 # Entity type - a scope constraining collection of vocabularies.
-ENTITY_TYPE_SCOPE = "scope"
+ENTITY_TYPE_SCOPE = 'scope'
 
 # Entity type - a collection constraining collection of term.
-ENTITY_TYPE_COLLECTION = "collection"
+ENTITY_TYPE_COLLECTION = 'collection'
 
 # Entity type - a term.
-ENTITY_TYPE_TERM = "term"
+ENTITY_TYPE_TERM = 'term'
 
 # Set of allowed name types.
 ENTITY_TYPE_SET = (
@@ -52,16 +52,16 @@ ENTITY_TYPE_SET = (
   )
 
 # Governance state - the term is accepted.
-GOVERNANCE_STATUS_ACCEPTED = u'accepted'
+GOVERNANCE_STATUS_ACCEPTED = 'accepted'
 
 # Governance state - the term is obsolete.
-GOVERNANCE_STATUS_DEPRECATED = u'obsolete'
+GOVERNANCE_STATUS_DEPRECATED = 'obsolete'
 
 # Governance state - the term is pending review.
-GOVERNANCE_STATUS_PENDING = u'pending'
+GOVERNANCE_STATUS_PENDING = 'pending'
 
 # Governance state - the term is rejected.
-GOVERNANCE_STATUS_REJECTED = u'rejected'
+GOVERNANCE_STATUS_REJECTED = 'rejected'
 
 # Set of allowed governance states.
 GOVERNANCE_STATUS_SET = set([
@@ -72,10 +72,10 @@ GOVERNANCE_STATUS_SET = set([
 ])
 
 # Regular expression for validating a canonical name.
-REGEX_CANONICAL_NAME = re.compile(r"^[A-z0-9\-]*$")
+REGEX_CANONICAL_NAME = re.compile(r'^[A-z0-9\-\ \.]*$')
 
 # Regular expression for validating a label.
-REGEX_LABEL = u"/&"
+REGEX_LABEL = '/&'
 
 # Regular expression for validating a url.
-REGEX_URL = re.compile(r"^(?!www\.|(?:http|ftp)s?://|[A-Za-z]:\\|//).*")
+REGEX_URL = re.compile(r'^(?!www\.|(?:http|ftp)s?://|[A-Za-z]:\\|//).*')

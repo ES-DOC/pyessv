@@ -31,9 +31,7 @@ def _test(governance_action, governance_status):
     pyessv.save(term)
 
     tu.setup()
-    print "ZZZ", pyessv.get_count()
     term = tu.get_term()
-    print id(term)
     tu.assert_str(term.status, governance_status)
 
 
@@ -44,10 +42,10 @@ def test():
 
 
     for func, status, desc in (
-        (pyessv.accept, pyessv.GOVERNANCE_STATUS_ACCEPTED, "accept"),
-        # (pyessv.reject, pyessv.GOVERNANCE_STATUS_REJECTED, "reject"),
-        # (pyessv.reset, pyessv.GOVERNANCE_STATUS_PENDING, "reset"),
-        # (pyessv.deprecate, pyessv.GOVERNANCE_STATUS_DEPRECATED, "deprecate")
+        (pyessv.accept, pyessv.GOVERNANCE_STATUS_ACCEPTED, 'accept'),
+        # (pyessv.reject, pyessv.GOVERNANCE_STATUS_REJECTED, 'reject'),
+        # (pyessv.reset, pyessv.GOVERNANCE_STATUS_PENDING, 'reset'),
+        # (pyessv.deprecate, pyessv.GOVERNANCE_STATUS_DEPRECATED, 'deprecate')
         ):
-        tu.init(_test, 'governance', "{} term".format(desc))
+        tu.init(_test, 'governance', '{} term'.format(desc))
         yield _test, func, status

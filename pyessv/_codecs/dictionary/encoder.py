@@ -32,7 +32,7 @@ def encode(instance):
     try:
         encoder = _ENCODERS[type(instance)]
     except KeyError:
-        raise TypeError("Type encoding unsupported: {}".format(type(instance)))
+        raise TypeError('Type encoding unsupported: {}'.format(type(instance)))
 
     obj = dict()
     _encode_entity(instance, obj)
@@ -59,7 +59,7 @@ def _encode_collection(instance, obj):
     """Encodes a term collection as a dictionary.
 
     """
-    obj['terms'] = ["{}:{}".format(i.name, i.uid) for i in instance.terms]
+    obj['terms'] = ['{}:{}'.format(i.name, i.uid) for i in instance.terms]
 
 
 def _encode_term(instance, obj):
@@ -84,7 +84,7 @@ def _encode_entity(instance, obj):
     """Encodes an entity instance to a dictionary representation.
 
     """
-    obj['_type'] = unicode(instance.__module__)
+    obj['_type'] = str(instance.__module__)
     obj['create_date'] = instance.create_date
     obj['description'] = instance.description
     obj['label'] = instance.label

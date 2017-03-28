@@ -35,13 +35,13 @@ def decode(obj):
     try:
         typekey = obj['_type']
     except KeyError:
-        raise TypeError("Decoding type key not found")
+        raise TypeError('Decoding type key not found')
 
     # Set type.
     try:
         typeof = _TYPE_MAP[typekey]
     except KeyError:
-        raise TypeError("Decoding type unsupported: {}".format(typekey))
+        raise TypeError('Decoding type unsupported: {}'.format(typekey))
     else:
         decoder = _DECODERS[typeof]
 
@@ -100,7 +100,7 @@ def _decode_term(obj, instance):
     instance.status = obj['status']
     instance.synonyms = obj.get('synonyms', [])
     if instance.parent:
-        instance.parent = uuid.UUID(unicode(obj['parent']))
+        instance.parent = uuid.UUID(str(obj['parent']))
 
 
 def _decode_entity(obj, instance):
@@ -112,7 +112,7 @@ def _decode_entity(obj, instance):
     instance.description = obj['description']
     instance.label = obj['label']
     instance.name = obj['name']
-    instance.uid = uuid.UUID(unicode(obj['uid']))
+    instance.uid = uuid.UUID(str(obj['uid']))
     instance.url = obj.get('url')
 
 

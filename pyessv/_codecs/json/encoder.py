@@ -22,7 +22,7 @@ def encode(instance):
     :param pyessv.Entity instance: A domain model class instance to be encoded as a JSON text blob.
 
     :returns: Instance encoded as a JSON text blob.
-    :rtype: unicode
+    :rtype: str
 
     """
     # Convert to dictionary.

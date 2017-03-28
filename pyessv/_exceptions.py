@@ -19,7 +19,7 @@ class ParsingError(ValueError):
 		"""Object constructor.
 
 		"""
-		msg = "A parsing error has occurred: typeof={}, name={}".format(typeof, name)
+		msg = 'A parsing error has occurred: typeof={}, name={}'.format(typeof, name)
 		super(ParsingError, self).__init__()
 
 
@@ -42,5 +42,5 @@ class InvalidAssociationError(ValueError):
 		"""Object constructor.
 
 		"""
-		msg = "Unsupported association: {}".format(association)
+		msg = 'Unsupported association: {}'.format(association)
 		super(InvalidAssociationError, self).__init__(msg)

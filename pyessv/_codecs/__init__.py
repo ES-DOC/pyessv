@@ -16,6 +16,7 @@ from pyessv._codecs import json
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
 from pyessv._model import ENTITY_TYPES
+from pyessv._utils.compat import basestring
 
 
 
@@ -28,14 +29,14 @@ _CODECS = {
 # Map of encodings to allowed input types when decoding.
 _DECODE_TYPE_WHITELIST = {
     ENCODING_DICT : (dict, ),
-    ENCODING_JSON : (str, unicode)
+    ENCODING_JSON : (basestring, )
     }
 
 
 def decode(representation, encoding=ENCODING_JSON):
     """Returns a decoded domain model class instance.
 
-    :param basestring|dict representation: A domain model class instance representation.
+    :param str|dict representation: A domain model class instance representation.
     :param str encoding: A supported encoding (dict|json).
 
     :returns: A domain model class instance.
@@ -43,11 +44,11 @@ def decode(representation, encoding=ENCODING_JSON):
 
     """
     if representation is None:
-        raise ValueError("Cannot decode a null pointer.")
+        raise ValueError('Cannot decode a null pointer.')
     if not encoding in _CODECS:
         raise NotImplementedError('Unsupported term encoding :: {0}.'.format(encoding))
     if not isinstance(representation, _DECODE_TYPE_WHITELIST[encoding]):
-        err = "Representation unsupported: must be one of {}."
+        err = 'Representation unsupported: must be one of {}.'
         err = err.format(_DECODE_TYPE_WHITELIST[encoding])
         raise TypeError(err)
 
@@ -61,11 +62,11 @@ def encode(target, encoding=ENCODING_JSON):
     :param str encoding: A supported encoding (dict|json).
 
     :returns: Target encoded accordingly.
-    :rtype: unicode|dict|list
+    :rtype: str|dict|list
 
     """
     if target is None:
-        raise ValueError("Null encoding error")
+        raise ValueError('Null encoding error')
     if encoding not in _CODECS:
         raise NotImplementedError('Invalid encoding: {}'.format(encoding))
 

@@ -12,6 +12,7 @@
 
 """
 import inspect
+import io
 import json
 import nose
 import os
@@ -80,9 +81,9 @@ def test_write():
     assert os.path.isdir(scope_dir)
     assert os.path.isdir(collection_dir)
     assert os.path.isfile(term_file)
-    with open(authority_manifest, 'r') as fstream:
+    with io.open(authority_manifest, 'r') as fstream:
     	assert isinstance(json.loads(fstream.read()), dict)
-    with open(term_file, 'r') as fstream:
+    with io.open(term_file, 'r') as fstream:
     	assert isinstance(json.loads(fstream.read()), dict)
 
 

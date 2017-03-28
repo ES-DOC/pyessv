@@ -20,33 +20,33 @@ import tests.utils as tu
 
 # Entity level test information.
 _ENTITY_TEST_INFO = [
-    ("create_date", arrow.utcnow().datetime, ("", "  ", 123)),
-    ("data", {"a": 1}, ("", "  ", 123)),
-    ("description", tu.TEST_AUTHORITY_DESCRIPTION, (None, "", "  ")),
-    ("name", tu.TEST_AUTHORITY_NAME, (None, "", "  ", "invalid name")),
-    ("url", tu.TEST_AUTHORITY_URL, ("", "  ", u"an-invalid-url")),
+    ('create_date', arrow.utcnow().datetime, ('', '  ', 123)),
+    ('data', {'a': 1}, ('', '  ', 123)),
+    ('description', tu.TEST_AUTHORITY_DESCRIPTION, (None, '', '  ')),
+    ('name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid name')),
+    ('url', tu.TEST_AUTHORITY_URL, ('', '  ', 'an-invalid-url')),
     ]
 
 
 # Test information mapped by entity type.
 _TEST_INFO = {
     LIB.ENTITY_TYPE_AUTHORITY: _ENTITY_TEST_INFO + [
-        ("scopes", [], [None, "", "  ", [123]])
+        ('scopes', [], [None, '', '  ', [123]])
     ],
     LIB.ENTITY_TYPE_SCOPE: _ENTITY_TEST_INFO + [
-        # ("authority", None, [None, "", "  ", [123]]),
-        ("collections", [], [None, "", "  ", [123]])
+        # ('authority', None, [None, '', '  ', [123]]),
+        ('collections', [], [None, '', '  ', [123]])
     ],
     LIB.ENTITY_TYPE_COLLECTION: _ENTITY_TEST_INFO + [
-        # ("collection", None, [None, "", "  ", [123]]),
-        ("terms", [], [None, "", "  ", [123]])
+        # ('collection', None, [None, '', '  ', [123]]),
+        ('terms', [], [None, '', '  ', [123]])
     ],
     LIB.ENTITY_TYPE_TERM: _ENTITY_TEST_INFO + [
-        ("alternative_name", tu.TEST_AUTHORITY_ALTERNATIVE_NAME, ("", "  ")),
-        ("alternative_url", tu.TEST_AUTHORITY_ALTERNATIVE_URL, ("", "  ")),
-        ("idx", 1, ("", "  ", [123])),
-        ("status", LIB.GOVERNANCE_STATUS_PENDING, ("", "  ", [123])),
-        ("synonyms", tu.TEST_TERM_SYNONYMS, ("", "  ", [123])),
+        ('alternative_name', tu.TEST_AUTHORITY_ALTERNATIVE_NAME, ('', '  ')),
+        ('alternative_url', tu.TEST_AUTHORITY_ALTERNATIVE_URL, ('', '  ')),
+        ('idx', 1, ('', '  ', [123])),
+        ('status', LIB.GOVERNANCE_STATUS_PENDING, ('', '  ', [123])),
+        ('synonyms', tu.TEST_TERM_SYNONYMS, ('', '  ', [123])),
     ],
 }
 
@@ -62,7 +62,7 @@ def test_entity():
         (LIB.ENTITY_TYPE_TERM, tu.create_term)
         ):
         for attr, valid, invalid in _TEST_INFO[typeof]:
-            tu.init(_test_entity_attr, "validate --> {}: {}".format(typeof, attr))
+            tu.init(_test_entity_attr, 'validate --> {}: {}'.format(typeof, attr))
             yield _test_entity_attr, factory, attr, valid, invalid
 
 

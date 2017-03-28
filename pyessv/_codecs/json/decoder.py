@@ -19,13 +19,13 @@ from pyessv._utils import convert
 def decode(as_json):
     """Decodes a document from a UTF-8 encoded json text blob.
 
-    :param unicode as_xml: Term JSON representation.
+    :param str as_xml: Term JSON representation.
 
     :returns: A term instance.
     :rtype: pyessv.Term
 
     """
-    # Convert to unicode.
+    # Convert to str.
     as_json = convert.str_to_unicode(as_json)
 
     # Convert to dictionary.

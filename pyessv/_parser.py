@@ -26,9 +26,9 @@ def parse_namespace(namespace, strict=True):
     :param bool strict: Flag indicating whether to apply strict lookup rules.
 
     """
-    namespace = unicode(namespace).split(":")
+    namespace = str(namespace).split(':')
     if len(namespace) == 0 or len(namespace) > 4:
-        raise ValueError("Invalid namespace")
+        raise ValueError('Invalid namespace')
 
     namespace = namespace + [None for i in range(4 - len(namespace))]
 
@@ -80,7 +80,7 @@ class _EntityInfo(object):
         """Gets formatted name used to search archive.
 
         """
-        name = unicode(self.name)
+        name = str(self.name)
         if not self.strict:
             name = name.strip().lower()
 

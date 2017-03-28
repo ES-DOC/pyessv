@@ -20,16 +20,15 @@ import uuid
 
 import arrow
 
+from pyessv._utils.compat import numeric_types
+from pyessv._utils.compat import basestring
 
-
-# Default character set.
-_JSON_CHARSET = "ISO-8859-1"
 
 # Set of data types to be ignored when encoding.
-_ENCODE_IGNOREABLE = (int, float, long, type(None), unicode)
+_ENCODE_IGNOREABLE = tuple(list(numeric_types) + [type(None), str])
 
-# Set of data types to be converted to unicode when encoding.
-_ENCODE_UNICODEABLE = (
+# Set of data types to be converted to string when encoding.
+_ENCODE_STRING = (
     basestring,
     arrow.Arrow,
     datetime.datetime,
@@ -37,34 +36,34 @@ _ENCODE_UNICODEABLE = (
     )
 
 # ISO date formats.
-_ISO_DATE_FORMATS = ["%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S"]
+_ISO_DATE_FORMATS = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S']
 
 # Values considered to be abbreviations.
-_ABBREVIATIONS = ("id", "uid", "uuid")
+_ABBREVIATIONS = ('id', 'uid', 'uuid')
 
 # Default string encoding.
-_UNICODE = "utf-8"
+_UTF8 = 'utf-8'
 
 
 def str_to_unicode(val):
-    """Converts string input to a unicode literal.
+    """Converts input to a string literal.
 
-    :param object val: arget to be converted to a unicode literal.
+    :param object val: value to be converted to a string literal.
 
-    :returns: A unicode literal.
-    :rtype: unicode
+    :returns: A string literal.
+    :rtype: str
 
     """
     if val is None:
-        return unicode()
-    if isinstance(val, unicode):
+        return str()
+    if isinstance(val, str):
         return val
 
-    val = str(val).decode(_UNICODE).strip()
+    val = str(val).decode(_UTF8).strip()
     if not len(val):
-        return unicode()
+        return str()
 
-    return unicode(val)
+    return str(val)
 
 
 def str_to_camel_case(target, separator='_'):
@@ -165,11 +164,11 @@ def _to_encodable(obj, key_formatter=str_to_camel_case):
     if isinstance(obj, _ENCODE_IGNOREABLE):
         return obj
 
-    elif isinstance(obj, _ENCODE_UNICODEABLE):
-        return unicode(obj)
+    elif isinstance(obj, _ENCODE_STRING):
+        return str(obj)
 
     elif isinstance(obj, collections.Mapping):
-        return {unicode(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
+        return {str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
 
     elif isinstance(obj, collections.Iterable):
         return [_to_encodable(i) for i in obj]
@@ -183,14 +182,12 @@ class _JSONDecoder(json.JSONDecoder):
         """Instance constructor.
 
         """
-        json.JSONDecoder.__init__(self,
-                                  encoding=_JSON_CHARSET,
-                                  object_hook=self.dict_to_object)
+        json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
         self.key_formatter = key_formatter
         self.to_namedtuple = to_namedtuple
         self.value_parsers = [
-            self.unicode_to_datetime,
-            self.unicode_to_uuid
+            self._to_datetime,
+            self._to_uuid
             ]
 
 
@@ -212,11 +209,11 @@ class _JSONDecoder(json.JSONDecoder):
         return d
 
 
-    def unicode_to_datetime(self, d, k, v):
-        """Converts a unicode value to datetime.
+    def _to_datetime(self, d, k, v):
+        """Converts a value to datetime.
 
         """
-        if isinstance(v, unicode) and len(v):
+        if isinstance(v, str) and len(v):
             try:
                 float(v)
             except ValueError:
@@ -232,11 +229,11 @@ class _JSONDecoder(json.JSONDecoder):
         return False
 
 
-    def unicode_to_uuid(self, d, k, v):
-        """Converts a unicode value to uuid.UUID.
+    def _to_uuid(self, d, k, v):
+        """Converts a value to uuid.UUID.
 
         """
-        if isinstance(v, unicode) and len(v):
+        if isinstance(v, basestring) and len(v):
             try:
                 v = uuid.UUID(v)
             except ValueError:
@@ -251,7 +248,7 @@ class _JSONDecoder(json.JSONDecoder):
 def json_to_dict(as_json, key_formatter=None):
     """Converts a json encoded string to a dictionary.
 
-    :param unicode as_json: A json encoded string.
+    :param str as_json: A json encoded string.
     :param function key_formatter: Dictionary key formatter.
 
     :returns: A dictionary.
@@ -267,7 +264,7 @@ def dict_to_json(as_dict):
     :param dict as_dict: A dictionary.
 
     :returns: A json encoded text blob.
-    :rtype: unicode
+    :rtype: str
 
     """
     return json.dumps(_to_encodable(as_dict), indent=4, sort_keys=True)
@@ -290,7 +287,7 @@ def dict_keys(as_dict, key_formatter=str_to_pascal_case):
     for key, val in as_dict.items():
         if isinstance(val, collections.Mapping):
             result[key_formatter(key)] = dict_keys(val, key_formatter)
-        elif isinstance(val, types.ListType):
+        elif isinstance(val, list):
             result[key_formatter(key)] = [dict_keys(i, key_formatter) for i in val]
         else:
             result[key_formatter(key)] = val

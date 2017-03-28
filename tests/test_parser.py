@@ -42,19 +42,19 @@ def test_parse():
         typeof, name, expected, strict = cfg
 
         try:
-            if typeof == "authority":
+            if typeof == 'authority':
                 result = LIB.parse(name, strict=strict)
-            elif typeof == "scope":
+            elif typeof == 'scope':
                 result = LIB.parse(tu.TEST_AUTHORITY_NAME, name, strict=strict)
-            elif typeof == "collection":
+            elif typeof == 'collection':
                 result = LIB.parse(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, name, strict=strict)
-            elif typeof == "term":
+            elif typeof == 'term':
                 result = LIB.parse(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME, name, strict=strict)
         except LIB.ParsingError:
             result = LIB.ParsingError
 
         assert result == expected, \
-               "Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.".format(typeof, name, result, expected)
+               'Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.'.format(typeof, name, result, expected)
 
 
     def _test_parse_namespace(cfg):
@@ -63,23 +63,23 @@ def test_parse():
         """
         typeof, name, expected, strict = cfg
 
-        if typeof == "authority":
+        if typeof == 'authority':
             parts = []
-        elif typeof == "scope":
+        elif typeof == 'scope':
             parts = [tu.TEST_AUTHORITY_NAME]
-        elif typeof == "collection":
+        elif typeof == 'collection':
             parts = [tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME]
-        elif typeof == "term":
+        elif typeof == 'term':
             parts = [tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME]
         parts.append(name)
 
         try:
-            result = LIB.parse_namespace(":".join(parts), strict)
+            result = LIB.parse_namespace(':'.join(parts), strict)
         except LIB.ParsingError:
             result = LIB.ParsingError
 
         assert result == expected, \
-               "Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.".format(typeof, name, result, expected)
+               'Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.'.format(typeof, name, result, expected)
 
 
     for typeof, name, synonym in [
@@ -93,10 +93,10 @@ def test_parse():
             config += _get_config(typeof, name, synonym)
 
         for cfg in config:
-            desc = "parse --> {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])
+            desc = 'parse --> {}: {} [strict={}]'.format(cfg[0], cfg[1], cfg[3])
             tu.init(_test_parse_names, desc)
             yield _test_parse_names, cfg
 
-            desc = "parse namespace --> {}: {} [strict={}]".format(cfg[0], cfg[1], cfg[3])
+            desc = 'parse namespace --> {}: {} [strict={}]'.format(cfg[0], cfg[1], cfg[3])
             tu.init(_test_parse_namespace, desc)
             yield _test_parse_namespace, cfg

@@ -19,6 +19,8 @@ from pyessv._constants import ENTITY_TYPE_AUTHORITY
 from pyessv._constants import ENTITY_TYPE_COLLECTION
 from pyessv._constants import ENTITY_TYPE_SCOPE
 from pyessv._constants import ENTITY_TYPE_TERM
+from pyessv._utils.compat import basestring
+
 
 
 class Entity(object):
@@ -88,7 +90,7 @@ class Entity(object):
         """Returns namespace used in I/O scenarios.
 
         """
-        return u":".join([i.name for i in Entity.get_hierarchy(entity)])
+        return ':'.join([i.name for i in Entity.get_hierarchy(entity)])
 
 
     @staticmethod
@@ -158,7 +160,7 @@ class Entity(object):
         """
         items = Entity.get_collection(entity)
 
-        return iter(sorted(items, key=lambda i: i if isinstance(i, (str, unicode)) else i.name))
+        return iter(sorted(items, key=lambda i: i if isinstance(i, basestring) else i.name))
 
 
     @staticmethod
@@ -174,13 +176,13 @@ class Entity(object):
         elif isinstance(key, uuid.UUID):
             comparator = lambda i: i.uid
         else:
-            key = unicode(key).strip().lower()
+            key = str(key).strip().lower()
             try:
                 uuid.UUID(key)
             except ValueError:
                 comparator = lambda i: i.name
             else:
-                comparator = lambda i: unicode(i.uid)
+                comparator = lambda i: str(i.uid)
 
         # Match against a attribute.
         for item in items:

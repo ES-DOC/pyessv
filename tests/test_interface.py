@@ -81,7 +81,7 @@ def test_library_exports():
         (_FUNCS, 'function'),
         ):
         for member in sorted(members):
-            desc = "library exposes {} --> {}".format(member_type, member)
+            desc = 'library exposes {} --> {}'.format(member_type, member)
             tu.init(_test_member, desc)
             yield _test_member, member, member_type
 

@@ -16,31 +16,31 @@ import pyessv
 
 
 # Define command line options.
-_ARGS = argparse.ArgumentParser("Writes an authority's vocabularies to stdout.")
+_ARGS = argparse.ArgumentParser('Writes an authority's vocabularies to stdout.'')
 _ARGS.add_argument(
-    "--authority",
-    help="Authority to be displayed.",
-    dest="authority",
+    '--authority',
+    help='Authority to be displayed.',
+    dest='authority',
     type=str
     )
 _ARGS.add_argument(
-    "--scope",
-    help="scope to be displayed.",
-    dest="scope",
+    '--scope',
+    help='scope to be displayed.',
+    dest='scope',
     type=str,
     default=None
     )
 _ARGS.add_argument(
-    "--collection",
-    help="Collection to be displayed.",
-    dest="collection",
+    '--collection',
+    help='Collection to be displayed.',
+    dest='collection',
     type=str,
     default=None
     )
 _ARGS.add_argument(
-    "--term",
-    help="Term to be displayed.",
-    dest="term",
+    '--term',
+    help='Term to be displayed.',
+    dest='term',
     type=str,
     default=None
     )
@@ -50,7 +50,7 @@ def _main(args):
 
     """
     if args.authority is None or len(args.authority.strip()) == 0:
-        raise ValueError("Authority is a required parameter")
+        raise ValueError('Authority is a required parameter')
 
     for scope in pyessv.load(args.authority):
         if args.scope and args.scope != scope.name:
@@ -61,7 +61,7 @@ def _main(args):
             for term in collection:
                 if args.term and args.term != term.name:
                     continue
-                print term.namespace.replace(":", " -> ")
+                print(term.namespace.replace(':', ' -> '))
 
 
 # Entry point.

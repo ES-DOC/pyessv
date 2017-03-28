@@ -31,7 +31,7 @@ def get_date(value=None):
     """
     if value:
         if len(value) == 4:
-            return arrow.get(value, "YYYY").datetime
+            return arrow.get(value, 'YYYY').datetime
         else:
             return arrow.get(value).datetime
     else:
@@ -55,20 +55,13 @@ def get_float():
     return random.random()
 
 
-def get_string(length):
+def get_string(length=31, existing=None):
     """Returns a random string for testing purposes.
 
     """
-    return unicode(uuid.uuid1())[:length]
-
-
-def get_unicode(length=31, existing=None):
-    """Returns a random unicode for testing purposes.
-
-    """
-    result = unicode(uuid.uuid1())[:length]
+    result = str(uuid.uuid1())[:length]
     while existing == result:
-        result = unicode(uuid.uuid1())[:length]
+        result = str(uuid.uuid1())[:length]
     return result
 
 
@@ -76,6 +69,4 @@ def get_uuid():
     """Returns a uuid for testing purposes.
 
     """
-    return unicode(uuid.uuid1())
-
-
+    return string(uuid.uuid1())

@@ -40,7 +40,7 @@ class Term(Entity):
         """Instance membership predicate.
 
         """
-        key = unicode(key).strip().lower()
+        key = str(key).strip().lower()
 
         return key in self.all_names
 
@@ -111,7 +111,7 @@ class Term(Entity):
         _validate_term_synonym(new_synonym)
 
         # Format.
-        new_synonym = unicode(new_synonym).strip()
+        new_synonym = str(new_synonym).strip()
 
         # Escape if already aliased.
         for synonym in self.synonyms:

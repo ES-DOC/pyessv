@@ -31,9 +31,8 @@ from pyessv._validation import validate_canonical_name
 from pyessv._validation import validate_data
 from pyessv._validation import validate_date
 from pyessv._validation import validate_entity
-from pyessv._validation import validate_unicode
+from pyessv._validation import validate_str
 from pyessv._validation import validate_url
-
 
 
 def create_authority(name, description, url=None, create_date=None, data=None):
@@ -50,8 +49,10 @@ def create_authority(name, description, url=None, create_date=None, data=None):
 
     """
     instance = _create_entity(Authority, name, description, url, create_date, data)
-    if not instance.is_valid:
-        raise ValidationError(instance.errors)
+
+    errors = validate_entity(instance)
+    if errors:
+        raise ValidationError(errors)
 
     return instance
 
@@ -73,8 +74,10 @@ def create_scope(authority, name, description, url=None, create_date=None, data=
     """
     instance = _create_entity(Scope, name, description, url, create_date, data, authority)
     instance.authority = authority
-    if not instance.is_valid:
-        raise ValidationError(instance.errors)
+
+    errors = validate_entity(instance)
+    if errors:
+        raise ValidationError(errors)
 
     return instance
 
@@ -96,8 +99,10 @@ def create_collection(scope, name, description, url=None, create_date=None, data
     """
     instance = _create_entity(Collection, name, description, url, create_date, data, scope)
     instance.scope = scope
-    if not instance.is_valid:
-        raise ValidationError(instance.errors)
+
+    errors = validate_entity(instance)
+    if errors:
+        raise ValidationError(errors)
 
     return instance
 
@@ -119,8 +124,10 @@ def create_term(collection, name, description, url=None, create_date=None, data=
     instance = _create_entity(Term, name, description, url, create_date, data, collection)
     instance.collection = collection
     instance.idx = Entity.get_count(collection)
-    if not instance.is_valid:
-        raise ValidationError(instance.errors)
+
+    errors = validate_entity(instance)
+    if errors:
+        raise ValidationError(errors)
 
     return instance
 
@@ -130,22 +137,22 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
 
     """
     # Validate inputs.
-    validate_canonical_name(name, "name")
-    validate_unicode(description, "description")
+    validate_canonical_name(name, 'name')
+    validate_str(description, 'description')
     if url is not None:
-        validate_url(url, "url")
+        validate_url(url, 'url')
     if create_date is not None:
-        validate_date(create_date, "create-date")
+        validate_date(create_date, 'create-date')
     if data is not None:
-        validate_data(data, "data")
+        validate_data(data, 'data')
     if owner is not None:
         validate_entity(owner)
 
     # Format inputs.
-    name = unicode(name).strip()
-    description = unicode(description).strip()
+    name = str(name).strip()
+    description = str(description).strip()
     if url is not None:
-        url = unicode(url).strip()
+        url = str(url).strip()
 
     # Set core attributes.
     instance = typeof()

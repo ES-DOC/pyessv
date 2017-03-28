@@ -1,0 +1,32 @@
+{
+    "_type": "pyessv._model.term",
+    "typeof": "term",
+    "identifiers": {
+        "idx": 2,
+        "name": "c4mip",
+        "uid": "7936c76b-ee84-4a32-9816-0f98e90c359f"
+    },
+    "statusHistory": [
+        {
+            "date": "2017-03-21 00:00:00+00:00",
+            "status": "pending"
+        },
+        {
+            "date": "2017-04-21 00:00:00+00:00",
+            "status": "accepted"
+        }
+    ],
+    "relationships": {
+        "associations": [],
+        "parent": null
+    },
+    "other": {
+        "description": "C4MIP",
+        "label": "C4MIP",
+        "alternativeName": null,
+        "synonyms": [],
+        "alternativeUrl": null,
+        "url": "None"
+    },
+    "data": {}
+}
