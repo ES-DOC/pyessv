@@ -26,7 +26,7 @@ def init():
 	"""
 	# Verify archive folder exists.
 	if not os.path.isdir(DIR_ARCHIVE):
-		raise EnvironmentError('~/.esdoc/pyessv-archive directory does not exists')
+		raise EnvironmentError('{} directory does not exists'.format(DIR_ARCHIVE))
 
 	# Read set of authorities from file system & cache.
 	logger.log('Loading vocabularies from {}:'.format(DIR_ARCHIVE))

@@ -11,7 +11,9 @@
 
 
 """
+from pyessv._cache import cache
 from pyessv._cache import get_cached
+from pyessv._io import write
 
 
 
@@ -43,11 +45,19 @@ def load(authority, scope=None, collection=None, term=None):
         return result
 
 
-def save():
-    """Saves archive to file system.
+def add(authority):
+    """Adds an authority to the archive.
 
     """
-    pass
+    cache(authority)
+
+
+def save():
+    """Persists archive to file system.
+
+    """
+    for authority in get_cached():
+        write(authority)
 
 
 def _format_name(name):

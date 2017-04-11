@@ -17,11 +17,16 @@ import uuid
 from pyessv._codecs.dictionary import decoder as dict_decoder
 from pyessv._utils import convert
 from pyessv._utils.compat import json
+from pyessv._utils.compat import str
 
 
 
 # ISO date formats.
 _ISO_DATE_FORMATS = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S']
+
+# Default string encoding.
+_UTF8 = 'utf-8'
+
 
 
 def decode(as_json):
@@ -33,8 +38,8 @@ def decode(as_json):
     :rtype: pyessv.Term
 
     """
-    # Convert to str.
-    as_json = convert.str_to_unicode(as_json)
+    # Decode raw text blob.
+    as_json = _decode_blob(as_json)
 
     # Convert to dictionary.
     as_dict = _JSONDecoder(convert.str_to_underscore_case).decode(as_json)
@@ -112,3 +117,24 @@ class _JSONDecoder(json.JSONDecoder):
                 return True
 
         return False
+
+
+def _decode_blob(val):
+    """Converts input to a string literal.
+
+    :param object val: value to be converted to a string literal.
+
+    :returns: A string literal.
+    :rtype: str
+
+    """
+    if val is None:
+        return str()
+    if isinstance(val, str):
+        return val
+
+    val = str(val).decode(_UTF8).strip()
+    if not len(val):
+        return str()
+
+    return str(val)

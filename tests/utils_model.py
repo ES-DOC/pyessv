@@ -118,6 +118,17 @@ def create_term():
     return TEST_TERM
 
 
+def create_test_entities():
+    """Returns tuple of test entities.
+
+    """
+    return \
+        create_term(), \
+        create_collection(), \
+        create_scope(), \
+        create_authority()
+
+
 def init(func, desc=None):
     """Initializes a test function prior to be executed.
 

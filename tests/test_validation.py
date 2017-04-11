@@ -23,7 +23,7 @@ _ENTITY_TEST_INFO = [
     ('create_date', arrow.utcnow().datetime, ('', '  ', 123)),
     ('data', {'a': 1}, ('', '  ', 123)),
     ('description', tu.TEST_AUTHORITY_DESCRIPTION, (None, '', '  ')),
-    ('name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid name')),
+    ('name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid $#$#$ name')),
     ('url', tu.TEST_AUTHORITY_URL, ('', '  ', 'an-invalid-url')),
     ]
 
@@ -73,7 +73,7 @@ def _test_entity_attr(factory, attr, valid_value, invalid_values):
     instance = factory()
     for value in invalid_values:
         setattr(instance, attr, value)
-        assert LIB.is_valid(instance) == False
+        assert LIB.is_valid(instance) == False, LIB.get_errors(instance)
         assert len(LIB.get_errors(instance)) == 1
     setattr(instance, attr, valid_value)
     assert LIB.is_valid(instance) == True

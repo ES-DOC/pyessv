@@ -194,6 +194,11 @@ def _validate_value(field, val, is_mandatory, typeof, misc):
             if val not in misc:
                 raise ValueError('not in enum')
 
+        # Error: string length.
+        if isinstance(val, basestring):
+            if len(val.strip()) == 0:
+                raise ValueError('invalid string length')
+
         # Error: function.
         if inspect.isfunction(misc):
             misc(val, field)

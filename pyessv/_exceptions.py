@@ -20,7 +20,7 @@ class ParsingError(ValueError):
 
 		"""
 		msg = 'A parsing error has occurred: typeof={}, name={}'.format(typeof, name)
-		super(ParsingError, self).__init__()
+		super(ParsingError, self).__init__(msg)
 
 
 class ValidationError(ValueError):

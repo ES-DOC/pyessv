@@ -97,6 +97,18 @@ def test_parse():
             tu.init(_test_parse_names, desc)
             yield _test_parse_names, cfg
 
+
+    for typeof, name, synonym in [
+        (LIB.ENTITY_TYPE_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
+        (LIB.ENTITY_TYPE_SCOPE, tu.TEST_SCOPE_NAME, None),
+        (LIB.ENTITY_TYPE_COLLECTION, tu.TEST_COLLECTION_NAME, None),
+        (LIB.ENTITY_TYPE_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
+        ]:
+        config = _get_config(typeof, name)
+        if synonym:
+            config += _get_config(typeof, name, synonym)
+
+        for cfg in config:
             desc = 'parse namespace --> {}: {} [strict={}]'.format(cfg[0], cfg[1], cfg[3])
             tu.init(_test_parse_namespace, desc)
             yield _test_parse_namespace, cfg

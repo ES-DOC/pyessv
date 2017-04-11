@@ -16,7 +16,7 @@ import pyessv
 
 
 # Define command line options.
-_ARGS = argparse.ArgumentParser('Writes an authority's vocabularies to stdout.'')
+_ARGS = argparse.ArgumentParser('Writes an authority"s vocabularies to stdout.')
 _ARGS.add_argument(
     '--authority',
     help='Authority to be displayed.',

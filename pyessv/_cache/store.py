@@ -11,12 +11,12 @@
 
 
 """
-from pyessv._cache import store_memory
+from pyessv._cache import store_memory as _memory_store
 
 
 # Collection of cache stores.
 _STORES = (
-	store_memory,
+	_memory_store,
 	)
 
 
@@ -28,7 +28,7 @@ def cache(authority):
     	store.cache(authority)
 
 
-def get_cached(authority_name):
+def get_cached(authority_name=None):
     """Caches authority vocabularies.
 
     :param str authority_name: Authority name.
@@ -37,10 +37,7 @@ def get_cached(authority_name):
     :rtype: pyessv.Authority
 
     """
-    for store in _STORES:
-    	authority = store.get_cached(authority_name)
-    	if authority is not None:
-    		return authority
+    return _memory_store.get_cached(authority_name)
 
 
 def uncache(authority_name):

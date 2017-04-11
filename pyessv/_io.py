@@ -67,14 +67,14 @@ def delete(target):
         pass
 
 
-def read():
+def read(archive_dir=DIR_ARCHIVE):
     """Reads vocabularies from archive folder (~/.esdoc/pyessv-archive) upon file system.
 
     :returns: List of vocabulary authorities loaded from archive folder.
     :rtype: list
 
     """
-    return [_read_authority(i) for i in glob.glob('{}/*'.format(DIR_ARCHIVE))]
+    return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir))]
 
 
 def _read_authority(dpath):
@@ -86,6 +86,10 @@ def _read_authority(dpath):
     :rtype: pyessv.Authority
 
     """
+    # Directory must exist.
+    if not os.path.isdir(dpath):
+        raise OSError('Invalid authority directory.')
+
     # MANIFEST file must exist.
     if not os.path.isfile(os.path.join(dpath, _MANIFEST)):
         raise OSError('Invalid MANIFEST.')
@@ -138,26 +142,22 @@ def _read_term(fpath, collection, term_cache):
     return term
 
 
-def write(authority, dpath=None):
+def write(authority, archive_dir=DIR_ARCHIVE):
     """Writes authority CV data to file system.
 
     :param pyessv.Authority authority: Authority class instance to be written to file-system.
-    :param str dpath: Path to directory to which the CV will be written.
 
     """
     # Validate inputs.
     if not isinstance(authority, Authority):
         raise ValueError('Invalid authority: unknown type')
-    if dpath is not None:
-        if not os.path.isdir(dpath):
-            raise OSError('Invalid directory.')
+    if not os.path.isdir(archive_dir):
+        raise OSError('Invalid authority directory.')
     if not is_valid(authority):
         raise ValueError('Invalid authority: has validation errors')
 
     # Set directory.
-    if dpath is None:
-        dpath = DIR_ARCHIVE
-    dpath = os.path.join(dpath, authority.name)
+    dpath = os.path.join(archive_dir, authority.name)
     try:
         os.makedirs(dpath)
     except OSError:

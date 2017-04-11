@@ -26,13 +26,13 @@ def parse_namespace(namespace, strict=True):
     :param bool strict: Flag indicating whether to apply strict lookup rules.
 
     """
-    namespace = str(namespace).split(':')
-    if len(namespace) == 0 or len(namespace) > 4:
+    ns = str(namespace).split(':')
+    if len(ns) == 0 or len(ns) > 4:
         raise ValueError('Invalid namespace')
 
-    namespace = namespace + [None for i in range(4 - len(namespace))]
+    ns = ns + [None for i in range(4 - len(ns))]
 
-    return parse(namespace[0], namespace[1], namespace[2], namespace[3], strict)
+    return parse(ns[0], ns[1], ns[2], ns[3], strict)
 
 
 def parse(authority, scope=None, collection=None, term=None, strict=True):

@@ -6,6 +6,9 @@
 export PYESSV_LIB_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PYESSV_LIB_HOME="$( cd "$( dirname "${PYESSV_LIB_HOME[0]}" )" && pwd )"
 
+# Set archive directory.
+mkdir -p $HOME/.esdoc/pyessv-archive
+
 # ###############################################################
 # STANDARD-SECTION: OPERATIONS
 # ###############################################################

@@ -22,7 +22,7 @@ def cache(authority):
     _DATA[authority.name] = authority
 
 
-def get_cached(authority_name):
+def get_cached(authority_name=None):
     """Caches authority vocabularies.
 
     :param str authority_name: Authority name.
@@ -31,10 +31,13 @@ def get_cached(authority_name):
     :rtype: pyessv.Authority
 
     """
-    try:
-        return _DATA[authority_name]
-    except KeyError:
-        pass
+    if authority_name is not None:
+        try:
+            return _DATA[authority_name]
+        except KeyError:
+            pass
+    else:
+        return _DATA.values()
 
 
 def uncache(authority_name):

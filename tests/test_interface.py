@@ -6,7 +6,7 @@
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
    :platform: Unix, Windows
-   :synopsis: Executes pyesdoc.cv interface tests.
+   :synopsis: Executes pyessv interface tests.
 
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
@@ -29,6 +29,10 @@ _CONSTANTS = {
     'DIR_ARCHIVE',
     'ENCODING_DICT',
     'ENCODING_JSON',
+    'ENTITY_TYPE_AUTHORITY',
+    'ENTITY_TYPE_COLLECTION',
+    'ENTITY_TYPE_SCOPE',
+    'ENTITY_TYPE_TERM',
     'GOVERNANCE_STATUS_ACCEPTED',
     'GOVERNANCE_STATUS_DEPRECATED',
     'GOVERNANCE_STATUS_PENDING',
@@ -45,13 +49,19 @@ _EXCEPTIONS = {
 # Set of functions exposed by library.
 _FUNCS = {
     # ... archive
+    'add',
     'load',
     'save',
+    # ... codecs
+    'decode',
+    'encode',
     # ... factory
     'create_authority',
     'create_collection',
     'create_scope',
     'create_term',
+    # ... initialisation
+    'init',
     # ... parsing
     'parse',
     'parse_namespace',

@@ -10,8 +10,12 @@
 .. moduleauthor:: IPSL (ES-DOC) <dev@esdocumentation.org>
 
 """
+from pyessv._archive import add
 from pyessv._archive import load
 from pyessv._archive import save
+
+from pyessv._codecs import decode
+from pyessv._codecs import encode
 
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_DICT
@@ -47,7 +51,6 @@ from pyessv._parser import parse_namespace
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
 from pyessv._validation import validate_entity as validate
-
 
 
 # Auto-initialize.
