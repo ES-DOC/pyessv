@@ -10,6 +10,14 @@
 .. moduleauthor:: IPSL (ES-DOC) <dev@esdocumentation.org>
 
 """
+__title__ = 'pyessv'
+__version__ = '0.2.0.0.0'
+__author__ = 'ES-DOC'
+__license__ = 'GPL'
+__copyright__ = 'Copyright 2016 ES-DOC'
+
+
+
 from pyessv._archive import add
 from pyessv._archive import load
 from pyessv._archive import save
