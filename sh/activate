@@ -23,3 +23,4 @@ chmod a+x $PYESSV_LIB_HOME/sh/*.sh
 alias pyessv-list=$PYESSV_LIB_HOME/sh/list.sh
 alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
 alias pyessv-exec-tests=$PYESSV_LIB_HOME/runtests.sh
+alias pyessv-write-wcrp-cmip6=$PYESSV_LIB_HOME/sh/write_wcrp_cmip6.sh
