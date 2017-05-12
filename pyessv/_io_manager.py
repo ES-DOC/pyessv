@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._io.py
+.. module:: pyessv._io_manager.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -96,7 +96,7 @@ def _read_authority(dpath):
 
     # Read authority from manifest.
     fpath = os.path.join(dpath, _MANIFEST)
-    with io.open(fpath, 'r') as fstream:
+    with open(fpath, 'r') as fstream:
         authority = decode(fstream.read(), ENCODING_JSON)
 
     # Read terms.
@@ -133,7 +133,7 @@ def _read_term(fpath, collection, term_cache):
 
     """
     # Decode term from JSON file.
-    with io.open(fpath, 'r') as fstream:
+    with open(fpath, 'r') as fstream:
         term = decode(fstream.read(), ENCODING_JSON)
     term.collection = collection
 
@@ -164,7 +164,7 @@ def write(authority, archive_dir=DIR_ARCHIVE):
         pass
 
     # Write manifest.
-    with io.open(os.path.join(dpath, _MANIFEST), 'w') as fstream:
+    with open(os.path.join(dpath, _MANIFEST), 'w') as fstream:
         fstream.write(encode(authority))
 
     # Write collections/terms.
@@ -190,5 +190,5 @@ def _write_term(dpath, term):
     fpath = os.path.join(dpath, term.name)
 
     # Write term JSON file.
-    with io.open(fpath, 'w') as fstream:
+    with open(fpath, 'w') as fstream:
         fstream.write(encode(term))

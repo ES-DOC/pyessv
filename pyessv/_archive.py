@@ -13,7 +13,7 @@
 """
 from pyessv._cache import cache
 from pyessv._cache import get_cached
-from pyessv._io import write
+from pyessv._io_manager import write
 
 
 
