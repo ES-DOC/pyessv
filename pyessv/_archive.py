@@ -65,4 +65,4 @@ def _format_name(name):
 
     """
     if name is not None:
-        return str(name).strip().lower()
+        return str(name).strip().lower().replace("_", "-")
