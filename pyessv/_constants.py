@@ -76,6 +76,3 @@ REGEX_CANONICAL_NAME = re.compile(r'^[A-z0-9\-\ \.]*$')
 
 # Regular expression for validating a label.
 REGEX_LABEL = '/&'
-
-# Regular expression for validating a url.
-REGEX_URL = re.compile(r'^(?!www\.|(?:http|ftp)s?://|[A-Za-z]:\\|//).*')

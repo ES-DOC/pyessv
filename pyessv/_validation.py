@@ -19,7 +19,6 @@ from pyessv._constants import ENTITY_TYPE_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._constants import REGEX_LABEL
-from pyessv._constants import REGEX_URL
 from pyessv._model import ENTITY_TYPES
 from pyessv._model import Authority
 from pyessv._model import Collection

@@ -136,21 +136,11 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
     """Instantiates, initialises & returns an entity.
 
     """
-    # Validate inputs.
-    validate_canonical_name(name, 'name')
-    validate_str(description, 'description')
-    if url is not None:
-        validate_url(url, 'url')
-    if create_date is not None:
-        validate_date(create_date, 'create-date')
-    if data is not None:
-        validate_data(data, 'data')
-    if owner is not None:
-        validate_entity(owner)
-
     # Format inputs.
-    name = str(name).strip()
-    description = str(description).strip()
+    if name is not None:
+        name = str(name).strip().lower()
+    if description is not None:
+        description = str(description).strip()
     if url is not None:
         url = str(url).strip()
 
@@ -158,13 +148,11 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
     instance = typeof()
     instance.description = description
     instance.label = name
-    instance.name = name.lower()
-    if create_date:
-        instance.create_date = create_date
-    if data is not None:
-        instance.data = data
-    if url is not None:
-        instance.url = url
+    instance.name = name
+    instance.create_date = create_date or arrow.utcnow().datetime
+    instance.data = data
+    instance.uid = uuid.uuid4()
+    instance.url = url
 
     # Set associative attributes.
     if owner is not None:

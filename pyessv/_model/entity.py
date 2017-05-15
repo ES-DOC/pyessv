@@ -31,13 +31,13 @@ class Entity(object):
         """Instance constructor.
 
         """
-        self.create_date = arrow.utcnow().datetime
+        self.create_date = None
         self.data = None
         self.description = None
         self.label = None
         self.name = None
         self.typekey = typekey
-        self.uid = uuid.uuid4()
+        self.uid = None
         self.url = None
 
 
