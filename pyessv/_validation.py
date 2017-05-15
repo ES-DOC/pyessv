@@ -13,6 +13,7 @@
 """
 import datetime
 import inspect
+import re
 import uuid
 
 from pyessv._constants import ENTITY_TYPE_SET
@@ -71,51 +72,18 @@ def validate_entity(instance):
     return errs
 
 
-def validate_canonical_name(name, field):
-    """Validates a canonical name.
-
-    """
-    validate_str(name, field)
-    if REGEX_CANONICAL_NAME.match(name) is None:
-        raise ValueError('invalid name: {} :: {}'.format(field, name))
-
-
-def validate_data(data, field):
-    """Validates a term's data.
-
-    """
-    if not isinstance(data, dict):
-        raise ValueError('invalid term data: {}'.format(field))
-
-
-def validate_date(val, field):
-    """Validates a date field value.
-
-    """
-    if not isinstance(val, datetime.datetime):
-        raise ValueError('invalid date: {}'.format(field))
-
-
-def validate_str(val, field):
-    """Validates a string field value.
-
-    """
-    if val is None:
-        raise ValueError('undefined {}'.format(field))
-    if not isinstance(val, basestring):
-        raise ValueError('invalid {} (str test failed)'.format(field))
-    if not len(val.strip()):
-        raise ValueError('invalid {} (>0 length test failed)'.format(field))
-
-
-def validate_url(val, field):
+def _validate_url(val, field):
     """Validates a url field value.
 
     """
-    validate_str(val, field)
-    url = urlparse(val)
-    if not url.netloc or not url.scheme:
-        raise ValueError('invalid url: {}'.format(field))
+    if not isinstance(val, basestring):
+        raise ValueError('invalid {} (str test failed)'.format(field))
+    elif not len(val.strip()):
+        raise ValueError('invalid {} (>0 length test failed)'.format(field))
+    else:
+        url = urlparse(val)
+        if not url.netloc or not url.scheme:
+            raise ValueError('invalid url: {}'.format(field))
 
 
 def _validate_field(instance, type_info):
@@ -164,15 +132,26 @@ def _validate_iterable(field, val, is_mandatory, typeof, misc):
     if [i for i in val if not isinstance(i, typeof)]:
         raise ValueError('item type mismatch')
 
+    # Error: url.
+    elif misc == 'url':
+        for i in [i for i in val if i is not None]:
+            _validate_url(i, field)
+
+    # Error: regex.
+    elif isinstance(misc, basestring):
+        for i in [i for i in val if i is not None]:
+            if re.compile(misc).match(i) is None:
+                raise ValueError('failed reg-ex validation {}'.format(misc))
+
     # Error: enum.
-    if isinstance(misc, tuple):
+    elif isinstance(misc, tuple):
         if [i for i in val if i not in misc]:
             raise ValueError('item not in enum')
 
     # Error: function.
-    if inspect.isfunction(misc):
-        for i in [i for i in val if i is not None]:
-            misc(i, field)
+    elif inspect.isfunction(misc):
+        for val in [i for i in val if i is not None]:
+            misc(val, field)
 
 
 def _validate_value(field, val, is_mandatory, typeof, misc):
@@ -188,19 +167,30 @@ def _validate_value(field, val, is_mandatory, typeof, misc):
         if not isinstance(val, typeof):
             raise ValueError('type mismatch: {} :: {} :: {}'.format(type(val), typeof, val))
 
+        # Error: url.
+        elif misc == 'url':
+            _validate_url(val, field)
+
+        # Error: regex.
+        elif isinstance(misc, basestring):
+            if len(val.strip()) == 0:
+                raise ValueError('invalid string length')
+            elif re.compile(misc).match(val) is None:
+                raise ValueError('failed reg-ex validation {}'.format(misc))
+
         # Error: enum.
-        if isinstance(misc, tuple):
+        elif isinstance(misc, tuple):
             if val not in misc:
                 raise ValueError('not in enum')
 
+        # Error: function.
+        elif inspect.isfunction(misc):
+            misc(val, field)
+
         # Error: string length.
-        if isinstance(val, basestring):
+        elif isinstance(val, basestring):
             if len(val.strip()) == 0:
                 raise ValueError('invalid string length')
-
-        # Error: function.
-        if inspect.isfunction(misc):
-            misc(val, field)
 
 
 # Type information applying to all entities.
@@ -209,10 +199,10 @@ _STANDARD_TYPE_INFO = {
     ('data', dict, '0.1'),
     ('description', basestring, '1.1'),
     ('label', basestring, '1.1'),
-    ('name', basestring, '1.1', validate_canonical_name),
+    ('name', basestring, '1.1', REGEX_CANONICAL_NAME),
     ('typekey', basestring, '1.1', tuple(ENTITY_TYPE_SET)),
     ('uid', uuid.UUID, '1.1'),
-    ('url', basestring, '0.1', validate_url)
+    ('url', basestring, '0.1', 'url')
 }
 
 # Map of types to tuples containing validation info.
@@ -229,12 +219,13 @@ _ENTITY_TYPE_INFO = {
         ('collections', Collection, '0.N'),
     }),
     Term: _STANDARD_TYPE_INFO.union({
-        ('alternative_name', basestring, '0.1', validate_canonical_name),
-        ('alternative_url', basestring, '0.1', validate_url),
+        ('alternative_name', basestring, '0.1', REGEX_CANONICAL_NAME),
+        ('alternative_url', basestring, '0.1', 'url'),
         ('collection', Collection, '1.1'),
+        ('data', dict, '0.1'),
         ('idx', int, '1.1'),
         ('parent', Term, '0.1'),
         ('status', basestring, '1.1', tuple(GOVERNANCE_STATUS_SET)),
-        ('synonyms', basestring, '0.N', validate_canonical_name),
+        ('synonyms', basestring, '0.N', REGEX_CANONICAL_NAME),
     })
 }

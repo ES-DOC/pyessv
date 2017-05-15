@@ -27,12 +27,7 @@ from pyessv._model import Entity
 from pyessv._model import Scope
 from pyessv._model import Collection
 from pyessv._model import Term
-from pyessv._validation import validate_canonical_name
-from pyessv._validation import validate_data
-from pyessv._validation import validate_date
 from pyessv._validation import validate_entity
-from pyessv._validation import validate_str
-from pyessv._validation import validate_url
 
 
 def create_authority(name, description, url=None, create_date=None, data=None):
