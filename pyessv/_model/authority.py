@@ -33,14 +33,15 @@ class Authority(Entity):
         """Returns number of items in managed collection.
 
         """
-        return Entity.get_count(self)
+        return len(self.scopes)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.get_iter(self)
+        return iter(sorted(self.scopes,
+                           key=lambda i: i if isinstance(i, basestring) else i.name))
 
 
     def __getitem__(self, key):
@@ -55,6 +56,30 @@ class Authority(Entity):
 
         """
         return self[key] is not None
+
+
+    @property
+    def ancestors(self):
+        """Gets ancestors within archive hierarchy.
+
+        """
+        return []
+
+
+    @property
+    def hierarchy(self):
+        """Gets hierachy within archive.
+
+        """
+        return [self]
+
+
+    @property
+    def namespace(self):
+        """Returns namespace used in I/O scenarios.
+
+        """
+        return self.name
 
 
     def parse(self, scope_name, strict=True):

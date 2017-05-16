@@ -46,6 +46,30 @@ class Term(Entity):
 
 
     @property
+    def hierarchy(self):
+        """Gets hierachy within archive.
+
+        """
+        return [self.authority, self.scope, self.collection, self]
+
+
+    @property
+    def ancestors(self):
+        """Gets ancestors within archive hierarchy.
+
+        """
+        return [self.authority, self.scope, self.collection]
+
+
+    @property
+    def namespace(self):
+        """Returns namespace used in I/O scenarios.
+
+        """
+        return "{}:{}".format(self.collection.namespace, self.name)
+
+
+    @property
     def owner(self):
         """Gets owner within vocabulary model.
 

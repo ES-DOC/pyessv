@@ -28,20 +28,22 @@ class Collection(Entity):
 
         self.scope = None
         self.terms = list()
+        self.name_regex = None
 
 
     def __len__(self):
         """Returns number of terms in managed collection.
 
         """
-        return Entity.get_count(self)
+        return len(self.terms)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.get_iter(self)
+        return iter(sorted(self.terms,
+                           key=lambda i: i if isinstance(i, basestring) else i.name))
 
 
     def __getitem__(self, key):
@@ -56,6 +58,30 @@ class Collection(Entity):
 
         """
         return self[key] is not None
+
+
+    @property
+    def hierarchy(self):
+        """Gets hierachy within archive.
+
+        """
+        return [self.authority, self.scope, self]
+
+
+    @property
+    def namespace(self):
+        """Returns namespace used in I/O scenarios.
+
+        """
+        return "{}:{}".format(self.scope.namespace, self.name)
+
+
+    @property
+    def ancestors(self):
+        """Gets ancestors within archive hierarchy.
+
+        """
+        return [self.authority, self.scope]
 
 
     @property

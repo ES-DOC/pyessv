@@ -48,14 +48,6 @@ class Entity(object):
         return self.namespace
 
 
-    @property
-    def namespace(self):
-        """Gets namespace.
-
-        """
-        return Entity.get_namespace(self)
-
-
     def validate(self):
         """Validates instance.
 
@@ -86,89 +78,17 @@ class Entity(object):
 
 
     @staticmethod
-    def get_namespace(entity):
-        """Returns namespace used in I/O scenarios.
-
-        """
-        return ':'.join([i.name for i in Entity.get_hierarchy(entity)])
-
-
-    @staticmethod
-    def get_hierarchy(entity):
-        """Returns an entity's hierachy within the archive.
-
-        """
-        if entity.typekey == ENTITY_TYPE_AUTHORITY:
-            hierachy = []
-        elif entity.typekey == ENTITY_TYPE_SCOPE:
-            hierachy = Entity.get_hierarchy(entity.authority)
-        elif entity.typekey == ENTITY_TYPE_COLLECTION:
-            hierachy = Entity.get_hierarchy(entity.scope)
-        elif entity.typekey == ENTITY_TYPE_TERM:
-            hierachy = Entity.get_hierarchy(entity.collection)
-        hierachy.append(entity)
-
-        return hierachy
-
-
-    @staticmethod
-    def get_ancestors(entity):
-        """Returns an entity's ancestors within the archive.
-
-        """
-        return Entity.get_hierarchy(entity)[0:-1]
-
-
-    @staticmethod
-    def get_ancestor(entity):
-        """Returns an entity's ancestor within the archive.
-
-        """
-        try:
-            return Entity.get_ancestors(entity)[-1]
-        except IndexError:
-            pass
-
-
-    @staticmethod
-    def get_collection(entity):
-        """Returns associated managed collection.
-
-        """
-        if entity.typekey == ENTITY_TYPE_AUTHORITY:
-            return entity.scopes
-        elif entity.typekey == ENTITY_TYPE_COLLECTION:
-            return entity.terms
-        elif entity.typekey == ENTITY_TYPE_SCOPE:
-            return entity.collections
-        elif entity.typekey == ENTITY_TYPE_TERM:
-            raise NotImplementedError()
-
-
-    @staticmethod
-    def get_count(entity):
-        """Returns associated managed collection count.
-
-        """
-        return len(Entity.get_collection(entity))
-
-
-    @staticmethod
-    def get_iter(entity):
-        """Returns an iterator over managed collection.
-
-        """
-        items = Entity.get_collection(entity)
-
-        return iter(sorted(items, key=lambda i: i if isinstance(i, basestring) else i.name))
-
-
-    @staticmethod
     def get_item(entity, key):
         """Returns an item from managed collection.
 
         """
-        items = Entity.get_collection(entity)
+        # Set collection.
+        if entity.typekey == ENTITY_TYPE_AUTHORITY:
+            items = entity.scopes
+        elif entity.typekey == ENTITY_TYPE_COLLECTION:
+            items = entity.terms
+        elif entity.typekey == ENTITY_TYPE_SCOPE:
+            items = entity.collections
 
         # Set comparator to be used.
         if isinstance(key, int):
@@ -198,6 +118,3 @@ class Entity(object):
             for item in items:
                 if key in item.synonyms:
                     return item
-
-
-

@@ -19,7 +19,6 @@ import uuid
 from pyessv._constants import ENTITY_TYPE_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._constants import REGEX_LABEL
 from pyessv._model import ENTITY_TYPES
 from pyessv._model import Authority
 from pyessv._model import Collection
@@ -62,170 +61,216 @@ def validate_entity(instance):
     if not isinstance(instance, ENTITY_TYPES):
         raise NotImplementedError('Invalid instance: unknown type')
 
+    validators = _validate_core()
+    if isinstance(instance, Authority):
+        validators += _validate_authority()
+    elif isinstance(instance, Scope):
+        validators += _validate_scope()
+    elif isinstance(instance, Collection):
+        validators += _validate_collection()
+    elif isinstance(instance, Term):
+        validators += _validate_term()
+
     errs = set()
-    for field_info in _ENTITY_TYPE_INFO[type(instance)]:
+    for validator in validators:
         try:
-            _validate_field(instance, field_info)
+            validator(instance)
         except ValueError as err:
             errs.add('{}.{}'.format(instance.__class__.__name__, err.message))
 
     return errs
 
 
-def _validate_url(val, field):
-    """Validates a url field value.
+def _validate_core():
+    """Returns common instance validators.
 
     """
-    if not isinstance(val, basestring):
-        raise ValueError('invalid {} (str test failed)'.format(field))
-    elif not len(val.strip()):
-        raise ValueError('invalid {} (>0 length test failed)'.format(field))
-    else:
-        url = urlparse(val)
+    def _validate_create_date(i):
+        if isinstance(i.create_date, datetime.datetime) == False:
+            raise ValueError("Invalid create_date")
+
+    def _validate_data(i):
+        if i.data is None:
+            return
+        if isinstance(i.data, dict) == False:
+            raise ValueError("Invalid data")
+
+    def _validate_description(i):
+        if isinstance(i.description, basestring) == False or \
+           len(i.description.strip()) == 0:
+            raise ValueError("Invalid description")
+
+    def _validate_label(i):
+        if isinstance(i.label, basestring) == False or \
+           len(i.label.strip()) == 0:
+            raise ValueError("Invalid label")
+
+    def _validate_typekey(i):
+        if i.typekey not in ENTITY_TYPE_SET:
+            raise ValueError("Invalid typekey")
+
+    def _validate_uid(i):
+        if isinstance(i.uid, uuid.UUID) == False:
+            raise ValueError("Invalid uid")
+
+    def _validate_url(i):
+        if i.url is None:
+            return
+        if isinstance(i.url, basestring) == False or \
+           len(i.url.strip()) == 0:
+            raise ValueError("Invalid url")
+        url = urlparse(i.url)
         if not url.netloc or not url.scheme:
-            raise ValueError('invalid url: {}'.format(field))
+            raise ValueError('invalid url')
 
 
-def _validate_field(instance, type_info):
-    """Validates a field.
-
-    """
-    # Unpack type info.
-    try:
-        field, typeof, cardinality, misc = type_info
-    except ValueError:
-        field, typeof, cardinality = type_info
-        misc = None
-
-    # Error: unknown field.
-    if not hasattr(instance, field):
-        raise ValueError('{}: unknown'.format(field))
-
-    # Set validation function.
-    if cardinality in {'0.N', '1.N'}:
-        func = _validate_iterable
-    else:
-        func = _validate_value
-
-    # Execute validation function.
-    val = getattr(instance, field)
-    is_mandatory = (cardinality in {'1.1', '1.N'})
-    try:
-        func(field, val, is_mandatory, typeof, misc)
-    except ValueError as err:
-        raise ValueError('{}: {}'.format(field, err))
+    return [
+        _validate_create_date,
+        _validate_data,
+        _validate_description,
+        _validate_label,
+        _validate_typekey,
+        _validate_uid,
+        _validate_url
+    ]
 
 
-def _validate_iterable(field, val, is_mandatory, typeof, misc):
-    """Validates an iterable field value.
+def _validate_authority():
+    """Returns Authority instance validators.
 
     """
-    # Error: type mismatch.
-    if not isinstance(val, list):
-        raise ValueError('type')
+    def _validate_scopes(i):
+        if isinstance(i.scopes, list) == False or \
+           [j for j in i.scopes if isinstance(j, Scope) == False]:
+            raise ValueError("Invalid scopes")
 
-    # Error: length.
-    if is_mandatory and len(val) == 0:
-        raise ValueError('undefined')
+    def _validate_name(i):
+        if isinstance(i.name, basestring) == False or \
+           len(i.name.strip()) == 0 or \
+           re.compile(REGEX_CANONICAL_NAME).match(i.name) is None:
+            raise ValueError("Invalid name")
 
-    # Error: type mismatch.
-    if [i for i in val if not isinstance(i, typeof)]:
-        raise ValueError('item type mismatch')
-
-    # Error: url.
-    elif misc == 'url':
-        for i in [i for i in val if i is not None]:
-            _validate_url(i, field)
-
-    # Error: regex.
-    elif isinstance(misc, basestring):
-        for i in [i for i in val if i is not None]:
-            if re.compile(misc).match(i) is None:
-                raise ValueError('failed reg-ex validation {}'.format(misc))
-
-    # Error: enum.
-    elif isinstance(misc, tuple):
-        if [i for i in val if i not in misc]:
-            raise ValueError('item not in enum')
-
-    # Error: function.
-    elif inspect.isfunction(misc):
-        for val in [i for i in val if i is not None]:
-            misc(val, field)
+    return [
+        _validate_scopes,
+        _validate_name
+        ]
 
 
-def _validate_value(field, val, is_mandatory, typeof, misc):
-    """Validates an iterable field value.
+def _validate_scope():
+    """Returns Scope instance validators.
 
     """
-    # Error: mandatory.
-    if val is None and is_mandatory:
-        raise ValueError('undefined')
+    def _validate_authority(i):
+        if isinstance(i.authority, Authority) == False:
+            raise ValueError("Invalid authority")
 
-    if val is not None:
-        # Error: type mismatch.
-        if not isinstance(val, typeof):
-            raise ValueError('type mismatch: {} :: {} :: {}'.format(type(val), typeof, val))
+    def _validate_collections(i):
+        if isinstance(i.collections, list) == False or \
+           [j for j in i.collections if isinstance(j, Collection) == False]:
+            raise ValueError("Invalid collections")
 
-        # Error: url.
-        elif misc == 'url':
-            _validate_url(val, field)
+    def _validate_name(i):
+        if isinstance(i.name, basestring) == False or \
+           len(i.name.strip()) == 0 or \
+           re.compile(REGEX_CANONICAL_NAME).match(i.name) is None:
+            raise ValueError("Invalid name")
 
-        # Error: regex.
-        elif isinstance(misc, basestring):
-            if len(val.strip()) == 0:
-                raise ValueError('invalid string length')
-            elif re.compile(misc).match(val) is None:
-                raise ValueError('failed reg-ex validation {}'.format(misc))
-
-        # Error: enum.
-        elif isinstance(misc, tuple):
-            if val not in misc:
-                raise ValueError('not in enum')
-
-        # Error: function.
-        elif inspect.isfunction(misc):
-            misc(val, field)
-
-        # Error: string length.
-        elif isinstance(val, basestring):
-            if len(val.strip()) == 0:
-                raise ValueError('invalid string length')
+    return [
+        _validate_authority,
+        _validate_collections,
+        _validate_name
+        ]
 
 
-# Type information applying to all entities.
-_STANDARD_TYPE_INFO = {
-    ('create_date', datetime.datetime, '1.1'),
-    ('data', dict, '0.1'),
-    ('description', basestring, '1.1'),
-    ('label', basestring, '1.1'),
-    ('name', basestring, '1.1', REGEX_CANONICAL_NAME),
-    ('typekey', basestring, '1.1', tuple(ENTITY_TYPE_SET)),
-    ('uid', uuid.UUID, '1.1'),
-    ('url', basestring, '0.1', 'url')
-}
+def _validate_collection():
+    """Returns Collection instance validators.
 
-# Map of types to tuples containing validation info.
-_ENTITY_TYPE_INFO = {
-    Authority: _STANDARD_TYPE_INFO.union({
-        ('scopes', Scope, '0.N'),
-    }),
-    Collection: _STANDARD_TYPE_INFO.union({
-        ('scope', Scope, '1.1'),
-        ('terms', Term, '0.N'),
-    }),
-    Scope: _STANDARD_TYPE_INFO.union({
-        ('authority', Authority, '1.1'),
-        ('collections', Collection, '0.N'),
-    }),
-    Term: _STANDARD_TYPE_INFO.union({
-        ('alternative_name', basestring, '0.1', REGEX_CANONICAL_NAME),
-        ('alternative_url', basestring, '0.1', 'url'),
-        ('collection', Collection, '1.1'),
-        ('data', dict, '0.1'),
-        ('idx', int, '1.1'),
-        ('parent', Term, '0.1'),
-        ('status', basestring, '1.1', tuple(GOVERNANCE_STATUS_SET)),
-        ('synonyms', basestring, '0.N', REGEX_CANONICAL_NAME),
-    })
-}
+    """
+    def _validate_scope(i):
+        if isinstance(i.scope, Scope) == False:
+            raise ValueError("Invalid scope")
+
+    def _validate_terms(i):
+        if isinstance(i.terms, list) == False or \
+           [j for j in i.terms if isinstance(j, Term) == False]:
+            raise ValueError("Invalid terms")
+
+    def _validate_name(i):
+        if isinstance(i.name, basestring) == False or \
+           len(i.name.strip()) == 0 or \
+           re.compile(REGEX_CANONICAL_NAME).match(i.name) is None:
+            raise ValueError("Invalid name")
+
+    return [
+        _validate_scope,
+        _validate_terms,
+        _validate_name
+        ]
+
+
+def _validate_term():
+    """Returns Term instance validators.
+
+    """
+    def validate_alternative_name(i):
+        if i.alternative_name is None:
+            return
+        if isinstance(i.alternative_name, basestring) == False or \
+           len(i.alternative_name.strip()) == 0:
+            raise ValueError("Invalid alternative_name")
+
+    def validate_alternative_url(i):
+        if i.alternative_url is None:
+            return
+        if isinstance(i.alternative_url, basestring) == False or \
+           len(i.alternative_url.strip()) == 0:
+            raise ValueError("Invalid alternative_url")
+        url = urlparse(i.alternative_url)
+        if not url.netloc or not url.scheme:
+            raise ValueError('invalid alternative_url')
+
+    def validate_collection(i):
+        if isinstance(i.collection, Collection) == False:
+            raise ValueError("Invalid collection")
+
+    def validate_idx(i):
+        if isinstance(i.idx, int) == False:
+            raise ValueError("Invalid idx")
+
+    def _validate_name(i):
+        if i.collection.name_regex is None:
+            reg_ex = REGEX_CANONICAL_NAME
+        else:
+            reg_ex = i.collection.name_regex
+        if isinstance(i.name, basestring) == False or \
+           len(i.name.strip()) == 0 or \
+           re.compile(reg_ex).match(i.name) is None:
+            raise ValueError("Invalid name")
+
+
+    def validate_parent(i):
+        if i.parent is None:
+            return
+        if isinstance(i.parent, Term) == False:
+            raise ValueError("Invalid parent")
+
+    def validate_status(i):
+        if i.status not in GOVERNANCE_STATUS_SET:
+            raise ValueError("Invalid status")
+
+    def validate_synonyms(i):
+        if isinstance(i.synonyms, list) == False or \
+           [j for j in i.synonyms if isinstance(j, basestring) == False] or \
+           [j for j in i.synonyms if len(j) == 0]:
+            raise ValueError("Invalid synonyms")
+
+    return [
+        validate_alternative_name,
+        validate_alternative_url,
+        validate_collection,
+        validate_idx,
+        _validate_name,
+        validate_parent,
+        validate_status,
+        validate_synonyms
+        ]

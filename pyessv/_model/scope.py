@@ -34,14 +34,15 @@ class Scope(Entity):
         """Returns number of items in managed collection.
 
         """
-        return Entity.get_count(self)
+        return len(self.collections)
 
 
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        return Entity.get_iter(self)
+        return iter(sorted(self.collections,
+                           key=lambda i: i if isinstance(i, basestring) else i.name))
 
 
     def __getitem__(self, key):
@@ -56,6 +57,30 @@ class Scope(Entity):
 
         """
         return self[key] is not None
+
+
+    @property
+    def ancestors(self):
+        """Gets ancestors within archive hierarchy.
+
+        """
+        return [self.authority]
+
+
+    @property
+    def hierarchy(self):
+        """Gets hierachy within archive.
+
+        """
+        return [self.authority, self]
+
+
+    @property
+    def namespace(self):
+        """Returns namespace used in I/O scenarios.
+
+        """
+        return "{}:{}".format(self.authority.namespace, self.name)
 
 
     @property

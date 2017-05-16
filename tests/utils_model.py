@@ -100,7 +100,7 @@ def create_collection():
     return TEST_COLLECTION
 
 
-def create_term():
+def create_term(collection=None):
     """Creates & returns a test term.
 
     """
@@ -108,7 +108,7 @@ def create_term():
 
     if TEST_TERM is None:
         TEST_TERM = LIB.create_term(
-            TEST_COLLECTION or create_collection(),
+            collection or TEST_COLLECTION or create_collection(),
             TEST_TERM_NAME,
             TEST_TERM_DESCRIPTION,
             TEST_TERM_URL

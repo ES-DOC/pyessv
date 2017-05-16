@@ -64,15 +64,12 @@ GOVERNANCE_STATUS_PENDING = 'pending'
 GOVERNANCE_STATUS_REJECTED = 'rejected'
 
 # Set of allowed governance states.
-GOVERNANCE_STATUS_SET = set([
+GOVERNANCE_STATUS_SET = (
     GOVERNANCE_STATUS_PENDING,
     GOVERNANCE_STATUS_ACCEPTED,
     GOVERNANCE_STATUS_REJECTED,
     GOVERNANCE_STATUS_DEPRECATED
-])
+)
 
 # Regular expression for validating a canonical name.
 REGEX_CANONICAL_NAME = r'^[A-z0-9\-\ \.]*$'
-
-# Regular expression for validating a label.
-REGEX_LABEL = '/&'

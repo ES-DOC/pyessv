@@ -78,7 +78,7 @@ def create_scope(authority, name, description, url=None, create_date=None, data=
 
 
 
-def create_collection(scope, name, description, url=None, create_date=None, data=None):
+def create_collection(scope, name, description, url=None, create_date=None, data=None, name_regex=None):
     """Instantiates, initialises & returns a term collection.
 
     :param pyessv.Scope scope: CV scope to which collection is bound.
@@ -94,6 +94,7 @@ def create_collection(scope, name, description, url=None, create_date=None, data
     """
     instance = _create_entity(Collection, name, description, url, create_date, data, scope)
     instance.scope = scope
+    instance.name_regex = name_regex
 
     errors = validate_entity(instance)
     if errors:
@@ -118,7 +119,7 @@ def create_term(collection, name, description, url=None, create_date=None, data=
     """
     instance = _create_entity(Term, name, description, url, create_date, data, collection)
     instance.collection = collection
-    instance.idx = Entity.get_count(collection)
+    instance.idx = len(collection)
 
     errors = validate_entity(instance)
     if errors:
@@ -150,7 +151,21 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
     instance.url = url
 
     # Set associative attributes.
+    if isinstance(instance, Authority):
+        pass
+    elif isinstance(instance, Scope):
+        instance.authority = owner
+    elif isinstance(instance, Collection):
+        instance.scope = owner
+    elif isinstance(instance, Term):
+        instance.collection = owner
+
     if owner is not None:
-        Entity.get_collection(owner).append(instance)
+        if isinstance(owner, Authority):
+            owner.scopes.append(instance)
+        elif isinstance(owner, Scope):
+            owner.collections.append(instance)
+        elif isinstance(owner, Collection):
+            owner.terms.append(instance)
 
     return instance
