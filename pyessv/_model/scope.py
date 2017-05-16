@@ -80,7 +80,7 @@ class Scope(Entity):
         """Returns namespace used in I/O scenarios.
 
         """
-        return "{}:{}".format(self.authority.namespace, self.name)
+        return '{}:{}'.format(self.authority.namespace, self.name)
 
 
     @property

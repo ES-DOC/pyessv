@@ -81,4 +81,4 @@ def _setup():
         LIB.load('wcrp', 'cmip6', 'experiment-id')
         )
     for template in _TEMPLATES:
-        _EXPRESSIONS[template] = LIB.create_expression(template, collections)
+        _EXPRESSIONS[template] = LIB.create_template_parser(template, collections)

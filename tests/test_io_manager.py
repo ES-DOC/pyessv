@@ -62,7 +62,7 @@ def test_write():
     """
     authority_dirs = os.listdir(LIB.DIR_ARCHIVE)
     authority_dir = os.path.join(LIB.DIR_ARCHIVE, tu.TEST_AUTHORITY_NAME)
-    authority_manifest = os.path.join(authority_dir, "MANIFEST")
+    authority_manifest = os.path.join(authority_dir, 'MANIFEST')
     scope_dir = os.path.join(authority_dir, tu.TEST_SCOPE_NAME)
     collection_dir = os.path.join(scope_dir, tu.TEST_COLLECTION_NAME)
     term_file = os.path.join(collection_dir, tu.TEST_TERM_NAME)

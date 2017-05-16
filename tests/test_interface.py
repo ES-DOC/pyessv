@@ -59,7 +59,7 @@ _FUNCS = {
     # ... factory
     'create_authority',
     'create_collection',
-    'create_expression',
+    'create_template_parser',
     'create_scope',
     'create_term',
     # ... initialisation

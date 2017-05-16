@@ -64,11 +64,11 @@ def test_encode():
         (tu.create_collection, LIB.Collection),
         (tu.create_term, LIB.Term)
         ):
-        desc = 'encode --> {} --> dict'.format(str(typeof).split(".")[-1][0:-2].lower())
+        desc = 'encode --> {} --> dict'.format(str(typeof).split('.')[-1][0:-2].lower())
         tu.init(_test, desc)
         yield _test, func, typeof, LIB.ENCODING_DICT
 
-        desc = 'encode --> {} --> json'.format(str(typeof).split(".")[-1][0:-2].lower())
+        desc = 'encode --> {} --> json'.format(str(typeof).split('.')[-1][0:-2].lower())
         tu.init(_test, desc)
         yield _test, func, typeof, LIB.ENCODING_JSON
 
@@ -95,10 +95,10 @@ def test_decode():
         (tu.create_collection, LIB.Collection),
         (tu.create_term, LIB.Term)
         ):
-        desc = 'decode --> {} --> dict'.format(str(typeof).split(".")[-1][0:-2].lower())
+        desc = 'decode --> {} --> dict'.format(str(typeof).split('.')[-1][0:-2].lower())
         tu.init(_test, desc)
         yield _test, func, typeof, LIB.ENCODING_DICT
 
-        desc = 'decode --> {} --> json'.format(str(typeof).split(".")[-1][0:-2].lower())
+        desc = 'decode --> {} --> json'.format(str(typeof).split('.')[-1][0:-2].lower())
         tu.init(_test, desc)
         yield _test, func, typeof, LIB.ENCODING_JSON

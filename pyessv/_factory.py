@@ -124,8 +124,8 @@ def create_term(collection, name, description, url=None, create_date=None, data=
     return instance
 
 
-def create_expression(template, collections):
-    """Instantiates, initialises & returns a vocabulary expression manager.
+def create_template_parser(template, collections):
+    """Instantiates, initialises & returns a template parser.
 
     :param str template: An expression template.
     :param tuple collections: Collections that the template maps to.
@@ -139,7 +139,7 @@ def create_expression(template, collections):
     assert len(template) > 0, 'Invalid template'
     assert len(collections) > 0, 'Invalid collections'
     assert len([i for i in collections if not isinstance(i, Collection)]) ==0, 'Invalid collections'
-    assert template.count("{}") == len(collections), 'Invalid template'
+    assert template.count('{}') == len(collections), 'Invalid template'
 
     return Expression(template, collections)
 
@@ -148,14 +148,6 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
     """Instantiates, initialises & returns an entity.
 
     """
-    # Format inputs.
-    if name is not None:
-        name = str(name).strip().lower()
-    if description is not None:
-        description = str(description).strip()
-    if url is not None:
-        url = str(url).strip()
-
     # Set core attributes.
     instance = typeof()
     instance.description = description

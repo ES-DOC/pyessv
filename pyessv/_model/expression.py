@@ -13,6 +13,7 @@
 """
 import pyessv
 from pyessv._model.collection import Collection
+from pyessv._exceptions import TemplateParsingError
 
 
 
@@ -25,17 +26,19 @@ class Expression(object):
 
         """
         if [i for i in collections if not isinstance(i, Collection)]:
-            raise ValueError("Invalid collections")
-        if template.count("{}") != len(collections):
-            raise ValueError("Invalid expression: template & number of collections are mismatched")
+            raise ValueError('Invalid collections')
+        if template.count('{}') != len(collections):
+            raise ValueError('Invalid expression: template & number of collections are mismatched')
 
         self.template = template
-        self.parts = template.split("{}")
+        self.parts = template.split('{}')
         self.collections = collections
 
 
-
     def parse(self, val):
+        """Parses a val against a template.
+
+        """
         parsed = ''
         for idx, collection in enumerate(self.collections):
             parsed += self.parts[idx]
@@ -45,9 +48,9 @@ class Expression(object):
                 if found:
                     break
             if found == False:
-                raise ValueError("Invalid expression")
+                raise TemplateParsingError(val)
             parsed += term.name
 
         parsed += self.parts[idx + 1]
         if not val == parsed:
-            raise ValueError("Invalid expression")
+            raise TemplateParsingError(val)

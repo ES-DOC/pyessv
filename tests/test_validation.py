@@ -81,15 +81,22 @@ def _test_entity_attr(factory, attr, valid_value, invalid_values):
 
 
 def test_regex_collection():
-    """pyessv-tests: validate --> reg-ex collection.
+    """pyessv-tests: validate --> reg-ex collection
+
+    """
+    collection = tu.create_collection()
+    collection.term_name_regex = r'^[a-z\-]*$'
+    term = tu.create_term(collection=collection)
+    term.name = 'abc-def'
+    assert LIB.is_valid(term) == True
+
+
+def test_regex_collection_negative():
+    """pyessv-tests: validate --> reg-ex collection --> negative
 
     """
     collection = tu.create_collection()
     collection.term_name_regex = r'^[a-z\-]*$'
     term = tu.create_term(collection=collection)
     term.name = 'ABC-DEF'
-    assert LIB.is_valid(term) == False, (term.name, LIB.get_errors(term))
-    term.name = 'abc-def'
-    assert LIB.is_valid(term) == True
-
-
+    assert LIB.is_valid(term) == False

@@ -66,7 +66,7 @@ class Term(Entity):
         """Returns namespace used in I/O scenarios.
 
         """
-        return "{}:{}".format(self.collection.namespace, self.name)
+        return '{}:{}'.format(self.collection.namespace, self.name)
 
 
     @property

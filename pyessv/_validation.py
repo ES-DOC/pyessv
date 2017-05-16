@@ -73,10 +73,11 @@ def validate_entity(instance):
 
     errs = set()
     for validator in validators:
+        field = validator.__name__.split("_validate_")[-1]
         try:
             validator(instance)
-        except ValueError as err:
-            errs.add('{}.{}'.format(instance.__class__.__name__, err.message))
+        except AssertionError as err:
+            errs.add('{}. Invalid {}'.format(instance.__class__.__name__, field))
 
     return errs
 
@@ -86,43 +87,27 @@ def _validate_core():
 
     """
     def _validate_create_date(i):
-        if isinstance(i.create_date, datetime.datetime) == False:
-            raise ValueError("Invalid create_date")
+        assert isinstance(i.create_date, datetime.datetime)
 
     def _validate_data(i):
-        if i.data is None:
-            return
-        if isinstance(i.data, dict) == False:
-            raise ValueError("Invalid data")
+        if i.data is not None:
+            assert isinstance(i.data, dict)
 
     def _validate_description(i):
-        if isinstance(i.description, basestring) == False or \
-           len(i.description.strip()) == 0:
-            raise ValueError("Invalid description")
+        _assert_string(i.description)
 
     def _validate_label(i):
-        if isinstance(i.label, basestring) == False or \
-           len(i.label.strip()) == 0:
-            raise ValueError("Invalid label")
+        _assert_string(i.label)
 
     def _validate_typekey(i):
-        if i.typekey not in ENTITY_TYPE_SET:
-            raise ValueError("Invalid typekey")
+        assert i.typekey in ENTITY_TYPE_SET
 
     def _validate_uid(i):
-        if isinstance(i.uid, uuid.UUID) == False:
-            raise ValueError("Invalid uid")
+        assert isinstance(i.uid, uuid.UUID)
 
     def _validate_url(i):
-        if i.url is None:
-            return
-        if isinstance(i.url, basestring) == False or \
-           len(i.url.strip()) == 0:
-            raise ValueError("Invalid url")
-        url = urlparse(i.url)
-        if not url.netloc or not url.scheme:
-            raise ValueError('invalid url')
-
+        if i.url is not None:
+            _assert_url(i.url)
 
     return [
         _validate_create_date,
@@ -140,15 +125,10 @@ def _validate_authority():
 
     """
     def _validate_scopes(i):
-        if isinstance(i.scopes, list) == False or \
-           [j for j in i.scopes if isinstance(j, Scope) == False]:
-            raise ValueError("Invalid scopes")
+        _assert_iterable(i.scopes, Scope)
 
     def _validate_name(i):
-        if isinstance(i.name, basestring) == False or \
-           len(i.name.strip()) == 0 or \
-           re.compile(REGEX_CANONICAL_NAME).match(i.name) is None:
-            raise ValueError("Invalid name")
+        _assert_string(i.name, REGEX_CANONICAL_NAME)
 
     return [
         _validate_scopes,
@@ -161,19 +141,13 @@ def _validate_scope():
 
     """
     def _validate_authority(i):
-        if isinstance(i.authority, Authority) == False:
-            raise ValueError("Invalid authority")
+        assert isinstance(i.authority, Authority)
 
     def _validate_collections(i):
-        if isinstance(i.collections, list) == False or \
-           [j for j in i.collections if isinstance(j, Collection) == False]:
-            raise ValueError("Invalid collections")
+        _assert_iterable(i.collections, Collection)
 
     def _validate_name(i):
-        if isinstance(i.name, basestring) == False or \
-           len(i.name.strip()) == 0 or \
-           re.compile(REGEX_CANONICAL_NAME).match(i.name) is None:
-            raise ValueError("Invalid name")
+        _assert_string(i.name, REGEX_CANONICAL_NAME)
 
     return [
         _validate_authority,
@@ -187,19 +161,13 @@ def _validate_collection():
 
     """
     def _validate_scope(i):
-        if isinstance(i.scope, Scope) == False:
-            raise ValueError("Invalid scope")
+        assert isinstance(i.scope, Scope)
 
     def _validate_terms(i):
-        if isinstance(i.terms, list) == False or \
-           [j for j in i.terms if isinstance(j, Term) == False]:
-            raise ValueError("Invalid terms")
+        _assert_iterable(i.terms, Term)
 
     def _validate_name(i):
-        if isinstance(i.name, basestring) == False or \
-           len(i.name.strip()) == 0 or \
-           re.compile(REGEX_CANONICAL_NAME).match(i.name) is None:
-            raise ValueError("Invalid name")
+        _assert_string(i.name, REGEX_CANONICAL_NAME)
 
     return [
         _validate_scope,
@@ -212,65 +180,75 @@ def _validate_term():
     """Returns Term instance validators.
 
     """
-    def validate_alternative_name(i):
-        if i.alternative_name is None:
-            return
-        if isinstance(i.alternative_name, basestring) == False or \
-           len(i.alternative_name.strip()) == 0:
-            raise ValueError("Invalid alternative_name")
+    def _validate_alternative_name(i):
+        if i.alternative_name is not None:
+            _assert_string(i.alternative_name)
 
-    def validate_alternative_url(i):
-        if i.alternative_url is None:
-            return
-        if isinstance(i.alternative_url, basestring) == False or \
-           len(i.alternative_url.strip()) == 0:
-            raise ValueError("Invalid alternative_url")
-        url = urlparse(i.alternative_url)
-        if not url.netloc or not url.scheme:
-            raise ValueError('invalid alternative_url')
+    def _validate_alternative_url(i):
+        if i.alternative_url is not None:
+            _assert_url(i.alternative_url)
 
-    def validate_collection(i):
-        if isinstance(i.collection, Collection) == False:
-            raise ValueError("Invalid collection")
+    def _validate_collection(i):
+        assert isinstance(i.collection, Collection)
 
-    def validate_idx(i):
-        if isinstance(i.idx, int) == False:
-            raise ValueError("Invalid idx")
+    def _validate_idx(i):
+        assert isinstance(i.idx, int)
 
     def _validate_name(i):
         if i.collection.term_name_regex is None:
             reg_ex = REGEX_CANONICAL_NAME
         else:
             reg_ex = i.collection.term_name_regex
-        if isinstance(i.name, basestring) == False or \
-           len(i.name.strip()) == 0 or \
-           re.compile(reg_ex).match(i.name) is None:
-            raise ValueError("Invalid name")
+        _assert_string(i.name, reg_ex)
 
+    def _validate_parent(i):
+        if i.parent is not None:
+            assert isinstance(i.parent, Term)
 
-    def validate_parent(i):
-        if i.parent is None:
-            return
-        if isinstance(i.parent, Term) == False:
-            raise ValueError("Invalid parent")
+    def _validate_status(i):
+        assert i.status in GOVERNANCE_STATUS_SET
 
-    def validate_status(i):
-        if i.status not in GOVERNANCE_STATUS_SET:
-            raise ValueError("Invalid status")
-
-    def validate_synonyms(i):
-        if isinstance(i.synonyms, list) == False or \
-           [j for j in i.synonyms if isinstance(j, basestring) == False] or \
-           [j for j in i.synonyms if len(j) == 0]:
-            raise ValueError("Invalid synonyms")
+    def _validate_synonyms(i):
+        _assert_iterable(i.synonyms, _assert_string)
 
     return [
-        validate_alternative_name,
-        validate_alternative_url,
-        validate_collection,
-        validate_idx,
+        _validate_alternative_name,
+        _validate_alternative_url,
+        _validate_collection,
+        _validate_idx,
         _validate_name,
-        validate_parent,
-        validate_status,
-        validate_synonyms
+        _validate_parent,
+        _validate_status,
+        _validate_synonyms
         ]
+
+
+def _assert_string(val, reg_ex=None):
+    """Asserts a string value.
+
+    """
+    assert isinstance(val, basestring)
+    assert len(val.strip()) > 0
+    if reg_ex:
+        assert re.compile(reg_ex).match(val) is not None
+
+
+def _assert_url(val):
+    """Asserts a url value.
+
+    """
+    _assert_string(val)
+    url = urlparse(val)
+    assert url.netloc and url.scheme
+
+
+def _assert_iterable(val, modifier):
+    """Asserts an iterable value.
+
+    """
+    assert isinstance(val, list)
+    for i in val:
+        if inspect.isfunction(modifier):
+            modifier(i)
+        else:
+            assert isinstance(i, modifier)

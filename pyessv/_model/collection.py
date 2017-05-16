@@ -73,7 +73,7 @@ class Collection(Entity):
         """Returns namespace used in I/O scenarios.
 
         """
-        return "{}:{}".format(self.scope.namespace, self.name)
+        return '{}:{}'.format(self.scope.namespace, self.name)
 
 
     @property

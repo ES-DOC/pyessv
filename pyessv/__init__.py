@@ -37,13 +37,14 @@ from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._constants import GOVERNANCE_STATUS_REJECTED
 
+from pyessv._exceptions import InvalidAssociationError
+from pyessv._exceptions import TemplateParsingError
 from pyessv._exceptions import ParsingError
 from pyessv._exceptions import ValidationError
-from pyessv._exceptions import InvalidAssociationError
 
 from pyessv._factory import create_authority
 from pyessv._factory import create_collection
-from pyessv._factory import create_expression
+from pyessv._factory import create_template_parser
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
 
