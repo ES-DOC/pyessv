@@ -43,6 +43,7 @@ from pyessv._exceptions import InvalidAssociationError
 
 from pyessv._factory import create_authority
 from pyessv._factory import create_collection
+from pyessv._factory import create_expression
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
 
@@ -52,6 +53,7 @@ from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
+from pyessv._model import Expression
 
 from pyessv._parser import parse
 from pyessv._parser import parse_namespace

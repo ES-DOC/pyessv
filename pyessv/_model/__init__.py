@@ -15,9 +15,10 @@ from pyessv._constants import ENTITY_TYPE_AUTHORITY
 from pyessv._constants import ENTITY_TYPE_COLLECTION
 from pyessv._constants import ENTITY_TYPE_SCOPE
 from pyessv._constants import ENTITY_TYPE_TERM
-from pyessv._model.entity import Entity
 from pyessv._model.authority import Authority
 from pyessv._model.collection import Collection
+from pyessv._model.entity import Entity
+from pyessv._model.expression import Expression
 from pyessv._model.scope import Scope
 from pyessv._model.term import Term
 

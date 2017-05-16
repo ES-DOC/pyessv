@@ -24,9 +24,11 @@ from pyessv._exceptions import ValidationError
 from pyessv._model import ENTITY_TYPE_KEY_MAP
 from pyessv._model import Authority
 from pyessv._model import Entity
+from pyessv._model import Expression
 from pyessv._model import Scope
 from pyessv._model import Collection
 from pyessv._model import Term
+from pyessv._utils.compat import basestring
 from pyessv._validation import validate_entity
 
 
@@ -44,13 +46,11 @@ def create_authority(name, description, url=None, create_date=None, data=None):
 
     """
     instance = _create_entity(Authority, name, description, url, create_date, data)
-
     errors = validate_entity(instance)
     if errors:
         raise ValidationError(errors)
 
     return instance
-
 
 
 def create_scope(authority, name, description, url=None, create_date=None, data=None):
@@ -69,13 +69,11 @@ def create_scope(authority, name, description, url=None, create_date=None, data=
     """
     instance = _create_entity(Scope, name, description, url, create_date, data, authority)
     instance.authority = authority
-
     errors = validate_entity(instance)
     if errors:
         raise ValidationError(errors)
 
     return instance
-
 
 
 def create_collection(scope, name, description, url=None, create_date=None, data=None, term_name_regex=None):
@@ -95,7 +93,6 @@ def create_collection(scope, name, description, url=None, create_date=None, data
     instance = _create_entity(Collection, name, description, url, create_date, data, scope)
     instance.scope = scope
     instance.term_name_regex = term_name_regex
-
     errors = validate_entity(instance)
     if errors:
         raise ValidationError(errors)
@@ -120,12 +117,31 @@ def create_term(collection, name, description, url=None, create_date=None, data=
     instance = _create_entity(Term, name, description, url, create_date, data, collection)
     instance.collection = collection
     instance.idx = len(collection)
-
     errors = validate_entity(instance)
     if errors:
         raise ValidationError(errors)
 
     return instance
+
+
+def create_expression(template, collections):
+    """Instantiates, initialises & returns a vocabulary expression manager.
+
+    :param str template: An expression template.
+    :param tuple collections: Collections that the template maps to.
+
+    :returns: A vocabulary expression manager.
+    :rtype: pyessv.Expression
+
+    """
+    assert isinstance(template, basestring), 'Invalid template'
+    assert isinstance(collections, tuple), 'Invalid collections'
+    assert len(template) > 0, 'Invalid template'
+    assert len(collections) > 0, 'Invalid collections'
+    assert len([i for i in collections if not isinstance(i, Collection)]) ==0, 'Invalid collections'
+    assert template.count("{}") == len(collections), 'Invalid template'
+
+    return Expression(template, collections)
 
 
 def _create_entity(typeof, name, description, url=None, create_date=None, data=None, owner=None):

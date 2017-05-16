@@ -20,6 +20,7 @@ import tests.utils as tu
 _CLASSES = {
     'Authority',
     'Collection',
+    'Expression',
     'Scope',
     'Term'
     }
@@ -58,6 +59,7 @@ _FUNCS = {
     # ... factory
     'create_authority',
     'create_collection',
+    'create_expression',
     'create_scope',
     'create_term',
     # ... initialisation
