@@ -28,7 +28,7 @@ class Collection(Entity):
 
         self.scope = None
         self.terms = list()
-        self.name_regex = None
+        self.term_name_regex = None
 
 
     def __len__(self):

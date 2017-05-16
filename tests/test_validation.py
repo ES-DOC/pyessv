@@ -85,7 +85,7 @@ def test_regex_collection():
 
     """
     collection = tu.create_collection()
-    collection.name_regex = r'^[a-z\-]*$'
+    collection.term_name_regex = r'^[a-z\-]*$'
     term = tu.create_term(collection=collection)
     term.name = 'ABC-DEF'
     assert LIB.is_valid(term) == False, (term.name, LIB.get_errors(term))

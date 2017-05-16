@@ -82,6 +82,7 @@ def _decode_collection(obj, instance):
 
     """
     instance.terms = [decode(i) if isinstance(i, dict) else i for i in obj['terms']]
+    instance.term_name_regex = obj.get('term_name_regex')
 
     # Wire hierarchy.
     for term in [instance]:

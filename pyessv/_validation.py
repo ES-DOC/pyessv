@@ -238,10 +238,10 @@ def _validate_term():
             raise ValueError("Invalid idx")
 
     def _validate_name(i):
-        if i.collection.name_regex is None:
+        if i.collection.term_name_regex is None:
             reg_ex = REGEX_CANONICAL_NAME
         else:
-            reg_ex = i.collection.name_regex
+            reg_ex = i.collection.term_name_regex
         if isinstance(i.name, basestring) == False or \
            len(i.name.strip()) == 0 or \
            re.compile(reg_ex).match(i.name) is None:

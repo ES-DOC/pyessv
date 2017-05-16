@@ -78,7 +78,7 @@ def create_scope(authority, name, description, url=None, create_date=None, data=
 
 
 
-def create_collection(scope, name, description, url=None, create_date=None, data=None, name_regex=None):
+def create_collection(scope, name, description, url=None, create_date=None, data=None, term_name_regex=None):
     """Instantiates, initialises & returns a term collection.
 
     :param pyessv.Scope scope: CV scope to which collection is bound.
@@ -94,7 +94,7 @@ def create_collection(scope, name, description, url=None, create_date=None, data
     """
     instance = _create_entity(Collection, name, description, url, create_date, data, scope)
     instance.scope = scope
-    instance.name_regex = name_regex
+    instance.term_name_regex = term_name_regex
 
     errors = validate_entity(instance)
     if errors:
