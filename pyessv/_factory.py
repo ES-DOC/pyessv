@@ -34,11 +34,12 @@ from pyessv._parser_template import TemplateParser
 
 
 
-def create_authority(name, description, url=None, create_date=None, data=None):
+def create_authority(name, description=None, label=None, url=None, create_date=None, data=None):
     """Instantiates, initialises & returns a term authority.
 
     :param str name: Canonical authority name.
     :param str description: Authority description.
+    :param str label: Label for UI purposes.
     :param str url: Authority further information URL.
     :param datetime create_date: Date upon which authority was created.
     :param dict data: Arbirtrary data associated with authority.
@@ -47,7 +48,7 @@ def create_authority(name, description, url=None, create_date=None, data=None):
     :rtype: pyessv.Authority
 
     """
-    instance = _create_entity(Authority, name, description, url, create_date, data)
+    instance = _create_entity(Authority, name, description, label, url, create_date, data)
     errors = validate_entity(instance)
     if errors:
         raise ValidationError(errors)
@@ -55,11 +56,12 @@ def create_authority(name, description, url=None, create_date=None, data=None):
     return instance
 
 
-def create_scope(authority, name, description, url=None, create_date=None, data=None):
+def create_scope(name, authority, description=None, label=None, url=None, create_date=None, data=None):
     """Instantiates, initialises & returns a term scope.
 
-    :param pyessv.Authority authority: CV authority to which scope is bound.
     :param str name: Canonical scope name.
+    :param pyessv.Authority authority: CV authority to which scope is bound.
+    :param str label: Label for UI purposes.
     :param str description: Scope description.
     :param str url: Scope URL for further information.
     :param datetime create_date: Date upon which scope was created.
@@ -69,7 +71,7 @@ def create_scope(authority, name, description, url=None, create_date=None, data=
     :rtype: pyessv.Scope
 
     """
-    instance = _create_entity(Scope, name, description, url, create_date, data, authority)
+    instance = _create_entity(Scope, name, description, label, url, create_date, data, authority)
     instance.authority = authority
     errors = validate_entity(instance)
     if errors:
@@ -78,12 +80,13 @@ def create_scope(authority, name, description, url=None, create_date=None, data=
     return instance
 
 
-def create_collection(scope, name, description, url=None, create_date=None, data=None, term_name_regex=None):
+def create_collection(name, scope, description=None, label=None, url=None, create_date=None, data=None, term_name_regex=None):
     """Instantiates, initialises & returns a term collection.
 
-    :param pyessv.Scope scope: CV scope to which collection is bound.
     :param str name: Canonical collection name.
+    :param pyessv.Scope scope: CV scope to which collection is bound.
     :param str description: Collection description.
+    :param str label: Label for UI purposes.
     :param str url: Collection URL for further information.
     :param datetime create_date: Date upon which collection was created.
     :param dict data: Arbirtrary data associated with collection.
@@ -92,7 +95,7 @@ def create_collection(scope, name, description, url=None, create_date=None, data
     :rtype: pyessv.Collection
 
     """
-    instance = _create_entity(Collection, name, description, url, create_date, data, scope)
+    instance = _create_entity(Collection, name, description, label, url, create_date, data, scope)
     instance.scope = scope
     instance.term_name_regex = term_name_regex
     errors = validate_entity(instance)
@@ -102,12 +105,13 @@ def create_collection(scope, name, description, url=None, create_date=None, data
     return instance
 
 
-def create_term(collection, name, description, url=None, create_date=None, data=None):
+def create_term(name, collection, description=None, label=None, url=None, create_date=None, data=None):
     """Instantiates, initialises & returns a term.
 
-    :param pyessv.Collection collection: The collection to which the term belongs.
     :param str name: Canonical term name.
+    :param pyessv.Collection collection: The collection to which the term belongs.
     :param str description: Term description.
+    :param str label: Label for UI purposes.
     :param str url: Term URL for further information.
     :param datetime create_date: Date upon which term was created.
     :param dict data: Arbitrary data associated with term.
@@ -116,7 +120,7 @@ def create_term(collection, name, description, url=None, create_date=None, data=
     :rtype: pyessv.Term
 
     """
-    instance = _create_entity(Term, name, description, url, create_date, data, collection)
+    instance = _create_entity(Term, name, description, label, url, create_date, data, collection)
     instance.collection = collection
     instance.idx = len(collection)
     errors = validate_entity(instance)
@@ -146,7 +150,7 @@ def create_template_parser(template, collections):
     return TemplateParser(template, collections)
 
 
-def _create_entity(typeof, name, description, url=None, create_date=None, data=None, owner=None):
+def _create_entity(typeof, name, description, label=None, url=None, create_date=None, data=None, owner=None):
     """Instantiates, initialises & returns an entity.
 
     """
@@ -154,7 +158,7 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
     instance = typeof()
     instance.description = description
     instance.label = name
-    instance.name = str(name).lower()
+    instance.name = str(name)
     instance.create_date = create_date or arrow.utcnow().datetime
     instance.data = data
     instance.uid = uuid.uuid4()

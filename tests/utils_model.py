@@ -59,8 +59,8 @@ def create_authority():
     if TEST_AUTHORITY is None:
         TEST_AUTHORITY = LIB.create_authority(
             TEST_AUTHORITY_NAME,
-            TEST_AUTHORITY_DESCRIPTION,
-            TEST_AUTHORITY_URL
+            description=TEST_AUTHORITY_DESCRIPTION,
+            url=TEST_AUTHORITY_URL
             )
 
     return TEST_AUTHORITY
@@ -74,10 +74,10 @@ def create_scope():
 
     if TEST_SCOPE is None:
         TEST_SCOPE = LIB.create_scope(
-            TEST_AUTHORITY or create_authority(),
             TEST_SCOPE_NAME,
-            TEST_SCOPE_DESCRIPTION,
-            TEST_SCOPE_URL
+            TEST_AUTHORITY or create_authority(),
+            description=TEST_SCOPE_DESCRIPTION,
+            url=TEST_SCOPE_URL
             )
 
     return TEST_SCOPE
@@ -91,10 +91,10 @@ def create_collection():
 
     if TEST_COLLECTION is None:
         TEST_COLLECTION = LIB.create_collection(
-            TEST_SCOPE or create_scope(),
             TEST_COLLECTION_NAME,
-            TEST_COLLECTION_DESCRIPTION,
-            TEST_COLLECTION_URL
+            TEST_SCOPE or create_scope(),
+            description=TEST_COLLECTION_DESCRIPTION,
+            url=TEST_COLLECTION_URL
             )
 
     return TEST_COLLECTION
@@ -108,10 +108,10 @@ def create_term(collection=None):
 
     if TEST_TERM is None:
         TEST_TERM = LIB.create_term(
-            collection or TEST_COLLECTION or create_collection(),
             TEST_TERM_NAME,
-            TEST_TERM_DESCRIPTION,
-            TEST_TERM_URL
+            collection or TEST_COLLECTION or create_collection(),
+            description=TEST_TERM_DESCRIPTION,
+            url=TEST_TERM_URL
             )
         TEST_TERM.synonyms = TEST_TERM_SYNONYMS
 
