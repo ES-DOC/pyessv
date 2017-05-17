@@ -24,12 +24,14 @@ from pyessv._exceptions import ValidationError
 from pyessv._model import ENTITY_TYPE_KEY_MAP
 from pyessv._model import Authority
 from pyessv._model import Entity
-from pyessv._model import Expression
 from pyessv._model import Scope
 from pyessv._model import Collection
 from pyessv._model import Term
 from pyessv._utils.compat import basestring
+from pyessv._utils.compat import str
 from pyessv._validation import validate_entity
+from pyessv._parser_template import TemplateParser
+
 
 
 def create_authority(name, description, url=None, create_date=None, data=None):
@@ -130,8 +132,8 @@ def create_template_parser(template, collections):
     :param str template: An expression template.
     :param tuple collections: Collections that the template maps to.
 
-    :returns: A vocabulary expression manager.
-    :rtype: pyessv.Expression
+    :returns: A vocabulary expression parser.
+    :rtype: pyessv.TemplateParser
 
     """
     assert isinstance(template, basestring), 'Invalid template'
@@ -141,7 +143,7 @@ def create_template_parser(template, collections):
     assert len([i for i in collections if not isinstance(i, Collection)]) ==0, 'Invalid collections'
     assert template.count('{}') == len(collections), 'Invalid template'
 
-    return Expression(template, collections)
+    return TemplateParser(template, collections)
 
 
 def _create_entity(typeof, name, description, url=None, create_date=None, data=None, owner=None):
@@ -152,23 +154,22 @@ def _create_entity(typeof, name, description, url=None, create_date=None, data=N
     instance = typeof()
     instance.description = description
     instance.label = name
-    instance.name = name
+    instance.name = str(name).lower()
     instance.create_date = create_date or arrow.utcnow().datetime
     instance.data = data
     instance.uid = uuid.uuid4()
     instance.url = url
 
     # Set associative attributes.
-    if isinstance(instance, Authority):
-        pass
-    elif isinstance(instance, Scope):
-        instance.authority = owner
-    elif isinstance(instance, Collection):
-        instance.scope = owner
-    elif isinstance(instance, Term):
-        instance.collection = owner
-
     if owner is not None:
+        # ... parent in vocab hierarchy
+        if isinstance(instance, Scope):
+            instance.authority = owner
+        elif isinstance(instance, Collection):
+            instance.scope = owner
+        elif isinstance(instance, Term):
+            instance.collection = owner
+        # ... child in vocab hierarchy
         if isinstance(owner, Authority):
             owner.scopes.append(instance)
         elif isinstance(owner, Scope):

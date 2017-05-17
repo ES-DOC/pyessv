@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model.expression.py
+.. module:: pyessv._model.expression_parser.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -17,8 +17,8 @@ from pyessv._exceptions import TemplateParsingError
 
 
 
-class Expression(object):
-    """A vocabulary expression.
+class TemplateParser(object):
+    """A vocabulary template parser.
 
     """
     def __init__(self, template, collections):
@@ -54,3 +54,4 @@ class Expression(object):
         parsed += self.parts[idx + 1]
         if not val == parsed:
             raise TemplateParsingError(val)
+

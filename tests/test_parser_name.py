@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_parser.py
+.. module:: test_parser_name.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
    :platform: Unix, Windows
-   :synopsis: Executes pyessv parser tests.
+   :synopsis: Executes pyessv name parsing tests.
 
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 

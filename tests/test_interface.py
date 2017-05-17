@@ -20,7 +20,6 @@ import tests.utils as tu
 _CLASSES = {
     'Authority',
     'Collection',
-    'Expression',
     'Scope',
     'Term'
     }
@@ -59,12 +58,12 @@ _FUNCS = {
     # ... factory
     'create_authority',
     'create_collection',
-    'create_template_parser',
     'create_scope',
     'create_term',
     # ... initialisation
     'init',
     # ... parsing
+    'create_template_parser',
     'parse',
     'parse_namespace',
     # ... validation

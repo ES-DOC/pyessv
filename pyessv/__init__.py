@@ -54,7 +54,6 @@ from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
-from pyessv._model import Expression
 
 from pyessv._parser import parse
 from pyessv._parser import parse_namespace
