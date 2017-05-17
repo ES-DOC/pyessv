@@ -74,8 +74,8 @@ def create_scope():
 
     if TEST_SCOPE is None:
         TEST_SCOPE = LIB.create_scope(
-            TEST_SCOPE_NAME,
             TEST_AUTHORITY or create_authority(),
+            TEST_SCOPE_NAME,
             description=TEST_SCOPE_DESCRIPTION,
             url=TEST_SCOPE_URL
             )
@@ -91,8 +91,8 @@ def create_collection():
 
     if TEST_COLLECTION is None:
         TEST_COLLECTION = LIB.create_collection(
-            TEST_COLLECTION_NAME,
             TEST_SCOPE or create_scope(),
+            TEST_COLLECTION_NAME,
             description=TEST_COLLECTION_DESCRIPTION,
             url=TEST_COLLECTION_URL
             )
@@ -108,8 +108,8 @@ def create_term(collection=None):
 
     if TEST_TERM is None:
         TEST_TERM = LIB.create_term(
-            TEST_TERM_NAME,
             collection or TEST_COLLECTION or create_collection(),
+            TEST_TERM_NAME,
             description=TEST_TERM_DESCRIPTION,
             url=TEST_TERM_URL
             )

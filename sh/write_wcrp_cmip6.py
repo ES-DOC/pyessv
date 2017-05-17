@@ -40,7 +40,7 @@ _AUTHORITY = pyessv.create_authority('wcrp',
     )
 
 # CV scope = CMIP6.
-_SCOPE_CMIP6 = pyessv.create_scope('cmip6', _AUTHORITY,
+_SCOPE_CMIP6 = pyessv.create_scope(_AUTHORITY, 'cmip6',
     description='Controlled Vocabularies (CVs) for use in CMIP6',
     label='CMIP6',
     url='https://github.com/WCRP-CMIP/CMIP6_CVs',
@@ -48,7 +48,7 @@ _SCOPE_CMIP6 = pyessv.create_scope('cmip6', _AUTHORITY,
     )
 
 # CV scope = GLOBAL.
-_SCOPE_GLOBAL = pyessv.create_scope('global', _AUTHORITY,
+_SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY, 'global',
     description='Global controlled Vocabularies (CVs)',
     url='https://github.com/WCRP-CMIP/CMIP6_CVs',
     create_date=_CREATE_DATE
@@ -138,7 +138,7 @@ def _create_collection_cmip6(source, collection_type, parsers):
     """
     # Create collection.
     collection_name = _reformat_name(collection_type)
-    collection = pyessv.create_collection(collection_name, _SCOPE_CMIP6,
+    collection = pyessv.create_collection(_SCOPE_CMIP6, collection_name,
         description="WCRP CMIP6 CV collection: ".format(collection_name),
         create_date=_CREATE_DATE
         )
@@ -153,7 +153,7 @@ def _create_collection_cmip6(source, collection_type, parsers):
     # Create terms.
     for label in wcrp_cv_data:
         name = name_preformatter(label) if name_preformatter else label
-        pyessv.create_term(name, collection,
+        pyessv.create_term(collection, name,
             label=label,
             description=label,
             create_date=_CREATE_DATE,
@@ -167,7 +167,7 @@ def _create_collection_global(source, collection_type, parsers):
     """
     # Create collection.
     name = _reformat_name(collection_type)
-    collection = pyessv.create_collection(name, _SCOPE_GLOBAL,
+    collection = pyessv.create_collection(_SCOPE_GLOBAL, name,
         description='WCRP GLOBAL CV collection: '.format(collection_type),
         create_date=_CREATE_DATE
         )
@@ -182,7 +182,7 @@ def _create_collection_global(source, collection_type, parsers):
     # Create terms.
     for label in wcrp_cv_data:
         name = name_preformatter(label) if name_preformatter else label
-        pyessv.create_term(name, collection,
+        pyessv.create_term(collection, name,
             description=label,
             create_date=_CREATE_DATE,
             data=data_factory(wcrp_cv_data, label) if data_factory else None

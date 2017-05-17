@@ -56,11 +56,11 @@ def create_authority(name, description=None, label=None, url=None, create_date=N
     return instance
 
 
-def create_scope(name, authority, description=None, label=None, url=None, create_date=None, data=None):
+def create_scope(authority, name, description=None, label=None, url=None, create_date=None, data=None):
     """Instantiates, initialises & returns a term scope.
 
-    :param str name: Canonical scope name.
     :param pyessv.Authority authority: CV authority to which scope is bound.
+    :param str name: Canonical scope name.
     :param str label: Label for UI purposes.
     :param str description: Scope description.
     :param str url: Scope URL for further information.
@@ -80,11 +80,11 @@ def create_scope(name, authority, description=None, label=None, url=None, create
     return instance
 
 
-def create_collection(name, scope, description=None, label=None, url=None, create_date=None, data=None, term_name_regex=None):
+def create_collection(scope, name, description=None, label=None, url=None, create_date=None, data=None, term_name_regex=None):
     """Instantiates, initialises & returns a term collection.
 
-    :param str name: Canonical collection name.
     :param pyessv.Scope scope: CV scope to which collection is bound.
+    :param str name: Canonical collection name.
     :param str description: Collection description.
     :param str label: Label for UI purposes.
     :param str url: Collection URL for further information.
@@ -105,11 +105,11 @@ def create_collection(name, scope, description=None, label=None, url=None, creat
     return instance
 
 
-def create_term(name, collection, description=None, label=None, url=None, create_date=None, data=None):
+def create_term(collection, name, description=None, label=None, url=None, create_date=None, data=None):
     """Instantiates, initialises & returns a term.
 
-    :param str name: Canonical term name.
     :param pyessv.Collection collection: The collection to which the term belongs.
+    :param str name: Canonical term name.
     :param str description: Term description.
     :param str label: Label for UI purposes.
     :param str url: Term URL for further information.
