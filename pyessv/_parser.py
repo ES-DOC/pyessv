@@ -50,7 +50,7 @@ def parse(authority, scope=None, collection=None, term=None, strict=True):
         _NodeInfo(NODE_TYPE_AUTHORITY, authority, strict),
         _NodeInfo(NODE_TYPE_SCOPE, scope, strict),
         _NodeInfo(NODE_TYPE_COLLECTION, collection, strict),
-        _NodeInfo(NODE_TYPE_TERM, term, strict),
+        _NodeInfo(NODE_TYPE_TERM, term, strict)
     ]
 
     for target in [i for i in targets if i.name is not None]:
@@ -70,6 +70,9 @@ class _NodeInfo(object):
 
     """
     def __init__(self, typekey, name, strict):
+        """Instance constructor.
+
+        """
         self.node = None
         self.name = name
         self.strict = strict

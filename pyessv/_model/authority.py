@@ -11,6 +11,8 @@
 
 
 """
+import uuid
+
 import pyessv
 from pyessv._model.node import Node
 
@@ -48,7 +50,11 @@ class Authority(Node):
         """Returns a child section item.
 
         """
-        return Node.get_item(self, key)
+        # Match against key.
+        comparator = Node.get_comparator(key)
+        for item in self.scopes:
+            if comparator(item) == key:
+                return item
 
 
     def __contains__(self, key):

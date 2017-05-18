@@ -11,6 +11,8 @@
 
 
 """
+import uuid
+
 import pyessv
 from pyessv._model.node import Node
 
@@ -50,7 +52,16 @@ class Collection(Node):
         """Returns a child section item.
 
         """
-        return Node.get_item(self, key)
+        # Match against key.
+        comparator = Node.get_comparator(key)
+        for term in self.terms:
+            if comparator(term) == key:
+                return term
+
+        # Match against a synonym.
+        for term in self.terms:
+            if key in term.synonyms:
+                return term
 
 
     def __contains__(self, key):

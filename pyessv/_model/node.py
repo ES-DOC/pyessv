@@ -88,43 +88,19 @@ class Node(object):
 
 
     @staticmethod
-    def get_item(node, key):
+    def get_comparator(key):
         """Returns an item from managed collection.
 
         """
-        # Set collection.
-        if node.typekey == NODE_TYPE_AUTHORITY:
-            items = node.scopes
-        elif node.typekey == NODE_TYPE_COLLECTION:
-            items = node.terms
-        elif node.typekey == NODE_TYPE_SCOPE:
-            items = node.collections
-
-        # Set comparator to be used.
         if isinstance(key, int):
-            comparator = lambda i: i.idx
+            return lambda i: i.idx
         elif isinstance(key, uuid.UUID):
-            comparator = lambda i: i.uid
+            return lambda i: i.uid
         else:
             key = str(key).strip().lower()
             try:
                 uuid.UUID(key)
             except ValueError:
-                comparator = lambda i: i.name
+                return lambda i: i.name
             else:
-                comparator = lambda i: str(i.uid)
-
-        # Match against a attribute.
-        for item in items:
-            if comparator(item) == key:
-                return item
-
-        # Match against a synonym.
-        try:
-            items = [i for i in items if i.synonyms]
-        except AttributeError:
-            pass
-        else:
-            for item in items:
-                if key in item.synonyms:
-                    return item
+                return lambda i: str(i.uid)
