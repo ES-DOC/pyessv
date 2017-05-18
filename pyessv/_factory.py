@@ -27,107 +27,159 @@ from pyessv._model import Node
 from pyessv._model import Scope
 from pyessv._model import Collection
 from pyessv._model import Term
+from pyessv._parser_template import TemplateParser
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
+from pyessv._utils.formatter import format_canonical_name
+from pyessv._utils.formatter import format_string
 from pyessv._validation import validate_node
-from pyessv._parser_template import TemplateParser
 
 
 
-def create_authority(name, description=None, label=None, url=None, create_date=None, data=None):
+def create_authority(name, description, label=None, url=None, create_date=None, data=None):
     """Instantiates, initialises & returns a term authority.
 
-    :param str name: Canonical authority name.
-    :param str description: Authority description.
+    :param str name: Canonical name.
+    :param str description: Informative description.
     :param str label: Label for UI purposes.
-    :param str url: Authority further information URL.
-    :param datetime create_date: Date upon which authority was created.
-    :param dict data: Arbirtrary data associated with authority.
+    :param str url: Further information URL.
+    :param datetime create_date: Creation date.
+    :param dict data: Arbirtrary data.
 
     :returns: A vocabulary authority, e.g. wcrp.
     :rtype: pyessv.Authority
 
     """
-    instance = _create_node(Authority, name, description, label, url, create_date, data)
-    errors = validate_node(instance)
-    if errors:
-        raise ValidationError(errors)
+    return _create_node(
+        Authority,
+        name,
+        description,
+        label,
+        url,
+        create_date,
+        data
+        )
 
-    return instance
 
-
-def create_scope(authority, name, description=None, label=None, url=None, create_date=None, data=None):
+def create_scope(
+    authority,
+    name,
+    description,
+    label=None,
+    url=None,
+    create_date=None,
+    data=None
+    ):
     """Instantiates, initialises & returns a term scope.
 
     :param pyessv.Authority authority: CV authority to which scope is bound.
-    :param str name: Canonical scope name.
+    :param str name: Canonical name.
+    :param str description: Informative description.
     :param str label: Label for UI purposes.
-    :param str description: Scope description.
-    :param str url: Scope URL for further information.
-    :param datetime create_date: Date upon which scope was created.
-    :param dict data: Arbirtrary data associated with scope.
+    :param str url: Further information URL.
+    :param datetime create_date: Creation date.
+    :param dict data: Arbirtrary data.
 
     :returns: A vocabulary scope, e.g. cmip6.
     :rtype: pyessv.Scope
 
     """
-    instance = _create_node(Scope, name, description, label, url, create_date, data, authority)
-    instance.authority = authority
-    errors = validate_node(instance)
-    if errors:
-        raise ValidationError(errors)
+    def _callback(instance):
+        instance.authority = authority
+        authority.scopes.append(instance)
 
-    return instance
+    return _create_node(
+        Scope,
+        name,
+        description,
+        label,
+        url,
+        create_date,
+        data,
+        _callback
+        )
 
 
-def create_collection(scope, name, description=None, label=None, url=None, create_date=None, data=None, term_name_regex=None):
+def create_collection(
+    scope,
+    name,
+    description,
+    label=None,
+    url=None,
+    create_date=None,
+    data=None,
+    term_name_regex=None
+    ):
     """Instantiates, initialises & returns a term collection.
 
     :param pyessv.Scope scope: CV scope to which collection is bound.
-    :param str name: Canonical collection name.
-    :param str description: Collection description.
+    :param str name: Canonical name.
+    :param str description: Informative description.
     :param str label: Label for UI purposes.
-    :param str url: Collection URL for further information.
-    :param datetime create_date: Date upon which collection was created.
-    :param dict data: Arbirtrary data associated with collection.
+    :param str url: Further information URL.
+    :param datetime create_date: Creation date.
+    :param dict data: Arbirtrary data.
 
     :returns: A vocabulary collection, e.g. insitution-id.
     :rtype: pyessv.Collection
 
     """
-    instance = _create_node(Collection, name, description, label, url, create_date, data, scope)
-    instance.scope = scope
-    instance.term_name_regex = term_name_regex
-    errors = validate_node(instance)
-    if errors:
-        raise ValidationError(errors)
+    def _callback(instance):
+        instance.scope = scope
+        instance.term_name_regex = term_name_regex
+        scope.collections.append(instance)
 
-    return instance
+    return _create_node(
+        Collection,
+        name,
+        description,
+        label,
+        url,
+        create_date,
+        data,
+        _callback
+        )
 
 
-def create_term(collection, name, description=None, label=None, url=None, create_date=None, data=None):
+def create_term(
+    collection,
+    name,
+    description=None,
+    label=None,
+    url=None,
+    create_date=None,
+    data=None
+    ):
     """Instantiates, initialises & returns a term.
 
     :param pyessv.Collection collection: The collection to which the term belongs.
-    :param str name: Canonical term name.
-    :param str description: Term description.
+    :param str name: Canonical name.
+    :param str description: Informative description.
     :param str label: Label for UI purposes.
-    :param str url: Term URL for further information.
-    :param datetime create_date: Date upon which term was created.
-    :param dict data: Arbitrary data associated with term.
+    :param str url: Further information URL.
+    :param datetime create_date: Creation date.
+    :param dict data: Arbirtrary data.
 
     :returns: A vocabulary term, e.g. ipsl.
     :rtype: pyessv.Term
 
     """
-    instance = _create_node(Term, name, description, label, url, create_date, data, collection)
-    instance.collection = collection
-    instance.idx = len(collection)
-    errors = validate_node(instance)
-    if errors:
-        raise ValidationError(errors)
+    def _callback(instance):
+        instance.collection = collection
+        instance.idx = len(collection)
+        instance.name_raw = format_string(name)
+        collection.terms.append(instance)
 
-    return instance
+    return _create_node(
+        Term,
+        name,
+        description,
+        label,
+        url,
+        create_date,
+        data,
+        callback=_callback
+        )
 
 
 def create_template_parser(template, collections):
@@ -144,41 +196,46 @@ def create_template_parser(template, collections):
     assert isinstance(collections, tuple), 'Invalid collections'
     assert len(template) > 0, 'Invalid template'
     assert len(collections) > 0, 'Invalid collections'
-    assert len([i for i in collections if not isinstance(i, Collection)]) ==0, 'Invalid collections'
+    assert len([i for i in collections if not isinstance(i, Collection)]) == 0, 'Invalid collections'
     assert template.count('{}') == len(collections), 'Invalid template'
 
     return TemplateParser(template, collections)
 
 
-def _create_node(typeof, name, description, label=None, url=None, create_date=None, data=None, owner=None):
+def _create_node(
+    typeof,
+    name,
+    description,
+    label,
+    url,
+    create_date,
+    data,
+    callback = None
+    ):
     """Instantiates, initialises & returns a node.
 
     """
     # Set core attributes.
     instance = typeof()
-    instance.description = description
-    instance.label = name
-    instance.name = str(name)
+    instance.label = format_string(name)
+    instance.name = format_canonical_name(name)
     instance.create_date = create_date or arrow.utcnow().datetime
     instance.data = data
     instance.uid = uuid.uuid4()
-    instance.url = url
 
-    # Set associative attributes.
-    if owner is not None:
-        # ... parent in vocab hierarchy
-        if isinstance(instance, Scope):
-            instance.authority = owner
-        elif isinstance(instance, Collection):
-            instance.scope = owner
-        elif isinstance(instance, Term):
-            instance.collection = owner
-        # ... child in vocab hierarchy
-        if isinstance(owner, Authority):
-            owner.scopes.append(instance)
-        elif isinstance(owner, Scope):
-            owner.collections.append(instance)
-        elif isinstance(owner, Collection):
-            owner.terms.append(instance)
+    # Set other attributes.
+    if description is not None:
+        instance.description = format_string(description)
+    if url is not None:
+        instance.url = format_string(url)
+
+    # Set node specific attributes.
+    if callback is not None:
+        callback(instance)
+
+    # Validate.
+    errors = validate_node(instance)
+    if errors:
+        raise ValidationError(errors)
 
     return instance

@@ -16,6 +16,8 @@ import uuid
 
 import arrow
 
+from pyessv._utils.compat import str
+
 
 
 def get_boolean():

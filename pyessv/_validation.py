@@ -94,7 +94,10 @@ def _validate_core():
             assert isinstance(i.data, dict)
 
     def _validate_description(i):
-        _assert_string(i.description)
+        if isinstance(i, (Authority, Scope, Collection)):
+            _assert_string(i.description)
+        elif i.description is not None:
+            _assert_string(i.description)
 
     def _validate_label(i):
         _assert_string(i.label)

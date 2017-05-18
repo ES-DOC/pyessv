@@ -19,6 +19,7 @@ from pyessv._model import Term
 from pyessv._model import Authority
 from pyessv._model import Scope
 from pyessv._model import Collection
+from pyessv._utils.compat import str
 
 
 
@@ -31,26 +32,27 @@ def decode(obj):
     :rtype: pyessv.Term
 
     """
-    # Set type key.
+    typeof = _get_type(obj)
+    instance = typeof()
+    _decode_node(obj, instance)
+    _DECODERS[typeof](obj, instance)
+
+    return instance
+
+
+def _get_type(obj):
+    """Returns type to be decoded.
+
+    """
     try:
         typekey = obj['_type']
     except KeyError:
         raise TypeError('Decoding type key not found')
-
-    # Set type.
-    try:
-        typeof = _TYPE_MAP[typekey]
-    except KeyError:
-        raise TypeError('Decoding type unsupported: {}'.format(typekey))
     else:
-        decoder = _DECODERS[typeof]
-
-    # Instantite & set attributes.
-    instance = typeof()
-    _decode_node(obj, instance)
-    decoder(obj, instance)
-
-    return instance
+        try:
+            return _TYPE_MAP[typekey]
+        except KeyError:
+            raise TypeError('Decoding type unsupported: {}'.format(typekey))
 
 
 def _decode_authority(obj, instance):
@@ -58,8 +60,6 @@ def _decode_authority(obj, instance):
 
     """
     instance.scopes = [decode(i) for i in obj['scopes']]
-
-    # Wire hierarchy.
     for scope in instance:
         if isinstance(scope, Scope):
             scope.authority = instance
@@ -70,8 +70,6 @@ def _decode_scope(obj, instance):
 
     """
     instance.collections = [decode(i) for i in obj['collections']]
-
-    # Wire hierarchy.
     for collection in instance:
         if isinstance(collection, Collection):
             collection.scope = instance
@@ -83,8 +81,6 @@ def _decode_collection(obj, instance):
     """
     instance.terms = [decode(i) if isinstance(i, dict) else i for i in obj['terms']]
     instance.term_name_regex = obj.get('term_name_regex')
-
-    # Wire hierarchy.
     for term in [instance]:
         if isinstance(term, Term):
             term.collection = instance
@@ -98,6 +94,7 @@ def _decode_term(obj, instance):
     instance.alternative_url = obj.get('alternative_url')
     instance.associations = obj.get('associations', [])
     instance.idx = obj['idx']
+    instance.name_raw = obj.get('name_raw')
     instance.status = obj['status']
     instance.synonyms = obj.get('synonyms', [])
     if instance.parent:
@@ -110,7 +107,7 @@ def _decode_node(obj, instance):
     """
     instance.create_date = arrow.get(obj['create_date']).datetime
     instance.data = obj.get('data', dict())
-    instance.description = obj['description']
+    instance.description = obj.get('description')
     instance.label = obj['label']
     instance.name = obj['name']
     instance.uid = uuid.UUID(str(obj['uid']))

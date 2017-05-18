@@ -22,7 +22,7 @@ import tests.utils as tu
 _NODE_TEST_INFO = [
     ('create_date', arrow.utcnow().datetime, ('', '  ', 123)),
     ('data', {'a': 1}, ('', '  ', 123)),
-    ('description', tu.TEST_AUTHORITY_DESCRIPTION, (None, '', '  ')),
+    ('description', tu.TEST_AUTHORITY_DESCRIPTION, ('', '  ')),
     ('name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid $#$#$ name')),
     ('url', tu.TEST_AUTHORITY_URL, ('', '  ', 'an-invalid-url')),
     ]
@@ -34,11 +34,9 @@ _TEST_INFO = {
         ('scopes', [], [None, '', '  ', [123]])
     ],
     LIB.NODE_TYPE_SCOPE: _NODE_TEST_INFO + [
-        # ('authority', None, [None, '', '  ', [123]]),
         ('collections', [], [None, '', '  ', [123]])
     ],
     LIB.NODE_TYPE_COLLECTION: _NODE_TEST_INFO + [
-        # ('collection', None, [None, '', '  ', [123]]),
         ('terms', [], [None, '', '  ', [123]])
     ],
     LIB.NODE_TYPE_TERM: _NODE_TEST_INFO + [

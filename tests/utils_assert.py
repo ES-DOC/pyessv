@@ -15,6 +15,8 @@ import datetime
 import inspect
 import os
 
+from pyessv._utils.compat import str
+
 
 
 # Integer assertion constants.

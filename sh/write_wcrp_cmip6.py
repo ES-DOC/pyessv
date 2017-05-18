@@ -32,24 +32,27 @@ _ARGS.add_argument(
 _CREATE_DATE = arrow.get('2017-03-21 00:00:00.000000+0000').datetime
 
 # CV authority = WCRP.
-_AUTHORITY = pyessv.create_authority('wcrp',
-    description='World Climate Research Program',
+_AUTHORITY = pyessv.create_authority(
+    'wcrp',
+    'World Climate Research Program',
     label='WCRP',
     url='https://www.wcrp-climate.org/wgcm-overview',
     create_date=_CREATE_DATE
     )
 
 # CV scope = CMIP6.
-_SCOPE_CMIP6 = pyessv.create_scope(_AUTHORITY, 'cmip6',
-    description='Controlled Vocabularies (CVs) for use in CMIP6',
+_SCOPE_CMIP6 = pyessv.create_scope(_AUTHORITY,
+    'cmip6',
+    'Controlled Vocabularies (CVs) for use in CMIP6',
     label='CMIP6',
     url='https://github.com/WCRP-CMIP/CMIP6_CVs',
     create_date=_CREATE_DATE
     )
 
 # CV scope = GLOBAL.
-_SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY, 'global',
-    description='Global controlled Vocabularies (CVs)',
+_SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY,
+    'global',
+    'Global controlled Vocabularies (CVs)',
     url='https://github.com/WCRP-CMIP/CMIP6_CVs',
     create_date=_CREATE_DATE
     )
@@ -57,56 +60,44 @@ _SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY, 'global',
 # Map of CMIP6 collections to data factories / name pre-formatters.
 _COLLECTIONS_CMIP6 = {
     'activity_id': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     },
     'experiment_id': {
-        'data_factory': lambda obj, name: obj[name],
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': lambda obj, name: obj[name]
     },
     'frequency': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     },
     'grid_label': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     },
     'institution_id': {
-        'data_factory': lambda obj, name: {'postal_address': obj[name]},
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': lambda obj, name: {'postal_address': obj[name]}
     },
     'nominal_resolution': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     },
     'realm': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     },
     'required_global_attributes': {
-        'data_factory': None,
-        'name_preformatter': None
+        'data_factory': None
     },
     'source_id': {
-        'data_factory': lambda obj, name: obj[name] ,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': lambda obj, name: obj[name]
     },
     'source_type': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     },
     'table_id': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     }
 }
 
 # Map of CMIP6 collections to data factories / name pre-formatters.
 _COLLECTIONS_GLOBAL = {
     'mip_era': {
-        'data_factory': None,
-        'name_preformatter': lambda n: _reformat_name(n)
+        'data_factory': None
     }
 }
 
@@ -137,27 +128,27 @@ def _create_collection_cmip6(source, collection_type, parsers):
 
     """
     # Create collection.
-    collection_name = _reformat_name(collection_type)
-    collection = pyessv.create_collection(_SCOPE_CMIP6, collection_name,
-        description="WCRP CMIP6 CV collection: ".format(collection_name),
+    collection = pyessv.create_collection(
+        _SCOPE_CMIP6,
+        collection_type,
+        "WCRP CMIP6 CV collection: ".format(collection_type),
         create_date=_CREATE_DATE
         )
 
     # Unpack parsers.
     data_factory = parsers['data_factory']
-    name_preformatter = parsers['name_preformatter']
 
     # Load WCRP json data.
     wcrp_cv_data = _get_wcrp_cv(source, collection_type, 'CMIP6_')
 
     # Create terms.
-    for label in wcrp_cv_data:
-        name = name_preformatter(label) if name_preformatter else label
-        pyessv.create_term(collection, name,
-            label=label,
-            description=label,
+    for name in wcrp_cv_data:
+        pyessv.create_term(
+            collection,
+            name,
+            label=name,
             create_date=_CREATE_DATE,
-            data=data_factory(wcrp_cv_data, label) if data_factory else None
+            data=data_factory(wcrp_cv_data, name) if data_factory else None
             )
 
 
@@ -166,26 +157,26 @@ def _create_collection_global(source, collection_type, parsers):
 
     """
     # Create collection.
-    name = _reformat_name(collection_type)
-    collection = pyessv.create_collection(_SCOPE_GLOBAL, name,
-        description='WCRP GLOBAL CV collection: '.format(collection_type),
+    collection = pyessv.create_collection(
+        _SCOPE_GLOBAL,
+        collection_type,
+        'WCRP GLOBAL CV collection: '.format(collection_type),
         create_date=_CREATE_DATE
         )
 
     # Unpack parsers.
     data_factory = parsers['data_factory']
-    name_preformatter = parsers['name_preformatter']
 
     # Load WCRP json data.
     wcrp_cv_data = _get_wcrp_cv(source, collection_type)
 
     # Create terms.
-    for label in wcrp_cv_data:
-        name = name_preformatter(label) if name_preformatter else label
-        pyessv.create_term(collection, name,
-            description=label,
+    for name in wcrp_cv_data:
+        pyessv.create_term(
+            collection,
+            name,
             create_date=_CREATE_DATE,
-            data=data_factory(wcrp_cv_data, label) if data_factory else None
+            data=data_factory(wcrp_cv_data, name) if data_factory else None
             )
 
 
@@ -197,13 +188,6 @@ def _get_wcrp_cv(source, collection_type, prefix=''):
     fpath = os.path.join(source, fname)
     with open(fpath, 'r') as fstream:
         return json.loads(fstream.read())[collection_type]
-
-
-def _reformat_name(name):
-    """Reformats a name.
-
-    """
-    return str(name).lower().replace("_", "-")
 
 
 # Entry point.

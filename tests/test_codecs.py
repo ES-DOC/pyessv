@@ -18,6 +18,7 @@ import pyessv as LIB
 from pyessv._codecs import decode
 from pyessv._codecs import encode
 from pyessv._utils.compat import basestring
+from pyessv._utils.compat import str
 import tests.utils as tu
 
 

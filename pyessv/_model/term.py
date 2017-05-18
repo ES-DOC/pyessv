@@ -13,6 +13,7 @@
 """
 import pyessv
 from pyessv._model.node import Node
+from pyessv._utils.compat import str
 
 
 
@@ -26,14 +27,15 @@ class Term(Node):
         """
         super(Term, self).__init__(pyessv.NODE_TYPE_TERM)
 
-        self.alternative_name = None    # primary synonym
-        self.alternative_url = None     # an alternative URL
-        self.associations = list()      # associated terms
-        self.collection = None          # collection of which term is a member
-        self.idx = None                 # collection ordinal
-        self.parent = None              # parent term within collection
+        self.alternative_name = None
+        self.alternative_url = None
+        self.associations = list()
+        self.collection = None
+        self.idx = None
+        self.name_raw = None
+        self.parent = None
         self.status = pyessv.GOVERNANCE_STATUS_PENDING
-        self.synonyms = list()          # name synonyms
+        self.synonyms = list()
 
 
     def __contains__(self, key):
@@ -98,7 +100,7 @@ class Term(Node):
         """Returns all term names.
 
         """
-        result = [self.name, self.alternative_name] + self.synonyms
+        result = [self.name, self.name_raw, self.alternative_name] + self.synonyms
         result = [t for t in result if t is not None and len(t) > 0]
 
         return set(sorted(result))

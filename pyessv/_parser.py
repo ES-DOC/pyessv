@@ -10,12 +10,13 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
+from pyessv._archive import load
 from pyessv._constants import NODE_TYPE_AUTHORITY
 from pyessv._constants import NODE_TYPE_SCOPE
 from pyessv._constants import NODE_TYPE_COLLECTION
 from pyessv._constants import NODE_TYPE_TERM
-from pyessv._archive import load
 from pyessv._exceptions import ParsingError
+from pyessv._utils.compat import str
 
 
 

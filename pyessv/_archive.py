@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv.archive.py
+.. module:: pyessv._archive.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -14,6 +14,7 @@
 from pyessv._cache import cache
 from pyessv._cache import get_cached
 from pyessv._io_manager import write
+from pyessv._utils.formatter import format_canonical_name
 
 
 
@@ -28,7 +29,7 @@ def load(authority, scope=None, collection=None, term=None):
     """
     # Format names.
     names = [authority, scope, collection, term]
-    names = [_format_name(i) for i in names if i is not None]
+    names = [format_canonical_name(i) for i in names if i is not None]
 
     # Set authority (JIT loads cache).
     result = get_cached(names[0])
@@ -59,10 +60,3 @@ def save():
     for authority in get_cached():
         write(authority)
 
-
-def _format_name(name):
-    """Formats a name prior to accessing archive.
-
-    """
-    if name is not None:
-        return str(name).strip().lower().replace('_', '-')

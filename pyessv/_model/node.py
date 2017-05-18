@@ -20,6 +20,8 @@ from pyessv._constants import NODE_TYPE_COLLECTION
 from pyessv._constants import NODE_TYPE_SCOPE
 from pyessv._constants import NODE_TYPE_TERM
 from pyessv._utils.compat import basestring
+from pyessv._utils.compat import str
+from pyessv._utils.formatter import format_io_name
 
 
 
@@ -82,11 +84,7 @@ class Node(object):
         """Returns name formatted for I/O operations.
 
         """
-        io_name = self.name.strip().lower()
-        io_name = io_name.replace("_", "-")
-        io_name = io_name.replace(" ", "-")
-
-        return io_name
+        return format_io_name(self.name)
 
 
     @staticmethod

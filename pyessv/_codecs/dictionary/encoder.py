@@ -15,6 +15,7 @@ from pyessv._model import Term
 from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
+from pyessv._utils.compat import str
 
 
 
@@ -68,6 +69,7 @@ def _encode_term(instance, obj):
 
     """
     obj['idx'] = instance.idx
+    obj['name_raw'] = instance.name_raw
     obj['status'] = instance.status
     if instance.alternative_name is not None:
         obj['alternative_name'] = instance.alternative_name
@@ -87,12 +89,13 @@ def _encode_node(instance, obj):
     """
     obj['_type'] = str(instance.__module__)
     obj['create_date'] = instance.create_date
-    obj['description'] = instance.description
     obj['label'] = instance.label
     obj['name'] = instance.name
     obj['uid'] = instance.uid
-    if instance.data:
+    if instance.data is not None:
         obj['data'] = instance.data
+    if instance.description is not None:
+        obj['description'] = instance.description
     if instance.url is not None:
         obj['url'] = instance.url
 

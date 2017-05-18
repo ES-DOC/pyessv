@@ -13,6 +13,8 @@
 """
 import arrow
 
+from pyessv._utils.compat import str
+
 
 
 # Set of logging levels.

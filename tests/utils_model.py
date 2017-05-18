@@ -59,7 +59,7 @@ def create_authority():
     if TEST_AUTHORITY is None:
         TEST_AUTHORITY = LIB.create_authority(
             TEST_AUTHORITY_NAME,
-            description=TEST_AUTHORITY_DESCRIPTION,
+            TEST_AUTHORITY_DESCRIPTION,
             url=TEST_AUTHORITY_URL
             )
 
@@ -76,7 +76,7 @@ def create_scope():
         TEST_SCOPE = LIB.create_scope(
             TEST_AUTHORITY or create_authority(),
             TEST_SCOPE_NAME,
-            description=TEST_SCOPE_DESCRIPTION,
+            TEST_SCOPE_DESCRIPTION,
             url=TEST_SCOPE_URL
             )
 
@@ -93,7 +93,7 @@ def create_collection():
         TEST_COLLECTION = LIB.create_collection(
             TEST_SCOPE or create_scope(),
             TEST_COLLECTION_NAME,
-            description=TEST_COLLECTION_DESCRIPTION,
+            TEST_COLLECTION_DESCRIPTION,
             url=TEST_COLLECTION_URL
             )
 
