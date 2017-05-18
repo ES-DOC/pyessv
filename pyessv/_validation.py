@@ -19,7 +19,7 @@ import uuid
 from pyessv._constants import NODE_TYPE_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._model import NODE_TYPES
+from pyessv._model import NODE_TYPESET
 from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
@@ -58,7 +58,7 @@ def validate_node(instance):
     :rtype: set
 
     """
-    if not isinstance(instance, NODE_TYPES):
+    if not isinstance(instance, tuple(NODE_TYPESET)):
         raise NotImplementedError('Invalid instance: unknown type')
 
     validators = _validate_core()

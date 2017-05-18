@@ -19,7 +19,7 @@ from pyessv._model import Authority
 from pyessv._model import Scope
 from pyessv._model import Collection
 from pyessv._model import Term
-from pyessv._model import NODE_TYPES
+from pyessv._model import NODE_TYPESET
 
 
 
@@ -59,7 +59,7 @@ def reset(target):
 
 
 def _apply(target, status):
-	if type(target) not in NODE_TYPES:
+	if type(target) not in NODE_TYPESET:
 		raise TypeError("Cannot apply governance status to a non domain node")
 
 	# Update status.

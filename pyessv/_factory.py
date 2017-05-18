@@ -16,12 +16,7 @@ import arrow
 
 import pyessv
 
-from pyessv._constants import NODE_TYPE_AUTHORITY
-from pyessv._constants import NODE_TYPE_COLLECTION
-from pyessv._constants import NODE_TYPE_SCOPE
-from pyessv._constants import NODE_TYPE_TERM
 from pyessv._exceptions import ValidationError
-from pyessv._model import NODE_TYPE_KEY_MAP
 from pyessv._model import Authority
 from pyessv._model import Node
 from pyessv._model import Scope

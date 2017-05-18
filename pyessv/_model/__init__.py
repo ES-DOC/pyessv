@@ -24,17 +24,9 @@ from pyessv._model.term import Term
 
 
 # Set of supported node types.
-NODE_TYPES = (
-    Authority,
-    Collection,
-    Scope,
-    Term,
-)
-
-# Map of type keys to types.
-NODE_TYPE_KEY_MAP = {
-    Authority: NODE_TYPE_AUTHORITY,
-    Collection: NODE_TYPE_COLLECTION,
-    Scope: NODE_TYPE_SCOPE,
-    Term: NODE_TYPE_TERM
-}
+NODE_TYPESET = {
+	Authority,
+	Collection,
+	Scope,
+	Term
+	}
