@@ -48,14 +48,6 @@ class Term(Node):
 
 
     @property
-    def hierarchy(self):
-        """Gets hierachy within archive.
-
-        """
-        return [self.authority, self.scope, self.collection, self]
-
-
-    @property
     def ancestors(self):
         """Gets ancestors within archive hierarchy.
 
@@ -64,35 +56,11 @@ class Term(Node):
 
 
     @property
-    def namespace(self):
-        """Returns namespace used in I/O scenarios.
-
-        """
-        return '{}:{}'.format(self.collection.namespace, self.name)
-
-
-    @property
-    def owner(self):
-        """Gets owner within vocabulary model.
-
-        """
-        return self.collection
-
-
-    @property
     def authority(self):
         """Gets associated governing authority.
 
         """
         return self.scope.authority
-
-
-    @property
-    def scope(self):
-        """Gets associated scope.
-
-        """
-        return self.collection.scope
 
 
     @property
@@ -107,55 +75,11 @@ class Term(Node):
 
 
     @property
-    def depth(self):
-        """Gets hierarchical depth.
+    def scope(self):
+        """Gets associated scope.
 
         """
-        return len(self.ancestors)
-
-
-    @property
-    def ancestors(self):
-        """Gets ancestral hierarchy.
-
-        """
-        result = []
-        ancestor = self.parent
-        while ancestor:
-            result.append(ancestor)
-            ancestor = ancestor.parent
-        result.reverse()
-
-        return result
-
-
-    def add_synonym(self, new_synonym):
-        """Adds a new synonym to the term's synnym set.
-
-        """
-        # Validate new synonym.
-        _validate_term_synonym(new_synonym)
-
-        # Format.
-        new_synonym = str(new_synonym).strip()
-
-        # Escape if already aliased.
-        for synonym in self.synonyms:
-            if synonym == new_synonym:
-                return
-
-        # Update synonym set.
-        self.synonyms = sorted(self.synonyms + [new_synonym])
-
-        # Save term.
-        # self.partition.save(self)
-
-
-    def save(self):
-        """Saves term to persistant state stores.
-
-        """
-        self.partition.save(self)
+        return self.collection.scope
 
 
     def associate(self, term):
@@ -165,38 +89,3 @@ class Term(Node):
 
         """
         self.associations.add(term)
-
-
-    def accept(self):
-        """Marks node as accepted.
-
-        """
-        self.status = pyessv.GOVERNANCE_STATUS_ACCEPTED
-
-
-    def deprecate(self):
-        """Marks node as deprecated.
-
-        """
-        self.status = pyessv.GOVERNANCE_STATUS_DEPRECATED
-
-
-    def destroy(self):
-        """Marks node for removal from all persistant state stores.
-
-        """
-        self.status = pyessv.GOVERNANCE_STATUS_DEPRECATED
-
-
-    def reject(self):
-        """Marks node as rejected.
-
-        """
-        self.status = pyessv.GOVERNANCE_STATUS_REJECTED
-
-
-    def reset(self):
-        """Resets node status.
-
-        """
-        self.status = pyessv.GOVERNANCE_STATUS_PENDING

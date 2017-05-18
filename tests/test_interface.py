@@ -60,6 +60,12 @@ _FUNCS = {
     'create_collection',
     'create_scope',
     'create_term',
+    # ... governance
+    'accept',
+    'deprecate',
+    'destroy',
+    'reject',
+    'reset',
     # ... initialisation
     'init',
     # ... parsing

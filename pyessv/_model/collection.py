@@ -72,22 +72,6 @@ class Collection(Node):
 
 
     @property
-    def hierarchy(self):
-        """Gets hierachy within archive.
-
-        """
-        return [self.authority, self.scope, self]
-
-
-    @property
-    def namespace(self):
-        """Returns namespace used in I/O scenarios.
-
-        """
-        return '{}:{}'.format(self.scope.namespace, self.name)
-
-
-    @property
     def ancestors(self):
         """Gets ancestors within archive hierarchy.
 
@@ -96,63 +80,8 @@ class Collection(Node):
 
 
     @property
-    def owner(self):
-        """Gets owner within vocabulary model.
-
-        """
-        return self.scope
-
-
-    @property
     def authority(self):
         """Gets associated governing authority.
 
         """
         return self.scope.authority
-
-
-    def parse(self, term_name, strict=True):
-        """Parses an associated term name.
-
-        """
-        return pyessv.parse(term_name, self, strict=strict)
-
-
-    def accept(self):
-        """Marks node as accepted.
-
-        """
-        for term in self:
-            term.accept()
-
-
-    def deprecate(self):
-        """Marks node as deprecated.
-
-        """
-        for term in self:
-            term.deprecate()
-
-
-    def destroy(self):
-        """Marks node for removal from all persistant state stores.
-
-        """
-        for term in self:
-            term.destroy()
-
-
-    def reject(self):
-        """Marks node as rejected.
-
-        """
-        for term in self:
-            term.reject()
-
-
-    def reset(self):
-        """Resets node status.
-
-        """
-        for term in self:
-            term.reset()

@@ -48,6 +48,12 @@ from pyessv._factory import create_template_parser
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
 
+from pyessv._governance import accept
+from pyessv._governance import deprecate
+from pyessv._governance import destroy
+from pyessv._governance import reject
+from pyessv._governance import reset
+
 from pyessv._initializer import init
 
 from pyessv._model import Authority

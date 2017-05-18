@@ -15,11 +15,6 @@ import uuid
 
 import arrow
 
-from pyessv._constants import NODE_TYPE_AUTHORITY
-from pyessv._constants import NODE_TYPE_COLLECTION
-from pyessv._constants import NODE_TYPE_SCOPE
-from pyessv._constants import NODE_TYPE_TERM
-from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_io_name
 
@@ -50,33 +45,20 @@ class Node(object):
         return self.namespace
 
 
-    def validate(self):
-        """Validates instance.
-
-        :returns: Set of validation errrors.
-        :rtype: set
+    @property
+    def hierarchy(self):
+        """Gets hierachy within archive.
 
         """
-        # N.B. just-in-time import to avoid circular references.
-        from pyessv._validation import validate_node
-
-        return validate_node(self)
+        return self.ancestors + [self]
 
 
     @property
-    def errors(self):
-        """Returns set of validation errors.
+    def namespace(self):
+        """Gets hierachy within archive.
 
         """
-        return sorted(list(self.validate()))
-
-
-    @property
-    def is_valid(self):
-        """Gets flag indicating validity.
-
-        """
-        return len(self.validate()) == 0
+        return ":".join([i.name for i in self.hierarchy])
 
 
     @property
