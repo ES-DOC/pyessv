@@ -81,7 +81,7 @@ class Collection(Node):
 
     @property
     def authority(self):
-        """Gets associated governing authority.
+        """Gets governing authority.
 
         """
         return self.scope.authority

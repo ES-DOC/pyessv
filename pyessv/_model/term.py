@@ -57,7 +57,7 @@ class Term(Node):
 
     @property
     def authority(self):
-        """Gets associated governing authority.
+        """Gets governing authority.
 
         """
         return self.scope.authority
@@ -76,16 +76,7 @@ class Term(Node):
 
     @property
     def scope(self):
-        """Gets associated scope.
+        """Gets governing scope.
 
         """
         return self.collection.scope
-
-
-    def associate(self, term):
-        """Appends an associated term to managed collection.
-
-        :param pyessv.Term term: Associated term to be added.
-
-        """
-        self.associations.add(term)
