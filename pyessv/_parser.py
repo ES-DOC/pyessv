@@ -10,10 +10,10 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-from pyessv._constants import ENTITY_TYPE_AUTHORITY
-from pyessv._constants import ENTITY_TYPE_SCOPE
-from pyessv._constants import ENTITY_TYPE_COLLECTION
-from pyessv._constants import ENTITY_TYPE_TERM
+from pyessv._constants import NODE_TYPE_AUTHORITY
+from pyessv._constants import NODE_TYPE_SCOPE
+from pyessv._constants import NODE_TYPE_COLLECTION
+from pyessv._constants import NODE_TYPE_TERM
 from pyessv._archive import load
 from pyessv._exceptions import ParsingError
 
@@ -46,30 +46,30 @@ def parse(authority, scope=None, collection=None, term=None, strict=True):
 
     """
     targets = [
-        _EntityInfo(ENTITY_TYPE_AUTHORITY, authority, strict),
-        _EntityInfo(ENTITY_TYPE_SCOPE, scope, strict),
-        _EntityInfo(ENTITY_TYPE_COLLECTION, collection, strict),
-        _EntityInfo(ENTITY_TYPE_TERM, term, strict),
+        _NodeInfo(NODE_TYPE_AUTHORITY, authority, strict),
+        _NodeInfo(NODE_TYPE_SCOPE, scope, strict),
+        _NodeInfo(NODE_TYPE_COLLECTION, collection, strict),
+        _NodeInfo(NODE_TYPE_TERM, term, strict),
     ]
 
     for target in [i for i in targets if i.name is not None]:
-        entity = load(
+        node = load(
             targets[0].get_name(target),
             targets[1].get_name(target),
             targets[2].get_name(target),
             targets[3].get_name(target)
             )
-        target.set_entity(entity)
+        target.set_node(node)
 
-    return target.entity.name
+    return target.node.name
 
 
-class _EntityInfo(object):
-    """Information about an entity whose name is being parsed.
+class _NodeInfo(object):
+    """Information about a node whose name is being parsed.
 
     """
     def __init__(self, typekey, name, strict):
-        self.entity = None
+        self.node = None
         self.name = name
         self.strict = strict
         self.typekey = typekey
@@ -91,19 +91,19 @@ class _EntityInfo(object):
         """Gets parsing relative name.
 
         """
-        if self.entity:
-            return self.entity.name
+        if self.node:
+            return self.node.name
         if target == self:
             return self.formatted_name
 
 
-    def set_entity(self, entity):
-        """Sets entity returned from archive search.
+    def set_node(self, node):
+        """Sets node returned from archive search.
 
         """
-        if entity is None:
+        if node is None:
             raise ParsingError(self.typekey, self.name)
         if self.strict:
-            if entity.name != self.name:
+            if node.name != self.name:
                 raise ParsingError(self.typekey, self.name)
-        self.entity = entity
+        self.node = node

@@ -16,10 +16,10 @@ import inspect
 import re
 import uuid
 
-from pyessv._constants import ENTITY_TYPE_SET
+from pyessv._constants import NODE_TYPE_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._model import ENTITY_TYPES
+from pyessv._model import NODE_TYPES
 from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
@@ -36,7 +36,7 @@ def is_valid(instance):
     :rtype: bool
 
     """
-    return len(validate_entity(instance)) == 0
+    return len(validate_node(instance)) == 0
 
 
 def get_errors(instance):
@@ -46,19 +46,19 @@ def get_errors(instance):
     :rtype: list
 
     """
-    return sorted(list(validate_entity(instance)))
+    return sorted(list(validate_node(instance)))
 
 
-def validate_entity(instance):
-    """Validates an instance of a domain entity.
+def validate_node(instance):
+    """Validates an instance of a domain node.
 
-    :param instance: Sub-class of pyessv.Entity
+    :param instance: Sub-class of pyessv.Node
 
     :returns: Set of instance validation errrors.
     :rtype: set
 
     """
-    if not isinstance(instance, ENTITY_TYPES):
+    if not isinstance(instance, NODE_TYPES):
         raise NotImplementedError('Invalid instance: unknown type')
 
     validators = _validate_core()
@@ -100,7 +100,7 @@ def _validate_core():
         _assert_string(i.label)
 
     def _validate_typekey(i):
-        assert i.typekey in ENTITY_TYPE_SET
+        assert i.typekey in NODE_TYPE_SET
 
     def _validate_uid(i):
         assert isinstance(i.uid, uuid.UUID)

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model.entity.py
+.. module:: pyessv._model.node.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: An entity within the pyessv domain model.
+   :synopsis: A node within the pyessv domain model.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
@@ -15,16 +15,16 @@ import uuid
 
 import arrow
 
-from pyessv._constants import ENTITY_TYPE_AUTHORITY
-from pyessv._constants import ENTITY_TYPE_COLLECTION
-from pyessv._constants import ENTITY_TYPE_SCOPE
-from pyessv._constants import ENTITY_TYPE_TERM
+from pyessv._constants import NODE_TYPE_AUTHORITY
+from pyessv._constants import NODE_TYPE_COLLECTION
+from pyessv._constants import NODE_TYPE_SCOPE
+from pyessv._constants import NODE_TYPE_TERM
 from pyessv._utils.compat import basestring
 
 
 
-class Entity(object):
-    """An entity within the pyessv domain model.
+class Node(object):
+    """A node within the pyessv domain model.
 
     """
     def __init__(self, typekey):
@@ -56,9 +56,9 @@ class Entity(object):
 
         """
         # N.B. just-in-time import to avoid circular references.
-        from pyessv._validation import validate_entity
+        from pyessv._validation import validate_node
 
-        return validate_entity(self)
+        return validate_node(self)
 
 
     @property
@@ -77,18 +77,30 @@ class Entity(object):
         return len(self.validate()) == 0
 
 
+    @property
+    def io_name(self):
+        """Returns name formatted for I/O operations.
+
+        """
+        io_name = self.name.strip().lower()
+        io_name = io_name.replace("_", "-")
+        io_name = io_name.replace(" ", "-")
+
+        return io_name
+
+
     @staticmethod
-    def get_item(entity, key):
+    def get_item(node, key):
         """Returns an item from managed collection.
 
         """
         # Set collection.
-        if entity.typekey == ENTITY_TYPE_AUTHORITY:
-            items = entity.scopes
-        elif entity.typekey == ENTITY_TYPE_COLLECTION:
-            items = entity.terms
-        elif entity.typekey == ENTITY_TYPE_SCOPE:
-            items = entity.collections
+        if node.typekey == NODE_TYPE_AUTHORITY:
+            items = node.scopes
+        elif node.typekey == NODE_TYPE_COLLECTION:
+            items = node.terms
+        elif node.typekey == NODE_TYPE_SCOPE:
+            items = node.collections
 
         # Set comparator to be used.
         if isinstance(key, int):

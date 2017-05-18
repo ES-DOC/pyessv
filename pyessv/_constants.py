@@ -31,24 +31,24 @@ ENCODING_SET = {
     ENCODING_JSON
 }
 
-# Entity type - an authority governing vocabularies.
-ENTITY_TYPE_AUTHORITY = 'authority'
+# Node type - an authority governing vocabularies.
+NODE_TYPE_AUTHORITY = 'authority'
 
-# Entity type - a scope constraining collection of vocabularies.
-ENTITY_TYPE_SCOPE = 'scope'
+# Node type - a scope constraining collection of vocabularies.
+NODE_TYPE_SCOPE = 'scope'
 
-# Entity type - a collection constraining collection of term.
-ENTITY_TYPE_COLLECTION = 'collection'
+# Node type - a collection constraining collection of term.
+NODE_TYPE_COLLECTION = 'collection'
 
-# Entity type - a term.
-ENTITY_TYPE_TERM = 'term'
+# Node type - a term.
+NODE_TYPE_TERM = 'term'
 
 # Set of allowed name types.
-ENTITY_TYPE_SET = (
-  ENTITY_TYPE_AUTHORITY,
-  ENTITY_TYPE_COLLECTION,
-  ENTITY_TYPE_SCOPE,
-  ENTITY_TYPE_TERM
+NODE_TYPE_SET = (
+  NODE_TYPE_AUTHORITY,
+  NODE_TYPE_COLLECTION,
+  NODE_TYPE_SCOPE,
+  NODE_TYPE_TERM
   )
 
 # Governance state - the term is accepted.

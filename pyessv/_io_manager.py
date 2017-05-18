@@ -39,27 +39,27 @@ def delete(target):
     if not isinstance(target, (Authority, Scope, Collection, Term)):
         raise TypeError()
 
-    if isinstance(target, Authority):
+    elif isinstance(target, Authority):
         action = shutil.rmtree
-        io_path = os.path.join(DIR_ARCHIVE, target.name)
+        io_path = os.path.join(DIR_ARCHIVE, target.io_name)
 
-    if isinstance(target, Scope):
+    elif isinstance(target, Scope):
         action = shutil.rmtree
-        io_path = os.path.join(DIR_ARCHIVE, target.authority.name)
-        io_path = os.path.join(io_path, target.name)
+        io_path = os.path.join(DIR_ARCHIVE, target.authority.io_name)
+        io_path = os.path.join(io_path, target.io_name)
 
-    if isinstance(target, Collection):
+    elif isinstance(target, Collection):
         action = shutil.rmtree
-        io_path = os.path.join(DIR_ARCHIVE, target.authority.name)
-        io_path = os.path.join(io_path, target.scope.name)
-        io_path = os.path.join(io_path, target.name)
+        io_path = os.path.join(DIR_ARCHIVE, target.authority.io_name)
+        io_path = os.path.join(io_path, target.scope.io_name)
+        io_path = os.path.join(io_path, target.io_name)
 
-    if isinstance(target, Term):
+    elif isinstance(target, Term):
         action = os.remove
-        io_path = os.path.join(DIR_ARCHIVE, target.authority.name)
-        io_path = os.path.join(io_path, target.scope.name)
-        io_path = os.path.join(io_path, target.collection.name)
-        io_path = os.path.join(io_path, target.name)
+        io_path = os.path.join(DIR_ARCHIVE, target.authority.io_name)
+        io_path = os.path.join(io_path, target.scope.io_name)
+        io_path = os.path.join(io_path, target.collection.io_name)
+        io_path = os.path.join(io_path, target.io_name)
 
     try:
         action(io_path)
@@ -121,8 +121,8 @@ def _read_terms(dpath, scope, collection, term_cache):
     """Reads terms from file system.
 
     """
-    dpath = os.path.join(dpath, scope.name)
-    dpath = os.path.join(dpath, collection.name)
+    dpath = os.path.join(dpath, scope.io_name)
+    dpath = os.path.join(dpath, collection.io_name)
     dpath = os.path.join(dpath, '*')
 
     return [_read_term(i, collection, term_cache) for i in glob.iglob(dpath)]
@@ -157,7 +157,7 @@ def write(authority, archive_dir=DIR_ARCHIVE):
         raise ValueError('Invalid authority: has validation errors')
 
     # Set directory.
-    dpath = os.path.join(archive_dir, authority.name)
+    dpath = os.path.join(archive_dir, authority.io_name)
     try:
         os.makedirs(dpath)
     except OSError:
@@ -179,15 +179,15 @@ def _write_term(dpath, term):
 
     """
     # Set directory.
-    dpath = os.path.join(dpath, term.scope.name)
-    dpath = os.path.join(dpath, term.collection.name)
+    dpath = os.path.join(dpath, term.scope.io_name)
+    dpath = os.path.join(dpath, term.collection.io_name)
     try:
         os.makedirs(dpath)
     except OSError:
         pass
 
     # Set file path.
-    fpath = os.path.join(dpath, term.name)
+    fpath = os.path.join(dpath, term.io_name)
 
     # Write term JSON file.
     with open(fpath, 'w') as fstream:

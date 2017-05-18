@@ -18,8 +18,8 @@ import tests.utils as tu
 
 
 
-# Entity level test information.
-_ENTITY_TEST_INFO = [
+# Node level test information.
+_NODE_TEST_INFO = [
     ('create_date', arrow.utcnow().datetime, ('', '  ', 123)),
     ('data', {'a': 1}, ('', '  ', 123)),
     ('description', tu.TEST_AUTHORITY_DESCRIPTION, (None, '', '  ')),
@@ -28,20 +28,20 @@ _ENTITY_TEST_INFO = [
     ]
 
 
-# Test information mapped by entity type.
+# Test information mapped by node type.
 _TEST_INFO = {
-    LIB.ENTITY_TYPE_AUTHORITY: _ENTITY_TEST_INFO + [
+    LIB.NODE_TYPE_AUTHORITY: _NODE_TEST_INFO + [
         ('scopes', [], [None, '', '  ', [123]])
     ],
-    LIB.ENTITY_TYPE_SCOPE: _ENTITY_TEST_INFO + [
+    LIB.NODE_TYPE_SCOPE: _NODE_TEST_INFO + [
         # ('authority', None, [None, '', '  ', [123]]),
         ('collections', [], [None, '', '  ', [123]])
     ],
-    LIB.ENTITY_TYPE_COLLECTION: _ENTITY_TEST_INFO + [
+    LIB.NODE_TYPE_COLLECTION: _NODE_TEST_INFO + [
         # ('collection', None, [None, '', '  ', [123]]),
         ('terms', [], [None, '', '  ', [123]])
     ],
-    LIB.ENTITY_TYPE_TERM: _ENTITY_TEST_INFO + [
+    LIB.NODE_TYPE_TERM: _NODE_TEST_INFO + [
         ('alternative_name', tu.TEST_AUTHORITY_ALTERNATIVE_NAME, ('', '  ')),
         ('alternative_url', tu.TEST_AUTHORITY_ALTERNATIVE_URL, ('', '  ')),
         ('idx', 1, ('', '  ', [123])),
@@ -51,23 +51,23 @@ _TEST_INFO = {
 }
 
 
-def test_entity():
-    """Tests entity validation.
+def test_node():
+    """Tests node validation.
 
     """
     for typeof, factory in (
-        (LIB.ENTITY_TYPE_AUTHORITY, tu.create_authority),
-        (LIB.ENTITY_TYPE_SCOPE, tu.create_scope),
-        (LIB.ENTITY_TYPE_COLLECTION, tu.create_collection),
-        (LIB.ENTITY_TYPE_TERM, tu.create_term)
+        (LIB.NODE_TYPE_AUTHORITY, tu.create_authority),
+        (LIB.NODE_TYPE_SCOPE, tu.create_scope),
+        (LIB.NODE_TYPE_COLLECTION, tu.create_collection),
+        (LIB.NODE_TYPE_TERM, tu.create_term)
         ):
         for attr, valid, invalid in _TEST_INFO[typeof]:
-            tu.init(_test_entity_attr, 'validate --> {}: {}'.format(typeof, attr))
-            yield _test_entity_attr, factory, attr, valid, invalid
+            tu.init(_test_node_attr, 'validate --> {}: {}'.format(typeof, attr))
+            yield _test_node_attr, factory, attr, valid, invalid
 
 
-def _test_entity_attr(factory, attr, valid_value, invalid_values):
-    """Tests entity attribute validation.
+def _test_node_attr(factory, attr, valid_value, invalid_values):
+    """Tests node attribute validation.
 
     """
     instance = factory()

@@ -16,20 +16,20 @@ import arrow
 
 import pyessv
 
-from pyessv._constants import ENTITY_TYPE_AUTHORITY
-from pyessv._constants import ENTITY_TYPE_COLLECTION
-from pyessv._constants import ENTITY_TYPE_SCOPE
-from pyessv._constants import ENTITY_TYPE_TERM
+from pyessv._constants import NODE_TYPE_AUTHORITY
+from pyessv._constants import NODE_TYPE_COLLECTION
+from pyessv._constants import NODE_TYPE_SCOPE
+from pyessv._constants import NODE_TYPE_TERM
 from pyessv._exceptions import ValidationError
-from pyessv._model import ENTITY_TYPE_KEY_MAP
+from pyessv._model import NODE_TYPE_KEY_MAP
 from pyessv._model import Authority
-from pyessv._model import Entity
+from pyessv._model import Node
 from pyessv._model import Scope
 from pyessv._model import Collection
 from pyessv._model import Term
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
-from pyessv._validation import validate_entity
+from pyessv._validation import validate_node
 from pyessv._parser_template import TemplateParser
 
 
@@ -48,8 +48,8 @@ def create_authority(name, description=None, label=None, url=None, create_date=N
     :rtype: pyessv.Authority
 
     """
-    instance = _create_entity(Authority, name, description, label, url, create_date, data)
-    errors = validate_entity(instance)
+    instance = _create_node(Authority, name, description, label, url, create_date, data)
+    errors = validate_node(instance)
     if errors:
         raise ValidationError(errors)
 
@@ -71,9 +71,9 @@ def create_scope(authority, name, description=None, label=None, url=None, create
     :rtype: pyessv.Scope
 
     """
-    instance = _create_entity(Scope, name, description, label, url, create_date, data, authority)
+    instance = _create_node(Scope, name, description, label, url, create_date, data, authority)
     instance.authority = authority
-    errors = validate_entity(instance)
+    errors = validate_node(instance)
     if errors:
         raise ValidationError(errors)
 
@@ -95,10 +95,10 @@ def create_collection(scope, name, description=None, label=None, url=None, creat
     :rtype: pyessv.Collection
 
     """
-    instance = _create_entity(Collection, name, description, label, url, create_date, data, scope)
+    instance = _create_node(Collection, name, description, label, url, create_date, data, scope)
     instance.scope = scope
     instance.term_name_regex = term_name_regex
-    errors = validate_entity(instance)
+    errors = validate_node(instance)
     if errors:
         raise ValidationError(errors)
 
@@ -120,10 +120,10 @@ def create_term(collection, name, description=None, label=None, url=None, create
     :rtype: pyessv.Term
 
     """
-    instance = _create_entity(Term, name, description, label, url, create_date, data, collection)
+    instance = _create_node(Term, name, description, label, url, create_date, data, collection)
     instance.collection = collection
     instance.idx = len(collection)
-    errors = validate_entity(instance)
+    errors = validate_node(instance)
     if errors:
         raise ValidationError(errors)
 
@@ -150,8 +150,8 @@ def create_template_parser(template, collections):
     return TemplateParser(template, collections)
 
 
-def _create_entity(typeof, name, description, label=None, url=None, create_date=None, data=None, owner=None):
-    """Instantiates, initialises & returns an entity.
+def _create_node(typeof, name, description, label=None, url=None, create_date=None, data=None, owner=None):
+    """Instantiates, initialises & returns a node.
 
     """
     # Set core attributes.

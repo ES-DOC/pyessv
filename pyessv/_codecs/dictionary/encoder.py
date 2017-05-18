@@ -21,7 +21,7 @@ from pyessv._model import Scope
 def encode(instance):
     """Encodes an instance of a domain model class as a dictionary.
 
-    :param pyessv.Entity instance: A domain model class instance to be encoded as a dictionary.
+    :param pyessv.Node instance: A domain model class instance to be encoded as a dictionary.
 
     :returns: Instance encoded as a simple dictionary.
     :rtype: dict
@@ -35,7 +35,7 @@ def encode(instance):
         raise TypeError('Type encoding unsupported: {}'.format(type(instance)))
 
     obj = dict()
-    _encode_entity(instance, obj)
+    _encode_node(instance, obj)
     encoder(instance, obj)
 
     return obj
@@ -81,8 +81,8 @@ def _encode_term(instance, obj):
         obj['synonyms'] = instance.synonyms
 
 
-def _encode_entity(instance, obj):
-    """Encodes an entity instance to a dictionary representation.
+def _encode_node(instance, obj):
+    """Encodes a node instance to a dictionary representation.
 
     """
     obj['_type'] = str(instance.__module__)

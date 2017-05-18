@@ -11,7 +11,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.3.0.0.0'
+__version__ = '0.3.1.0.0'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2016 ES-DOC'
@@ -28,10 +28,10 @@ from pyessv._codecs import encode
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
-from pyessv._constants import ENTITY_TYPE_AUTHORITY
-from pyessv._constants import ENTITY_TYPE_COLLECTION
-from pyessv._constants import ENTITY_TYPE_SCOPE
-from pyessv._constants import ENTITY_TYPE_TERM
+from pyessv._constants import NODE_TYPE_AUTHORITY
+from pyessv._constants import NODE_TYPE_COLLECTION
+from pyessv._constants import NODE_TYPE_SCOPE
+from pyessv._constants import NODE_TYPE_TERM
 from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
@@ -60,7 +60,7 @@ from pyessv._parser import parse_namespace
 
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
-from pyessv._validation import validate_entity as validate
+from pyessv._validation import validate_node as validate
 
 
 # Auto-initialize.

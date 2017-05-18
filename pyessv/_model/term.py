@@ -12,11 +12,11 @@
 
 """
 import pyessv
-from pyessv._model.entity import Entity
+from pyessv._model.node import Node
 
 
 
-class Term(Entity):
+class Term(Node):
     """A vocabulary term.
 
     """
@@ -24,7 +24,7 @@ class Term(Entity):
         """Instance constructor.
 
         """
-        super(Term, self).__init__(pyessv.ENTITY_TYPE_TERM)
+        super(Term, self).__init__(pyessv.NODE_TYPE_TERM)
 
         self.alternative_name = None    # primary synonym
         self.alternative_url = None     # an alternative URL
@@ -166,35 +166,35 @@ class Term(Entity):
 
 
     def accept(self):
-        """Marks entity as accepted.
+        """Marks node as accepted.
 
         """
         self.status = pyessv.GOVERNANCE_STATUS_ACCEPTED
 
 
     def deprecate(self):
-        """Marks entity as deprecated.
+        """Marks node as deprecated.
 
         """
         self.status = pyessv.GOVERNANCE_STATUS_DEPRECATED
 
 
     def destroy(self):
-        """Marks entity for removal from all persistant state stores.
+        """Marks node for removal from all persistant state stores.
 
         """
         self.status = pyessv.GOVERNANCE_STATUS_DEPRECATED
 
 
     def reject(self):
-        """Marks entity as rejected.
+        """Marks node as rejected.
 
         """
         self.status = pyessv.GOVERNANCE_STATUS_REJECTED
 
 
     def reset(self):
-        """Resets entity status.
+        """Resets node status.
 
         """
         self.status = pyessv.GOVERNANCE_STATUS_PENDING

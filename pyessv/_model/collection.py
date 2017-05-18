@@ -12,11 +12,11 @@
 
 """
 import pyessv
-from pyessv._model.entity import Entity
+from pyessv._model.node import Node
 
 
 
-class Collection(Entity):
+class Collection(Node):
     """A vocabulary term collection.
 
     """
@@ -24,7 +24,7 @@ class Collection(Entity):
         """Instance constructor.
 
         """
-        super(Collection, self).__init__(pyessv.ENTITY_TYPE_COLLECTION)
+        super(Collection, self).__init__(pyessv.NODE_TYPE_COLLECTION)
 
         self.scope = None
         self.terms = list()
@@ -50,7 +50,7 @@ class Collection(Entity):
         """Returns a child section item.
 
         """
-        return Entity.get_item(self, key)
+        return Node.get_item(self, key)
 
 
     def __contains__(self, key):
@@ -108,7 +108,7 @@ class Collection(Entity):
 
 
     def accept(self):
-        """Marks entity as accepted.
+        """Marks node as accepted.
 
         """
         for term in self:
@@ -116,7 +116,7 @@ class Collection(Entity):
 
 
     def deprecate(self):
-        """Marks entity as deprecated.
+        """Marks node as deprecated.
 
         """
         for term in self:
@@ -124,7 +124,7 @@ class Collection(Entity):
 
 
     def destroy(self):
-        """Marks entity for removal from all persistant state stores.
+        """Marks node for removal from all persistant state stores.
 
         """
         for term in self:
@@ -132,7 +132,7 @@ class Collection(Entity):
 
 
     def reject(self):
-        """Marks entity as rejected.
+        """Marks node as rejected.
 
         """
         for term in self:
@@ -140,7 +140,7 @@ class Collection(Entity):
 
 
     def reset(self):
-        """Resets entity status.
+        """Resets node status.
 
         """
         for term in self:

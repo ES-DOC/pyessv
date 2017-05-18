@@ -40,7 +40,7 @@ _ENCODE_STRING = (
 def encode(instance):
     """Encodes an instance of a domain model class as a JSON text blob.
 
-    :param pyessv.Entity instance: A domain model class instance to be encoded as a JSON text blob.
+    :param pyessv.Node instance: A domain model class instance to be encoded as a JSON text blob.
 
     :returns: Instance encoded as a JSON text blob.
     :rtype: str

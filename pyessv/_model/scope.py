@@ -12,11 +12,11 @@
 
 """
 import pyessv
-from pyessv._model.entity import Entity
+from pyessv._model.node import Node
 
 
 
-class Scope(Entity):
+class Scope(Node):
     """A scope managed by an authority.
 
     """
@@ -24,7 +24,7 @@ class Scope(Entity):
         """Instance constructor.
 
         """
-        super(Scope, self).__init__(pyessv.ENTITY_TYPE_SCOPE)
+        super(Scope, self).__init__(pyessv.NODE_TYPE_SCOPE)
 
         self.authority = None
         self.collections = list()
@@ -49,7 +49,7 @@ class Scope(Entity):
         """Returns a child section item.
 
         """
-        return Entity.get_item(self, key)
+        return Node.get_item(self, key)
 
 
     def __contains__(self, key):
@@ -99,7 +99,7 @@ class Scope(Entity):
 
 
     def accept(self):
-        """Marks entity as accepted.
+        """Marks node as accepted.
 
         """
         for collection in self:
@@ -107,7 +107,7 @@ class Scope(Entity):
 
 
     def deprecate(self):
-        """Marks entity as deprecated.
+        """Marks node as deprecated.
 
         """
         for collection in self:
@@ -115,7 +115,7 @@ class Scope(Entity):
 
 
     def destroy(self):
-        """Marks entity for removal from all persistant state stores.
+        """Marks node for removal from all persistant state stores.
 
         """
         for collection in self:
@@ -123,7 +123,7 @@ class Scope(Entity):
 
 
     def reject(self):
-        """Marks entity as rejected.
+        """Marks node as rejected.
 
         """
         for collection in self:
@@ -131,7 +131,7 @@ class Scope(Entity):
 
 
     def reset(self):
-        """Resets entity status.
+        """Resets node status.
 
         """
         for collection in self:

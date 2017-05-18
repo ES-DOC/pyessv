@@ -47,7 +47,7 @@ def decode(obj):
 
     # Instantite & set attributes.
     instance = typeof()
-    _decode_entity(obj, instance)
+    _decode_node(obj, instance)
     decoder(obj, instance)
 
     return instance
@@ -104,8 +104,8 @@ def _decode_term(obj, instance):
         instance.parent = uuid.UUID(str(obj['parent']))
 
 
-def _decode_entity(obj, instance):
-    """Decodes an entity instance from a dictionary representation.
+def _decode_node(obj, instance):
+    """Decodes a node instance from a dictionary representation.
 
     """
     instance.create_date = arrow.get(obj['create_date']).datetime

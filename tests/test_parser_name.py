@@ -83,10 +83,10 @@ def test_parse():
 
 
     for typeof, name, synonym in [
-        (LIB.ENTITY_TYPE_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
-        (LIB.ENTITY_TYPE_SCOPE, tu.TEST_SCOPE_NAME, None),
-        (LIB.ENTITY_TYPE_COLLECTION, tu.TEST_COLLECTION_NAME, None),
-        (LIB.ENTITY_TYPE_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
+        (LIB.NODE_TYPE_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
+        (LIB.NODE_TYPE_SCOPE, tu.TEST_SCOPE_NAME, None),
+        (LIB.NODE_TYPE_COLLECTION, tu.TEST_COLLECTION_NAME, None),
+        (LIB.NODE_TYPE_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
         ]:
         config = _get_config(typeof, name)
         if synonym:
@@ -99,10 +99,10 @@ def test_parse():
 
 
     for typeof, name, synonym in [
-        (LIB.ENTITY_TYPE_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
-        (LIB.ENTITY_TYPE_SCOPE, tu.TEST_SCOPE_NAME, None),
-        (LIB.ENTITY_TYPE_COLLECTION, tu.TEST_COLLECTION_NAME, None),
-        (LIB.ENTITY_TYPE_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
+        (LIB.NODE_TYPE_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
+        (LIB.NODE_TYPE_SCOPE, tu.TEST_SCOPE_NAME, None),
+        (LIB.NODE_TYPE_COLLECTION, tu.TEST_COLLECTION_NAME, None),
+        (LIB.NODE_TYPE_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
         ]:
         config = _get_config(typeof, name)
         if synonym:
