@@ -14,11 +14,11 @@
 import uuid
 
 import pyessv
-from pyessv._model.node import Node
+from pyessv._model.node import IterableNode
 
 
 
-class Scope(Node):
+class Scope(IterableNode):
     """A scope managed by an authority.
 
     """
@@ -26,47 +26,9 @@ class Scope(Node):
         """Instance constructor.
 
         """
-        super(Scope, self).__init__(pyessv.NODE_TYPEKEY_SCOPE)
-
         self.authority = None
-        self.collections = list()
-
-
-    def __len__(self):
-        """Returns number of items in managed collection.
-
-        """
-        return len(self.collections)
-
-
-    def __iter__(self):
-        """Instance iterator initializer.
-
-        """
-        return iter(sorted(self.collections,
-                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
-
-
-    def __getitem__(self, key):
-        """Returns a child section item.
-
-        """
-        comparator = Node.get_comparator(key)
-        for item in self.collections:
-            if comparator(item) == key:
-                return item
-
-        # Match against a raw name.
-        for collection in self.collections:
-            if key == collection.raw_name:
-                return collection
-
-
-    def __contains__(self, key):
-        """Instance membership predicate.
-
-        """
-        return self[key] is not None
+        self.collections = []
+        super(Scope, self).__init__(self.collections, pyessv.NODE_TYPEKEY_SCOPE)
 
 
     @property

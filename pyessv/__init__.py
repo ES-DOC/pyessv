@@ -11,7 +11,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.3.2.0.0'
+__version__ = '0.3.3.0.0'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
@@ -20,6 +20,8 @@ __copyright__ = 'Copyright 2017 ES-DOC'
 
 from pyessv._archive import add
 from pyessv._archive import load
+from pyessv._archive import load_by_uid
+from pyessv._archive import load_by_namespace
 from pyessv._archive import save
 
 from pyessv._codecs import decode
@@ -36,6 +38,10 @@ from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._constants import GOVERNANCE_STATUS_REJECTED
+from pyessv._constants import PARSING_STRICTNESS_0
+from pyessv._constants import PARSING_STRICTNESS_1
+from pyessv._constants import PARSING_STRICTNESS_2
+from pyessv._constants import PARSING_STRICTNESS_3
 
 from pyessv._exceptions import InvalidAssociationError
 from pyessv._exceptions import TemplateParsingError

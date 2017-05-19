@@ -27,6 +27,7 @@ from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
+from pyessv._model import Node
 from pyessv._validation import is_valid
 
 
@@ -39,7 +40,7 @@ def delete(target):
     """Deletes vocabulary data from file system.
 
     """
-    if not isinstance(target, (Authority, Scope, Collection, Term)):
+    if not isinstance(target, Node):
         raise TypeError()
 
     elif isinstance(target, Authority):
@@ -102,7 +103,9 @@ def _read_authority(dpath):
     term_cache = {}
     for scope in authority:
         for collection in scope:
-            collection.terms = _read_terms(dpath, scope, collection, term_cache)
+            for term in _read_terms(dpath, scope, collection, term_cache):
+                term.collection = collection
+                collection.terms.append(term)
 
     # Set inter-term hierarchies.
     for term in term_cache.values():
@@ -131,7 +134,6 @@ def _read_term(fpath, collection, term_cache):
     """Reads terms from file system.
 
     """
-    # Decode term from JSON file.
     with open(fpath, 'r') as fstream:
         term = decode(fstream.read(), ENCODING_JSON)
     term.collection = collection

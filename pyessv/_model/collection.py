@@ -14,11 +14,11 @@
 import uuid
 
 import pyessv
-from pyessv._model.node import Node
+from pyessv._model.node import IterableNode
 
 
 
-class Collection(Node):
+class Collection(IterableNode):
     """A vocabulary term collection.
 
     """
@@ -26,54 +26,10 @@ class Collection(Node):
         """Instance constructor.
 
         """
-        super(Collection, self).__init__(pyessv.NODE_TYPEKEY_COLLECTION)
-
         self.scope = None
-        self.terms = list()
+        self.terms = []
         self.term_name_regex = None
-
-
-    def __len__(self):
-        """Returns number of terms in managed collection.
-
-        """
-        return len(self.terms)
-
-
-    def __iter__(self):
-        """Instance iterator initializer.
-
-        """
-        return iter(sorted(self.terms,
-                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
-
-
-    def __getitem__(self, key):
-        """Returns a child section item.
-
-        """
-        # Match against key.
-        comparator = Node.get_comparator(key)
-        for term in self.terms:
-            if comparator(term) == key:
-                return term
-
-        # Match against a raw name.
-        for term in self.terms:
-            if key == term.raw_name:
-                return term
-
-        # Match against a synonym.
-        for term in self.terms:
-            if key in term.synonyms:
-                return term
-
-
-    def __contains__(self, key):
-        """Instance membership predicate.
-
-        """
-        return self[key] is not None
+        super(Collection, self).__init__(self.terms, pyessv.NODE_TYPEKEY_COLLECTION)
 
 
     @property

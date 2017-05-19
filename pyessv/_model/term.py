@@ -34,7 +34,6 @@ class Term(Node):
         self.idx = None
         self.parent = None
         self.status = pyessv.GOVERNANCE_STATUS_PENDING
-        self.synonyms = list()
 
 
     def __contains__(self, key):
@@ -60,17 +59,6 @@ class Term(Node):
 
         """
         return self.scope.authority
-
-
-    @property
-    def all_names(self):
-        """Returns all term names.
-
-        """
-        result = [self.canonical_name, self.raw_name, self.alternative_name] + self.synonyms
-        result = [t for t in result if t is not None and len(t) > 0]
-
-        return set(sorted(result))
 
 
     @property

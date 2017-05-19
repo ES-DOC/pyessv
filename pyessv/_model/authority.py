@@ -14,11 +14,11 @@
 import uuid
 
 import pyessv
-from pyessv._model.node import Node
+from pyessv._model.node import IterableNode
 
 
 
-class Authority(Node):
+class Authority(IterableNode):
     """An authority assuming responsibity for governance of vocabularies.
 
     """
@@ -26,46 +26,8 @@ class Authority(Node):
         """Instance constructor.
 
         """
-        super(Authority, self).__init__(pyessv.NODE_TYPEKEY_AUTHORITY)
-
-        self.scopes = list()
-
-
-    def __len__(self):
-        """Returns number of items in managed collection.
-
-        """
-        return len(self.scopes)
-
-
-    def __iter__(self):
-        """Instance iterator initializer.
-
-        """
-        return iter(sorted(self.scopes,
-                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
-
-
-    def __getitem__(self, key):
-        """Returns a child section item.
-
-        """
-        comparator = Node.get_comparator(key)
-        for item in self.scopes:
-            if comparator(item) == key:
-                return item
-
-        # Match against a raw name.
-        for scope in self.scopes:
-            if key == scope.raw_name:
-                return scope
-
-
-    def __contains__(self, key):
-        """Instance membership predicate.
-
-        """
-        return self[key] is not None
+        self.scopes = []
+        super(Authority, self).__init__(self.scopes, pyessv.NODE_TYPEKEY_AUTHORITY)
 
 
     @property

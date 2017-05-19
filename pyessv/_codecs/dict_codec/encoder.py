@@ -46,7 +46,7 @@ def _encode_authority(instance, obj):
     """Encodes a term authority as a dictionary.
 
     """
-    obj['scopes'] = [encode(i) for i in instance.scopes]
+    obj['scopes'] = [encode(i) for i in instance]
 
 
 def _encode_scope(instance, obj):
@@ -78,8 +78,6 @@ def _encode_term(instance, obj):
         obj['parent'] = instance.parent.uid
     if len(instance.associations) > 0:
         obj['associations'] = [i.uid for i in instance.associations]
-    if len(instance.synonyms) > 0:
-        obj['synonyms'] = instance.synonyms
 
 
 def _encode_node(instance, obj):
@@ -96,6 +94,8 @@ def _encode_node(instance, obj):
         obj['data'] = instance.data
     if instance.description is not None:
         obj['description'] = instance.description
+    if len(instance.synonyms) > 0:
+        obj['synonyms'] = instance.synonyms
     if instance.url is not None:
         obj['url'] = instance.url
 

@@ -19,11 +19,12 @@ import uuid
 from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._model import NODE_TYPESET
 from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
+from pyessv._model import IterableNode
+from pyessv._model import Node
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import urlparse
 
@@ -58,7 +59,7 @@ def validate_node(instance):
     :rtype: set
 
     """
-    if not isinstance(instance, tuple(NODE_TYPESET)):
+    if not isinstance(instance, Node):
         raise NotImplementedError('Invalid instance: unknown type')
 
     validators = _validate_core()
@@ -94,13 +95,16 @@ def _validate_core():
             assert isinstance(i.data, dict)
 
     def _validate_description(i):
-        if isinstance(i, (Authority, Scope, Collection)):
+        if isinstance(i, IterableNode):
             _assert_string(i.description)
         elif i.description is not None:
             _assert_string(i.description)
 
     def _validate_label(i):
         _assert_string(i.label)
+
+    def _validate_synonyms(i):
+        _assert_iterable(i.synonyms, _assert_string)
 
     def _validate_typekey(i):
         assert i.typekey in NODE_TYPEKEY_SET
@@ -117,6 +121,7 @@ def _validate_core():
         _validate_data,
         _validate_description,
         _validate_label,
+        _validate_synonyms,
         _validate_typekey,
         _validate_uid,
         _validate_url
@@ -211,9 +216,6 @@ def _validate_term():
     def _validate_status(i):
         assert i.status in GOVERNANCE_STATUS_SET
 
-    def _validate_synonyms(i):
-        _assert_iterable(i.synonyms, _assert_string)
-
     return [
         _validate_alternative_name,
         _validate_alternative_url,
@@ -221,8 +223,7 @@ def _validate_term():
         _validate_idx,
         _validate_canonical_name,
         _validate_parent,
-        _validate_status,
-        _validate_synonyms
+        _validate_status
         ]
 
 

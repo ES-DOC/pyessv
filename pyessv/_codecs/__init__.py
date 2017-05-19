@@ -11,19 +11,19 @@
 
 
 """
-from pyessv._codecs import dictionary
-from pyessv._codecs import json
+from pyessv._codecs import dict_codec
+from pyessv._codecs import json_codec
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
-from pyessv._model import NODE_TYPESET
+from pyessv._model import Node
 from pyessv._utils.compat import basestring
 
 
 
 # Codecs mapped by encoding.
 _CODECS = {
-	ENCODING_DICT: dictionary,
-	ENCODING_JSON: json
+	ENCODING_DICT: dict_codec,
+	ENCODING_JSON: json_codec
     }
 
 # Map of encodings to allowed input types when decoding.
@@ -70,7 +70,7 @@ def encode(target, encoding=ENCODING_JSON):
     if encoding not in _CODECS:
         raise NotImplementedError('Invalid encoding: {}'.format(encoding))
 
-    if isinstance(target, tuple(NODE_TYPESET)):
+    if isinstance(target, Node):
         encoded = _CODECS[encoding].encode(target)
         if isinstance(encoded, basestring):
             encoded = encoded.strip()

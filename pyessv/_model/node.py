@@ -34,6 +34,7 @@ class Node(object):
         self.description = None
         self.label = None
         self.raw_name = None
+        self.synonyms = list()
         self.typekey = typekey
         self.uid = None
         self.url = None
@@ -44,6 +45,17 @@ class Node(object):
 
         """
         return self.namespace
+
+
+    @property
+    def all_names(self):
+        """Returns all term names.
+
+        """
+        result = [self.canonical_name, self.raw_name] + self.synonyms
+        result = [t for t in result if t is not None and len(t) > 0]
+
+        return set(sorted(result))
 
 
     @property
@@ -87,3 +99,57 @@ class Node(object):
                 return lambda i: i.canonical_name
             else:
                 return lambda i: str(i.uid)
+
+
+class IterableNode(Node):
+    """An iterable node within the pyessv domain model.
+
+    """
+    def __init__(self, items, typekey):
+        """Instance constructor.
+
+        """
+        self._items = items
+        super(IterableNode, self).__init__(typekey)
+
+
+    def __contains__(self, key):
+        """Instance membership predicate.
+
+        """
+        return self[key] is not None
+
+
+    def __getitem__(self, key):
+        """Returns a child section item.
+
+        """
+        comparator = Node.get_comparator(key)
+        for item in self:
+            if comparator(item) == key:
+                return item
+
+        # Match against a raw name.
+        for item in self:
+            if key == item.raw_name:
+                return item
+
+        # Match against a synonym.
+        for item in self:
+            if key in item.synonyms:
+                return item
+
+
+    def __iter__(self):
+        """Instance iterator initializer.
+
+        """
+        return iter(sorted(self._items,
+                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
+
+
+    def __len__(self):
+        """Returns number of items in managed collection.
+
+        """
+        return len(self._items)

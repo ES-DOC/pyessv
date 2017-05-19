@@ -19,96 +19,101 @@ import tests.utils as tu
 
 
 @nose.with_setup(tu.setup, tu.teardown)
-def test_parse():
-    """Test parsing of anmes at various levels.
+def test_parse_name():
+    """Test parsing of names at various levels.
 
     """
-    def _get_config(typeof, name, synonym=None):
-        target = synonym or name
-        return [
-            (typeof, target, name, False),
-            (typeof, target, LIB.ParsingError if synonym else name, True),
-            (typeof, target.upper(), name, False),
-            (typeof, target.upper(), LIB.ParsingError, True),
-            (typeof, target.title(), name, False),
-            (typeof, target.title(), LIB.ParsingError, True)
-        ]
-
-
-    def _test_parse_names(cfg):
-        """Inner test.
-
-        """
-        typeof, name, expected, strict = cfg
-
-        try:
-            if typeof == 'authority':
-                result = LIB.parse(name, strict=strict)
-            elif typeof == 'scope':
-                result = LIB.parse(tu.TEST_AUTHORITY_NAME, name, strict=strict)
-            elif typeof == 'collection':
-                result = LIB.parse(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, name, strict=strict)
-            elif typeof == 'term':
-                result = LIB.parse(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME, name, strict=strict)
-        except LIB.ParsingError:
-            result = LIB.ParsingError
-
-        assert result == expected, \
-               'Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.'.format(typeof, name, result, expected)
-
-
-    def _test_parse_namespace(cfg):
-        """Inner test.
-
-        """
-        typeof, name, expected, strict = cfg
-
-        if typeof == 'authority':
-            parts = []
-        elif typeof == 'scope':
-            parts = [tu.TEST_AUTHORITY_NAME]
-        elif typeof == 'collection':
-            parts = [tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME]
-        elif typeof == 'term':
-            parts = [tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME]
-        parts.append(name)
-
-        try:
-            result = LIB.parse_namespace(':'.join(parts), strict)
-        except LIB.ParsingError:
-            result = LIB.ParsingError
-
-        assert result == expected, \
-               'Parsing error: typeof={}.  name={}.  actual = {}.  expected {}.'.format(typeof, name, result, expected)
-
-
     for typeof, name, synonym in [
-        (LIB.NODE_TYPEKEY_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
-        (LIB.NODE_TYPEKEY_SCOPE, tu.TEST_SCOPE_NAME, None),
-        (LIB.NODE_TYPEKEY_COLLECTION, tu.TEST_COLLECTION_NAME, None),
+        (LIB.NODE_TYPEKEY_AUTHORITY, tu.TEST_AUTHORITY_NAME, tu.TEST_AUTHORITY_SYNONYMS[0]),
+        (LIB.NODE_TYPEKEY_SCOPE, tu.TEST_SCOPE_NAME, tu.TEST_SCOPE_SYNONYMS[0]),
+        (LIB.NODE_TYPEKEY_COLLECTION, tu.TEST_COLLECTION_NAME, tu.TEST_COLLECTION_SYNONYMS[0]),
         (LIB.NODE_TYPEKEY_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
         ]:
-        config = _get_config(typeof, name)
-        if synonym:
-            config += _get_config(typeof, name, synonym)
-
-        for cfg in config:
-            desc = 'parse --> {}: {} [strict={}]'.format(cfg[0], cfg[1], cfg[3])
+        for cfg in _get_config(name, synonym):
+            desc = 'parse --> {}: {} [strictness={}]'.format(typeof, cfg[0], cfg[2])
             tu.init(_test_parse_names, desc)
-            yield _test_parse_names, cfg
+            yield _test_parse_names, typeof, cfg
 
 
+@nose.with_setup(tu.setup, tu.teardown)
+def test_parse_namespace():
+    """Test parsing of namespsace at various levels.
+
+    """
     for typeof, name, synonym in [
-        (LIB.NODE_TYPEKEY_AUTHORITY, tu.TEST_AUTHORITY_NAME, None),
-        (LIB.NODE_TYPEKEY_SCOPE, tu.TEST_SCOPE_NAME, None),
-        (LIB.NODE_TYPEKEY_COLLECTION, tu.TEST_COLLECTION_NAME, None),
+        (LIB.NODE_TYPEKEY_AUTHORITY, tu.TEST_AUTHORITY_NAME, tu.TEST_AUTHORITY_SYNONYMS[0]),
+        (LIB.NODE_TYPEKEY_SCOPE, tu.TEST_SCOPE_NAME, tu.TEST_SCOPE_SYNONYMS[0]),
+        (LIB.NODE_TYPEKEY_COLLECTION, tu.TEST_COLLECTION_NAME, tu.TEST_COLLECTION_SYNONYMS[0]),
         (LIB.NODE_TYPEKEY_TERM, tu.TEST_TERM_NAME, tu.TEST_TERM_SYNONYMS[0]),
         ]:
-        config = _get_config(typeof, name)
-        if synonym:
-            config += _get_config(typeof, name, synonym)
-
-        for cfg in config:
-            desc = 'parse namespace --> {}: {} [strict={}]'.format(cfg[0], cfg[1], cfg[3])
+        for cfg in _get_config(name, synonym):
+            desc = 'parse namespace --> {}: {} [strictness={}]'.format(typeof, cfg[0], cfg[2])
             tu.init(_test_parse_namespace, desc)
-            yield _test_parse_namespace, cfg
+            yield _test_parse_namespace, typeof, cfg
+
+
+def _get_config(name, synonym):
+    """Returns node test configuration.
+
+    """
+    return [
+        (name, name, 0),
+        (name.upper(), LIB.ParsingError, 1),
+        (name.upper(), LIB.ParsingError, 2),
+        (name.upper(), name, 3),
+        (synonym, LIB.ParsingError, 0),
+        (synonym, LIB.ParsingError, 1),
+        (synonym.upper(), LIB.ParsingError, 2),
+        (synonym, name, 2)
+    ]
+
+
+def _test_parse_names(typeof, cfg):
+    """Asserts name test.
+
+    """
+    name, expected, strictness = cfg
+    if typeof == LIB.NODE_TYPEKEY_AUTHORITY:
+        a = name
+        s = c = t = None
+    elif typeof == LIB.NODE_TYPEKEY_SCOPE:
+        a = tu.TEST_AUTHORITY_NAME
+        s = name
+        c = t = None
+    elif typeof == LIB.NODE_TYPEKEY_COLLECTION:
+        a = tu.TEST_AUTHORITY_NAME
+        s = tu.TEST_SCOPE_NAME
+        c = name
+        t = None
+    elif typeof == LIB.NODE_TYPEKEY_TERM:
+        a = tu.TEST_AUTHORITY_NAME
+        s = tu.TEST_SCOPE_NAME
+        c = tu.TEST_COLLECTION_NAME
+        t = name
+    try:
+        result = LIB.parse(a, s, c, t, strictness=strictness)
+    except LIB.ParsingError:
+        result = LIB.ParsingError
+    assert result == expected, \
+           'Parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typeof, name, result, expected)
+
+
+def _test_parse_namespace(typeof, cfg):
+    """Asserts namespace test.
+
+    """
+    name, expected, strictness = cfg
+    if typeof == LIB.NODE_TYPEKEY_AUTHORITY:
+        ns = name
+    elif typeof == LIB.NODE_TYPEKEY_SCOPE:
+        ns = "{}:{}".format(tu.TEST_AUTHORITY_NAME, name)
+    elif typeof == LIB.NODE_TYPEKEY_COLLECTION:
+        ns = "{}:{}:{}".format(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, name)
+    elif typeof == LIB.NODE_TYPEKEY_TERM:
+        ns = "{}:{}:{}:{}".format(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME, name)
+    try:
+        result = LIB.parse_namespace(ns, strictness)
+    except LIB.ParsingError:
+        result = LIB.ParsingError
+    assert result == expected, \
+           'Parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typeof, name, result, expected)

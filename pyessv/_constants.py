@@ -71,5 +71,25 @@ GOVERNANCE_STATUS_SET = (
     GOVERNANCE_STATUS_DEPRECATED
     )
 
+# Parsing strictness: canonical-name;
+PARSING_STRICTNESS_0 = 0
+
+# Parsing strictness: 0 + raw-name;
+PARSING_STRICTNESS_1 = 1
+
+# Parsing strictness: 1 + synonyms
+PARSING_STRICTNESS_2 = 2
+
+# Parsing strictness: 2 + case-insensitive
+PARSING_STRICTNESS_3 = 3
+
+# Set of allowed parsing stricness.
+PARSING_STRICTNESS_SET = (
+    PARSING_STRICTNESS_0,
+    PARSING_STRICTNESS_1,
+    PARSING_STRICTNESS_2,
+    PARSING_STRICTNESS_3
+    )
+
 # Regular expression for validating a canonical name.
 REGEX_CANONICAL_NAME = r'^[a-z0-9\-]*$'

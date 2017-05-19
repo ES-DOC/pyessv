@@ -15,11 +15,8 @@ from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._constants import GOVERNANCE_STATUS_REJECTED
-from pyessv._model import Authority
-from pyessv._model import Scope
-from pyessv._model import Collection
-from pyessv._model import Term
-from pyessv._model import NODE_TYPESET
+from pyessv._model import IterableNode
+from pyessv._model import Node
 
 
 
@@ -62,19 +59,13 @@ def _apply(target, status):
     """Applies governance status update.
 
     """
-    if not isinstance(target, tuple(NODE_TYPESET)):
-        raise TypeError("Cannot apply governance status to a non domain node")
+    assert isinstance(target, Node), \
+           'Cannot apply governance status to a non domain node'
 
     # Update status.
     target.status = status
 
     # Cascade.
-    children = []
-    if isinstance(target, Authority):
-        children = target.scopes
-    elif isinstance(target, Scope):
-        children = target.collections
-    elif isinstance(target, Collection):
-        children = target.terms
-    for child in children:
-        _apply(child, status)
+    if isinstance(target, IterableNode):
+        for child in target:
+            _apply(child, status)

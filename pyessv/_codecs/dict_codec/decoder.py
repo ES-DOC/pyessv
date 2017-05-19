@@ -59,31 +59,25 @@ def _decode_authority(obj, instance):
     """Decodes a termset from a dictionary.
 
     """
-    instance.scopes = [decode(i) for i in obj['scopes']]
-    for scope in instance:
-        if isinstance(scope, Scope):
-            scope.authority = instance
+    for scope in [decode(i) for i in obj['scopes']]:
+        scope.authority = instance
+        instance.scopes.append(scope)
 
 
 def _decode_scope(obj, instance):
     """Decodes a termset from a dictionary.
 
     """
-    instance.collections = [decode(i) for i in obj['collections']]
-    for collection in instance:
-        if isinstance(collection, Collection):
-            collection.scope = instance
+    for collection in [decode(i) for i in obj['collections']]:
+        collection.scope = instance
+        instance.collections.append(collection)
 
 
-def _decode_collection(obj, instance):
+def _decode_collection(obj, collection):
     """Decodes a termset from a dictionary.
 
     """
-    instance.terms = [decode(i) if isinstance(i, dict) else i for i in obj['terms']]
-    instance.term_name_regex = obj.get('term_name_regex')
-    for term in [instance]:
-        if isinstance(term, Term):
-            term.collection = instance
+    collection.term_name_regex = obj.get('term_name_regex')
 
 
 def _decode_term(obj, instance):
@@ -95,7 +89,6 @@ def _decode_term(obj, instance):
     instance.associations = obj.get('associations', [])
     instance.idx = obj['idx']
     instance.status = obj['status']
-    instance.synonyms = obj.get('synonyms', [])
     if instance.parent:
         instance.parent = uuid.UUID(str(obj['parent']))
 
@@ -110,6 +103,7 @@ def _decode_node(obj, instance):
     instance.label = obj['label']
     instance.canonical_name = obj['canonical_name']
     instance.raw_name = obj.get('raw_name')
+    instance.synonyms = obj.get('synonyms', [])
     instance.uid = uuid.UUID(str(obj['uid']))
     instance.url = obj.get('url')
 

@@ -29,18 +29,21 @@ TEST_AUTHORITY_DESCRIPTION = 'test-authority-description'
 TEST_AUTHORITY_URL = 'https://github.com/ES-DOC/pyesssv-archive/{}'.format(TEST_AUTHORITY_NAME)
 TEST_AUTHORITY_ALTERNATIVE_NAME = 'test-authority-alternative-name'
 TEST_AUTHORITY_ALTERNATIVE_URL = 'https://github.com/ES-DOC/pyesssv-archive/{}'.format(TEST_AUTHORITY_NAME)
+TEST_AUTHORITY_SYNONYMS = ['test-authority-synonym-1', 'test-authority-synonym-2']
 
 # Test scope.
 TEST_SCOPE = None
 TEST_SCOPE_NAME = 'test-scope'
 TEST_SCOPE_DESCRIPTION = 'test-scope-description'
 TEST_SCOPE_URL = '{}/{}'.format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
+TEST_SCOPE_SYNONYMS = ['test-scope-synonym-1', 'test-scope-synonym-2']
 
 # Test collection.
 TEST_COLLECTION = None
 TEST_COLLECTION_NAME = 'test-collection'
 TEST_COLLECTION_DESCRIPTION = 'test-collection-description'
 TEST_COLLECTION_URL = '{}/{}'.format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
+TEST_COLLECTION_SYNONYMS = ['test-collection-synonym-1', 'test-collection-synonym-2']
 
 # Test term.
 TEST_TERM = None
@@ -55,11 +58,11 @@ def create_authority():
 
     """
     global TEST_AUTHORITY
-
     if TEST_AUTHORITY is None:
         TEST_AUTHORITY = LIB.create_authority(
-            TEST_AUTHORITY_NAME,
-            TEST_AUTHORITY_DESCRIPTION,
+            name=TEST_AUTHORITY_NAME,
+            description=TEST_AUTHORITY_DESCRIPTION,
+            synonyms=TEST_AUTHORITY_SYNONYMS,
             url=TEST_AUTHORITY_URL
             )
 
@@ -71,12 +74,12 @@ def create_scope():
 
     """
     global TEST_SCOPE
-
     if TEST_SCOPE is None:
         TEST_SCOPE = LIB.create_scope(
-            TEST_AUTHORITY or create_authority(),
-            TEST_SCOPE_NAME,
-            TEST_SCOPE_DESCRIPTION,
+            authority=TEST_AUTHORITY or create_authority(),
+            name=TEST_SCOPE_NAME,
+            description=TEST_SCOPE_DESCRIPTION,
+            synonyms=TEST_SCOPE_SYNONYMS,
             url=TEST_SCOPE_URL
             )
 
@@ -88,12 +91,12 @@ def create_collection():
 
     """
     global TEST_COLLECTION
-
     if TEST_COLLECTION is None:
         TEST_COLLECTION = LIB.create_collection(
-            TEST_SCOPE or create_scope(),
-            TEST_COLLECTION_NAME,
-            TEST_COLLECTION_DESCRIPTION,
+            scope=TEST_SCOPE or create_scope(),
+            name=TEST_COLLECTION_NAME,
+            description=TEST_COLLECTION_DESCRIPTION,
+            synonyms=TEST_COLLECTION_SYNONYMS,
             url=TEST_COLLECTION_URL
             )
 
@@ -105,15 +108,14 @@ def create_term(collection=None):
 
     """
     global TEST_TERM
-
     if TEST_TERM is None:
         TEST_TERM = LIB.create_term(
-            collection or TEST_COLLECTION or create_collection(),
-            TEST_TERM_NAME,
+            collection=collection or TEST_COLLECTION or create_collection(),
+            name=TEST_TERM_NAME,
             description=TEST_TERM_DESCRIPTION,
+            synonyms=TEST_TERM_SYNONYMS,
             url=TEST_TERM_URL
             )
-        TEST_TERM.synonyms = TEST_TERM_SYNONYMS
 
     return TEST_TERM
 

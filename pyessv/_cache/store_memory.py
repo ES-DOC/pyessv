@@ -11,6 +11,10 @@
 
 
 """
+from pyessv._utils.compat import str
+
+
+
 # Cached loaded vocabulary authorities objects.
 _DATA = {}
 
@@ -22,22 +26,25 @@ def cache(authority):
     _DATA[authority.canonical_name] = authority
 
 
-def get_cached(authority_name=None):
+def get_cached(identifier=None):
     """Caches authority vocabularies.
 
-    :param str authority_name: Authority canonical name.
+    :param str identifier: Authority identifier.
 
     :returns: A pointer to a cached authority.
     :rtype: pyessv.Authority
 
     """
-    if authority_name is not None:
-        try:
-            return _DATA[authority_name]
-        except KeyError:
-            pass
-    else:
+    if identifier is None:
         return _DATA.values()
+
+    for authority in _DATA.values():
+        if authority.canonical_name == identifier:
+            return authority
+        elif authority.raw_name == identifier:
+            return authority
+        elif str(authority.uid) == identifier:
+            return authority
 
 
 def uncache(authority_name):

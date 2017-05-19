@@ -31,7 +31,15 @@ from pyessv._validation import validate_node
 
 
 
-def create_authority(name, description, label=None, url=None, create_date=None, data=None):
+def create_authority(
+    name,
+    description,
+    label=None,
+    url=None,
+    create_date=None,
+    data=None,
+    synonyms=[]
+    ):
     """Instantiates, initialises & returns a term authority.
 
     :param str name: Canonical name.
@@ -52,6 +60,7 @@ def create_authority(name, description, label=None, url=None, create_date=None, 
         label,
         url,
         create_date,
+        synonyms,
         data
         )
 
@@ -63,7 +72,8 @@ def create_scope(
     label=None,
     url=None,
     create_date=None,
-    data=None
+    data=None,
+    synonyms=[]
     ):
     """Instantiates, initialises & returns a term scope.
 
@@ -90,6 +100,7 @@ def create_scope(
         label,
         url,
         create_date,
+        synonyms,
         data,
         _callback
         )
@@ -103,6 +114,7 @@ def create_collection(
     url=None,
     create_date=None,
     data=None,
+    synonyms=[],
     term_name_regex=None
     ):
     """Instantiates, initialises & returns a term collection.
@@ -131,6 +143,7 @@ def create_collection(
         label,
         url,
         create_date,
+        synonyms,
         data,
         _callback
         )
@@ -143,7 +156,8 @@ def create_term(
     label=None,
     url=None,
     create_date=None,
-    data=None
+    data=None,
+    synonyms=[]
     ):
     """Instantiates, initialises & returns a term.
 
@@ -171,6 +185,7 @@ def create_term(
         label,
         url,
         create_date,
+        synonyms,
         data,
         callback=_callback
         )
@@ -203,6 +218,7 @@ def _create_node(
     label,
     url,
     create_date,
+    synonyms,
     data,
     callback = None
     ):
@@ -216,6 +232,7 @@ def _create_node(
     instance.raw_name = format_string(name)
     instance.create_date = create_date or arrow.utcnow().datetime
     instance.data = data
+    instance.synonyms = synonyms
     instance.uid = uuid.uuid4()
 
     # Set other attributes.

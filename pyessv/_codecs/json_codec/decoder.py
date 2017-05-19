@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._codecs.json.decoder.py
+.. module:: pyessv._codecs.json_codec.decoder.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -14,7 +14,7 @@
 import datetime
 import uuid
 
-from pyessv._codecs.dictionary import decoder as dict_decoder
+from pyessv._codecs.dict_codec import decoder as dict_decoder
 from pyessv._utils import convert
 from pyessv._utils.compat import json
 from pyessv._utils.compat import str
