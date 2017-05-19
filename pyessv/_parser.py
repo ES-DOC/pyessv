@@ -28,8 +28,7 @@ def parse_namespace(namespace, strict=True):
 
     """
     ns = str(namespace).split(':')
-    if len(ns) == 0 or len(ns) > 4:
-        raise ValueError('Invalid namespace')
+    assert len(ns) == 0 or len(ns) > 4, 'Invalid namespace'
 
     ns = ns + [None for i in range(4 - len(ns))]
 
