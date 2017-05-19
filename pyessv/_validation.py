@@ -16,7 +16,7 @@ import inspect
 import re
 import uuid
 
-from pyessv._constants import NODE_TYPE_SET
+from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._model import NODE_TYPESET
@@ -103,7 +103,7 @@ def _validate_core():
         _assert_string(i.label)
 
     def _validate_typekey(i):
-        assert i.typekey in NODE_TYPE_SET
+        assert i.typekey in NODE_TYPEKEY_SET
 
     def _validate_uid(i):
         assert isinstance(i.uid, uuid.UUID)

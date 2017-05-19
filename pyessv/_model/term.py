@@ -25,7 +25,7 @@ class Term(Node):
         """Instance constructor.
 
         """
-        super(Term, self).__init__(pyessv.NODE_TYPE_TERM)
+        super(Term, self).__init__(pyessv.NODE_TYPEKEY_TERM)
 
         self.alternative_name = None
         self.alternative_url = None

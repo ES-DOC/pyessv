@@ -11,10 +11,10 @@
 
 """
 from pyessv._archive import load
-from pyessv._constants import NODE_TYPE_AUTHORITY
-from pyessv._constants import NODE_TYPE_SCOPE
-from pyessv._constants import NODE_TYPE_COLLECTION
-from pyessv._constants import NODE_TYPE_TERM
+from pyessv._constants import NODE_TYPEKEY_AUTHORITY
+from pyessv._constants import NODE_TYPEKEY_SCOPE
+from pyessv._constants import NODE_TYPEKEY_COLLECTION
+from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._exceptions import ParsingError
 from pyessv._utils.compat import str
 
@@ -47,10 +47,10 @@ def parse(authority, scope=None, collection=None, term=None, strict=True):
 
     """
     targets = [
-        _NodeInfo(NODE_TYPE_AUTHORITY, authority, strict),
-        _NodeInfo(NODE_TYPE_SCOPE, scope, strict),
-        _NodeInfo(NODE_TYPE_COLLECTION, collection, strict),
-        _NodeInfo(NODE_TYPE_TERM, term, strict)
+        _NodeInfo(NODE_TYPEKEY_AUTHORITY, authority, strict),
+        _NodeInfo(NODE_TYPEKEY_SCOPE, scope, strict),
+        _NodeInfo(NODE_TYPEKEY_COLLECTION, collection, strict),
+        _NodeInfo(NODE_TYPEKEY_TERM, term, strict)
     ]
 
     for target in [i for i in targets if i.name is not None]:

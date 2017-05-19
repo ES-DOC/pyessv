@@ -26,7 +26,7 @@ class Collection(Node):
         """Instance constructor.
 
         """
-        super(Collection, self).__init__(pyessv.NODE_TYPE_COLLECTION)
+        super(Collection, self).__init__(pyessv.NODE_TYPEKEY_COLLECTION)
 
         self.scope = None
         self.terms = list()

@@ -28,10 +28,10 @@ from pyessv._codecs import encode
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
-from pyessv._constants import NODE_TYPE_AUTHORITY
-from pyessv._constants import NODE_TYPE_COLLECTION
-from pyessv._constants import NODE_TYPE_SCOPE
-from pyessv._constants import NODE_TYPE_TERM
+from pyessv._constants import NODE_TYPEKEY_AUTHORITY
+from pyessv._constants import NODE_TYPEKEY_COLLECTION
+from pyessv._constants import NODE_TYPEKEY_SCOPE
+from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv._constants import GOVERNANCE_STATUS_PENDING

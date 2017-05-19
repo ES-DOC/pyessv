@@ -11,10 +11,10 @@
 
 
 """
-from pyessv._constants import NODE_TYPE_AUTHORITY
-from pyessv._constants import NODE_TYPE_COLLECTION
-from pyessv._constants import NODE_TYPE_SCOPE
-from pyessv._constants import NODE_TYPE_TERM
+from pyessv._constants import NODE_TYPEKEY_AUTHORITY
+from pyessv._constants import NODE_TYPEKEY_COLLECTION
+from pyessv._constants import NODE_TYPEKEY_SCOPE
+from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._model.authority import Authority
 from pyessv._model.collection import Collection
 from pyessv._model.node import Node

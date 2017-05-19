@@ -26,7 +26,7 @@ class Scope(Node):
         """Instance constructor.
 
         """
-        super(Scope, self).__init__(pyessv.NODE_TYPE_SCOPE)
+        super(Scope, self).__init__(pyessv.NODE_TYPEKEY_SCOPE)
 
         self.authority = None
         self.collections = list()
@@ -51,7 +51,6 @@ class Scope(Node):
         """Returns a child section item.
 
         """
-        # Match against key.
         comparator = Node.get_comparator(key)
         for item in self.collections:
             if comparator(item) == key:

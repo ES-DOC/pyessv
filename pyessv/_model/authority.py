@@ -26,7 +26,7 @@ class Authority(Node):
         """Instance constructor.
 
         """
-        super(Authority, self).__init__(pyessv.NODE_TYPE_AUTHORITY)
+        super(Authority, self).__init__(pyessv.NODE_TYPEKEY_AUTHORITY)
 
         self.scopes = list()
 
@@ -50,7 +50,6 @@ class Authority(Node):
         """Returns a child section item.
 
         """
-        # Match against key.
         comparator = Node.get_comparator(key)
         for item in self.scopes:
             if comparator(item) == key:

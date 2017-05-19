@@ -30,16 +30,16 @@ _NODE_TEST_INFO = [
 
 # Test information mapped by node type.
 _TEST_INFO = {
-    LIB.NODE_TYPE_AUTHORITY: _NODE_TEST_INFO + [
+    LIB.NODE_TYPEKEY_AUTHORITY: _NODE_TEST_INFO + [
         ('scopes', [], [None, '', '  ', [123]])
     ],
-    LIB.NODE_TYPE_SCOPE: _NODE_TEST_INFO + [
+    LIB.NODE_TYPEKEY_SCOPE: _NODE_TEST_INFO + [
         ('collections', [], [None, '', '  ', [123]])
     ],
-    LIB.NODE_TYPE_COLLECTION: _NODE_TEST_INFO + [
+    LIB.NODE_TYPEKEY_COLLECTION: _NODE_TEST_INFO + [
         ('terms', [], [None, '', '  ', [123]])
     ],
-    LIB.NODE_TYPE_TERM: _NODE_TEST_INFO + [
+    LIB.NODE_TYPEKEY_TERM: _NODE_TEST_INFO + [
         ('alternative_name', tu.TEST_AUTHORITY_ALTERNATIVE_NAME, ('', '  ')),
         ('alternative_url', tu.TEST_AUTHORITY_ALTERNATIVE_URL, ('', '  ')),
         ('idx', 1, ('', '  ', [123])),
@@ -54,10 +54,10 @@ def test_node():
 
     """
     for typeof, factory in (
-        (LIB.NODE_TYPE_AUTHORITY, tu.create_authority),
-        (LIB.NODE_TYPE_SCOPE, tu.create_scope),
-        (LIB.NODE_TYPE_COLLECTION, tu.create_collection),
-        (LIB.NODE_TYPE_TERM, tu.create_term)
+        (LIB.NODE_TYPEKEY_AUTHORITY, tu.create_authority),
+        (LIB.NODE_TYPEKEY_SCOPE, tu.create_scope),
+        (LIB.NODE_TYPEKEY_COLLECTION, tu.create_collection),
+        (LIB.NODE_TYPEKEY_TERM, tu.create_term)
         ):
         for attr, valid, invalid in _TEST_INFO[typeof]:
             tu.init(_test_node_attr, 'validate --> {}: {}'.format(typeof, attr))

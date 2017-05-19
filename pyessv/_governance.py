@@ -59,19 +59,22 @@ def reset(target):
 
 
 def _apply(target, status):
-	if type(target) not in NODE_TYPESET:
-		raise TypeError("Cannot apply governance status to a non domain node")
+    """Applies governance status update.
 
-	# Update status.
-	target.status = status
+    """
+    if not isinstance(target, tuple(NODE_TYPESET)):
+        raise TypeError("Cannot apply governance status to a non domain node")
 
-	# Cascade.
-	children = []
-	if isinstance(target, Authority):
-		children = target.scopes
-	elif isinstance(target, Scope):
-		children = target.collections
-	elif isinstance(target, Collection):
-		children = target.terms
-	for child in children:
-		_apply(child, status)
+    # Update status.
+    target.status = status
+
+    # Cascade.
+    children = []
+    if isinstance(target, Authority):
+        children = target.scopes
+    elif isinstance(target, Scope):
+        children = target.collections
+    elif isinstance(target, Collection):
+        children = target.terms
+    for child in children:
+        _apply(child, status)
