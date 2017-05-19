@@ -107,6 +107,6 @@ class _NodeInfo(object):
         if node is None:
             raise ParsingError(self.typekey, self.name)
         if self.strict:
-            if node.name != self.name and node.name_raw != self.name:
+            if node.name != self.name and node.raw_name != self.name:
                 raise ParsingError(self.typekey, self.name)
         self.node = node

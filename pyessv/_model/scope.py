@@ -58,7 +58,7 @@ class Scope(Node):
 
         # Match against a raw name.
         for collection in self.collections:
-            if key == collection.name_raw:
+            if key == collection.raw_name:
                 return collection
 
 

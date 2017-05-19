@@ -90,7 +90,7 @@ def _encode_node(instance, obj):
     obj['create_date'] = instance.create_date
     obj['label'] = instance.label
     obj['name'] = instance.name
-    obj['name_raw'] = instance.name_raw
+    obj['raw_name'] = instance.raw_name
     obj['uid'] = instance.uid
     if instance.data is not None:
         obj['data'] = instance.data

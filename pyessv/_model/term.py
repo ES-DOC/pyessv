@@ -67,7 +67,7 @@ class Term(Node):
         """Returns all term names.
 
         """
-        result = [self.name, self.name_raw, self.alternative_name] + self.synonyms
+        result = [self.name, self.raw_name, self.alternative_name] + self.synonyms
         result = [t for t in result if t is not None and len(t) > 0]
 
         return set(sorted(result))

@@ -109,7 +109,7 @@ def _decode_node(obj, instance):
     instance.description = obj.get('description')
     instance.label = obj['label']
     instance.name = obj['name']
-    instance.name_raw = obj.get('name_raw')
+    instance.raw_name = obj.get('raw_name')
     instance.uid = uuid.UUID(str(obj['uid']))
     instance.url = obj.get('url')
 

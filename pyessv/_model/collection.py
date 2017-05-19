@@ -60,7 +60,7 @@ class Collection(Node):
 
         # Match against a raw name.
         for term in self.terms:
-            if key == term.name_raw:
+            if key == term.raw_name:
                 return term
 
         # Match against a synonym.

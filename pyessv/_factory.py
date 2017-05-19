@@ -213,7 +213,7 @@ def _create_node(
     instance = typeof()
     instance.label = format_string(name)
     instance.name = format_canonical_name(name)
-    instance.name_raw = format_string(name)
+    instance.raw_name = format_string(name)
     instance.create_date = create_date or arrow.utcnow().datetime
     instance.data = data
     instance.uid = uuid.uuid4()

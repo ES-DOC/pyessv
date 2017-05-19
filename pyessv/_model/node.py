@@ -33,7 +33,7 @@ class Node(object):
         self.description = None
         self.label = None
         self.name = None
-        self.name_raw = None
+        self.raw_name = None
         self.typekey = typekey
         self.uid = None
         self.url = None

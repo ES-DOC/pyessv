@@ -57,7 +57,7 @@ class Authority(Node):
 
         # Match against a raw name.
         for scope in self.scopes:
-            if key == scope.name_raw:
+            if key == scope.raw_name:
                 return scope
 
 
