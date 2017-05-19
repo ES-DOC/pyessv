@@ -60,7 +60,7 @@ def _encode_collection(instance, obj):
     """Encodes a term collection as a dictionary.
 
     """
-    obj['terms'] = ['{}:{}'.format(i.name, i.uid) for i in instance.terms]
+    obj['terms'] = ['{}:{}'.format(i.canonical_name, i.uid) for i in instance.terms]
     obj['term_name_regex'] = instance.term_name_regex
 
 
@@ -87,9 +87,9 @@ def _encode_node(instance, obj):
 
     """
     obj['_type'] = str(instance.__module__)
+    obj['canonical_name'] = instance.canonical_name
     obj['create_date'] = instance.create_date
     obj['label'] = instance.label
-    obj['name'] = instance.name
     obj['raw_name'] = instance.raw_name
     obj['uid'] = instance.uid
     if instance.data is not None:

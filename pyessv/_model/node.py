@@ -28,11 +28,11 @@ class Node(object):
         """Instance constructor.
 
         """
+        self.canonical_name = None
         self.create_date = None
         self.data = None
         self.description = None
         self.label = None
-        self.name = None
         self.raw_name = None
         self.typekey = typekey
         self.uid = None
@@ -59,7 +59,7 @@ class Node(object):
         """Gets hierachy within archive.
 
         """
-        return ":".join([i.name for i in self.hierarchy])
+        return ":".join([i.canonical_name for i in self.hierarchy])
 
 
     @property
@@ -67,7 +67,7 @@ class Node(object):
         """Returns name formatted for I/O operations.
 
         """
-        return format_io_name(self.name)
+        return format_io_name(self.canonical_name)
 
 
     @staticmethod
@@ -84,6 +84,6 @@ class Node(object):
             try:
                 uuid.UUID(key)
             except ValueError:
-                return lambda i: i.name
+                return lambda i: i.canonical_name
             else:
                 return lambda i: str(i.uid)

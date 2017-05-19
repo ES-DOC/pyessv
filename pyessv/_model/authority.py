@@ -43,7 +43,7 @@ class Authority(Node):
 
         """
         return iter(sorted(self.scopes,
-                           key=lambda i: i if isinstance(i, basestring) else i.name))
+                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
 
 
     def __getitem__(self, key):

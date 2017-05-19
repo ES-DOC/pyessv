@@ -72,4 +72,4 @@ GOVERNANCE_STATUS_SET = (
     )
 
 # Regular expression for validating a canonical name.
-REGEX_CANONICAL_NAME = r'^[A-z0-9\_\-\ \.]*$'
+REGEX_CANONICAL_NAME = r'^[a-z0-9\-]*$'

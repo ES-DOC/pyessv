@@ -53,13 +53,13 @@ def _main(args):
         raise ValueError('Authority is a required parameter')
 
     for scope in pyessv.load(args.authority):
-        if args.scope and args.scope != scope.name:
+        if args.scope and args.scope != scope.canonical_name:
             continue
         for collection in scope:
-            if args.collection and args.collection != collection.name:
+            if args.collection and args.collection != collection.canonical_name:
                 continue
             for term in collection:
-                if args.term and args.term != term.name:
+                if args.term and args.term != term.canonical_name:
                     continue
                 print(term.namespace.replace(':', ' -> '))
 

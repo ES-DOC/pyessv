@@ -77,7 +77,7 @@ def validate_node(instance):
         try:
             validator(instance)
         except AssertionError as err:
-            errs.add('{}. Invalid {}'.format(instance.__class__.__name__, field))
+            errs.add('{}. Invalid {}. {}'.format(instance.__class__.__name__, field, getattr(instance, field)))
 
     return errs
 
@@ -130,12 +130,12 @@ def _validate_authority():
     def _validate_scopes(i):
         _assert_iterable(i.scopes, Scope)
 
-    def _validate_name(i):
-        _assert_string(i.name, REGEX_CANONICAL_NAME)
+    def _validate_canonical_name(i):
+        _assert_string(i.canonical_name, REGEX_CANONICAL_NAME)
 
     return [
         _validate_scopes,
-        _validate_name
+        _validate_canonical_name
         ]
 
 
@@ -149,13 +149,13 @@ def _validate_scope():
     def _validate_collections(i):
         _assert_iterable(i.collections, Collection)
 
-    def _validate_name(i):
-        _assert_string(i.name, REGEX_CANONICAL_NAME)
+    def _validate_canonical_name(i):
+        _assert_string(i.canonical_name, REGEX_CANONICAL_NAME)
 
     return [
         _validate_authority,
         _validate_collections,
-        _validate_name
+        _validate_canonical_name
         ]
 
 
@@ -169,13 +169,13 @@ def _validate_collection():
     def _validate_terms(i):
         _assert_iterable(i.terms, Term)
 
-    def _validate_name(i):
-        _assert_string(i.name, REGEX_CANONICAL_NAME)
+    def _validate_canonical_name(i):
+        _assert_string(i.canonical_name, REGEX_CANONICAL_NAME)
 
     return [
         _validate_scope,
         _validate_terms,
-        _validate_name
+        _validate_canonical_name
         ]
 
 
@@ -197,12 +197,12 @@ def _validate_term():
     def _validate_idx(i):
         assert isinstance(i.idx, int)
 
-    def _validate_name(i):
+    def _validate_canonical_name(i):
         if i.collection.term_name_regex is None:
             reg_ex = REGEX_CANONICAL_NAME
         else:
             reg_ex = i.collection.term_name_regex
-        _assert_string(i.name, reg_ex)
+        _assert_string(i.canonical_name, reg_ex)
 
     def _validate_parent(i):
         if i.parent is not None:
@@ -219,7 +219,7 @@ def _validate_term():
         _validate_alternative_url,
         _validate_collection,
         _validate_idx,
-        _validate_name,
+        _validate_canonical_name,
         _validate_parent,
         _validate_status,
         _validate_synonyms

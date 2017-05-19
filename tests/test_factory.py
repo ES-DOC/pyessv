@@ -82,7 +82,7 @@ def test_create():
 
 #     def _update_name(term):
 #         """Update term name."""
-#         term.name = tu.get_string(existing=term.name)
+#         term.canonical_name = tu.get_string(existing=term.canonical_name)
 
 #     def _update_status(term):
 #         """Update term status."""

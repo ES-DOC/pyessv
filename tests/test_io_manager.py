@@ -52,7 +52,7 @@ def test_read():
 
     dirs = os.listdir(LIB.DIR_ARCHIVE)
     assert len(authorities) == len(dirs)
-    assert dirs == [i.name for i in authorities]
+    assert dirs == [i.canonical_name for i in authorities]
 
 
 @nose.with_setup(tu.setup, tu.teardown)

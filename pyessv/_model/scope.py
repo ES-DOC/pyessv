@@ -44,7 +44,7 @@ class Scope(Node):
 
         """
         return iter(sorted(self.collections,
-                           key=lambda i: i if isinstance(i, basestring) else i.name))
+                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
 
 
     def __getitem__(self, key):

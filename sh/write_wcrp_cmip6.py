@@ -75,7 +75,8 @@ _COLLECTIONS_CMIP6 = {
         'data_factory': lambda obj, name: {'postal_address': obj[name]}
     },
     'nominal_resolution': {
-        'data_factory': None
+        'data_factory': None,
+        'term_name_regex': r'^[a-z0-9\-\.]*$'
     },
     'realm': {
         'data_factory': None
@@ -123,7 +124,7 @@ def _main(args):
     pyessv.save()
 
 
-def _create_collection_cmip6(source, collection_type, parsers):
+def _create_collection_cmip6(source, collection_type, collection_info):
     """Creates cmip6 collection from a WCRP JSON files.
 
     """
@@ -132,16 +133,15 @@ def _create_collection_cmip6(source, collection_type, parsers):
         _SCOPE_CMIP6,
         collection_type,
         "WCRP CMIP6 CV collection: ".format(collection_type),
-        create_date=_CREATE_DATE
+        create_date=_CREATE_DATE,
+        term_name_regex=collection_info.get('term_name_regex')
         )
-
-    # Unpack parsers.
-    data_factory = parsers['data_factory']
 
     # Load WCRP json data.
     wcrp_cv_data = _get_wcrp_cv(source, collection_type, 'CMIP6_')
 
     # Create terms.
+    data_factory = collection_info['data_factory']
     for name in wcrp_cv_data:
         pyessv.create_term(
             collection,

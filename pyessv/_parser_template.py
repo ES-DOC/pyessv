@@ -44,12 +44,12 @@ class TemplateParser(object):
             parsed += self.parts[idx]
             found = False
             for term in collection:
-                found = val.startswith(parsed + term.name)
+                found = val.startswith(parsed + term.canonical_name)
                 if found:
                     break
             if found == False:
                 raise TemplateParsingError(val)
-            parsed += term.name
+            parsed += term.canonical_name
 
         parsed += self.parts[idx + 1]
         if not val == parsed:

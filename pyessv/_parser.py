@@ -61,7 +61,7 @@ def parse(authority, scope=None, collection=None, term=None, strict=True):
             )
         target.set_node(node)
 
-    return target.node.name
+    return target.node.canonical_name
 
 
 class _NodeInfo(object):
@@ -78,26 +78,17 @@ class _NodeInfo(object):
         self.typekey = typekey
 
 
-    @property
-    def formatted_name(self):
-        """Gets formatted name used to search archive.
-
-        """
-        name = str(self.name)
-        if not self.strict:
-            name = name.strip().lower()
-
-        return name
-
-
     def get_name(self, target):
         """Gets parsing relative name.
 
         """
         if self.node:
-            return self.node.name
+            return self.node.canonical_name
         if target == self:
-            return self.formatted_name
+            name = str(self.name)
+            if not self.strict:
+                name = name.strip().lower()
+            return name
 
 
     def set_node(self, node):
@@ -107,6 +98,6 @@ class _NodeInfo(object):
         if node is None:
             raise ParsingError(self.typekey, self.name)
         if self.strict:
-            if node.name != self.name and node.raw_name != self.name:
+            if node.canonical_name != self.name and node.raw_name != self.name:
                 raise ParsingError(self.typekey, self.name)
         self.node = node

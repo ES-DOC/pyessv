@@ -19,13 +19,13 @@ def cache(authority):
     """Caches authority vocabularies.
 
     """
-    _DATA[authority.name] = authority
+    _DATA[authority.canonical_name] = authority
 
 
 def get_cached(authority_name=None):
     """Caches authority vocabularies.
 
-    :param str authority_name: Authority name.
+    :param str authority_name: Authority canonical name.
 
     :returns: A pointer to a cached authority.
     :rtype: pyessv.Authority

@@ -212,7 +212,7 @@ def _create_node(
     # Set core attributes.
     instance = typeof()
     instance.label = format_string(name)
-    instance.name = format_canonical_name(name)
+    instance.canonical_name = format_canonical_name(name)
     instance.raw_name = format_string(name)
     instance.create_date = create_date or arrow.utcnow().datetime
     instance.data = data

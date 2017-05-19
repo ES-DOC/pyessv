@@ -23,7 +23,7 @@ _NODE_TEST_INFO = [
     ('create_date', arrow.utcnow().datetime, ('', '  ', 123)),
     ('data', {'a': 1}, ('', '  ', 123)),
     ('description', tu.TEST_AUTHORITY_DESCRIPTION, ('', '  ')),
-    ('name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid $#$#$ name')),
+    ('canonical_name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid-CANONICAL-name')),
     ('url', tu.TEST_AUTHORITY_URL, ('', '  ', 'an-invalid-url')),
     ]
 
@@ -71,7 +71,7 @@ def _test_node_attr(factory, attr, valid_value, invalid_values):
     instance = factory()
     for value in invalid_values:
         setattr(instance, attr, value)
-        assert LIB.is_valid(instance) == False
+        assert LIB.is_valid(instance) == False, (attr, value)
         assert len(LIB.get_errors(instance)) >= 1, (LIB.get_errors(instance), attr, value)
     setattr(instance, attr, valid_value)
     assert LIB.is_valid(instance) == True, (LIB.get_errors(instance), attr, valid_value)
@@ -85,7 +85,7 @@ def test_regex_collection():
     collection = tu.create_collection()
     collection.term_name_regex = r'^[a-z\-]*$'
     term = tu.create_term(collection=collection)
-    term.name = 'abc-def'
+    term.canonical_name = 'abc-def'
     assert LIB.is_valid(term) == True
 
 
@@ -96,5 +96,5 @@ def test_regex_collection_negative():
     collection = tu.create_collection()
     collection.term_name_regex = r'^[a-z\-]*$'
     term = tu.create_term(collection=collection)
-    term.name = 'ABC-DEF'
+    term.canonical_name = 'ABC-DEF'
     assert LIB.is_valid(term) == False
