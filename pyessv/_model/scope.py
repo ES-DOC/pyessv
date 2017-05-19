@@ -56,6 +56,11 @@ class Scope(Node):
             if comparator(item) == key:
                 return item
 
+        # Match against a raw name.
+        for collection in self.collections:
+            if key == collection.name_raw:
+                return collection
+
 
     def __contains__(self, key):
         """Instance membership predicate.

@@ -28,7 +28,7 @@ def parse_namespace(namespace, strict=True):
 
     """
     ns = str(namespace).split(':')
-    assert len(ns) == 0 or len(ns) > 4, 'Invalid namespace'
+    assert len(ns) >= 1 and len(ns) <= 4, 'Invalid namespace'
 
     ns = ns + [None for i in range(4 - len(ns))]
 
@@ -107,6 +107,6 @@ class _NodeInfo(object):
         if node is None:
             raise ParsingError(self.typekey, self.name)
         if self.strict:
-            if node.name != self.name:
+            if node.name != self.name and node.name_raw != self.name:
                 raise ParsingError(self.typekey, self.name)
         self.node = node

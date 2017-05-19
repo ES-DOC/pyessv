@@ -32,7 +32,6 @@ class Term(Node):
         self.associations = list()
         self.collection = None
         self.idx = None
-        self.name_raw = None
         self.parent = None
         self.status = pyessv.GOVERNANCE_STATUS_PENDING
         self.synonyms = list()

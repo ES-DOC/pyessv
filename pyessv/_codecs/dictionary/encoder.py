@@ -69,7 +69,6 @@ def _encode_term(instance, obj):
 
     """
     obj['idx'] = instance.idx
-    obj['name_raw'] = instance.name_raw
     obj['status'] = instance.status
     if instance.alternative_name is not None:
         obj['alternative_name'] = instance.alternative_name
@@ -91,6 +90,7 @@ def _encode_node(instance, obj):
     obj['create_date'] = instance.create_date
     obj['label'] = instance.label
     obj['name'] = instance.name
+    obj['name_raw'] = instance.name_raw
     obj['uid'] = instance.uid
     if instance.data is not None:
         obj['data'] = instance.data

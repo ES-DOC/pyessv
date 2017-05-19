@@ -58,6 +58,11 @@ class Collection(Node):
             if comparator(term) == key:
                 return term
 
+        # Match against a raw name.
+        for term in self.terms:
+            if key == term.name_raw:
+                return term
+
         # Match against a synonym.
         for term in self.terms:
             if key in term.synonyms:

@@ -33,7 +33,7 @@ _CREATE_DATE = arrow.get('2017-03-21 00:00:00.000000+0000').datetime
 
 # CV authority = WCRP.
 _AUTHORITY = pyessv.create_authority(
-    'wcrp',
+    'WCRP',
     'World Climate Research Program',
     label='WCRP',
     url='https://www.wcrp-climate.org/wgcm-overview',
@@ -42,7 +42,7 @@ _AUTHORITY = pyessv.create_authority(
 
 # CV scope = CMIP6.
 _SCOPE_CMIP6 = pyessv.create_scope(_AUTHORITY,
-    'cmip6',
+    'CMIP6',
     'Controlled Vocabularies (CVs) for use in CMIP6',
     label='CMIP6',
     url='https://github.com/WCRP-CMIP/CMIP6_CVs',
@@ -51,7 +51,7 @@ _SCOPE_CMIP6 = pyessv.create_scope(_AUTHORITY,
 
 # CV scope = GLOBAL.
 _SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY,
-    'global',
+    'GLOBAL',
     'Global controlled Vocabularies (CVs)',
     url='https://github.com/WCRP-CMIP/CMIP6_CVs',
     create_date=_CREATE_DATE

@@ -55,6 +55,11 @@ class Authority(Node):
             if comparator(item) == key:
                 return item
 
+        # Match against a raw name.
+        for scope in self.scopes:
+            if key == scope.name_raw:
+                return scope
+
 
     def __contains__(self, key):
         """Instance membership predicate.
