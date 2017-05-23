@@ -15,6 +15,13 @@ import os
 import re
 
 
+# In memory cache type.
+CACHE_STORE_MEMORY = 'memory'
+
+# Set of allowed cache types.
+CACHE_STORE_TYPES = (
+    CACHE_STORE_MEMORY,
+    )
 
 # Directory containing vocabulary archive.
 DIR_ARCHIVE = os.path.expanduser('~/.esdoc/pyessv-archive')

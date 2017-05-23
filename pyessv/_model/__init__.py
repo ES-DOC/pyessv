@@ -21,3 +21,12 @@ from pyessv._model.node import Node
 from pyessv._model.node import IterableNode
 from pyessv._model.scope import Scope
 from pyessv._model.term import Term
+
+
+# Set of node types.
+NODE_TYPES = {
+    Authority,
+    Scope,
+    Collection,
+    Term
+}

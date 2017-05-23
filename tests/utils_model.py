@@ -25,6 +25,7 @@ from tests.utils_assert import assert_objects
 # Test authority.
 TEST_AUTHORITY = None
 TEST_AUTHORITY_NAME = 'test-authority'
+TEST_AUTHORITY_NAMESPACE = TEST_AUTHORITY_NAME
 TEST_AUTHORITY_DESCRIPTION = 'test-authority-description'
 TEST_AUTHORITY_URL = 'https://github.com/ES-DOC/pyesssv-archive/{}'.format(TEST_AUTHORITY_NAME)
 TEST_AUTHORITY_ALTERNATIVE_NAME = 'test-authority-alternative-name'
@@ -34,6 +35,7 @@ TEST_AUTHORITY_SYNONYMS = ['test-authority-synonym-1', 'test-authority-synonym-2
 # Test scope.
 TEST_SCOPE = None
 TEST_SCOPE_NAME = 'test-scope'
+TEST_SCOPE_NAMESPACE = ":".join([TEST_AUTHORITY_NAME, TEST_SCOPE_NAME])
 TEST_SCOPE_DESCRIPTION = 'test-scope-description'
 TEST_SCOPE_URL = '{}/{}'.format(TEST_AUTHORITY_URL, TEST_SCOPE_NAME)
 TEST_SCOPE_SYNONYMS = ['test-scope-synonym-1', 'test-scope-synonym-2']
@@ -41,6 +43,7 @@ TEST_SCOPE_SYNONYMS = ['test-scope-synonym-1', 'test-scope-synonym-2']
 # Test collection.
 TEST_COLLECTION = None
 TEST_COLLECTION_NAME = 'test-collection'
+TEST_COLLECTION_NAMESPACE = ":".join([TEST_AUTHORITY_NAME, TEST_SCOPE_NAME, TEST_COLLECTION_NAME])
 TEST_COLLECTION_DESCRIPTION = 'test-collection-description'
 TEST_COLLECTION_URL = '{}/{}'.format(TEST_SCOPE_URL, TEST_COLLECTION_NAME)
 TEST_COLLECTION_SYNONYMS = ['test-collection-synonym-1', 'test-collection-synonym-2']
@@ -48,6 +51,7 @@ TEST_COLLECTION_SYNONYMS = ['test-collection-synonym-1', 'test-collection-synony
 # Test term.
 TEST_TERM = None
 TEST_TERM_NAME = 'test-term'
+TEST_TERM_NAMESPACE = ":".join([TEST_AUTHORITY_NAME, TEST_SCOPE_NAME, TEST_COLLECTION_NAME, TEST_TERM_NAME])
 TEST_TERM_DESCRIPTION = 'test-term-description'
 TEST_TERM_URL = '{}/{}'.format(TEST_COLLECTION_URL, TEST_TERM_NAME)
 TEST_TERM_SYNONYMS = ['test-term-synonym-1', 'test-term-synonym-2']

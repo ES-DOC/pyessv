@@ -66,13 +66,10 @@ def parse(
     ]
 
     for target in [i for i in targets if i.name is not None]:
-        node = load(
-            targets[0].get_name(target),
-            targets[1].get_name(target),
-            targets[2].get_name(target),
-            targets[3].get_name(target)
-            )
-        target.set_node(node)
+        namespace = [i.get_name(target) for i in targets]
+        namespace = [i for i in namespace if i is not None]
+        namespace = ":".join(namespace)
+        target.set_node(load(namespace))
 
     return target.node.canonical_name
 

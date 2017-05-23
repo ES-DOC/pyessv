@@ -48,7 +48,7 @@ def test_read():
     authorities = read()
     assert isinstance(authorities, list)
     for authority in authorities:
-	    assert isinstance(authority, LIB.Authority)
+        assert isinstance(authority, LIB.Authority)
 
     dirs = os.listdir(LIB.DIR_ARCHIVE)
     assert len(authorities) == len(dirs)
@@ -82,9 +82,9 @@ def test_write():
     assert os.path.isdir(collection_dir)
     assert os.path.isfile(term_file)
     with io.open(authority_manifest, 'r') as fstream:
-    	assert isinstance(json.loads(fstream.read()), dict)
+        assert isinstance(json.loads(fstream.read()), dict)
     with io.open(term_file, 'r') as fstream:
-    	assert isinstance(json.loads(fstream.read()), dict)
+        assert isinstance(json.loads(fstream.read()), dict)
 
 
 @nose.with_setup(tu.setup, tu.teardown)
@@ -97,12 +97,13 @@ def test_delete():
     collection_dir = os.path.join(scope_dir, tu.TEST_COLLECTION_NAME)
     term_file = os.path.join(collection_dir, tu.TEST_TERM_NAME)
 
-    write(LIB.load(tu.TEST_AUTHORITY_NAME))
+    write(LIB.load(tu.TEST_AUTHORITY_NAMESPACE))
 
-    authority = LIB.load(tu.TEST_AUTHORITY_NAME)
-    scope = LIB.load(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME)
-    collection = LIB.load(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME)
-    term = LIB.load(tu.TEST_AUTHORITY_NAME, tu.TEST_SCOPE_NAME, tu.TEST_COLLECTION_NAME, tu.TEST_TERM_NAME)
+    authority, scope, collection, term = \
+        LIB.load(tu.TEST_AUTHORITY_NAMESPACE), \
+        LIB.load(tu.TEST_SCOPE_NAMESPACE), \
+        LIB.load(tu.TEST_COLLECTION_NAMESPACE), \
+        LIB.load(tu.TEST_TERM_NAMESPACE) \
 
     delete(term)
     assert not os.path.isfile(term_file)

@@ -11,6 +11,8 @@
 
 
 """
+from pyessv._model import NODE_TYPES
+from pyessv._model import Authority
 from pyessv._utils.compat import str
 
 
@@ -19,41 +21,46 @@ from pyessv._utils.compat import str
 _DATA = {}
 
 
-def cache(authority):
-    """Caches authority vocabularies.
+def cache(node):
+    """Caches a vocabulary node.
+
+    :param pyeesv.Node: Node to be cached.
 
     """
-    _DATA[authority.canonical_name] = authority
+    _DATA[node.namespace] = node
+    _DATA[str(node.uid)] = node
+    try:
+        iter(node)
+    except TypeError:
+        return
+    else:
+        for subnode in node:
+            cache(subnode)
 
 
-def get_cached(identifier=None):
-    """Caches authority vocabularies.
+def get_cached(cache_filter):
+    """Returns a cached node.
 
-    :param str identifier: Authority identifier.
+    :param str|class filter: Cache filter expression.
+    :param str store_type: Cache store type.
 
-    :returns: A pointer to a cached authority.
-    :rtype: pyessv.Authority
+    :returns: A pointer to a vocabulary node or a set of nodes.
+    :rtype: pyessv.Node | list[Authority]
 
     """
-    if identifier is None:
-        return _DATA.values()
-
-    for authority in _DATA.values():
-        if authority.canonical_name == identifier:
-            return authority
-        elif authority.raw_name == identifier:
-            return authority
-        elif str(authority.uid) == identifier:
-            return authority
+    if cache_filter in _DATA:
+        return _DATA[cache_filter]
+    elif cache_filter in NODE_TYPES:
+        return [i for i in _DATA.values() if isinstance(i, cache_filter)]
 
 
-def uncache(authority_name):
-    """Uncaches authority vocabularies.
+def uncache(identifier):
+    """Uncaches a node.
 
-    :param str authority_name: Authority name.
+    :param str identifier: A vocabulary node identifier.
 
     """
     try:
-        del _DATA[authority_name]
+        del _DATA[identifier]
     except KeyError:
         pass

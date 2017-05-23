@@ -11,25 +11,77 @@
 
 
 """
+import uuid
+
 from pyessv._cache import cache
 from pyessv._cache import get_cached
 from pyessv._io_manager import write
+from pyessv._model import Authority
 from pyessv._model import Term
 from pyessv._utils.formatter import format_canonical_name
 from pyessv._utils.formatter import format_string
 
 
 
-def load(authority, scope=None, collection=None, term=None):
-    """Loads a CV authority from archive.
+def load(identifier):
+    """Loads a vocabulary node from archive.
+
+    :param str identifier: Vocabulary node identifier.
+
+    :return: A vocabulary node.
+    :rtype: pyessv.Node | None
+
+    """
+    if isinstance(identifier, tuple):
+        identifier = ":".join(identifier)
+
+    return _load_by_namespace(identifier) or \
+           _load_by_uid(identifier)
+
+
+def load_by_name(authority, scope=None, collection=None, term=None):
+    """Loads a vocabulary node from archive by name.
 
     :param str authority: Vocabulary authority, e.g. wcrp.
     :param str scope: Vocabulary scope, e.g. global.
     :param str collection: Vocabulary collection, e.g. institute-id.
     :param str term: Vocabulary term, e.g. ipsl.
 
+    :return: A vocabulary node.
+    :rtype: pyessv.Node | None
+
     """
-    for a in get_cached():
+    names = [i.strip() for i in [authority, scope, collection, term] if i is not None]
+    namespace = ":".join(names)
+
+    return _load_by_namespace(namespace)
+
+
+def _load_by_namespace(identifier):
+    """Loads a vocabulary node from archive by trying to match it's namespace.
+
+    :param str identifier: Vocabulary node namespace.
+
+    :returns: First matching vocabulary node.
+    :rtype: pyessv.Node | None
+
+    """
+    ns = str(identifier).split(':')
+    assert len(ns) >= 1 and len(ns) <= 4, 'Invalid namespace'
+
+    # Unpack.
+    authority = scope = collection = term = None
+    if len(ns) == 1:
+        authority = ns[0]
+    elif len(ns) == 2:
+        authority, scope = ns
+    elif len(ns) == 3:
+        authority, scope, collection = ns
+    elif len(ns) == 4:
+        authority, scope, collection, term = ns
+
+    # Walk nodes returning deepest match.
+    for a in get_cached(Authority):
         if not _is_matched(a, authority):
             continue
         if scope is None:
@@ -49,19 +101,7 @@ def load(authority, scope=None, collection=None, term=None):
                         return t
 
 
-def load_by_namespace(identifier):
-    """Loads a vocabulary node from archive by trying to match it's namespace.
-
-    :param str identifier: Vocabulary node namespace.
-
-    :returns: First matching vocabulary node.
-    :rtype: pyessv.Node | None
-
-    """
-    return _load(identifier, lambda n, i: str(n.namespace) == i)
-
-
-def load_by_uid(identifier):
+def _load_by_uid(identifier):
     """Loads a vocabulary node from archive by trying to match it's unique identifier.
 
     :param str identifier: Vocabulary node unique identifier.
@@ -70,26 +110,12 @@ def load_by_uid(identifier):
     :rtype: pyessv.Node | None
 
     """
-    return _load(identifier, lambda n, i: str(n.uid) == i)
-
-
-def _load(identifier, predicate):
-    """Loads a vocabulary node from archive.
-
-    """
-    identifier = format_string(identifier).lower()
-    for a in get_cached():
-        if predicate(a, identifier):
-            return a
-        for s in a:
-            if predicate(s, identifier):
-                return s
-            for c in s:
-                if predicate(c, identifier):
-                    return c
-                for t in c:
-                    if predicate(t, identifier):
-                        return t
+    try:
+        uuid.UUID(identifier)
+    except ValueError:
+        pass
+    else:
+        return get_cached(str(identifier))
 
 
 def _is_matched(node, identifier):
@@ -138,6 +164,5 @@ def save():
     """Persists archive to file system.
 
     """
-    for authority in get_cached():
+    for authority in get_cached(Authority):
         write(authority)
-

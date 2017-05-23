@@ -12,39 +12,51 @@
 
 """
 from pyessv._cache import store_memory as _memory_store
+from pyessv._constants import CACHE_STORE_MEMORY
+from pyessv._constants import CACHE_STORE_TYPES
+from pyessv._model import Node
+
 
 
 # Collection of cache stores.
-_STORES = (
-	_memory_store,
-	)
+_STORES = {
+    CACHE_STORE_MEMORY: _memory_store
+}
 
 
-def cache(authority):
-    """Caches authority vocabularies.
+def cache(node):
+    """Caches a vocabulary node.
 
-    """
-    for store in _STORES:
-    	store.cache(authority)
-
-
-def get_cached(authority_name=None):
-    """Caches authority vocabularies.
-
-    :param str authority_name: Authority name.
-
-    :returns: A pointer to a cached authority.
-    :rtype: pyessv.Authority
+    :param pyeesv.Node: Node to be cached.
 
     """
-    return _memory_store.get_cached(authority_name)
+    assert isinstance(node, Node), 'Invalid node'
+
+    for store in _STORES.values():
+        store.cache(node)
 
 
-def uncache(authority_name):
-    """Uncaches authority vocabularies.
+def get_cached(identifier=None, store_type=CACHE_STORE_MEMORY):
+    """Returns a cached node.
 
-    :param str authority_name: Authority name.
+    :param str|None|class filter: Cache filter expression.
+    :param str store_type: Cache store type.
+
+    :returns: A pointer to a vocabulary node or a set of nodes.
+    :rtype: pyessv.Node | list[Authority]
 
     """
-    for store in _STORES:
-    	store.uncache(authority_name)
+
+    assert store_type in CACHE_STORE_TYPES, 'Invalid cache store type'
+
+    return _STORES[store_type].get_cached(identifier)
+
+
+def uncache(identifier):
+    """Uncaches a node.
+
+    :param str identifier: A vocabulary node identifier.
+
+    """
+    for store in _STORES.values():
+        store.uncache(identifier)

@@ -20,8 +20,7 @@ __copyright__ = 'Copyright 2017 ES-DOC'
 
 from pyessv._archive import add
 from pyessv._archive import load
-from pyessv._archive import load_by_uid
-from pyessv._archive import load_by_namespace
+from pyessv._archive import load_by_name
 from pyessv._archive import save
 
 from pyessv._codecs import decode

@@ -78,10 +78,10 @@ def _setup():
 
     # Set collections.
     collections = (
-        LIB.load('wcrp', 'cmip6', 'institution-id'),
-        LIB.load('wcrp', 'cmip6', 'activity-id'),
-        LIB.load('wcrp', 'cmip6', 'source-id'),
-        LIB.load('wcrp', 'cmip6', 'experiment-id')
+        LIB.load('wcrp:cmip6:institution-id'),
+        LIB.load('wcrp:cmip6:activity-id'),
+        LIB.load('wcrp:cmip6:source-id'),
+        LIB.load('wcrp:cmip6:experiment-id')
         )
 
     # Set parsers.
