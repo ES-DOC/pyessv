@@ -17,7 +17,7 @@ dist
 venv
 pyessv.egg-info
 *-checkpoint.ipynb
-pyessv/TODO.txt
+TODO.txt
 tmp.ipynb
 tmp
 tmp.py
