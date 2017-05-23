@@ -11,7 +11,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.3.3.0.0'
+__version__ = '0.3.4.0.0'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
@@ -20,7 +20,6 @@ __copyright__ = 'Copyright 2017 ES-DOC'
 
 from pyessv._archive import add
 from pyessv._archive import load
-from pyessv._archive import load_by_name
 from pyessv._archive import save
 
 from pyessv._codecs import decode

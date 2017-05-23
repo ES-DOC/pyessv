@@ -23,7 +23,7 @@ from pyessv._utils.formatter import format_string
 
 
 
-def load(identifier):
+def load(*args):
     """Loads a vocabulary node from archive.
 
     :param str identifier: Vocabulary node identifier.
@@ -32,14 +32,14 @@ def load(identifier):
     :rtype: pyessv.Node | None
 
     """
-    if isinstance(identifier, tuple):
-        identifier = ":".join(identifier)
+    assert len(args) >= 1 and len(args) <= 4, 'Vocabs can be loaded by namespace, uuid & name'
+    if len(args) == 1:
+        return _load_by_namespace(args[0]) or \
+               _load_by_uid(args[0])
+    return _load_by_name(args)
 
-    return _load_by_namespace(identifier) or \
-           _load_by_uid(identifier)
 
-
-def load_by_name(authority, scope=None, collection=None, term=None):
+def _load_by_name(args):
     """Loads a vocabulary node from archive by name.
 
     :param str authority: Vocabulary authority, e.g. wcrp.
@@ -51,6 +51,20 @@ def load_by_name(authority, scope=None, collection=None, term=None):
     :rtype: pyessv.Node | None
 
     """
+    authority = args[0]
+    try:
+        scope = args[1]
+    except IndexError:
+        scope = None
+    try:
+        collection = args[2]
+    except IndexError:
+        collection = None
+    try:
+        term = args[3]
+    except IndexError:
+        term = None
+
     names = [i.strip() for i in [authority, scope, collection, term] if i is not None]
     namespace = ":".join(names)
 
