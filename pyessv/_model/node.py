@@ -48,6 +48,14 @@ class Node(object):
 
 
     @property
+    def name(self):
+        """Helper attribute to return canonical_name.
+
+        """
+        return self.canonical_name
+
+
+    @property
     def all_names(self):
         """Returns all term names.
 

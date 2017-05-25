@@ -115,7 +115,7 @@ def create_collection(
     create_date=None,
     data=None,
     synonyms=[],
-    term_name_regex=None
+    term_regex=None
     ):
     """Instantiates, initialises & returns a term collection.
 
@@ -126,6 +126,7 @@ def create_collection(
     :param str url: Further information URL.
     :param datetime create_date: Creation date.
     :param dict data: Arbirtrary data.
+    :param srt term_regex: A regular expression to be applied to terms.
 
     :returns: A vocabulary collection, e.g. insitution-id.
     :rtype: pyessv.Collection
@@ -133,7 +134,56 @@ def create_collection(
     """
     def _callback(instance):
         instance.scope = scope
-        instance.term_name_regex = term_name_regex
+        instance.term_regex = term_regex
+        scope.collections.append(instance)
+
+    return _create_node(
+        Collection,
+        name,
+        description,
+        label,
+        url,
+        create_date,
+        synonyms,
+        data,
+        _callback
+        )
+
+
+def create_composite_collection(
+    scope,
+    name,
+    description,
+    template,
+    collections,
+    label=None,
+    url=None,
+    create_date=None,
+    data=None,
+    synonyms=[]
+    ):
+    """Instantiates, initialises & returns a term composite collection.
+
+    :param pyessv.Scope scope: CV scope to which collection is bound.
+    :param str name: Canonical name.
+    :param str description: Informative description.
+    :param str template: An expression template.
+    :param tuple collections: Collections that the template maps to.
+    :param str label: Label for UI purposes.
+    :param str url: Further information URL.
+    :param datetime create_date: Creation date.
+    :param dict data: Arbirtrary data.
+    :param srt term_regex: A regular expression to be applied to terms.
+    :param tuple term_name_template: 2 member tuple: a template, related collections.
+
+    :returns: A vocabulary collection, e.g. insitution-id.
+    :rtype: pyessv.Collection
+
+    """
+    def _callback(instance):
+        instance.scope = scope
+        instance.template = template
+        instance.template_collections = collections
         scope.collections.append(instance)
 
     return _create_node(

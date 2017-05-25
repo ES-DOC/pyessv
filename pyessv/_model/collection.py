@@ -28,7 +28,9 @@ class Collection(IterableNode):
         """
         self.scope = None
         self.terms = []
-        self.term_name_regex = None
+        self.term_regex = None
+        self.template = None
+        self.template_collections = None
         super(Collection, self).__init__(self.terms, pyessv.NODE_TYPEKEY_COLLECTION)
 
 

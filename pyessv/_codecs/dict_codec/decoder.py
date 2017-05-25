@@ -77,7 +77,7 @@ def _decode_collection(obj, collection):
     """Decodes a termset from a dictionary.
 
     """
-    collection.term_name_regex = obj.get('term_name_regex')
+    collection.term_regex = obj.get('term_regex')
 
 
 def _decode_term(obj, instance):

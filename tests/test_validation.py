@@ -83,7 +83,7 @@ def test_regex_collection():
 
     """
     collection = tu.create_collection()
-    collection.term_name_regex = r'^[a-z\-]*$'
+    collection.term_regex = r'^[a-z\-]*$'
     term = tu.create_term(collection=collection)
     term.canonical_name = 'abc-def'
     assert LIB.is_valid(term) == True
@@ -94,7 +94,7 @@ def test_regex_collection_negative():
 
     """
     collection = tu.create_collection()
-    collection.term_name_regex = r'^[a-z\-]*$'
+    collection.term_regex = r'^[a-z\-]*$'
     term = tu.create_term(collection=collection)
     term.canonical_name = 'ABC-DEF'
     assert LIB.is_valid(term) == False

@@ -48,6 +48,7 @@ from pyessv._exceptions import ValidationError
 
 from pyessv._factory import create_authority
 from pyessv._factory import create_collection
+from pyessv._factory import create_composite_collection
 from pyessv._factory import create_template_parser
 from pyessv._factory import create_scope
 from pyessv._factory import create_term

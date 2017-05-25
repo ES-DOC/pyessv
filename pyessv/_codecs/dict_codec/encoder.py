@@ -61,7 +61,7 @@ def _encode_collection(instance, obj):
 
     """
     obj['terms'] = ['{}:{}'.format(i.canonical_name, i.uid) for i in instance.terms]
-    obj['term_name_regex'] = instance.term_name_regex
+    obj['term_regex'] = instance.term_regex
 
 
 def _encode_term(instance, obj):

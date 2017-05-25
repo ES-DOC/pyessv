@@ -168,19 +168,28 @@ def _validate_collection():
     """Returns Collection instance validators.
 
     """
+    def _validate_canonical_name(i):
+        _assert_string(i.canonical_name, REGEX_CANONICAL_NAME)
+
     def _validate_scope(i):
         assert isinstance(i.scope, Scope)
 
     def _validate_terms(i):
         _assert_iterable(i.terms, Term)
 
-    def _validate_canonical_name(i):
-        _assert_string(i.canonical_name, REGEX_CANONICAL_NAME)
+    def _validate_template(i):
+        if i.template is not None:
+            _assert_string(i.template)
+            _assert_iterable(i.template_collections, Collection)
+            assert i.template.count('{}') == len(i.template_collections)
+        else:
+            assert i.template_collections is None
 
     return [
         _validate_scope,
         _validate_terms,
-        _validate_canonical_name
+        _validate_canonical_name,
+        _validate_template
         ]
 
 
@@ -203,10 +212,10 @@ def _validate_term():
         assert isinstance(i.idx, int)
 
     def _validate_canonical_name(i):
-        if i.collection.term_name_regex is None:
+        if i.collection.term_regex is None:
             reg_ex = REGEX_CANONICAL_NAME
         else:
-            reg_ex = i.collection.term_name_regex
+            reg_ex = i.collection.term_regex
         _assert_string(i.canonical_name, reg_ex)
 
     def _validate_parent(i):

@@ -58,6 +58,7 @@ _FUNCS = {
     # ... factory
     'create_authority',
     'create_collection',
+    'create_composite_collection',
     'create_scope',
     'create_term',
     # ... governance
