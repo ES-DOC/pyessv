@@ -25,3 +25,5 @@ alias pyessv-list=$PYESSV_LIB_HOME/sh/list.sh
 alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
 alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh
 alias pyessv-write-wcrp-cmip6=$PYESSV_LIB_HOME/sh/write_wcrp_cmip6.sh
+
+alias pyessv-write-bash-vars=$PYESSV_LIB_HOME/sh/write_bash_vars.sh

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# ###############################################################
+# SECTION: WCRP CMIP6 VOCABULARY BASH VARS
+# ###############################################################
+
+declare -a ACTIVITY_ID=(
+[ACTIVITY_ID])
+
+declare -a INSTITUTION_ID=(
+[INSTITUTION_ID])
+
+declare -a MIP_ERA=(
+[MIP_ERA])
+
+declare -a SOURCE_ID=(
+[SOURCE_ID])

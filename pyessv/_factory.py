@@ -241,11 +241,12 @@ def create_term(
         )
 
 
-def create_template_parser(template, collections):
+def create_template_parser(template, collections, field='canonical_name'):
     """Instantiates, initialises & returns a template parser.
 
     :param str template: An expression template.
     :param tuple collections: Collections that the template maps to.
+    :param str field: Term field against which to parse.
 
     :returns: A vocabulary expression parser.
     :rtype: pyessv.TemplateParser
@@ -254,11 +255,12 @@ def create_template_parser(template, collections):
     assert isinstance(template, basestring), 'Invalid template'
     assert isinstance(collections, tuple), 'Invalid collections'
     assert len(template) > 0, 'Invalid template'
+    assert template.count('{}') > 0, 'Invalid template'
     assert len(collections) > 0, 'Invalid collections'
-    assert len([i for i in collections if not isinstance(i, Collection)]) == 0, 'Invalid collections'
     assert template.count('{}') == len(collections), 'Invalid template'
+    assert field in ('canonical_name', 'raw_name', 'label'), 'Invalid term field'
 
-    return TemplateParser(template, collections)
+    return TemplateParser(template, collections, field)
 
 
 def _create_node(

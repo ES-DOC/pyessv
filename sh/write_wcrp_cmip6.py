@@ -1,7 +1,7 @@
     # -*- coding: utf-8 -*-
 
 """
-.. module:: write_cv.py.py
+.. module:: write_wcrp_cmip6.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
    :synopsis: Maps raw WCRP CMIP6 vocab files to normalized pyessv format.
@@ -76,7 +76,7 @@ _COLLECTIONS_CMIP6 = {
     },
     'nominal_resolution': {
         'data_factory': None,
-        'term_name_regex': r'^[a-z0-9\-\.]*$'
+        'term_regex': r'^[a-z0-9\-\.]*$'
     },
     'realm': {
         'data_factory': None
@@ -134,7 +134,7 @@ def _create_collection_cmip6(source, collection_type, collection_info):
         collection_type,
         "WCRP CMIP6 CV collection: ".format(collection_type),
         create_date=_CREATE_DATE,
-        term_name_regex=collection_info.get('term_name_regex')
+        term_regex=collection_info.get('term_regex')
         )
 
     # Load WCRP json data.
