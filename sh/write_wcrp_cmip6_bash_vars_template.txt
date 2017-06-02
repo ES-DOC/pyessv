@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# ###############################################################
+# SECTION: WCRP CMIP6 VOCABULARY BASH VARS
+# ###############################################################
+
+# Activity ID
+declare -a ACTIVITY_ID=(
+[ACTIVITY_ID])
+
+declare -a ACTIVITY_ID_RAW=(
+[ACTIVITY_ID_RAW])
+
+# Institution ID
+declare -a INSTITUTION_ID=(
+[INSTITUTION_ID])
+
+declare -a INSTITUTION_ID_RAW=(
+[INSTITUTION_ID_RAW])
+
+# MIP-era ID
+declare -a MIP_ERA=(
+[MIP_ERA])
+
+declare -a MIP_ERA_RAW=(
+[MIP_ERA_RAW])
+
+# Source ID
+declare -a SOURCE_ID=(
+[SOURCE_ID])
+
+declare -a SOURCE_ID_RAW=(
+[SOURCE_ID_RAW])
+
+# Experiment ID
+declare -a EXPERIMENT_ID=(
+[EXPERIMENT_ID])
+
+declare -a EXPERIMENT_ID_RAW=(
+[EXPERIMENT_ID_RAW])

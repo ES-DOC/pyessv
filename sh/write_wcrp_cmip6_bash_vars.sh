@@ -6,7 +6,7 @@ source $PYESSV_LIB_HOME/sh/utils.sh
 # Main entry point.
 main()
 {
-	python $PYESSV_LIB_HOME/sh/write_bash_vars.py
+	python $PYESSV_LIB_HOME/sh/write_wcrp_cmip6_bash_vars.py
 }
 
 # Invoke entry point.

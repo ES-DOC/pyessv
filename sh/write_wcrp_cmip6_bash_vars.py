@@ -23,6 +23,7 @@ import pyessv
 _VOCABS = {
     'cmip6': {
         'activity_id',
+        'experiment_id',
         'institution_id',
         'source_id'
         },
@@ -48,10 +49,12 @@ def _main():
             data = ''
             for term in collection:
                 data += '\t\'{}\'\n'.format(term.canonical_name)
+            content = content.replace('[{}]'.format(collection.raw_name.upper()), data)
 
-            collection = '[{}]'.format(collection.raw_name.upper())
-
-            content = content.replace(collection, data)
+            data = ''
+            for term in collection:
+                data += '\t\'{}\'\n'.format(term.raw_name)
+            content = content.replace('[{}_RAW]'.format(collection.raw_name.upper()), data)
 
 
     with open(_OUTPUT, 'w') as fstream:
