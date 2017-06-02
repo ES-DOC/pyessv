@@ -4,7 +4,7 @@
 # SECTION: WCRP CMIP6 VOCABULARY BASH VARS
 # ###############################################################
 
-# Activity ID
+# Activity ID - canonical name
 declare -a ACTIVITY_ID=(
 	'aerchemmip'
 	'c4mip'
@@ -30,6 +30,7 @@ declare -a ACTIVITY_ID=(
 	'volmip'
 )
 
+# Activity ID - raw name
 declare -a ACTIVITY_ID_RAW=(
 	'AerChemMIP'
 	'C4MIP'
@@ -55,7 +56,7 @@ declare -a ACTIVITY_ID_RAW=(
 	'VolMIP'
 )
 
-# Institution ID
+# Institution ID - canonical name
 declare -a INSTITUTION_ID=(
 	'awi'
 	'bnu'
@@ -90,6 +91,7 @@ declare -a INSTITUTION_ID=(
 	'thu'
 )
 
+# Institution ID - raw name
 declare -a INSTITUTION_ID_RAW=(
 	'AWI'
 	'BNU'
@@ -124,7 +126,7 @@ declare -a INSTITUTION_ID_RAW=(
 	'THU'
 )
 
-# MIP-era ID
+# MIP-era ID - canonical name
 declare -a MIP_ERA=(
 	'cmip1'
 	'cmip2'
@@ -133,6 +135,7 @@ declare -a MIP_ERA=(
 	'cmip6'
 )
 
+# MIP-era ID - raw name
 declare -a MIP_ERA_RAW=(
 	'CMIP1'
 	'CMIP2'
@@ -141,7 +144,7 @@ declare -a MIP_ERA_RAW=(
 	'CMIP6'
 )
 
-# Source ID
+# Source ID - canonical name
 declare -a SOURCE_ID=(
 	'access-1-0'
 	'awi-cm-1-0-hr'
@@ -204,6 +207,7 @@ declare -a SOURCE_ID=(
 	'vresm-1-0'
 )
 
+# Source ID - raw name
 declare -a SOURCE_ID_RAW=(
 	'ACCESS-1-0'
 	'AWI-CM-1-0-HR'
@@ -266,7 +270,7 @@ declare -a SOURCE_ID_RAW=(
 	'VRESM-1-0'
 )
 
-# Experiment ID
+# Experiment ID - canonical name
 declare -a EXPERIMENT_ID=(
 	'1pctco2'
 	'1pctco2-4xext'
@@ -518,6 +522,7 @@ declare -a EXPERIMENT_ID=(
 	'volc-pinatubo-surf'
 )
 
+# Experiment ID - raw name
 declare -a EXPERIMENT_ID_RAW=(
 	'1pctCO2'
 	'1pctCO2-4xext'

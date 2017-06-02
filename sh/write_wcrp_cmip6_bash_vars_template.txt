@@ -4,37 +4,42 @@
 # SECTION: WCRP CMIP6 VOCABULARY BASH VARS
 # ###############################################################
 
-# Activity ID
+# Activity ID - canonical name
 declare -a ACTIVITY_ID=(
 [ACTIVITY_ID])
 
+# Activity ID - raw name
 declare -a ACTIVITY_ID_RAW=(
 [ACTIVITY_ID_RAW])
 
-# Institution ID
+# Institution ID - canonical name
 declare -a INSTITUTION_ID=(
 [INSTITUTION_ID])
 
+# Institution ID - raw name
 declare -a INSTITUTION_ID_RAW=(
 [INSTITUTION_ID_RAW])
 
-# MIP-era ID
+# MIP-era ID - canonical name
 declare -a MIP_ERA=(
 [MIP_ERA])
 
+# MIP-era ID - raw name
 declare -a MIP_ERA_RAW=(
 [MIP_ERA_RAW])
 
-# Source ID
+# Source ID - canonical name
 declare -a SOURCE_ID=(
 [SOURCE_ID])
 
+# Source ID - raw name
 declare -a SOURCE_ID_RAW=(
 [SOURCE_ID_RAW])
 
-# Experiment ID
+# Experiment ID - canonical name
 declare -a EXPERIMENT_ID=(
 [EXPERIMENT_ID])
 
+# Experiment ID - raw name
 declare -a EXPERIMENT_ID_RAW=(
 [EXPERIMENT_ID_RAW])
