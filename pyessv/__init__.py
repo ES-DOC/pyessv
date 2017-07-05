@@ -40,6 +40,7 @@ from pyessv._constants import PARSING_STRICTNESS_0
 from pyessv._constants import PARSING_STRICTNESS_1
 from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_3
+from pyessv._constants import REGEX_CANONICAL_NAME
 
 from pyessv._exceptions import InvalidAssociationError
 from pyessv._exceptions import TemplateParsingError
@@ -48,7 +49,6 @@ from pyessv._exceptions import ValidationError
 
 from pyessv._factory import create_authority
 from pyessv._factory import create_collection
-from pyessv._factory import create_composite_collection
 from pyessv._factory import create_template_parser
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
@@ -71,7 +71,7 @@ from pyessv._parser import parse_namespace
 
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
-from pyessv._validation import validate_node as validate
+from pyessv._validation import validate
 
 
 # Auto-initialize.

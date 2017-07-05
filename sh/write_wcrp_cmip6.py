@@ -30,7 +30,7 @@ _ARGS.add_argument(
     )
 
 # Ensure we use fixed creation date.
-_CREATE_DATE = arrow.get('2017-03-21 00:00:00.000000+0000').datetime
+_CREATE_DATE = arrow.get('2017-06-21 00:00:00.000000+0000').datetime
 
 # CV authority = WCRP.
 _AUTHORITY = pyessv.create_authority(
@@ -58,48 +58,37 @@ _SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY,
     create_date=_CREATE_DATE
     )
 
-# Map of CMIP6 collections to data factories / name pre-formatters.
-_COLLECTIONS_CMIP6 = {
-    'activity_id': {
-        'data_factory': None
+# Map of scopes to collections.
+_SCOPE_COLLECTIONS = {
+    _SCOPE_CMIP6: {
+        'activity_id': {},
+        'experiment_id': {
+            'data_factory': lambda obj, name: obj[name]
+        },
+        'frequency': {},
+        'grid_label': {},
+        'institution_id': {
+            'data_factory': lambda obj, name: {'postal_address': obj[name]}
+        },
+        'nominal_resolution': {
+            'term_regex': r'^[a-z0-9\-\.]*$'
+        },
+        'realm': {
+            'data_factory': lambda obj, name: {'description': obj[name]}
+        },
+        'required_global_attributes': {},
+        'source_id': {
+            'data_factory': lambda obj, name: obj[name]
+        },
+        'source_type': {},
+        'sub_experiment_id': {
+            'data_factory': lambda obj, name: {'description': obj[name]},
+            'ommitted': ['none']
+        },
+        'table_id': {}
     },
-    'experiment_id': {
-        'data_factory': lambda obj, name: obj[name]
-    },
-    'frequency': {
-        'data_factory': None
-    },
-    'grid_label': {
-        'data_factory': None
-    },
-    'institution_id': {
-        'data_factory': lambda obj, name: {'postal_address': obj[name]}
-    },
-    'nominal_resolution': {
-        'data_factory': None,
-        'term_regex': r'^[a-z0-9\-\.]*$'
-    },
-    'realm': {
-        'data_factory': None
-    },
-    'required_global_attributes': {
-        'data_factory': None
-    },
-    'source_id': {
-        'data_factory': lambda obj, name: obj[name]
-    },
-    'source_type': {
-        'data_factory': None
-    },
-    'table_id': {
-        'data_factory': None
-    }
-}
-
-# Map of CMIP6 collections to data factories / name pre-formatters.
-_COLLECTIONS_GLOBAL = {
-    'mip_era': {
-        'data_factory': None
+    _SCOPE_GLOBAL: {
+        'mip_era': {}
     }
 }
 
@@ -118,13 +107,11 @@ def _main(args):
     if not os.path.isdir(args.source):
         raise ValueError('WCRP vocab directory does not exist')
 
-    # Create CMIP6 collections.
-    for typeof, parsers in _COLLECTIONS_CMIP6.items():
-        _create_collection_cmip6(args.source, typeof, parsers)
-
-    # Create GLOBAL collections.
-    for typeof, handlers in _COLLECTIONS_GLOBAL.items():
-        _create_collection_global(args.source, typeof, parsers)
+    # Create collections.
+    for scope in _SCOPE_COLLECTIONS:
+        for collection in _SCOPE_COLLECTIONS[scope]:
+            parsers = _SCOPE_COLLECTIONS[scope][collection]
+            _create_collection(args.source, scope, collection, parsers)
 
     # Update uid map for next time.
     _set_node_uid(_AUTHORITY)
@@ -138,71 +125,53 @@ def _main(args):
     pyessv.save()
 
 
-def _create_collection_cmip6(source, collection_type, collection_info):
-    """Creates cmip6 collection from a WCRP JSON files.
+def _create_collection(source, scope, collection_id, parsers):
+    """Creates collection from a WCRP JSON file.
 
     """
+    # Load WCRP json data.
+    wcrp_cv_data = _get_wcrp_cv(source, scope, collection_id)
+
     # Create collection.
     collection = pyessv.create_collection(
-        _SCOPE_CMIP6,
-        collection_type,
-        "WCRP CMIP6 CV collection: ".format(collection_type),
+        scope,
+        collection_id,
+        "WCRP CMIP6 CV collection: ".format(collection_id),
         create_date=_CREATE_DATE,
-        term_regex=collection_info.get('term_regex')
+        term_regex=parsers.get('term_regex', pyessv.REGEX_CANONICAL_NAME)
         )
 
-    # Load WCRP json data.
-    wcrp_cv_data = _get_wcrp_cv(source, collection_type, 'CMIP6_')
-
     # Create terms.
-    data_factory = collection_info['data_factory']
-    for name in wcrp_cv_data:
-        pyessv.create_term(
-            collection,
-            name,
-            label=name,
-            create_date=_CREATE_DATE,
-            data=data_factory(wcrp_cv_data, name) if data_factory else None
-            )
-
-
-def _create_collection_global(source, collection_type, parsers):
-    """Creates global collection from a WCRP JSON files.
-
-    """
-    # Create collection.
-    collection = pyessv.create_collection(
-        _SCOPE_GLOBAL,
-        collection_type,
-        'WCRP GLOBAL CV collection: '.format(collection_type),
-        create_date=_CREATE_DATE
-        )
-
-    # Unpack parsers.
-    data_factory = parsers['data_factory']
-
-    # Load WCRP json data.
-    wcrp_cv_data = _get_wcrp_cv(source, collection_type)
-
-    # Create terms.
-    for name in wcrp_cv_data:
-        pyessv.create_term(
-            collection,
-            name,
-            label=name,
-            create_date=_CREATE_DATE,
-            data=data_factory(wcrp_cv_data, name) if data_factory else None
-            )
+    data_factory = parsers.get('data_factory', None)
+    ommitted = parsers.get('ommitted', [])
+    for name in [i for i in wcrp_cv_data if i not in ommitted]:
+        data = data_factory(wcrp_cv_data, name) if data_factory else None
+        _create_term(collection, name, data)
 
 
 def _create_term(collection, raw_name, data):
     """Creates & returns a new term.
 
     """
-    pyessv.create_term(
+    try:
+        description = data['description']
+    except (TypeError, KeyError):
+        description = None
+    else:
+        del data['description']
+
+    try:
+        label = data['label']
+    except (TypeError, KeyError):
+        label = raw_name
+    else:
+        del data['label']
+
+    term = pyessv.create_term(
         collection,
         raw_name,
-        label=raw_name,
+        description=description,
+        label=label,
         create_date=_CREATE_DATE,
         data=data
         )
@@ -226,14 +195,15 @@ def _set_node_uid(node):
             _set_node_uid(node)
 
 
-def _get_wcrp_cv(source, collection_type, prefix=''):
+def _get_wcrp_cv(source, scope, collection_id):
     """Returns raw WCRP CV data.
 
     """
-    fname = '{}{}.json'.format(prefix, collection_type)
+    prefix = 'CMIP6_' if scope.canonical_name == 'cmip6' else ''
+    fname = '{}{}.json'.format(prefix, collection_id)
     fpath = os.path.join(source, fname)
     with open(fpath, 'r') as fstream:
-        return json.loads(fstream.read())[collection_type]
+        return json.loads(fstream.read())[collection_id]
 
 
 # Entry point.

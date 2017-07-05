@@ -31,27 +31,20 @@ def test_interface():
 	assert inspect.isfunction(get_cached)
 
 
-def test_get_cached():
-	"""pyessv-tests: caching: get_cached
 
-	"""
-	assert isinstance(get_cached('wcrp'), pyessv.Authority)
-
-
+@nose.with_setup(tu.create_authority, None)
 def test_cache():
 	"""pyessv-tests: caching: cache
 
 	"""
-	cache(tu.create_authority())
-
-	assert isinstance(get_cached(tu.TEST_AUTHORITY_NAME), pyessv.Authority)
+	assert isinstance(get_cached(tu.AUTHORITY_NAME), pyessv.Authority)
 
 
+@nose.with_setup(tu.create_authority, None)
 def test_uncache():
 	"""pyessv-tests: caching: uncache
 
 	"""
-	cache(tu.create_authority())
-	uncache(tu.TEST_AUTHORITY_NAME)
+	uncache(tu.AUTHORITY_NAME)
 
-	assert get_cached(tu.TEST_AUTHORITY_NAME) is None
+	assert get_cached(tu.AUTHORITY_NAME) is None

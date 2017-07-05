@@ -12,8 +12,17 @@
 
 """
 import pyessv
+from pyessv._constants import GOVERNANCE_STATUS_PENDING
+from pyessv._constants import GOVERNANCE_STATUS_SET
+from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._model.node import Node
+from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
+from pyessv._utils.validation import assert_iterable
+from pyessv._utils.validation import assert_pattern
+from pyessv._utils.validation import assert_regex
+from pyessv._utils.validation import assert_string
+from pyessv._utils.validation import assert_url
 
 
 
@@ -25,7 +34,7 @@ class Term(Node):
         """Instance constructor.
 
         """
-        super(Term, self).__init__(pyessv.NODE_TYPEKEY_TERM)
+        super(Term, self).__init__(NODE_TYPEKEY_TERM)
 
         self.alternative_name = None
         self.alternative_url = None
@@ -33,7 +42,7 @@ class Term(Node):
         self.collection = None
         self.idx = None
         self.parent = None
-        self.status = pyessv.GOVERNANCE_STATUS_PENDING
+        self.status = GOVERNANCE_STATUS_PENDING
 
 
     def __contains__(self, key):
@@ -67,3 +76,48 @@ class Term(Node):
 
         """
         return self.collection.scope
+
+
+    def get_validators(self):
+        """Returns set of validators.
+
+        """
+        from pyessv._model.scope import Collection
+
+        def _alternative_name():
+            if self.alternative_name is not None:
+                assert_string(self.alternative_name)
+
+        def _alternative_url():
+            if self.alternative_url is not None:
+                assert_url(self.alternative_url)
+
+        def _canonical_name():
+            assert_string(self.canonical_name)
+            if isinstance(self.collection.term_regex, basestring):
+                assert_regex(self.canonical_name, self.collection.term_regex)
+            if isinstance(self.collection.term_regex, tuple):
+                assert_pattern(self.canonical_name, self.collection.term_regex)
+
+        def _collection():
+            assert isinstance(self.collection, Collection)
+
+        def _idx():
+            assert isinstance(self.idx, int)
+
+        def _parent():
+            if self.parent is not None:
+                assert isinstance(self.parent, Term)
+
+        def _status():
+            assert self.status in GOVERNANCE_STATUS_SET
+
+        return super(Term, self).get_validators() + (
+            _alternative_name,
+            _alternative_url,
+            _collection,
+            _canonical_name,
+            _idx,
+            _parent,
+            _status,
+            )

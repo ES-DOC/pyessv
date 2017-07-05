@@ -15,10 +15,15 @@ import uuid
 
 import arrow
 
-from pyessv._model import Term
+from pyessv._constants import NODE_TYPEKEY_AUTHORITY
+from pyessv._constants import NODE_TYPEKEY_COLLECTION
+from pyessv._constants import NODE_TYPEKEY_SCOPE
+from pyessv._constants import NODE_TYPEKEY_SET
+from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._model import Authority
-from pyessv._model import Scope
 from pyessv._model import Collection
+from pyessv._model import Scope
+from pyessv._model import Term
 from pyessv._utils.compat import str
 
 
@@ -32,58 +37,59 @@ def decode(obj):
     :rtype: pyessv.Term
 
     """
-    typeof = _get_type(obj)
-    instance = typeof()
-    _decode_node(obj, instance)
-    _DECODERS[typeof](obj, instance)
+    assert '_type' in obj, 'Invalid type key'
+    assert obj['_type'] in NODE_TYPEKEY_SET, 'Invalid type key'
 
-    return instance
+    decoders = {
+        NODE_TYPEKEY_AUTHORITY: _decode_authority,
+        NODE_TYPEKEY_COLLECTION: _decode_collection,
+        NODE_TYPEKEY_SCOPE: _decode_scope,
+        NODE_TYPEKEY_TERM: _decode_term
+        }
+    decoder = decoders[obj['_type']]
 
-
-def _get_type(obj):
-    """Returns type to be decoded.
-
-    """
-    try:
-        typekey = obj['_type']
-    except KeyError:
-        raise TypeError('Decoding type key not found')
-    else:
-        try:
-            return _TYPE_MAP[typekey]
-        except KeyError:
-            raise TypeError('Decoding type unsupported: {}'.format(typekey))
+    return decoder(obj)
 
 
-def _decode_authority(obj, instance):
+def _decode_authority(obj):
     """Decodes a termset from a dictionary.
 
     """
+    instance = _decode_node(obj, Authority)
     for scope in [decode(i) for i in obj['scopes']]:
         scope.authority = instance
         instance.scopes.append(scope)
 
+    return instance
 
-def _decode_scope(obj, instance):
+
+def _decode_scope(obj):
     """Decodes a termset from a dictionary.
 
     """
+    instance = _decode_node(obj, Scope)
     for collection in [decode(i) for i in obj['collections']]:
         collection.scope = instance
         instance.collections.append(collection)
 
+    return instance
 
-def _decode_collection(obj, collection):
-    """Decodes a termset from a dictionary.
+
+def _decode_collection(obj):
+    """Decodes a collection from a dictionary.
 
     """
-    collection.term_regex = obj.get('term_regex')
+    instance = _decode_node(obj, Collection)
+    instance.term_regex = obj.get('term_regex')
+
+    return instance
 
 
-def _decode_term(obj, instance):
+def _decode_term(obj):
     """Decodes a term from a dictionary.
 
     """
+    instance = _decode_node(obj, Term)
     instance.alternative_name = obj.get('alternative_name')
     instance.alternative_url = obj.get('alternative_url')
     instance.associations = obj.get('associations', [])
@@ -92,11 +98,14 @@ def _decode_term(obj, instance):
     if instance.parent:
         instance.parent = uuid.UUID(str(obj['parent']))
 
+    return instance
 
-def _decode_node(obj, instance):
+
+def _decode_node(obj, typeof):
     """Decodes a node instance from a dictionary representation.
 
     """
+    instance = typeof()
     instance.create_date = arrow.get(obj['create_date']).datetime
     instance.data = obj.get('data', dict())
     instance.description = obj.get('description')
@@ -107,19 +116,4 @@ def _decode_node(obj, instance):
     instance.uid = uuid.UUID(str(obj['uid']))
     instance.url = obj.get('url')
 
-
-# Map of supported types to decoding functions.
-_DECODERS = {
-    Authority: _decode_authority,
-    Collection: _decode_collection,
-    Scope: _decode_scope,
-    Term: _decode_term
-}
-
-# Map of supported type keys to types.
-_TYPE_MAP = {
-    Authority.__module__: Authority,
-    Collection.__module__: Collection,
-    Scope.__module__: Scope,
-    Term.__module__: Term
-}
+    return instance

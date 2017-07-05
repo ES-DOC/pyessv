@@ -12,67 +12,76 @@
 
 """
 import arrow
+import nose
 
 import pyessv as LIB
 import tests.utils as tu
+import tests.utils_model as tum
 
 
 
 # Node level test information.
 _NODE_TEST_INFO = [
-    ('create_date', arrow.utcnow().datetime, ('', '  ', 123)),
-    ('data', {'a': 1}, ('', '  ', 123)),
-    ('description', tu.TEST_AUTHORITY_DESCRIPTION, ('', '  ')),
-    ('canonical_name', tu.TEST_AUTHORITY_NAME, (None, '', '  ', 'invalid-CANONICAL-name')),
-    ('url', tu.TEST_AUTHORITY_URL, ('', '  ', 'an-invalid-url')),
+    ('create_date', ('', '  ', 123)),
+    ('data', ('', '  ', 123)),
+    ('description', ('', '  ')),
+    ('canonical_name', (None, '', '  ', 'invalid-CANONICAL-name!')),
+    ('url', ('', '  ', 'an-invalid-url')),
     ]
 
 
 # Test information mapped by node type.
 _TEST_INFO = {
-    LIB.NODE_TYPEKEY_AUTHORITY: _NODE_TEST_INFO + [
-        ('scopes', [], [None, '', '  ', [123]])
+    LIB.Authority: _NODE_TEST_INFO + [
+        ('scopes', [None, '', '  ', [123]])
     ],
-    LIB.NODE_TYPEKEY_SCOPE: _NODE_TEST_INFO + [
-        ('collections', [], [None, '', '  ', [123]])
+    LIB.Scope: _NODE_TEST_INFO + [
+        ('collections', [None, '', '  ', [123]])
     ],
-    LIB.NODE_TYPEKEY_COLLECTION: _NODE_TEST_INFO + [
-        ('terms', [], [None, '', '  ', [123]])
+    LIB.Collection: _NODE_TEST_INFO + [
+        ('terms', [None, '', '  ', [123]])
     ],
-    LIB.NODE_TYPEKEY_TERM: _NODE_TEST_INFO + [
-        ('alternative_name', tu.TEST_AUTHORITY_ALTERNATIVE_NAME, ('', '  ')),
-        ('alternative_url', tu.TEST_AUTHORITY_ALTERNATIVE_URL, ('', '  ')),
-        ('idx', 1, ('', '  ', [123])),
-        ('status', LIB.GOVERNANCE_STATUS_PENDING, ('', '  ', [123])),
-        ('synonyms', tu.TEST_TERM_SYNONYMS, ('', '  ', [123])),
+    LIB.Term: _NODE_TEST_INFO + [
+        ('alternative_name', ('', '  ')),
+        ('alternative_url', ('', '  ')),
+        ('idx', ('', '  ', [123])),
+        ('status', ('', '  ', [123])),
+        ('synonyms', ('', '  ', [123])),
     ],
 }
 
 
+@nose.with_setup(None, tu.teardown)
 def test_node():
     """Tests node validation.
 
     """
-    for typeof, factory in (
-        (LIB.NODE_TYPEKEY_AUTHORITY, tu.create_authority),
-        (LIB.NODE_TYPEKEY_SCOPE, tu.create_scope),
-        (LIB.NODE_TYPEKEY_COLLECTION, tu.create_collection),
-        (LIB.NODE_TYPEKEY_TERM, tu.create_term)
+    for node_factory in (
+        tu.create_authority,
+        tu.create_scope,
+        tu.create_collection_01,
+        tu.create_collection_02,
+        tu.create_collection_03,
+        tu.create_term_01,
+        tu.create_term_02,
+        tu.create_term_03
         ):
-        for attr, valid, invalid in _TEST_INFO[typeof]:
-            tu.init(_test_node_attr, 'validate --> {}: {}'.format(typeof, attr))
-            yield _test_node_attr, factory, attr, valid, invalid
+        node = node_factory()
+        for attr, invalid in _TEST_INFO[type(node)]:
+            tu.init(_test_node_attr, 'validate --> {}: {}'.format(node_factory.__name__[7:], attr))
+            yield _test_node_attr, node, attr, invalid
 
 
-def _test_node_attr(factory, attr, valid_value, invalid_values):
+def _test_node_attr(instance, attr, invalid_values):
     """Tests node attribute validation.
 
     """
-    instance = factory()
+    valid_value = getattr(instance, attr)
     for value in invalid_values:
         setattr(instance, attr, value)
         assert LIB.is_valid(instance) == False, (attr, value)
         assert len(LIB.get_errors(instance)) >= 1, (LIB.get_errors(instance), attr, value)
+
     setattr(instance, attr, valid_value)
     assert LIB.is_valid(instance) == True, (LIB.get_errors(instance), attr, valid_value)
     assert len(LIB.get_errors(instance)) == 0
@@ -82,9 +91,9 @@ def test_regex_collection():
     """pyessv-tests: validate --> reg-ex collection
 
     """
-    collection = tu.create_collection()
+    collection = tu.create_collection_01()
     collection.term_regex = r'^[a-z\-]*$'
-    term = tu.create_term(collection=collection)
+    term = tu.create_term_01(collection=collection)
     term.canonical_name = 'abc-def'
     assert LIB.is_valid(term) == True
 
@@ -93,8 +102,8 @@ def test_regex_collection_negative():
     """pyessv-tests: validate --> reg-ex collection --> negative
 
     """
-    collection = tu.create_collection()
+    collection = tu.create_collection_01()
     collection.term_regex = r'^[a-z\-]*$'
-    term = tu.create_term(collection=collection)
+    term = tu.create_term_01(collection=collection)
     term.canonical_name = 'ABC-DEF'
     assert LIB.is_valid(term) == False

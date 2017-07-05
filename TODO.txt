@@ -5,27 +5,6 @@ Validate term name - combination
 	E.G. CORDEX RCM Model: [wcrp:global:institute]-[rcm-name]
 	This is more complex as the validator will need to split the term name and validate each split member.
 
-Validate term name - regex
-
-	If target collection is RegExCollection then validate name against regular expression.
-
-	E.G. ensemble-variant: r%(digit)si%(digit)sp%(digit)s
-	Note that the above is not a pure regular expression but an 'ESG' regex, equivalent pure regular expression is: r[0-9]+i[0-9]+p[0-9]+
-
-	This is fairly simple as the Collection class can be extended with a regex that is applied at the point of term creation / validation.
-
-	ESG INI patterns:
-
-		filename_format = %(variable)s_%(cmor_table)s_%(model)s_%(experiment)s_%(ensemble)s[_%(period_start)s-%(period_end)s].nc
-
-		directory_format = %(root)s/%(project)s/%(product)s/%(institute)s/%(model)s/%(experiment)s/%(time_frequency)s/%(realm)s/%(cmor_table)s/%(ensemble)s/%(version)s/%(variable)s
-
-		dataset_id = cmip5.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s
-
-		Become regular expressions:
-
-		cmip5.[esgf.global.product].[wcrp.global.institute] ...etc
-
 Ensure term rewriting only occurs when term has changed
 
 	Need to ensure that writes only occur when the term information has been touched in some way otherwise there will be false commits

@@ -35,14 +35,14 @@ _PARSERS = {
     _TEMPLATE_3: None
 }
 
-# Map of expression templates to valid expressions.
+# Map of templates to valid expressions.
 _VALID = {
     _TEMPLATE_1: 'ciclad/cmip6/ipsl/dcpp/hadgem3-gc31-ll/dcppc-atl-spg/afilename.nc1',
     _TEMPLATE_2: 'ipsl/dcpp/hadgem3-gc31-ll/dcppc-atl-spg/afilename.nc2',
     _TEMPLATE_3: 'ciclad/cmip6/ipsl/dcpp/hadgem3-gc31-ll/dcppc-atl-spg'
 }
 
-# Map of expression templates to invalid expressions.
+# Map of templates to invalid expressions.
 _INVALID = {
     _TEMPLATE_1: 'ciclad/cmip6/WWW/XXX/YYY/ZZZ/afilename.nc1',
     _TEMPLATE_2: 'WWW/XXX/YYY/ZZZ/afilename.nc2',
@@ -78,10 +78,10 @@ def _setup():
 
     # Set collections.
     collections = (
-        LIB.load('wcrp:cmip6:institution-id'),
-        LIB.load('wcrp:cmip6:activity-id'),
-        LIB.load('wcrp:cmip6:source-id'),
-        LIB.load('wcrp:cmip6:experiment-id')
+        'wcrp:cmip6:institution-id',
+        'wcrp:cmip6:activity-id',
+        'wcrp:cmip6:source-id',
+        'wcrp:cmip6:experiment-id'
         )
 
     # Set parsers.

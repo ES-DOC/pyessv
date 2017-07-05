@@ -11,10 +11,6 @@
 
 """
 from pyessv._archive import load
-from pyessv._constants import NODE_TYPEKEY_AUTHORITY
-from pyessv._constants import NODE_TYPEKEY_SCOPE
-from pyessv._constants import NODE_TYPEKEY_COLLECTION
-from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import PARSING_STRICTNESS_0
 from pyessv._constants import PARSING_STRICTNESS_1
@@ -23,6 +19,7 @@ from pyessv._constants import PARSING_STRICTNESS_3
 from pyessv._exceptions import ParsingError
 from pyessv._utils.compat import str
 
+from pyessv._model import Collection, Term
 
 
 def parse_namespace(namespace, strictness=PARSING_STRICTNESS_1):
@@ -59,10 +56,10 @@ def parse(
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness'
 
     targets = [
-        _NodeInfo(NODE_TYPEKEY_AUTHORITY, authority, strictness),
-        _NodeInfo(NODE_TYPEKEY_SCOPE, scope, strictness),
-        _NodeInfo(NODE_TYPEKEY_COLLECTION, collection, strictness),
-        _NodeInfo(NODE_TYPEKEY_TERM, term, strictness)
+        _NodeInfo('authority', authority, strictness),
+        _NodeInfo('scope', scope, strictness),
+        _NodeInfo('collection', collection, strictness),
+        _NodeInfo('term', term, strictness)
     ]
 
     for target in [i for i in targets if i.name is not None]:
@@ -96,7 +93,6 @@ class _NodeInfo(object):
             return self.node.canonical_name
         if target == self:
             return str(self.name).strip().lower()
-            # return self.name
 
 
     def set_node(self, node):
@@ -105,6 +101,10 @@ class _NodeInfo(object):
         """
         if node is None:
             raise ParsingError(self.typekey, self.name)
+
+        if isinstance(node, Term):
+            print node.collection.term_regex
+            print node.raw_name, node.canonical_name, node.label
 
         # Confirm match based upon the level of parsing strictness perform test.
         matched = False

@@ -14,19 +14,16 @@
 
 import sys
 
-# -------
-# Pythons
-# -------
-
 # Syntax sugar.
 _ver = sys.version_info
 
-#: Python 2.x?
+# Is Python 2.x?
 is_py2 = (_ver[0] == 2)
 
-#: Python 3.x?
+# Is Python 3.x?
 is_py3 = (_ver[0] == 3)
 
+# JSON.
 try:
     import simplejson as json
 except (ImportError, SyntaxError):
@@ -34,10 +31,10 @@ except (ImportError, SyntaxError):
     # because of u'...' Unicode literals.
     import json
 
-# ---------
-# Specifics
-# ---------
 
+# ---------
+# Python 2
+# ---------
 if is_py2:
     from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, getproxies, proxy_bypass
     from urlparse import urlparse, urlunparse, urljoin, urlsplit, urldefrag
@@ -53,6 +50,9 @@ if is_py2:
     numeric_types = (int, long, float)
     integer_types = (int, long)
 
+# ---------
+# Python 3
+# ---------
 elif is_py3:
     from urllib.parse import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, unquote, quote_plus, unquote_plus, urldefrag
     from urllib.request import parse_http_list, getproxies, proxy_bypass

@@ -36,13 +36,19 @@ _CONSTANTS = {
     'GOVERNANCE_STATUS_ACCEPTED',
     'GOVERNANCE_STATUS_DEPRECATED',
     'GOVERNANCE_STATUS_PENDING',
-    'GOVERNANCE_STATUS_REJECTED'
+    'GOVERNANCE_STATUS_REJECTED',
+    'PARSING_STRICTNESS_0',
+    'PARSING_STRICTNESS_1',
+    'PARSING_STRICTNESS_2',
+    'PARSING_STRICTNESS_3',
+    'REGEX_CANONICAL_NAME'
     }
 
 # Set of exceptions exposed by library.
 _EXCEPTIONS = {
     'InvalidAssociationError',
     'ParsingError',
+    'TemplateParsingError',
     'ValidationError'
     }
 
@@ -58,7 +64,7 @@ _FUNCS = {
     # ... factory
     'create_authority',
     'create_collection',
-    'create_composite_collection',
+    'create_template_parser',
     'create_scope',
     'create_term',
     # ... governance
@@ -70,7 +76,6 @@ _FUNCS = {
     # ... initialisation
     'init',
     # ... parsing
-    'create_template_parser',
     'parse',
     'parse_namespace',
     # ... validation

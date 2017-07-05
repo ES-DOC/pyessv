@@ -43,14 +43,8 @@ def decode(representation, encoding=ENCODING_JSON):
     :rtype: object
 
     """
-    if representation is None:
-        raise ValueError('Cannot decode a null pointer.')
-    if not encoding in _CODECS:
-        raise NotImplementedError('Unsupported term encoding :: {0}.'.format(encoding))
-    if not isinstance(representation, _DECODE_TYPE_WHITELIST[encoding]):
-        err = 'Representation unsupported: must be one of {}.'
-        err = err.format(_DECODE_TYPE_WHITELIST[encoding])
-        raise TypeError(err)
+    assert encoding in _CODECS, 'Invalid encoding type: {}'.format(encoding)
+    assert isinstance(representation, _DECODE_TYPE_WHITELIST[encoding]), 'Invalid representation'
 
     return _CODECS[encoding].decode(representation)
 
@@ -65,13 +59,7 @@ def encode(target, encoding=ENCODING_JSON):
     :rtype: str|dict|list
 
     """
-    if target is None:
-        raise ValueError('Null encoding error')
-    if encoding not in _CODECS:
-        raise NotImplementedError('Invalid encoding: {}'.format(encoding))
+    assert isinstance(target, Node), 'Invalid vocabulary type'
+    assert encoding in _CODECS, 'Invalid encoding type: {}'.format(encoding)
 
-    if isinstance(target, Node):
-        encoded = _CODECS[encoding].encode(target)
-        if isinstance(encoded, basestring):
-            encoded = encoded.strip()
-        return encoded
+    return _CODECS[encoding].encode(target)

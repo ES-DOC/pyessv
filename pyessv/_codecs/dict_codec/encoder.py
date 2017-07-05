@@ -11,10 +11,11 @@
 
 
 """
-from pyessv._model import Term
 from pyessv._model import Authority
 from pyessv._model import Collection
+from pyessv._model import Node
 from pyessv._model import Scope
+from pyessv._model import Term
 from pyessv._utils.compat import str
 
 
@@ -30,44 +31,55 @@ def encode(instance):
     :raises TypeError: If instance is a domain model class instance.
 
     """
-    try:
-        encoder = _ENCODERS[type(instance)]
-    except KeyError:
-        raise TypeError('Type encoding unsupported: {}'.format(type(instance)))
+    assert isinstance(instance, Node), 'Invalid type'
 
-    obj = dict()
-    _encode_node(instance, obj)
-    encoder(instance, obj)
+    encoders = {
+        Authority: _encode_authority,
+        Collection: _encode_collection,
+        Scope: _encode_scope,
+        Term: _encode_term
+        }
+    encoder = encoders[type(instance)]
+
+    return encoder(instance)
+
+
+def _encode_authority(instance):
+    """Encodes a term authority as a dictionary.
+
+    """
+    obj = _encode_node(instance)
+    obj['scopes'] = [encode(i) for i in instance]
 
     return obj
 
 
-def _encode_authority(instance, obj):
-    """Encodes a term authority as a dictionary.
-
-    """
-    obj['scopes'] = [encode(i) for i in instance]
-
-
-def _encode_scope(instance, obj):
+def _encode_scope(instance):
     """Encodes a term scope as a dictionary.
 
     """
-    obj['collections'] = [encode(i) for i in instance.collections]
+    obj = _encode_node(instance)
+    obj['collections'] = [encode(i) for i in instance]
+
+    return obj
 
 
-def _encode_collection(instance, obj):
-    """Encodes a term collection as a dictionary.
+def _encode_collection(instance):
+    """Encodes a collection as a dictionary.
 
     """
-    obj['terms'] = ['{}:{}'.format(i.canonical_name, i.uid) for i in instance.terms]
+    obj = _encode_node(instance)
+    obj['terms'] = ['{}:{}'.format(i.canonical_name, i.uid) for i in instance]
     obj['term_regex'] = instance.term_regex
 
+    return obj
 
-def _encode_term(instance, obj):
+
+def _encode_term(instance):
     """Encodes a term as a dictionary.
 
     """
+    obj = _encode_node(instance)
     obj['idx'] = instance.idx
     obj['status'] = instance.status
     if instance.alternative_name is not None:
@@ -79,12 +91,15 @@ def _encode_term(instance, obj):
     if len(instance.associations) > 0:
         obj['associations'] = [i.uid for i in instance.associations]
 
+    return obj
 
-def _encode_node(instance, obj):
+
+def _encode_node(instance):
     """Encodes a node instance to a dictionary representation.
 
     """
-    obj['_type'] = str(instance.__module__)
+    obj = dict()
+    obj['_type'] = instance.typekey
     obj['canonical_name'] = instance.canonical_name
     obj['create_date'] = instance.create_date
     obj['label'] = instance.label
@@ -99,11 +114,4 @@ def _encode_node(instance, obj):
     if instance.url is not None:
         obj['url'] = instance.url
 
-
-# Map of supported types to encoding functions.
-_ENCODERS = {
-    Authority: _encode_authority,
-    Collection: _encode_collection,
-    Scope: _encode_scope,
-    Term: _encode_term,
-}
+    return obj

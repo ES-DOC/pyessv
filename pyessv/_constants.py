@@ -44,7 +44,7 @@ NODE_TYPEKEY_AUTHORITY = 'authority'
 # Node type key - a scope constraining collection of vocabularies.
 NODE_TYPEKEY_SCOPE = 'scope'
 
-# Node type key - a collection constraining collection of term.
+# Node type key - a collection constraining collection of terms by composing keys from other collections.
 NODE_TYPEKEY_COLLECTION = 'collection'
 
 # Node type key - a term.
@@ -100,3 +100,23 @@ PARSING_STRICTNESS_SET = (
 
 # Regular expression for validating a canonical name.
 REGEX_CANONICAL_NAME = r'^[a-z0-9\-]*$'
+
+# Standard node fields.
+STANDARD_NODE_FIELDS = (
+    'canonical_name',
+    'create_date',
+    'description',
+    'label',
+    'raw_name',
+    'synonyms',
+    'typekey',
+    'uid',
+    'url',
+    )
+
+# Parsing node fields.
+PARSING_NODE_FIELDS = (
+    'canonical_name',
+    'label',
+    'raw_name'
+    )

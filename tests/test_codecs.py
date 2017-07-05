@@ -17,6 +17,8 @@ import nose
 import pyessv as LIB
 from pyessv._codecs import decode
 from pyessv._codecs import encode
+from pyessv._constants import ENCODING_SET
+from pyessv._constants import STANDARD_NODE_FIELDS
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
 import tests.utils as tu
@@ -43,63 +45,30 @@ def test_encode():
     """pyessv-tests: encode.
 
     """
-    def _test(func, typeof, encoding):
+    def _test(node, encoding):
         """Inner test.
 
         """
-        instance = func()
-        assert isinstance(instance, typeof)
-
-        representation = encode(instance, encoding)
+        representation = encode(node, encoding)
         assert isinstance(representation, _ENCODING_REPRESENTATION_TYPE[encoding])
-
-        if encoding == LIB.ENCODING_DICT:
-            for k, v in representation.iteritems():
-                if not k.startswith('_'):
-                    assert getattr(instance, k) == v, 'encode fail: {} :: {} :: {}'.format(k, getattr(instance, k), v)
-
-
-    for func, typeof in (
-        (tu.create_authority, LIB.Authority),
-        (tu.create_scope, LIB.Scope),
-        (tu.create_collection, LIB.Collection),
-        (tu.create_term, LIB.Term)
-        ):
-        desc = 'encode --> {} --> dict'.format(str(typeof).split('.')[-1][0:-2].lower())
-        tu.init(_test, desc)
-        yield _test, func, typeof, LIB.ENCODING_DICT
-
-        desc = 'encode --> {} --> json'.format(str(typeof).split('.')[-1][0:-2].lower())
-        tu.init(_test, desc)
-        yield _test, func, typeof, LIB.ENCODING_JSON
-
-
-
-@nose.with_setup(None, tu.teardown)
-def test_decode():
-    """pyessv-tests: decode.
-
-    """
-    def _test(func, typeof, encoding):
-        """Inner test.
-
-        """
-        instance = func()
-        representation = encode(instance, encoding)
         decoded = decode(representation, encoding)
-        assert isinstance(decoded, typeof)
+        assert isinstance(decoded, type(node))
+        for field in STANDARD_NODE_FIELDS:
+            assert getattr(decoded, field) == getattr(node, field)
 
 
-    for func, typeof in (
-        (tu.create_authority, LIB.Authority),
-        (tu.create_scope, LIB.Scope),
-        (tu.create_collection, LIB.Collection),
-        (tu.create_term, LIB.Term)
+    for node_factory in (
+        tu.create_authority,
+        tu.create_scope,
+        tu.create_collection_01,
+        tu.create_collection_02,
+        tu.create_collection_03,
+        tu.create_term_01,
+        tu.create_term_02,
+        tu.create_term_03
         ):
-        desc = 'decode --> {} --> dict'.format(str(typeof).split('.')[-1][0:-2].lower())
-        tu.init(_test, desc)
-        yield _test, func, typeof, LIB.ENCODING_DICT
-
-        desc = 'decode --> {} --> json'.format(str(typeof).split('.')[-1][0:-2].lower())
-        tu.init(_test, desc)
-        yield _test, func, typeof, LIB.ENCODING_JSON
+        node = node_factory()
+        for encoding in ENCODING_SET:
+            desc = 'codecs: {} --> {}'.format(node_factory.__name__[7:], encoding)
+            tu.init(_test, desc)
+            yield _test, node, encoding

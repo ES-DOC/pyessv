@@ -11,13 +11,17 @@
 
 
 """
+import datetime
 import uuid
 
 import arrow
 
+from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_io_name
-
+from pyessv._utils.validation import assert_iterable
+from pyessv._utils.validation import assert_string
+from pyessv._utils.validation import assert_url
 
 
 class Node(object):
@@ -88,6 +92,51 @@ class Node(object):
 
         """
         return format_io_name(self.canonical_name)
+
+
+    def get_validators(self):
+        """Returns set of validators.
+
+        """
+        def _create_date():
+            assert isinstance(self.create_date, datetime.datetime)
+
+        def _data():
+            if self.data is not None:
+                assert isinstance(self.data, dict)
+
+        def _description():
+            if isinstance(self, IterableNode):
+                assert_string(self.description)
+            elif self.description is not None:
+                assert_string(self.description)
+
+        def _label():
+            assert_string(self.label)
+
+        def _synonyms():
+            assert_iterable(self.synonyms, assert_string)
+
+        def _typekey():
+            assert self.typekey in NODE_TYPEKEY_SET
+
+        def _uid():
+            assert isinstance(self.uid, uuid.UUID)
+
+        def _url():
+            if self.url is not None:
+                assert_url(self.url)
+
+        return (
+            _create_date,
+            _data,
+            _description,
+            _label,
+            _synonyms,
+            _typekey,
+            _uid,
+            _url
+            )
 
 
     @staticmethod

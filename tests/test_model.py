@@ -17,6 +17,7 @@ import pyessv as LIB
 
 from pyessv._utils.compat import str
 import tests.utils as tu
+import tests.utils_model as tum
 
 
 
@@ -25,22 +26,24 @@ def test_iterability():
     """Test iterability of domain model.
 
     """
-    def _test(node, count, key):
+    def _test(node, keys):
         """Inner test.
 
         """
         assert iter(node)
-        assert len(node) == count
-        assert key in node
-        assert node[key] is not None
+        assert len(node) == len(keys)
+        for key in keys:
+            assert key in node
+            assert node[key] is not None
 
 
-    _, collection, scope, authority = tu.create_test_entities()
-    for node, count, key in (
-        (collection, 1, tu.TEST_TERM_NAME),
-        (scope, 1, tu.TEST_COLLECTION_NAME),
-        (authority, 1, tu.TEST_SCOPE_NAME)
+    for node_factory, keys in (
+        (tu.create_authority, [tum.SCOPE_NAME]),
+        (tu.create_scope, [tum.COLLECTION_01_NAME, tum.COLLECTION_02_NAME, tum.COLLECTION_03_NAME]),
+        (tu.create_collection_01, [tum.TERM_01_NAME]),
+        (tu.create_collection_02, [tum.TERM_02_NAME]),
+        (tu.create_collection_03, [tum.TERM_03_NAME]),
         ):
-        desc = 'iterate --> {}'.format(str(type(node)).split('.')[-1][0:-2].lower())
+        desc = 'iterate --> {}'.format(node_factory.__name__[7:])
         tu.init(_test, desc)
-        yield _test, node, 1, key
+        yield _test, node_factory(), keys

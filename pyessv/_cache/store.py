@@ -18,7 +18,7 @@ from pyessv._model import Node
 
 
 
-# Collection of cache stores.
+# Cache stores.
 _STORES = {
     CACHE_STORE_MEMORY: _memory_store
 }
