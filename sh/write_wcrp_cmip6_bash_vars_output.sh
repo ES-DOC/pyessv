@@ -85,6 +85,7 @@ declare -a INSTITUTION_ID=(
 	'noaa-gfdl'
 	'nuist'
 	'pcmdi'
+	'snu'
 	'thu'
 )
 
@@ -117,6 +118,7 @@ declare -a INSTITUTION_ID_RAW=(
 	'NOAA-GFDL'
 	'NUIST'
 	'PCMDI'
+	'SNU'
 	'THU'
 )
 
@@ -183,6 +185,7 @@ declare -a SOURCE_ID=(
 	'inm-cm4-8'
 	'inm-cm5-0'
 	'inm-cm5-h'
+	'ipsl-cm6a-lr'
 	'miroc-es2h'
 	'miroc-es2l'
 	'miroc6'
@@ -201,6 +204,7 @@ declare -a SOURCE_ID=(
 	'noresm2-mh'
 	'noresm2-mm'
 	'pcmdi-test-1-0'
+	'sam0-unicon'
 	'ukesm1-0-ll'
 	'ukesm1-0-mmh'
 	'vresm-1-0'
@@ -251,6 +255,7 @@ declare -a SOURCE_ID_RAW=(
 	'INM-CM4-8'
 	'INM-CM5-0'
 	'INM-CM5-H'
+	'IPSL-CM6A-LR'
 	'MIROC-ES2H'
 	'MIROC-ES2L'
 	'MIROC6'
@@ -269,6 +274,7 @@ declare -a SOURCE_ID_RAW=(
 	'NorESM2-MH'
 	'NorESM2-MM'
 	'PCMDI-test-1-0'
+	'SAM0-UNICON'
 	'UKESM1-0-LL'
 	'UKESM1-0-MMh'
 	'VRESM-1-0'

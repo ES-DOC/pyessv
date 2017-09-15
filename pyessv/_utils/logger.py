@@ -27,7 +27,7 @@ LOG_LEVEL_FATAL = 'FATAL'
 
 # Defaults.
 _DEFAULT_APP = 'PYESSV'
-_DEFAULT_INSTITUTE = 'ES-DOC'
+_DEFAULT_INSTITUTE = 'ESDOC'
 
 # Text to display when passed a null message.
 _NULL_MSG = '-------------------------------------------------------------------------------'
@@ -40,7 +40,7 @@ def _get_formatted_message(msg, level, app, institute):
     if msg is None:
         return _NULL_MSG
     else:
-        return '{0} [{1}] :: {2} {3} :: {4}'.format(
+        return '{0} [{1}] :: {2}-{3} :: {4}'.format(
             str(arrow.get())[0:-6],
             level,
             institute,
