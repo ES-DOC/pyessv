@@ -24,6 +24,7 @@ from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
+from pyessv._utils import convert
 from pyessv._utils.compat import str
 
 
@@ -111,6 +112,7 @@ def _decode_node(obj, typeof):
     instance.description = obj.get('description')
     instance.label = obj['label']
     instance.canonical_name = obj['canonical_name']
+    instance.raw_data = convert.dict_keys(obj.get('data', dict()), convert.str_to_camel_case)
     instance.raw_name = obj.get('raw_name')
     instance.synonyms = obj.get('synonyms', [])
     instance.uid = uuid.UUID(str(obj['uid']))

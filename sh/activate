@@ -15,6 +15,7 @@ mkdir -p $HOME/.esdoc/pyessv-archive
 
 # Ensure shell scripts are executable.
 chmod a+x $PYESSV_LIB_HOME/sh/*.sh
+chmod a+x $PYESSV_LIB_HOME/sh/wcrp/cmip6/*.sh
 
 # ###############################################################
 # STANDARD-SECTION: ALIASES
@@ -25,5 +26,7 @@ alias pyessv-list=$PYESSV_LIB_HOME/sh/list.sh
 alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
 alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh
 
-# CMIP6 related.
-alias pyessv-write-wcrp-cmip6=$PYESSV_LIB_HOME/sh/write_wcrp_cmip6.sh
+# WCRP CMIP6 related.
+alias pyessv-write-wcrp-cmip6-bash-vars=$PYESSV_LIB_HOME/sh/wcrp/cmip6/write_bash_vars.sh
+alias pyessv-write-wcrp-cmip6-model-seeding-config=$PYESSV_LIB_HOME/sh/wcrp/cmip6/write_model_seeding_config.sh
+alias pyessv-write-wcrp-cmip6-vocabs=$PYESSV_LIB_HOME/sh/wcrp/cmip6/write_voacbs.sh

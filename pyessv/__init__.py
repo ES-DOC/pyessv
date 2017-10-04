@@ -11,7 +11,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.3.5.1.0'
+__version__ = '0.3.6'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
@@ -68,6 +68,10 @@ from pyessv._model import Term
 
 from pyessv._parser import parse
 from pyessv._parser import parse_namespace
+
+from pyessv._utils.logger import log
+from pyessv._utils.logger import log_error
+from pyessv._utils.logger import log_warning
 
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid

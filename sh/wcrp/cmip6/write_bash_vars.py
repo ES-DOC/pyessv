@@ -32,14 +32,19 @@ _VOCABS = {
     }
 }
 
+# Template input file.
 _TEMPLATE = __file__.replace('.py', '_template.txt')
+
+# Output file.
 _OUTPUT = __file__.replace('.py', '_output.sh')
+
 
 
 def _main():
     """Main entry point.
 
     """
+    # Open template.
     with open(_TEMPLATE, 'r') as fstream:
         content = fstream.read()
 
@@ -56,7 +61,7 @@ def _main():
                 data += '\t\'{}\'\n'.format(term.raw_name)
             content = content.replace('[{}_RAW]'.format(collection.raw_name.upper()), data)
 
-
+    # Write output to file system.
     with open(_OUTPUT, 'w') as fstream:
         fstream.write(content)
 
