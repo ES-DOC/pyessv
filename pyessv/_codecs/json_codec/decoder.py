@@ -42,7 +42,7 @@ def decode(as_json):
     as_json = _decode_blob(as_json)
 
     # Convert to dictionary.
-    as_dict = _JSONDecoder(convert.str_to_underscore_case).decode(as_json)
+    as_dict = _JSONDecoder().decode(as_json)
 
     # Decode from dictionary.
     return dict_decoder.decode(as_dict)
@@ -52,7 +52,7 @@ class _JSONDecoder(json.JSONDecoder):
     """Extends json decoder so as to handle extended types.
 
     """
-    def __init__(self, key_formatter, to_namedtuple=False):
+    def __init__(self, key_formatter=lambda k:k, to_namedtuple=False):
         """Instance constructor.
 
         """

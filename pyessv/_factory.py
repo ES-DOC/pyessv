@@ -103,7 +103,7 @@ def create_scope(
         description=description,
         label=label,
         url=url,
-        create_date=create_date,
+        create_date=create_date or authority.create_date,
         synonyms=synonyms,
         data=data,
         callback=_callback
@@ -119,7 +119,7 @@ def create_collection(
     create_date=None,
     data=None,
     synonyms=[],
-    term_regex=REGEX_CANONICAL_NAME
+    term_regex=None
     ):
     """Instantiates, initialises & returns a regular expression term collection.
 
@@ -137,6 +137,9 @@ def create_collection(
     :rtype: pyessv.Collection
 
     """
+    if term_regex is None:
+        term_regex = REGEX_CANONICAL_NAME
+
     def _callback(instance):
         instance.scope = scope
         instance.term_regex = term_regex
@@ -148,7 +151,7 @@ def create_collection(
         description=description,
         label=label,
         url=url,
-        create_date=create_date,
+        create_date=create_date or scope.create_date,
         synonyms=synonyms,
         data=data,
         callback=_callback
@@ -190,7 +193,7 @@ def create_term(
         description=description,
         label=label,
         url=url,
-        create_date=create_date,
+        create_date=create_date or collection.create_date,
         synonyms=synonyms,
         data=data,
         callback=_callback

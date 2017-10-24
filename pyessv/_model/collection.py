@@ -11,6 +11,7 @@
 
 
 """
+import re
 import uuid
 
 import pyessv
@@ -88,6 +89,21 @@ class Collection(IterableNode):
             _term_regex,
             _terms
             )
+
+
+    def apply_term_regex(self, name):
+        """Applies collection's term regex constraint against a name.
+
+        :param str name: A term name to be validated.
+
+        :raises: ValueError
+
+        """
+        if self.term_regex is None:
+            raise ValueError('Collection is not linked to a regular expression')
+        regex = re.compile(self.term_regex)
+        if regex.match(name) is None:
+            raise ValueError('Invalid term name')
 
 
     @staticmethod

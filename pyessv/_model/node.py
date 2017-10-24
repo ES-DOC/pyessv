@@ -112,7 +112,8 @@ class Node(object):
                 assert_string(self.description)
 
         def _label():
-            assert_string(self.label)
+            if self.label is not None:
+                assert_string(self.label)
 
         def _synonyms():
             assert_iterable(self.synonyms, assert_string)

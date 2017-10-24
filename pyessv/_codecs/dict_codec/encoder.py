@@ -69,7 +69,7 @@ def _encode_collection(instance):
 
     """
     obj = _encode_node(instance)
-    obj['terms'] = ['{}:{}'.format(i.canonical_name, i.uid) for i in instance]
+    obj['terms'] = [i.canonical_name for i in instance]
     obj['term_regex'] = instance.term_regex
 
     return obj
@@ -82,13 +82,13 @@ def _encode_term(instance):
     obj = _encode_node(instance)
     obj['idx'] = instance.idx
     obj['status'] = instance.status
-    if instance.alternative_name is not None:
+    if bool(instance.alternative_name):
         obj['alternative_name'] = instance.alternative_name
-    if instance.alternative_url is not None:
+    if bool(instance.alternative_url):
         obj['alternative_url'] = instance.alternative_url
-    if instance.parent is not None:
+    if bool(instance.parent):
         obj['parent'] = instance.parent.uid
-    if len(instance.associations) > 0:
+    if bool(instance.associations):
         obj['associations'] = [i.uid for i in instance.associations]
 
     return obj
@@ -102,16 +102,19 @@ def _encode_node(instance):
     obj['_type'] = instance.typekey
     obj['canonical_name'] = instance.canonical_name
     obj['create_date'] = instance.create_date
-    obj['label'] = instance.label
-    obj['raw_name'] = instance.raw_name
+    obj['namespace'] = instance.namespace
     obj['uid'] = instance.uid
-    if instance.data is not None:
+    if bool(instance.label) and instance.label != instance.canonical_name:
+        obj['label'] = instance.label
+    if bool(instance.raw_name) and instance.raw_name != instance.canonical_name:
+        obj['raw_name'] = instance.raw_name
+    if bool(instance.data):
         obj['data'] = instance.data
-    if instance.description is not None:
+    if bool(instance.description):
         obj['description'] = instance.description
-    if len(instance.synonyms) > 0:
+    if bool(instance.synonyms):
         obj['synonyms'] = instance.synonyms
-    if instance.url is not None:
+    if bool(instance.url):
         obj['url'] = instance.url
 
     return obj

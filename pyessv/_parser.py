@@ -22,6 +22,7 @@ from pyessv._utils.compat import str
 from pyessv._model import Collection, Term
 
 
+
 def parse_namespace(namespace, strictness=PARSING_STRICTNESS_1):
     """Parses a namespace within a vocabulary hierachy.
 
@@ -55,18 +56,22 @@ def parse(
     """
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness'
 
+    # Set parsing targets.
     targets = [
         _NodeInfo('authority', authority, strictness),
         _NodeInfo('scope', scope, strictness),
         _NodeInfo('collection', collection, strictness),
         _NodeInfo('term', term, strictness)
     ]
+    targets = [i for i in targets if i.name is not None]
 
-    for target in [i for i in targets if i.name is not None]:
+    # Load parsed nodes.
+    for target in targets:
         namespace = [i.get_name(target) for i in targets]
         namespace = [i for i in namespace if i is not None]
         namespace = ":".join(namespace)
-        target.set_node(load(namespace))
+        node = load(namespace)
+        target.set_node(node)
 
     return target.node.canonical_name
 
@@ -89,9 +94,9 @@ class _NodeInfo(object):
         """Gets parsing relative name.
 
         """
-        if self.node:
+        if self.node is not None:
             return self.node.canonical_name
-        if target == self:
+        elif self == target:
             return str(self.name).strip().lower()
 
 
@@ -102,9 +107,9 @@ class _NodeInfo(object):
         if node is None:
             raise ParsingError(self.typekey, self.name)
 
-        if isinstance(node, Term):
-            print node.collection.term_regex
-            print node.raw_name, node.canonical_name, node.label
+        # if isinstance(node, Term):
+        #     print node.collection.term_regex
+        #     print node.raw_name, node.canonical_name, node.label
 
         # Confirm match based upon the level of parsing strictness perform test.
         matched = False
@@ -129,4 +134,3 @@ class _NodeInfo(object):
             raise ParsingError(self.typekey, self.name)
 
         self.node = node
-

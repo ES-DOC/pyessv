@@ -65,7 +65,7 @@ def dict_to_json(as_dict):
     return json.dumps(_to_encodable(as_dict), indent=4, sort_keys=True)
 
 
-def _to_encodable(obj, key_formatter=convert.str_to_camel_case):
+def _to_encodable(obj, key_formatter=lambda k: k):
     """Converts data to encodeable representation.
 
     """

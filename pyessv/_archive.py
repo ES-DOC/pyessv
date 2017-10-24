@@ -21,6 +21,8 @@ from pyessv._model import Term
 from pyessv._utils.formatter import format_canonical_name
 from pyessv._utils.formatter import format_string
 
+from pyessv._factory import create_term
+
 
 
 def load(*args):
@@ -34,9 +36,13 @@ def load(*args):
     """
     assert len(args) >= 1 and len(args) <= 4, 'Vocabs can be loaded by namespace, uuid & name'
     if len(args) == 1:
-        return _load_by_namespace(args[0]) or \
-               _load_by_uid(args[0])
-    return _load_by_name(args)
+        node = _load_by_namespace(args[0])
+        if node is None:
+            node = _load_by_uid(args[0])
+    else:
+        node = _load_by_name(args)
+
+    return node
 
 
 def _load_by_name(args):
@@ -100,19 +106,29 @@ def _load_by_namespace(identifier):
             continue
         if scope is None:
             return a
+        # ... scopes
         for s in a:
             if not _is_matched(s, scope):
                 continue
             if collection is None:
                 return s
+            # ... collections
             for c in s:
                 if not _is_matched(c, collection):
                     continue
                 if term is None:
                     return c
+                # ... terms (concrete)
                 for t in c:
                     if _is_matched(t, term):
                         return t
+                # ... terms (virtual)
+                try:
+                    c.apply_term_regex(term)
+                except ValueError:
+                    pass
+                else:
+                    return create_term(c, term)
 
 
 def _load_by_uid(identifier):
