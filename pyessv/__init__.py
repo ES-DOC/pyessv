@@ -11,7 +11,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
@@ -19,6 +19,7 @@ __copyright__ = 'Copyright 2017 ES-DOC'
 
 
 from pyessv._archive import add
+from pyessv._archive import get_random_term
 from pyessv._archive import load
 from pyessv._archive import save
 

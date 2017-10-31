@@ -11,6 +11,7 @@
 
 
 """
+import random
 import uuid
 
 from pyessv._cache import cache
@@ -196,3 +197,22 @@ def save():
     """
     for authority in get_cached(Authority):
         write(authority)
+
+
+def get_random_term(namespace):
+    """Returns a random term.
+
+    :param str namespace: Namespace of collection from which a term will be loaded.
+
+    :returns: A random term's canonical name.
+    :rtype: str
+
+    """
+    collection = load(namespace)
+    if not collection:
+        raise ValueError('Collection not found: {}'.format(namespace))
+
+    if len(collection):
+        return random.choice(collection).canonical_name
+
+    return str(uuid.uuid4()).split('-')[0]
