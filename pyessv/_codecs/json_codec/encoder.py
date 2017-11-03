@@ -47,22 +47,22 @@ def encode(instance):
 
     """
     # Convert to dictionary.
-    as_dict = dict_encoder.encode(instance)
+    obj = dict_encoder.encode(instance)
 
     # Return JSON.
-    return str(dict_to_json(as_dict))
+    return str(dict_to_json(obj))
 
 
-def dict_to_json(as_dict):
+def dict_to_json(obj):
     """Converts a dictionary to json.
 
-    :param dict as_dict: A dictionary.
+    :param dict obj: A dictionary.
 
     :returns: A json encoded text blob.
     :rtype: str
 
     """
-    return json.dumps(_to_encodable(as_dict), indent=4, sort_keys=True)
+    return json.dumps(_to_encodable(obj), indent=4, sort_keys=True)
 
 
 def _to_encodable(obj, key_formatter=lambda k: k):
