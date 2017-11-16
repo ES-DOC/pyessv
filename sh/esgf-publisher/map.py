@@ -10,6 +10,7 @@
 
 """
 import argparse
+import inspect
 import os
 from ConfigParser import ConfigParser
 
@@ -19,7 +20,6 @@ import pyessv
 import map_cmip5
 import map_cmip6
 import map_cordex
-import utils
 
 
 
@@ -48,7 +48,7 @@ def _main(args):
 
     """
     # Create authority.
-    authority = create_authority()
+    authority = _create_authority()
 
     # Process project modules:
     for module in _MODULES:
@@ -59,38 +59,30 @@ def _main(args):
         ini_section = _IniSection(project, args.source)
 
         # Create scope.
-        scope = create_scope(authority, project)
-        try:
-            module.set_scope_data(scope, ini_section)
-        except AttributeError:
-            pass
+        scope = _create_scope(authority, project)
+        scope.data = scope.data or dict()
+        for field in module.SCOPE_DATA:
+            scope.data[field] = ini_section.get_option(field, raw=True)
 
-        # Process vocab collections.
-        for collection_id, term_factory in module.VOCAB_COLLECTIONS:
+        # Create regex collections.
+        collections = [i for i in module.COLLECTIONS if not inspect.isfunction(i[1])]
+        for collection_id, term_regex in collections:
+            _create_collection(scope, collection_id, term_regex=term_regex)
+
+        # Create standard collections.
+        collections = [i for i in module.COLLECTIONS if inspect.isfunction(i[1])]
+        for collection_id, term_factory in collections:
             ctx = _MappingExecutionContext(project, collection_id, ini_section)
-            collection = create_collection(scope, collection_id)
+            collection = _create_collection(scope, collection_id)
             try:
                 term_factory = term_factory()
             except TypeError:
                 pass
             for term_data in term_factory(ctx):
-                create_term(collection, term_data)
+                _create_term(collection, term_data)
 
-        # Process regex collections.
-        for collection_id, term_regex in module.REG_EX_COLLECTIONS:
-            # print collection_id, term_regex
-            create_collection(scope, collection_id, term_regex=term_regex)
-
-        # Process data.
-        scope.data = scope.data or dict()
-        for field in module.DATA:
-            scope.data[field] = ini_section.get_option(field, raw=True)
-
-
-    # Add to the archive.
+    # Add to archive & persist to file system.
     pyessv.add(authority)
-
-    # Save (to file system).
     pyessv.save()
 
 
@@ -138,7 +130,10 @@ class _IniSection(object):
         return data
 
 
-def create_authority():
+def _create_authority():
+    """Factory method to return vocabulary authority.
+
+    """
     return pyessv.create_authority(
         'esgf-publisher',
         description='Earth System Grid Federation',
@@ -148,7 +143,10 @@ def create_authority():
     )
 
 
-def create_scope(authority, project):
+def _create_scope(authority, project):
+    """Factory method to return vocabulary scope.
+
+    """
     return pyessv.create_scope(
         authority,
         project,
@@ -158,7 +156,10 @@ def create_scope(authority, project):
     )
 
 
-def create_collection(scope, collection_id, term_regex=None):
+def _create_collection(scope, collection_id, term_regex=None):
+    """Factory method to return vocabulary collection.
+
+    """
     return pyessv.create_collection(
         scope,
         collection_id,
@@ -167,11 +168,14 @@ def create_collection(scope, collection_id, term_regex=None):
     )
 
 
-def create_term(collection, term_info):
-    term_name, term_label, term_description = term_info
-    return pyessv.create_term(collection, term_name,
-        label=term_label,
-        description=term_description
+def _create_term(collection, term_info):
+    """Factory method to return vocabulary term.
+
+    """
+    name, label, description = term_info
+    return pyessv.create_term(collection, name,
+        label=label,
+        description=description
     )
 
 

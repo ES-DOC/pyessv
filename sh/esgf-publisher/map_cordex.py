@@ -9,31 +9,31 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-from utils import map_comma_delimited_options
-from utils import map_pipe_delimited_options
+from utils import yield_comma_delimited_options
+from utils import yield_pipe_delimited_options
 
 
+# TODO process map: las_time_delta_map = map(time_frequency : las_time_delta)
+# TODO process map: rcm_name_map = map(project, rcm_model : rcm_name)
 
-# Map of fields to mapped vocab collections.
-VOCAB_COLLECTIONS = {
-	('domain', lambda: map_domain),
-	('driving_model', map_comma_delimited_options),
-	('experiment', map_pipe_delimited_options),
-	('institute', map_comma_delimited_options),
-	('las_time_delta', lambda: map_las_time_delta),
-	('product', map_comma_delimited_options),
-	('rcm_model', map_comma_delimited_options),
-	('rcm_version', map_comma_delimited_options),
-	('thredds_exclude_variables', map_comma_delimited_options),
-	('time_frequency', map_comma_delimited_options),
-	('variable', map_comma_delimited_options),
+# Vocabulary collections extracted from ini file.
+COLLECTIONS = {
+	('domain', lambda: yield_domain),
+	('driving_model', yield_comma_delimited_options),
+	('experiment', yield_pipe_delimited_options),
+	('institute', yield_comma_delimited_options),
+	('las_time_delta', lambda: yield_las_time_delta),
+	('product', yield_comma_delimited_options),
+	('rcm_model', yield_comma_delimited_options),
+	('rcm_name', lambda: yield_rcm_name),
+	('rcm_version', yield_comma_delimited_options),
+	('thredds_exclude_variables', yield_comma_delimited_options),
+	('time_frequency', yield_comma_delimited_options),
+	('variable', yield_comma_delimited_options),
 }
 
-# Map of fields to regular expressions.
-REG_EX_COLLECTIONS = dict()
-
-# Set of fields to be appended as data.
-DATA = {
+# Fields extracted from ini file & appended as data to the scope.
+SCOPE_DATA = {
 	'filename_format',
 	'dataset_id',
 	'directory_format',
@@ -42,28 +42,25 @@ DATA = {
 }
 
 
-def map_domain(ctx):
-	"""Converts CORDEX domain to pyessv terms.
+def yield_domain(ctx):
+	"""Yields domain information to be converted to pyessv terms.
 
 	"""
 	for _, domain_name, domain_description in ctx.ini_section.get_option('domain_description_map', '\n', '|'):
-		term_name = domain_name
-		term_label = domain_name
-		term_description = domain_description
-
-		yield term_name, term_label, term_description
+		yield domain_name, domain_name, domain_description
 
 
-def map_las_time_delta(ctx):
-	"""Converts CORDEX las time delta to pyessv terms.
+def yield_las_time_delta(ctx):
+	"""Yields las time delta information to be converted to pyessv terms.
 
 	"""
-	for time_frequency, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		term_name = las_time_delta
-		term_label = las_time_delta
-		term_description = las_time_delta
+	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
+		yield las_time_delta, las_time_delta, las_time_delta
 
-		# print time_frequency, las_time_delta
 
-		yield term_name, term_label, term_description
+def yield_rcm_name(ctx):
+	"""Yields rcm name information to be converted to pyessv terms.
 
+	"""
+	for _, _, rcm_name in ctx.ini_section.get_option('rcm_name_map', '\n', '|'):
+		yield rcm_name, rcm_name, rcm_name

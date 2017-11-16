@@ -15,7 +15,7 @@ import pyessv
 
 
 
-def map_comma_delimited_options(ctx):
+def yield_comma_delimited_options(ctx):
     """Maps comma delimited options to pyessv term attributes.
 
     :param object ctx: Mapping execution context information.
@@ -38,7 +38,7 @@ def map_comma_delimited_options(ctx):
         yield term_name, term_label, term_description
 
 
-def map_pipe_delimited_options(ctx):
+def yield_pipe_delimited_options(ctx):
     """Maps pipe delimited options to pyessv term attributes.
 
     :param object ctx: Mapping execution context information.
