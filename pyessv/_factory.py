@@ -216,7 +216,7 @@ def create_template_parser(template, collections, field='canonical_name'):
     assert len(template) > 0, 'Invalid template'
     assert template.count('{}') > 0, 'Invalid template'
     assert len(collections) > 0, 'Invalid collections'
-    assert template.count('{}') == len(collections), 'Invalid template'
+    assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
     assert field in ('canonical_name', 'raw_name', 'label'), 'Invalid term field'
 
     return TemplateParser(template, collections, field)

@@ -30,7 +30,7 @@ COLLECTIONS = {
 	('source_id', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('variable', r'^[a-z0-9]*$'),
-	('version', r'v[0-9]')
+	('version', r'^[0-9]*$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.

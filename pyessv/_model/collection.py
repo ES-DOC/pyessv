@@ -91,19 +91,26 @@ class Collection(IterableNode):
             )
 
 
-    def apply_term_regex(self, name):
-        """Applies collection's term regex constraint against a name.
+    def is_matched(self, name, field='canonical_name'):
+        """Gets flag indicating whether a matching term can be found.
 
         :param str name: A term name to be validated.
-
-        :raises: ValueError
+        :param str field: Term attribute to be used for comparison.
 
         """
-        if self.term_regex is None:
-            raise ValueError('Collection is not linked to a regular expression')
-        regex = re.compile(self.term_regex)
-        if regex.match(name) is None:
-            raise ValueError('Invalid term name')
+        assert isinstance(name, basestring), 'Invalid term name'
+        assert field in ('canonical_name', 'raw_name', 'label'), 'Invalid term attribute'
+
+        # Regular expression match.
+        if len(self) == 0:
+            return re.compile(self.term_regex).match(name) is not None
+
+        # Attribute match.
+        for term in self:
+            if getattr(term, field) == name:
+                return True
+
+        return False
 
 
     @staticmethod
@@ -120,7 +127,7 @@ class Collection(IterableNode):
 
         identifier = ':'.join(identifier[0:3])
         collection = pyessv.load(identifier)
-        assert isinstance(collection, Collection), 'Invalid collection identifier'
+        assert isinstance(collection, Collection), 'Invalid collection identifier: {}'.format(identifier)
 
         return collection, field
 

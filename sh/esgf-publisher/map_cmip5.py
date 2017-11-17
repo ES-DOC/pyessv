@@ -30,7 +30,7 @@ COLLECTIONS = {
 	('realm', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('version', r'v[0-9]')
+	('version', r'^[0-9]*$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.

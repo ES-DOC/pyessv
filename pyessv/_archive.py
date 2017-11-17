@@ -124,11 +124,7 @@ def _load_by_namespace(identifier):
                     if _is_matched(t, term):
                         return t
                 # ... terms (virtual)
-                try:
-                    c.apply_term_regex(term)
-                except ValueError:
-                    pass
-                else:
+                if c.is_matched(term):
                     return create_term(c, term)
 
 

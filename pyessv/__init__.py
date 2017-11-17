@@ -69,6 +69,9 @@ from pyessv._model import Term
 
 from pyessv._parser import parse
 from pyessv._parser import parse_namespace
+from pyessv._parsers import parse_cmip5_dataset_id
+from pyessv._parsers import parse_cmip6_dataset_id
+from pyessv._parsers import parse_cordex_dataset_id
 
 from pyessv._utils.logger import log
 from pyessv._utils.logger import log_error

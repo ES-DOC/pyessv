@@ -20,6 +20,7 @@ from utils import yield_pipe_delimited_options
 COLLECTIONS = {
 	('domain', lambda: yield_domain),
 	('driving_model', yield_comma_delimited_options),
+	('ensemble', r'r[0-9]*i[0-9]p[0-9]'),
 	('experiment', yield_pipe_delimited_options),
 	('institute', yield_comma_delimited_options),
 	('las_time_delta', lambda: yield_las_time_delta),
@@ -30,6 +31,7 @@ COLLECTIONS = {
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
+	('version', r'^[0-9]*$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.

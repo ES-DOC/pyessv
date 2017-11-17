@@ -19,7 +19,8 @@ from pyessv._constants import PARSING_STRICTNESS_3
 from pyessv._exceptions import ParsingError
 from pyessv._utils.compat import str
 
-from pyessv._model import Collection, Term
+from pyessv._model import Collection
+from pyessv._model import Term
 
 
 
