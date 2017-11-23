@@ -96,8 +96,8 @@ class Term(Node):
             assert_string(self.canonical_name)
             if isinstance(self.collection.term_regex, basestring):
                 assert_regex(self.canonical_name, self.collection.term_regex)
-            if isinstance(self.collection.term_regex, tuple):
-                assert_pattern(self.canonical_name, self.collection.term_regex)
+            else:
+                print 666, self.collection
 
         def _collection():
             assert isinstance(self.collection, Collection)

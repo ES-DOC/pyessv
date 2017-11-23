@@ -108,24 +108,23 @@ class _NodeInfo(object):
         if node is None:
             raise ParsingError(self.typekey, self.name)
 
-        # if isinstance(node, Term):
-        #     print node.collection.term_regex
-        #     print node.raw_name, node.canonical_name, node.label
-
         # Confirm match based upon the level of parsing strictness perform test.
         matched = False
         if self.name == node.canonical_name:
             matched = True
 
-        if self.strictness >= PARSING_STRICTNESS_1 and \
+        if matched == False and \
+           self.strictness >= PARSING_STRICTNESS_1 and \
            self.name == node.raw_name:
             matched = True
 
-        if self.strictness >= PARSING_STRICTNESS_2 and \
+        if matched == False and \
+           self.strictness >= PARSING_STRICTNESS_2 and \
            self.name in node.synonyms:
             matched = True
 
-        if self.strictness >= PARSING_STRICTNESS_3:
+        if matched == False and \
+           self.strictness >= PARSING_STRICTNESS_3:
             name = str(self.name).strip().lower()
             if name in [i.lower() for i in node.all_names]:
                 matched = True

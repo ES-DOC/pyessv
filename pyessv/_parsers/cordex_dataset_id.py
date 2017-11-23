@@ -11,6 +11,7 @@
 
 """
 from pyessv._factory import create_template_parser
+from pyessv._constants import PARSING_STRICTNESS_1
 
 
 
@@ -25,22 +26,23 @@ _TEMPLATE = 'cordex.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}'
 
 # Collections injected into template.
 _COLLECTIONS = (
-    'esgf-publisher:cordex:product',
-    'esgf-publisher:cordex:domain',
-    'esgf-publisher:cordex:institute',
-    'esgf-publisher:cordex:driving-model',
-    'esgf-publisher:cordex:experiment',
-    'esgf-publisher:cordex:ensemble',
-    'esgf-publisher:cordex:rcm-name',
-    'esgf-publisher:cordex:rcm-version',
-    'esgf-publisher:cordex:time-frequency',
-    'esgf-publisher:cordex:variable',
+    'wcrp:cordex:product',
+    'wcrp:cordex:domain',
+    'wcrp:cordex:institute',
+    'wcrp:cordex:driving-model',
+    'wcrp:cordex:experiment',
+    'wcrp:cordex:ensemble',
+    'wcrp:cordex:rcm-name',
+    'wcrp:cordex:rcm-version',
+    'wcrp:cordex:time-frequency',
+    'wcrp:cordex:variable',
     )
 
 
-def parse(identifier, field='canonical_name'):
+def parse(identifier, strictness=PARSING_STRICTNESS_1):
     """Parses a CMIP6 dataset identifier.
 
     """
-    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, field)
-    parser.parse(identifier)
+    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, strictness)
+
+    return parser.parse(identifier)

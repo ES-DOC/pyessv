@@ -22,6 +22,7 @@ from pyessv._cache import get_cached
 import tests.utils as tu
 
 
+
 def test_interface():
 	"""pyessv-tests: caching: interface.
 
@@ -29,7 +30,6 @@ def test_interface():
 	assert inspect.isfunction(cache)
 	assert inspect.isfunction(uncache)
 	assert inspect.isfunction(get_cached)
-
 
 
 @nose.with_setup(tu.create_authority, None)

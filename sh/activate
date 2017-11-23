@@ -15,7 +15,8 @@ mkdir -p $HOME/.esdoc/pyessv-archive
 
 # Ensure shell scripts are executable.
 chmod a+x $PYESSV_LIB_HOME/sh/*.sh
-chmod a+x $PYESSV_LIB_HOME/sh/wcrp/cmip6/*.sh
+chmod a+x $PYESSV_LIB_HOME/sh/writers/esgf-publisher/*.sh
+chmod a+x $PYESSV_LIB_HOME/sh/writers/wcrp/cmip6/*.sh
 
 # ###############################################################
 # STANDARD-SECTION: ALIASES
@@ -27,11 +28,20 @@ alias pyessv-list=$PYESSV_LIB_HOME/sh/list.sh
 alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
 alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh
 
-# WCRP commands.
-alias pyessv-write-wcrp-cmip6-bash-vars=$PYESSV_LIB_HOME/sh/wcrp/cmip6/write_bash_vars.sh
-alias pyessv-write-wcrp-cmip6-model-seeding-config=$PYESSV_LIB_HOME/sh/wcrp/cmip6/write_model_seeding_config.sh
-alias pyessv-write-wcrp-cmip6-vocabs=$PYESSV_LIB_HOME/sh/wcrp/cmip6/write_vocabs.sh
+# Vocabulary writing commands.
+alias pyessv-write-wcrp-cmip6-vocabs=$PYESSV_LIB_HOME/sh/writers/wcrp/cmip6/write.sh
+alias pyessv-write-esgf-publisher-vocabs=$PYESSV_LIB_HOME/sh/writers/esgf-publisher/write.sh
 
-# ESGF commands.
-alias pyessv-write-esgf-publisher-vocabs=$PYESSV_LIB_HOME/sh/esgf-publisher/write.sh
 
+
+_reset_cmip6()
+{
+	esdoc-archive-delete-documents cmip6
+	esdoc-ws-db-flush cmip6
+	esdoc-cmip6-write-experiment-cim-documents
+	esdoc-cmip6-write-experiment-config
+	esdoc-cmip6-write-experiment-d3
+	esdoc-cmip6-archive-experiment-cim-documents
+	esdoc-ws-db-ingest
+}
+alias esdoc-cmip6-reset=_reset_cmip6

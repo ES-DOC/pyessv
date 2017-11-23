@@ -171,6 +171,13 @@ class IterableNode(Node):
         super(IterableNode, self).__init__(typekey)
 
 
+    def __add__(self, other):
+        """Add operator.
+
+        """
+        return self._items + other._items
+
+
     def __contains__(self, key):
         """Instance membership predicate.
 

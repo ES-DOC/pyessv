@@ -11,6 +11,7 @@
 
 """
 from pyessv._factory import create_template_parser
+from pyessv._constants import PARSING_STRICTNESS_1
 
 
 
@@ -25,20 +26,21 @@ _TEMPLATE = 'cmip5.{}.{}.{}.{}.{}.{}.{}.{}'
 
 # Collections injected into template.
 _COLLECTIONS = (
-    'esgf-publisher:cmip5:product',
-    'esgf-publisher:cmip5:institute',
-    'esgf-publisher:cmip5:model',
-    'esgf-publisher:cmip5:experiment',
-    'esgf-publisher:cmip5:time-frequency',
-    'esgf-publisher:cmip5:realm',
-    'esgf-publisher:cmip5:cmor-table',
-    'esgf-publisher:cmip5:ensemble'
+    'wcrp:cmip5:product',
+    'wcrp:cmip5:institute',
+    'wcrp:cmip5:model',
+    'wcrp:cmip5:experiment',
+    'wcrp:cmip5:time-frequency',
+    'wcrp:cmip5:realm',
+    'wcrp:cmip5:cmor-table',
+    'wcrp:cmip5:ensemble'
     )
 
 
-def parse(identifier, field='canonical_name'):
+def parse(identifier, strictness=PARSING_STRICTNESS_1):
     """Parses a CMIP6 dataset identifier.
 
     """
-    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, field)
-    parser.parse(identifier)
+    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, strictness)
+
+    return parser.parse(identifier)

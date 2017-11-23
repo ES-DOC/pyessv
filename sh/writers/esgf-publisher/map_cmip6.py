@@ -10,7 +10,6 @@
 
 """
 from utils import yield_comma_delimited_options
-from utils import yield_pipe_delimited_options
 
 
 
@@ -19,18 +18,8 @@ from utils import yield_pipe_delimited_options
 
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
-	('activity', yield_comma_delimited_options),
-	('cmor_table', yield_comma_delimited_options),
-	('ensemble', r'r[0-9]i[0-9]p[0-9]f[0-9]'),
-	('experiment', yield_pipe_delimited_options),
-	('institute', lambda: yield_institute),
-	('grid_label', yield_comma_delimited_options),
-	('frequency', yield_comma_delimited_options),
 	('las_time_delta', lambda: yield_las_time_delta),
-	('source_id', yield_comma_delimited_options),
-	('thredds_exclude_variables', yield_comma_delimited_options),
-	('variable', r'^[a-z0-9]*$'),
-	('version', r'^[0-9]*$')
+	('thredds_exclude_variables', yield_comma_delimited_options)
 }
 
 # Fields extracted from ini file & appended as data to the scope.
@@ -42,18 +31,9 @@ SCOPE_DATA = {
 }
 
 
-def yield_institute(ctx):
-	"""Yields insititute information to be converted to pyessv terms.
-
-	"""
-	for _, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
-		yield institute, institute, institute
-
-
 def yield_las_time_delta(ctx):
 	"""Yields las time delta information to be converted to pyessv terms.
 
 	"""
 	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta, las_time_delta, las_time_delta
-
+		yield las_time_delta

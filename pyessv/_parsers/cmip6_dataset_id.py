@@ -11,6 +11,7 @@
 
 """
 from pyessv._factory import create_template_parser
+from pyessv._constants import PARSING_STRICTNESS_1
 
 
 
@@ -26,16 +27,17 @@ _COLLECTIONS = (
     'wcrp:cmip6:institution-id',
     'wcrp:cmip6:source-id',
     'wcrp:cmip6:experiment-id',
-    'esgf-publisher:cmip6:ensemble',
+    'wcrp:cmip6:ensemble',
     'wcrp:cmip6:table-id',
-    'esgf-publisher:cmip6:variable',
+    'wcrp:cmip6:variable',
     'wcrp:cmip6:grid-label'
     )
 
 
-def parse(identifier, field='canonical_name'):
+def parse(identifier, strictness=PARSING_STRICTNESS_1):
     """Parses a CMIP6 dataset identifier.
 
     """
-    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, field)
-    parser.parse(identifier)
+    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, strictness)
+
+    return parser.parse(identifier)

@@ -56,6 +56,7 @@ _EXCEPTIONS = {
 _FUNCS = {
     # ... archive
     'add',
+    'get_random',
     'load',
     'save',
     # ... codecs
@@ -75,9 +76,14 @@ _FUNCS = {
     'reset',
     # ... initialisation
     'init',
+    # ... logging
+    'log',
+    'log_error',
+    'log_warning',
     # ... parsing
     'parse',
     'parse_namespace',
+    'parse_dataset_identifer',
     # ... validation
     'get_errors',
     'is_valid',

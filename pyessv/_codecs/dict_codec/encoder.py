@@ -69,7 +69,7 @@ def _encode_collection(instance):
 
     """
     obj = _encode_node(instance)
-    obj['terms'] = [i.canonical_name for i in instance]
+    obj['terms'] = ['{}:{}'.format(i.canonical_name, i.label) for i in instance]
     obj['term_regex'] = instance.term_regex
 
     return obj

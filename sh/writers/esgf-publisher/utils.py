@@ -31,7 +31,7 @@ def yield_comma_delimited_options(ctx):
 
     # Yield term information.
     for option in options:
-        term_name = option.lower()
+        term_name = option
         term_label = option
         term_description = option
 

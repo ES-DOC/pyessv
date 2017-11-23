@@ -57,7 +57,7 @@ def yield_las_time_delta(ctx):
 
 	"""
 	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta, las_time_delta, las_time_delta
+		yield las_time_delta
 
 
 def yield_rcm_name(ctx):
@@ -65,4 +65,4 @@ def yield_rcm_name(ctx):
 
 	"""
 	for _, _, rcm_name in ctx.ini_section.get_option('rcm_name_map', '\n', '|'):
-		yield rcm_name, rcm_name, rcm_name
+		yield rcm_name

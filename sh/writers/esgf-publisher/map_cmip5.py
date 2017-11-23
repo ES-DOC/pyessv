@@ -30,7 +30,7 @@ COLLECTIONS = {
 	('realm', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('version', r'^[0-9]*$')
+	('version', r'^v[0-9]*$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.
@@ -47,7 +47,7 @@ def yield_institute(ctx):
 
 	"""
 	for _, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
-		yield institute, institute, institute
+		yield institute
 
 
 def yield_las_time_delta(ctx):
@@ -55,4 +55,4 @@ def yield_las_time_delta(ctx):
 
 	"""
 	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta, las_time_delta, las_time_delta
+		yield las_time_delta

@@ -32,6 +32,7 @@ _ENCODING_REPRESENTATION_TYPE = {
 }
 
 
+
 def test_interface():
     """pyessv-tests: codecs: interface.
 

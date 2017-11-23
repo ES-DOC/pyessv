@@ -37,9 +37,9 @@ _PARSERS = {
 
 # Map of templates to valid expressions.
 _VALID = {
-    _TEMPLATE_1: 'ciclad/cmip6/ipsl/dcpp/hadgem3-gc31-ll/dcppc-atl-spg/afilename.nc1',
-    _TEMPLATE_2: 'ipsl/dcpp/hadgem3-gc31-ll/dcppc-atl-spg/afilename.nc2',
-    _TEMPLATE_3: 'ciclad/cmip6/ipsl/dcpp/hadgem3-gc31-ll/dcppc-atl-spg'
+    _TEMPLATE_1: 'ciclad/cmip6/ipsl/fafmip/ipsl-cm6a-lr/amip/afilename.nc1',
+    _TEMPLATE_2: 'ipsl/fafmip/ipsl-cm6a-lr/amip/afilename.nc2',
+    _TEMPLATE_3: 'ciclad/cmip6/ipsl/fafmip/ipsl-cm6a-lr/amip'
 }
 
 # Map of templates to invalid expressions.
@@ -63,9 +63,9 @@ def test_expressions():
 
     _setup()
     for template in _TEMPLATES:
-        tu.init(_do_positive_test, 'parse expression :: {} --> positive'.format(template))
+        tu.init(_do_positive_test, 'parse expression (+ve) :: {}'.format(template))
         yield _do_positive_test, template, _PARSERS[template]
-        tu.init(_do_negative_test, 'parse expression :: {} --> negative'.format(template))
+        tu.init(_do_negative_test, 'parse expression (-ve) :: {}'.format(template))
         yield _do_negative_test, template, _PARSERS[template]
 
 
@@ -73,9 +73,6 @@ def _setup():
     """Unit test setup.
 
     """
-    # Load vocabs.
-    LIB.init()
-
     # Set collections.
     collections = (
         'wcrp:cmip6:institution-id',
@@ -86,4 +83,4 @@ def _setup():
 
     # Set parsers.
     for template in _TEMPLATES:
-        _PARSERS[template] = LIB.create_template_parser(template, collections)
+        _PARSERS[template] = LIB.create_template_parser(template, collections, seperator='/')

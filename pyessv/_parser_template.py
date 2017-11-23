@@ -11,6 +11,7 @@
 
 
 """
+import pyessv
 from pyessv._exceptions import TemplateParsingError
 from pyessv._model.collection import Collection
 from pyessv._utils.compat import  basestring
@@ -21,45 +22,54 @@ class TemplateParser(object):
     """A vocabulary template parser.
 
     """
-    def __init__(self, template, collections, field, seperator='.'):
+    def __init__(self, template, collections, strictness, seperator='.'):
         """Instance constructor.
 
         :param str template: Identifier template.
         :param list collections: pyessv collection identifiers.
-        :param str field: Default parsing field.
+        :param int strictness: Strictness level to apply when applying name matching rules.
         :param str seprarator: Seperator to apply when parsing.
 
         """
-        self._seperator = seperator
-        self._template_parts = template.split(seperator)
+        self.seperator = seperator
+        self.template_parts = template.split(seperator)
         self.template = template
-        self.term_field = field
+        self.strictness = strictness
 
+        # Inject pyessv collections into template.
         collection_idx = 0
-        for idx, part in enumerate(self._template_parts):
+        for idx, part in enumerate(self.template_parts):
             if part == '{}':
-                self._template_parts[idx] = Collection.get_info(collections[collection_idx])
+                self.template_parts[idx] = pyessv.load(collections[collection_idx])
                 collection_idx += 1
 
 
     def parse(self, val):
         """Parses a val against a template.
 
+        :returns: Set of terms extracted during parsing process.
+
         """
-        # Error: number of parts is unequal.
-        parts = val.split(self._seperator)
-        if len(parts) != len(self._template_parts):
+        # Verify that number of parts is equal.
+        parts = val.split(self.seperator)
+        if len(parts) != len(self.template_parts):
             raise TemplateParsingError(val)
 
         # Iterate template.
-        for template_part, part in [(self._template_parts[i], j) for i, j in enumerate(parts)]:
-            # Error: constant mismatch.
+        terms = set()
+        for template_part, name in [(self.template_parts[i], j) for i, j in enumerate(parts)]:
+            # Verify constant match.
             if isinstance(template_part, basestring):
-                if part != template_part:
+                if template_part != name:
                     raise TemplateParsingError(val)
+                continue
 
-            # Error: collection mismatch.
-            else:
-                collection, field = template_part
-                if collection.is_matched(part, field) == False:
-                    raise TemplateParsingError('{} :: {} :: {}'.format(collection, field, val))
+            # Verify collection match.
+            collection = template_part
+            term = collection.is_matched(name, self.strictness)
+            if term == False:
+                raise TemplateParsingError('vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, val))
+            if isinstance(term, pyessv.Term):
+                terms.add(term)
+
+        return terms

@@ -16,6 +16,10 @@ import uuid
 
 import pyessv
 from pyessv._constants import NODE_TYPEKEY_COLLECTION
+from pyessv._constants import PARSING_STRICTNESS_1
+from pyessv._constants import PARSING_STRICTNESS_2
+from pyessv._constants import PARSING_STRICTNESS_3
+from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._model.node import IterableNode
 from pyessv._model.term import Term
@@ -56,6 +60,14 @@ class Collection(IterableNode):
         return self.scope.authority
 
 
+    @property
+    def is_virtual(self):
+        """Gets flag indicating whether the collection is a virtual one (i.e. simply constrained by a reg-ex).
+
+        """
+        return len(self) == 0
+
+
     def get_validators(self):
         """Returns set of validators.
 
@@ -91,43 +103,40 @@ class Collection(IterableNode):
             )
 
 
-    def is_matched(self, name, field='canonical_name'):
+    def is_matched(self, name, strictness=PARSING_STRICTNESS_1):
         """Gets flag indicating whether a matching term can be found.
 
         :param str name: A term name to be validated.
-        :param str field: Term attribute to be used for comparison.
+        :param int strictness: Strictness level to apply when applying name matching rules.
 
         """
         assert isinstance(name, basestring), 'Invalid term name'
-        assert field in ('canonical_name', 'raw_name', 'label'), 'Invalid term attribute'
+        assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
 
-        # Regular expression match.
-        if len(self) == 0:
+        # Reg-ex match.
+        if self.is_virtual:
+            if strictness >= PARSING_STRICTNESS_3:
+                name = str(name).strip().lower()
             return re.compile(self.term_regex).match(name) is not None
 
-        # Attribute match.
+        # Match by term.
         for term in self:
-            if getattr(term, field) == name:
-                return True
+            # match by: canonical_name
+            if name == term.canonical_name:
+                return term
+
+            # match by: raw_name
+            if strictness >= PARSING_STRICTNESS_1 and name == term.raw_name:
+                return term
+
+            # match by: synonym
+            if strictness >= PARSING_STRICTNESS_2 and name in term.synonyms:
+                return term
+
+            # match by: all (case-insensitive)
+            if strictness >= PARSING_STRICTNESS_3:
+                name = str(name).strip().lower()
+                if name in [i.lower() for i in term.all_names]:
+                    return term
 
         return False
-
-
-    @staticmethod
-    def get_info(identifier, default_field='canonical_name'):
-        """Returns collection reference information.
-
-        """
-        assert isinstance(identifier, basestring), 'Invalid collection identifier'
-        identifier = identifier.split(':')
-        assert len(identifier) in (3, 4), 'Invalid collection identifier'
-
-        field = default_field if len(identifier) == 3 else identifier[-1]
-        assert field in ('canonical_name', 'raw_name', 'label'), 'Invalid term field'
-
-        identifier = ':'.join(identifier[0:3])
-        collection = pyessv.load(identifier)
-        assert isinstance(collection, Collection), 'Invalid collection identifier: {}'.format(identifier)
-
-        return collection, field
-

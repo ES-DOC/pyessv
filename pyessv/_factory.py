@@ -17,6 +17,8 @@ import arrow
 import pyessv
 
 from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv._constants import PARSING_STRICTNESS_1
+from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._cache import cache
 from pyessv._exceptions import ValidationError
 from pyessv._model import Authority
@@ -200,12 +202,13 @@ def create_term(
         )
 
 
-def create_template_parser(template, collections, field='canonical_name'):
+def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_1, seperator='.'):
     """Instantiates, initialises & returns a template parser.
 
     :param str template: An expression template.
     :param tuple collections: Collections that the template maps to.
-    :param str field: Term field against which to parse.
+    :param int strictness: Strictness level to apply when applying name matching rules.
+    :param str seprarator: Seperator to apply when parsing.
 
     :returns: A vocabulary expression parser.
     :rtype: pyessv.TemplateParser
@@ -217,9 +220,10 @@ def create_template_parser(template, collections, field='canonical_name'):
     assert template.count('{}') > 0, 'Invalid template'
     assert len(collections) > 0, 'Invalid collections'
     assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
-    assert field in ('canonical_name', 'raw_name', 'label'), 'Invalid term field'
+    assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
+    assert isinstance(seperator, basestring), 'Invalid seperator'
 
-    return TemplateParser(template, collections, field)
+    return TemplateParser(template, collections, strictness, seperator)
 
 
 def _create_node(

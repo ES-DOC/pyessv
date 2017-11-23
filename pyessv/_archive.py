@@ -19,6 +19,8 @@ from pyessv._cache import get_cached
 from pyessv._io_manager import write
 from pyessv._model import Authority
 from pyessv._model import Term
+from pyessv._utils.compat import basestring
+from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_canonical_name
 from pyessv._utils.formatter import format_string
 
@@ -26,7 +28,7 @@ from pyessv._factory import create_term
 
 
 
-def load(*args):
+def load(identifier):
     """Loads a vocabulary node from archive.
 
     :param str identifier: Vocabulary node identifier.
@@ -35,47 +37,15 @@ def load(*args):
     :rtype: pyessv.Node | None
 
     """
-    assert len(args) >= 1 and len(args) <= 4, 'Vocabs can be loaded by namespace, uuid & name'
-    if len(args) == 1:
-        node = _load_by_namespace(args[0])
-        if node is None:
-            node = _load_by_uid(args[0])
-    else:
-        node = _load_by_name(args)
+    assert isinstance(identifier, basestring)
 
-    return node
+    identifier = identifier.strip()
 
+    result = _load_by_namespace(identifier)
+    if result is None:
+        result = _load_by_uid(identifier)
 
-def _load_by_name(args):
-    """Loads a vocabulary node from archive by name.
-
-    :param str authority: Vocabulary authority, e.g. wcrp.
-    :param str scope: Vocabulary scope, e.g. global.
-    :param str collection: Vocabulary collection, e.g. institute-id.
-    :param str term: Vocabulary term, e.g. ipsl.
-
-    :return: A vocabulary node.
-    :rtype: pyessv.Node | None
-
-    """
-    authority = args[0]
-    try:
-        scope = args[1]
-    except IndexError:
-        scope = None
-    try:
-        collection = args[2]
-    except IndexError:
-        collection = None
-    try:
-        term = args[3]
-    except IndexError:
-        term = None
-
-    names = [i.strip() for i in [authority, scope, collection, term] if i is not None]
-    namespace = ":".join(names)
-
-    return _load_by_namespace(namespace)
+    return result
 
 
 def _load_by_namespace(identifier):
@@ -87,8 +57,10 @@ def _load_by_namespace(identifier):
     :rtype: pyessv.Node | None
 
     """
+    # Skip if identifier is not a namespace.
     ns = str(identifier).split(':')
-    assert len(ns) >= 1 and len(ns) <= 4, 'Invalid namespace'
+    if len(ns) < 1 or len(ns) > 4:
+        return
 
     # Unpack.
     authority = scope = collection = term = None
@@ -151,6 +123,7 @@ def _is_matched(node, identifier):
     """
     identifier = format_string(identifier).lower()
 
+
     # Matched by canonical name.
     if identifier == node.canonical_name:
         return True
@@ -195,7 +168,7 @@ def save():
         write(authority)
 
 
-def get_random_term(namespace):
+def get_random(namespace):
     """Returns a random term.
 
     :param str namespace: Namespace of collection from which a term will be loaded.
@@ -205,10 +178,10 @@ def get_random_term(namespace):
 
     """
     collection = load(namespace)
-    if not collection:
+    if collection is None:
         raise ValueError('Collection not found: {}'.format(namespace))
 
-    if len(collection):
-        return random.choice(collection).canonical_name
+    if collection.is_virtual:
+        return str(uuid.uuid4()).split('-')[0]
 
-    return str(uuid.uuid4()).split('-')[0]
+    return random.choice(collection.terms).canonical_name

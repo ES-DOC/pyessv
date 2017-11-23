@@ -48,7 +48,7 @@ def _main(args):
 
     """
     # Create authority.
-    authority = _create_authority()
+    authority = pyessv.load('wcrp')
 
     # Process project modules:
     for module in _MODULES:
@@ -59,7 +59,7 @@ def _main(args):
         ini_section = _IniSection(project, args.source)
 
         # Create scope.
-        scope = _create_scope(authority, project)
+        scope = _get_scope(authority, project)
         scope.data = scope.data or dict()
         for field in module.SCOPE_DATA:
             scope.data[field] = ini_section.get_option(field, raw=True)
@@ -67,19 +67,19 @@ def _main(args):
         # Create regex collections.
         collections = [i for i in module.COLLECTIONS if not inspect.isfunction(i[1])]
         for collection_id, term_regex in collections:
-            _create_collection(scope, collection_id, term_regex=term_regex)
+            _get_collection(scope, collection_id, term_regex=term_regex)
 
         # Create standard collections.
         collections = [i for i in module.COLLECTIONS if inspect.isfunction(i[1])]
         for collection_id, term_factory in collections:
             ctx = _MappingExecutionContext(project, collection_id, ini_section)
-            collection = _create_collection(scope, collection_id)
+            collection = _get_collection(scope, collection_id)
             try:
                 term_factory = term_factory()
             except TypeError:
                 pass
             for term_data in term_factory(ctx):
-                _create_term(collection, term_data)
+                _get_term(collection, term_data)
 
     # Add to archive & persist to file system.
     pyessv.add(authority)
@@ -130,24 +130,11 @@ class _IniSection(object):
         return data
 
 
-def _create_authority():
-    """Factory method to return vocabulary authority.
-
-    """
-    return pyessv.create_authority(
-        'esgf-publisher',
-        description='Earth System Grid Federation',
-        label='ESGF',
-        url='https://esgf.llnl.gov',
-        create_date=arrow.get('2017-10-11 00:00:00.000000+0000').datetime
-    )
-
-
-def _create_scope(authority, project):
+def _get_scope(authority, project):
     """Factory method to return vocabulary scope.
 
     """
-    return pyessv.create_scope(
+    return pyessv.load('wcrp:{}'.format(project)) or pyessv.create_scope(
         authority,
         project,
         description='ESGF publisher controlled Vocabularies (CVs) for use in {}'.format(project.upper()),
@@ -156,7 +143,7 @@ def _create_scope(authority, project):
     )
 
 
-def _create_collection(scope, collection_id, term_regex=None):
+def _get_collection(scope, collection_id, term_regex=None):
     """Factory method to return vocabulary collection.
 
     """
@@ -168,11 +155,23 @@ def _create_collection(scope, collection_id, term_regex=None):
     )
 
 
-def _create_term(collection, term_info):
+def _get_term(collection, term_info):
     """Factory method to return vocabulary term.
 
     """
-    name, label, description = term_info
+    # Unpack term information.
+    name = label = description = None
+    if isinstance(term_info, basestring):
+        name = term_info
+    else:
+        try:
+            name, label, description = term_info
+        except ValueError:
+            try:
+                name, label = term_info
+            except ValueError:
+                name = term_info
+
     return pyessv.create_term(collection, name,
         label=label,
         description=description

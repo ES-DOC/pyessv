@@ -61,34 +61,104 @@ _SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY,
 # Map of scopes to collections.
 _SCOPE_COLLECTIONS = {
     _SCOPE_CMIP6: {
-        'activity_id': {},
-        'experiment_id': {
-            'data_factory': lambda obj, name: obj[name]
+        'activity_id': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
         },
-        'frequency': {},
-        'grid_label': {},
+        'ensemble': {
+            'data_factory': None,
+            'is_virtual': True,
+            'ommitted': [],
+            'term_regex': r'r[0-9]i[0-9]p[0-9]f[0-9]',
+        },
+        'experiment_id': {
+            'data_factory': lambda obj, name: obj[name],
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        },
+        'frequency': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        },
+        'grid_label': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        },
         'institution_id': {
-            'data_factory': lambda obj, name: {'postal_address': obj[name]}
+            'data_factory': lambda obj, name: {'postal_address': obj[name]},
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
         },
         'nominal_resolution': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
             'term_regex': r'^[a-z0-9\-\.]*$'
         },
         'realm': {
-            'data_factory': lambda obj, name: {'description': obj[name]}
+            'data_factory': lambda obj, name: {'description': obj[name]},
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
         },
-        'required_global_attributes': {},
+        'required_global_attributes': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        },
         'source_id': {
-            'data_factory': lambda obj, name: obj[name]
+            'data_factory': lambda obj, name: obj[name],
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
         },
-        'source_type': {},
+        'source_type': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        },
         'sub_experiment_id': {
             'data_factory': lambda obj, name: {'description': obj[name]},
-            'ommitted': ['none']
+            'is_virtual': False,
+            'ommitted': ['none'],
+            'term_regex': None
         },
-        'table_id': {}
+        'table_id': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        },
+        'variable': {
+            'data_factory': None,
+            'is_virtual': True,
+            'ommitted': [],
+            'term_regex': r'^[a-z0-9]*$',
+        },
+        'version': {
+            'data_factory': None,
+            'is_virtual': True,
+            'ommitted': [],
+            'term_regex': r'^[0-9]*$',
+        }
     },
     _SCOPE_GLOBAL: {
-        'mip_era': {}
+        'mip_era': {
+            'data_factory': None,
+            'is_virtual': False,
+            'ommitted': [],
+            'term_regex': None
+        }
     }
 }
 
@@ -110,8 +180,8 @@ def _main(args):
     # Create collections.
     for scope in _SCOPE_COLLECTIONS:
         for collection in _SCOPE_COLLECTIONS[scope]:
-            parsers = _SCOPE_COLLECTIONS[scope][collection]
-            _create_collection(args.source, scope, collection, parsers)
+            cfg = _SCOPE_COLLECTIONS[scope][collection]
+            _create_collection(args.source, scope, collection, cfg)
 
     # Update uid map for next time.
     _set_node_uid(_AUTHORITY)
@@ -125,28 +195,26 @@ def _main(args):
     pyessv.save()
 
 
-def _create_collection(source, scope, collection_id, parsers):
+def _create_collection(source, scope, collection_id, cfg):
     """Creates collection from a WCRP JSON file.
 
     """
-    # Load WCRP json data.
-    wcrp_cv_data = _get_wcrp_cv(source, scope, collection_id)
-
     # Create collection.
     collection = pyessv.create_collection(
         scope,
         collection_id,
         "WCRP CMIP6 CV collection: ".format(collection_id),
         create_date=_CREATE_DATE,
-        term_regex=parsers.get('term_regex', pyessv.REGEX_CANONICAL_NAME)
+        term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME
         )
 
-    # Create terms.
-    data_factory = parsers.get('data_factory', None)
-    ommitted = parsers.get('ommitted', [])
-    for name in [i for i in wcrp_cv_data if i not in ommitted]:
-        data = data_factory(wcrp_cv_data, name) if data_factory else None
-        _create_term(collection, name, data)
+    # Load JSON data & create terms (if collection is not a virtual one).
+    if cfg['is_virtual'] == False:
+        cv_data = _get_wcrp_cv(source, scope, collection_id)
+        data_factory = cfg['data_factory']
+        for term_name in [i for i in cv_data if i not in cfg['ommitted']]:
+            term_data = data_factory(cv_data, term_name) if data_factory else None
+            _create_term(collection, term_name, term_data)
 
 
 def _create_term(collection, raw_name, data):
