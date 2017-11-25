@@ -143,7 +143,7 @@ _SCOPE_COLLECTIONS = {
             'data_factory': None,
             'is_virtual': True,
             'ommitted': [],
-            'term_regex': r'^[a-z0-9]*$',
+            'term_regex': r'^[A-Za-z0-9]*$',
         },
         'version': {
             'data_factory': None,
