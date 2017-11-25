@@ -40,4 +40,8 @@ def parse(identifier, strictness=PARSING_STRICTNESS_1):
     """
     parser = create_template_parser(_TEMPLATE, _COLLECTIONS, strictness)
 
+    # Strip version suffix.
+    if '#' in identifier:
+      identifier = identifier.split('#')[0]
+
     return parser.parse(identifier)
