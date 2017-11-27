@@ -16,6 +16,7 @@ import uuid
 
 from pyessv._cache import cache
 from pyessv._cache import get_cached
+from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._io_manager import write
 from pyessv._model import Authority
 from pyessv._model import Term
@@ -168,7 +169,7 @@ def save():
         write(authority)
 
 
-def get_random(namespace):
+def get_random(namespace, field='canonical_name'):
     """Returns a random term.
 
     :param str namespace: Namespace of collection from which a term will be loaded.
@@ -180,8 +181,12 @@ def get_random(namespace):
     collection = load(namespace)
     if collection is None:
         raise ValueError('Collection not found: {}'.format(namespace))
+    if field not in PARSING_NODE_FIELDS:
+        raise ValueError('Invalid field name')
 
     if collection.is_virtual:
         return str(uuid.uuid4()).split('-')[0]
 
-    return random.choice(collection.terms).canonical_name
+    term = random.choice(collection.terms)
+
+    return getattr(term, field)

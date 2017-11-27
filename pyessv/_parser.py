@@ -11,6 +11,7 @@
 
 """
 from pyessv._archive import load
+from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import PARSING_STRICTNESS_0
 from pyessv._constants import PARSING_STRICTNESS_1
@@ -25,11 +26,16 @@ from pyessv._model import Term
 
 
 
-def parse_namespace(namespace, strictness=PARSING_STRICTNESS_2):
+def parse_namespace(
+    namespace,
+    strictness=PARSING_STRICTNESS_2,
+    field='canonical_name'
+    ):
     """Parses a namespace within a vocabulary hierachy.
 
     :param str namespace: Vocabulary namespace, e.g. wcrp.
     :param int strictness: Strictness level to apply when applying lookup rules.
+    :param str field: Term field to return.
 
     """
     ns = str(namespace).split(':')
@@ -37,7 +43,7 @@ def parse_namespace(namespace, strictness=PARSING_STRICTNESS_2):
 
     ns = ns + [None for i in range(4 - len(ns))]
 
-    return parse(ns[0], ns[1], ns[2], ns[3], strictness)
+    return parse(ns[0], ns[1], ns[2], ns[3], strictness, field)
 
 
 def parse(
@@ -45,7 +51,8 @@ def parse(
     scope=None,
     collection=None,
     term=None,
-    strictness=PARSING_STRICTNESS_2
+    strictness=PARSING_STRICTNESS_2,
+    field='canonical_name'
     ):
     """Parses a name within a vocabulary hierachy.
 
@@ -54,9 +61,11 @@ def parse(
     :param str collection: Vocabulary collection, e.g. institute-id.
     :param str term: Vocabulary term, e.g. ipsl.
     :param int strictness: Strictness level to apply when applying lookup rules.
+    :param str field: Term field to return.
 
     """
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness'
+    assert field in PARSING_NODE_FIELDS, 'Invalid field'
 
     # Set parsing targets.
     targets = [
@@ -75,7 +84,7 @@ def parse(
         node = load(namespace)
         target.set_node(node)
 
-    return target.node.canonical_name
+    return getattr(target.node, field)
 
 
 class _NodeInfo(object):
