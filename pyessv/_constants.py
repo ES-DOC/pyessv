@@ -81,21 +81,25 @@ GOVERNANCE_STATUS_SET = (
 # Parsing strictness: canonical-name;
 PARSING_STRICTNESS_0 = 0
 
-# Parsing strictness: 0 + raw-name;
+# Parsing strictness: raw-name;
 PARSING_STRICTNESS_1 = 1
 
-# Parsing strictness: 1 + synonyms
+# Parsing strictness: canonical-name + raw-name;
 PARSING_STRICTNESS_2 = 2
 
-# Parsing strictness: 2 + case-insensitive
+# Parsing strictness: 2 + synonyms
 PARSING_STRICTNESS_3 = 3
+
+# Parsing strictness: 3 + case-insensitive
+PARSING_STRICTNESS_4 = 4
 
 # Set of allowed parsing stricness.
 PARSING_STRICTNESS_SET = (
     PARSING_STRICTNESS_0,
     PARSING_STRICTNESS_1,
     PARSING_STRICTNESS_2,
-    PARSING_STRICTNESS_3
+    PARSING_STRICTNESS_3,
+    PARSING_STRICTNESS_4
     )
 
 # Regular expression for validating a canonical name.

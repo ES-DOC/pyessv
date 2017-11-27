@@ -39,11 +39,11 @@ _COLLECTIONS = (
     )
 
 
-def parse(identifier, strictness=PARSING_STRICTNESS_1):
+def parse(identifier):
     """Parses a CMIP6 dataset identifier.
 
     """
-    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, strictness)
+    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
 
     # Strip version suffix.
     if '#' in identifier:

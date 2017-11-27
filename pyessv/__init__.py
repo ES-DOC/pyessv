@@ -41,6 +41,7 @@ from pyessv._constants import PARSING_STRICTNESS_0
 from pyessv._constants import PARSING_STRICTNESS_1
 from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_3
+from pyessv._constants import PARSING_STRICTNESS_4
 from pyessv._constants import REGEX_CANONICAL_NAME
 
 from pyessv._exceptions import InvalidAssociationError

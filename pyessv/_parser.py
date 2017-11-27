@@ -16,6 +16,7 @@ from pyessv._constants import PARSING_STRICTNESS_0
 from pyessv._constants import PARSING_STRICTNESS_1
 from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_3
+from pyessv._constants import PARSING_STRICTNESS_4
 from pyessv._exceptions import ParsingError
 from pyessv._utils.compat import str
 
@@ -24,7 +25,7 @@ from pyessv._model import Term
 
 
 
-def parse_namespace(namespace, strictness=PARSING_STRICTNESS_1):
+def parse_namespace(namespace, strictness=PARSING_STRICTNESS_2):
     """Parses a namespace within a vocabulary hierachy.
 
     :param str namespace: Vocabulary namespace, e.g. wcrp.
@@ -44,7 +45,7 @@ def parse(
     scope=None,
     collection=None,
     term=None,
-    strictness=PARSING_STRICTNESS_1
+    strictness=PARSING_STRICTNESS_2
     ):
     """Parses a name within a vocabulary hierachy.
 
@@ -110,21 +111,23 @@ class _NodeInfo(object):
 
         # Confirm match based upon the level of parsing strictness perform test.
         matched = False
-        if self.name == node.canonical_name:
-            matched = True
+        if self.strictness == PARSING_STRICTNESS_0:
+            if self.name == node.canonical_name:
+                matched = True
 
-        if matched == False and \
-           self.strictness >= PARSING_STRICTNESS_1 and \
-           self.name == node.raw_name:
-            matched = True
+        elif self.strictness == PARSING_STRICTNESS_1:
+            if self.name == node.raw_name:
+                matched = True
 
-        if matched == False and \
-           self.strictness >= PARSING_STRICTNESS_2 and \
-           self.name in node.synonyms:
-            matched = True
+        elif self.strictness == PARSING_STRICTNESS_2:
+            if self.name in {node.canonical_name, node.raw_name}:
+                matched = True
 
-        if matched == False and \
-           self.strictness >= PARSING_STRICTNESS_3:
+        elif self.strictness == PARSING_STRICTNESS_3:
+            if self.name in {node.canonical_name, node.raw_name}.union(set(node.synonyms)):
+                matched = True
+
+        elif self.strictness == PARSING_STRICTNESS_4:
             name = str(self.name).strip().lower()
             if name in [i.lower() for i in node.all_names]:
                 matched = True

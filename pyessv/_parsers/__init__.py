@@ -13,8 +13,6 @@
 """
 import collections
 
-from pyessv._constants import PARSING_STRICTNESS_1
-from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._parsers.cmip5_dataset_id import parse as parse_cmip5_dataset_id
 from pyessv._parsers.cmip6_dataset_id import parse as parse_cmip6_dataset_id
 from pyessv._parsers.cordex_dataset_id import parse as parse_cordex_dataset_id
@@ -30,12 +28,11 @@ _DATASET_ID_PARSERS = {
 }
 
 
-def parse_dataset_identifers(project, identifiers, strictness=PARSING_STRICTNESS_1):
+def parse_dataset_identifers(project, identifiers):
     """Parses a collection of dataset identifiers.
 
     :param str project: Project code.
     :param iterable identifiers: Dataset identifiers.
-    :param int strictness: Strictness level to apply when applying name matching rules.
 
     :returns: Facets extracted from the identifiers.
     :rtype: list
@@ -45,17 +42,16 @@ def parse_dataset_identifers(project, identifiers, strictness=PARSING_STRICTNESS
 
     result = set()
     for identifier in identifiers:
-        result = result.union(parse_dataset_identifer(project, identifier, strictness))
+        result = result.union(parse_dataset_identifer(project, identifier))
 
     return result
 
 
-def parse_dataset_identifer(project, identifier, strictness=PARSING_STRICTNESS_1):
+def parse_dataset_identifer(project, identifier):
     """Parses a dataset identifier.
 
     :param str project: Project code.
     :param str identifier: Dataset identifier.
-    :param int strictness: Strictness level to apply when applying name matching rules.
 
     :returns: Set of terms extracted from the identifier.
     :rtype: set
@@ -64,8 +60,7 @@ def parse_dataset_identifer(project, identifier, strictness=PARSING_STRICTNESS_1
     assert isinstance(project, basestring), 'Invalid project'
     assert project in _DATASET_ID_PARSERS, 'Unsupported project'
     assert isinstance(identifier, basestring), 'Invalid identifier'
-    assert strictness in PARSING_STRICTNESS_SET, 'Invalid strictness'
 
     parser = _DATASET_ID_PARSERS[project]
 
-    return parser(identifier, strictness)
+    return parser(identifier)

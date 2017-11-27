@@ -17,7 +17,7 @@ import arrow
 import pyessv
 
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._constants import PARSING_STRICTNESS_1
+from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._cache import cache
 from pyessv._exceptions import ValidationError
@@ -202,7 +202,7 @@ def create_term(
         )
 
 
-def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_1, seperator='.'):
+def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_2, seperator='.'):
     """Instantiates, initialises & returns a template parser.
 
     :param str template: An expression template.

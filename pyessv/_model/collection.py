@@ -16,9 +16,11 @@ import uuid
 
 import pyessv
 from pyessv._constants import NODE_TYPEKEY_COLLECTION
+from pyessv._constants import PARSING_STRICTNESS_0
 from pyessv._constants import PARSING_STRICTNESS_1
 from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_3
+from pyessv._constants import PARSING_STRICTNESS_4
 from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._model.node import IterableNode
@@ -103,7 +105,7 @@ class Collection(IterableNode):
             )
 
 
-    def is_matched(self, name, strictness=PARSING_STRICTNESS_1):
+    def is_matched(self, name, strictness=PARSING_STRICTNESS_2):
         """Gets flag indicating whether a matching term can be found.
 
         :param str name: A term name to be validated.
@@ -115,26 +117,34 @@ class Collection(IterableNode):
 
         # Reg-ex match.
         if self.is_virtual:
-            if strictness >= PARSING_STRICTNESS_3:
+            if strictness >= PARSING_STRICTNESS_4:
                 name = str(name).strip().lower()
             return re.compile(self.term_regex).match(name) is not None
 
         # Match by term.
         for term in self:
             # match by: canonical_name
-            if name == term.canonical_name:
-                return term
+            if strictness == PARSING_STRICTNESS_0:
+                if name == term.canonical_name:
+                    return term
 
             # match by: raw_name
-            if strictness >= PARSING_STRICTNESS_1 and name == term.raw_name:
-                return term
+            elif strictness == PARSING_STRICTNESS_1:
+                if name == term.raw_name:
+                    return term
+
+            # match by: canonical_name | raw_name
+            elif strictness == PARSING_STRICTNESS_2:
+                if name in {term.canonical_name, term.raw_name}:
+                    return term
 
             # match by: synonym
-            if strictness >= PARSING_STRICTNESS_2 and name in term.synonyms:
-                return term
+            if strictness == PARSING_STRICTNESS_3:
+                if name in {term.canonical_name, term.raw_name}.union(set(term.synonyms)):
+                    return term
 
             # match by: all (case-insensitive)
-            if strictness >= PARSING_STRICTNESS_3:
+            if strictness == PARSING_STRICTNESS_4:
                 name = str(name).strip().lower()
                 if name in [i.lower() for i in term.all_names]:
                     return term
