@@ -53,7 +53,7 @@ class TemplateParser(object):
         # Verify that number of parts is equal.
         parts = val.split(self.seperator)
         if len(parts) != len(self.template_parts):
-            raise TemplateParsingError(val)
+            raise TemplateParsingError('Number of elements is invalid: {}: is {}, expected {}'.format(val, len(parts), len(self.template_parts)))
 
         # Iterate template.
         terms = set()
