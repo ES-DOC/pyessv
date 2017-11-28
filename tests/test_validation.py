@@ -42,9 +42,6 @@ _TEST_INFO = {
         ('terms', [None, '', '  ', [123]])
     ],
     LIB.Term: _NODE_TEST_INFO + [
-        ('alternative_name', ('', '  ')),
-        ('alternative_url', ('', '  ')),
-        ('idx', ('', '  ', [123])),
         ('status', ('', '  ', [123])),
         ('synonyms', ('', '  ', [123])),
     ],
