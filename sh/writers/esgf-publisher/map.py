@@ -151,6 +151,7 @@ def _get_collection(scope, collection_id, term_regex=None):
         scope,
         collection_id,
         "ESGF publisher-config CV collection: ".format(collection_id),
+        label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
         term_regex=term_regex
     )
 

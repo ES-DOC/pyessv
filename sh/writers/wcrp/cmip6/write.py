@@ -64,90 +64,105 @@ _SCOPE_COLLECTIONS = {
         'activity_id': {
             'data_factory': None,
             'is_virtual': False,
+            'label': 'Activity',
             'ommitted': [],
             'term_regex': None
         },
         'ensemble': {
             'data_factory': None,
             'is_virtual': True,
+            'label': None,
             'ommitted': [],
             'term_regex': r'r[0-9]i[0-9]p[0-9]f[0-9]',
         },
         'experiment_id': {
             'data_factory': lambda obj, name: obj[name],
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'frequency': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'grid_label': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'institution_id': {
             'data_factory': lambda obj, name: {'postal_address': obj[name]},
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'nominal_resolution': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': r'^[a-z0-9\-\.]*$'
         },
         'realm': {
             'data_factory': lambda obj, name: {'description': obj[name]},
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'required_global_attributes': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'source_id': {
             'data_factory': lambda obj, name: obj[name],
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'source_type': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'sub_experiment_id': {
             'data_factory': lambda obj, name: {'description': obj[name]},
             'is_virtual': False,
+            'label': None,
             'ommitted': ['none'],
             'term_regex': None
         },
         'table_id': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         },
         'variable': {
             'data_factory': None,
             'is_virtual': True,
+            'label': None,
             'ommitted': [],
             'term_regex': r'^[A-Za-z0-9]*$',
         },
         'version': {
             'data_factory': None,
             'is_virtual': True,
+            'label': None,
             'ommitted': [],
             'term_regex': r'^[0-9]*$',
         }
@@ -156,6 +171,7 @@ _SCOPE_COLLECTIONS = {
         'mip_era': {
             'data_factory': None,
             'is_virtual': False,
+            'label': None,
             'ommitted': [],
             'term_regex': None
         }
@@ -204,6 +220,7 @@ def _create_collection(source, scope, collection_id, cfg):
         scope,
         collection_id,
         "WCRP CMIP6 CV collection: ".format(collection_id),
+        label=cfg['label'] or collection_id.title().replace('_Id', '_ID').replace('_', ' '),
         create_date=_CREATE_DATE,
         term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME
         )
