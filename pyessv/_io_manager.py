@@ -78,7 +78,7 @@ def read(archive_dir=DIR_ARCHIVE):
     :rtype: list
 
     """
-    return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir))]
+    return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
 
 def _read_authority(dpath):
@@ -90,8 +90,6 @@ def _read_authority(dpath):
     :rtype: pyessv.Authority
 
     """
-    # Validate inputs.
-    assert isdir(dpath), 'Invalid authority directory : {}'.format(dpath)
     assert isfile(join(dpath, _MANIFEST)), 'Invalid authority MANIFEST'
 
     # Read authority from manifest.
