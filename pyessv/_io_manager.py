@@ -91,7 +91,7 @@ def _read_authority(dpath):
 
     """
     # Validate inputs.
-    assert isdir(dpath), 'Invalid authority directory'
+    assert isdir(dpath), 'Invalid authority directory : {}'.format(dpath)
     assert isfile(join(dpath, _MANIFEST)), 'Invalid authority MANIFEST'
 
     # Read authority from manifest.
