@@ -80,12 +80,7 @@ def _encode_term(instance):
 
     """
     obj = _encode_node(instance)
-    obj['idx'] = instance.idx
     obj['status'] = instance.status
-    if bool(instance.alternative_name):
-        obj['alternative_name'] = instance.alternative_name
-    if bool(instance.alternative_url):
-        obj['alternative_url'] = instance.alternative_url
     if bool(instance.parent):
         obj['parent'] = instance.parent.uid
     if bool(instance.associations):

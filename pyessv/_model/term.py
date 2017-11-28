@@ -36,11 +36,8 @@ class Term(Node):
         """
         super(Term, self).__init__(NODE_TYPEKEY_TERM)
 
-        self.alternative_name = None
-        self.alternative_url = None
         self.associations = list()
         self.collection = None
-        self.idx = None
         self.parent = None
         self.status = GOVERNANCE_STATUS_PENDING
 
@@ -84,14 +81,6 @@ class Term(Node):
         """
         from pyessv._model.scope import Collection
 
-        def _alternative_name():
-            if self.alternative_name is not None:
-                assert_string(self.alternative_name)
-
-        def _alternative_url():
-            if self.alternative_url is not None:
-                assert_url(self.alternative_url)
-
         def _canonical_name():
             assert_string(self.canonical_name)
             if isinstance(self.collection.term_regex, basestring):
@@ -102,9 +91,6 @@ class Term(Node):
         def _collection():
             assert isinstance(self.collection, Collection)
 
-        def _idx():
-            assert isinstance(self.idx, int)
-
         def _parent():
             if self.parent is not None:
                 assert isinstance(self.parent, Term)
@@ -113,11 +99,8 @@ class Term(Node):
             assert self.status in GOVERNANCE_STATUS_SET
 
         return super(Term, self).get_validators() + (
-            _alternative_name,
-            _alternative_url,
             _collection,
             _canonical_name,
-            _idx,
             _parent,
             _status,
             )

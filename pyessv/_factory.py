@@ -186,7 +186,6 @@ def create_term(
     """
     def _callback(instance):
         instance.collection = collection
-        instance.idx = len(collection)
         collection.terms.append(instance)
 
     return _create_node(

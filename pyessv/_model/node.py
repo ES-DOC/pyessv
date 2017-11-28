@@ -145,9 +145,7 @@ class Node(object):
         """Returns an item from managed collection.
 
         """
-        if isinstance(key, int):
-            return lambda i: i.idx
-        elif isinstance(key, uuid.UUID):
+        if isinstance(key, uuid.UUID):
             return lambda i: i.uid
         else:
             key = str(key).strip().lower()

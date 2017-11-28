@@ -124,7 +124,6 @@ def _is_matched(node, identifier):
     """
     identifier = format_string(identifier).lower()
 
-
     # Matched by canonical name.
     if identifier == node.canonical_name:
         return True
@@ -140,16 +139,6 @@ def _is_matched(node, identifier):
     # Matched by synonyms.
     elif identifier in [format_string(i).lower() for i in node.synonyms]:
         return True
-
-    # Matched by idx.
-    if isinstance(node, Term):
-        try:
-            int(identifier)
-        except ValueError:
-            pass
-        else:
-            if int(identifier) == node.idx:
-                return True
 
     return False
 

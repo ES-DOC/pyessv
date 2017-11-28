@@ -91,10 +91,7 @@ def _decode_term(obj):
 
     """
     instance = _decode_node(obj, Term)
-    instance.alternative_name = obj.get('alternative_name')
-    instance.alternative_url = obj.get('alternative_url')
     instance.associations = obj.get('associations', [])
-    instance.idx = obj['idx']
     instance.status = obj['status']
     if instance.parent:
         instance.parent = uuid.UUID(str(obj['parent']))

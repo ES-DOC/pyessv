@@ -24,7 +24,7 @@ CACHE_STORE_TYPES = (
     )
 
 # Directory containing vocabulary archive.
-DIR_ARCHIVE = os.path.expanduser('~/.esdoc/pyessv-archive')
+DIR_ARCHIVE = os.getenv('PYESSV_ARCHIVE_HOME', os.path.expanduser('~/.esdoc/pyessv-archive'))
 
 # Dictionary encoding.
 ENCODING_DICT = 'dict'
