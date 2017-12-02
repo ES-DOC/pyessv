@@ -33,6 +33,18 @@ COLLECTIONS = {
 	('version', r'^v[0-9]*$')
 }
 
+# Arbitrary data associated with a collection.
+COLLECTION_DATA = {
+	'experiment': {
+		'cim_document_type': 'cim.1.activity.NumericalExperiment',
+		'cim_document_type_synonym': 'experiment'
+	},
+	'model': {
+		'cim_document_type': 'cim.1.software.ModelComponent',
+		'cim_document_type_synonym': 'model'
+	}
+}
+
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
 	'filename_format',

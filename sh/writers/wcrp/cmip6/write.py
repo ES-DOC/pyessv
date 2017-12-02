@@ -62,6 +62,8 @@ _SCOPE_GLOBAL = pyessv.create_scope(_AUTHORITY,
 _SCOPE_COLLECTIONS = {
     _SCOPE_CMIP6: {
         'activity_id': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': 'Activity',
@@ -69,6 +71,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'ensemble': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
@@ -76,6 +80,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': r'r[0-9]i[0-9]p[0-9]f[0-9]',
         },
         'experiment_id': {
+            'cim_document_type': 'cim.2.designing.NumericalExperiment',
+            'cim_document_type_synonym': 'experiment',
             'data_factory': lambda obj, name: obj[name],
             'is_virtual': False,
             'label': None,
@@ -83,6 +89,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'frequency': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -90,6 +98,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'grid_label': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -97,6 +107,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'institution_id': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': lambda obj, name: {'postal_address': obj[name]},
             'is_virtual': False,
             'label': None,
@@ -104,6 +116,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'nominal_resolution': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -111,6 +125,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': r'^[a-z0-9\-\.]*$'
         },
         'realm': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': lambda obj, name: {'description': obj[name]},
             'is_virtual': False,
             'label': None,
@@ -118,6 +134,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'required_global_attributes': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -125,6 +143,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'source_id': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': lambda obj, name: obj[name],
             'is_virtual': False,
             'label': None,
@@ -132,6 +152,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'source_type': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -139,6 +161,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'sub_experiment_id': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': lambda obj, name: {'description': obj[name]},
             'is_virtual': False,
             'label': None,
@@ -146,6 +170,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'table_id': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -153,6 +179,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': None
         },
         'variable': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
@@ -160,6 +188,8 @@ _SCOPE_COLLECTIONS = {
             'term_regex': r'^[A-Za-z0-9]*$',
         },
         'version': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
@@ -169,6 +199,8 @@ _SCOPE_COLLECTIONS = {
     },
     _SCOPE_GLOBAL: {
         'mip_era': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -222,7 +254,11 @@ def _create_collection(source, scope, collection_id, cfg):
         "WCRP CMIP6 CV collection: ".format(collection_id),
         label=cfg['label'] or collection_id.title().replace('_Id', '_ID').replace('_', ' '),
         create_date=_CREATE_DATE,
-        term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME
+        term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME,
+        data = None if cfg['cim_document_type'] is None else {
+            'cim_document_type': cfg['cim_document_type'],
+            'cim_document_type_synonym': cfg['cim_document_type_synonym']
+            }
         )
 
     # Load JSON data & create terms (if collection is not a virtual one).

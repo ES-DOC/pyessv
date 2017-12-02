@@ -67,13 +67,13 @@ def _main(args):
         # Create regex collections.
         collections = [i for i in module.COLLECTIONS if not inspect.isfunction(i[1])]
         for collection_id, term_regex in collections:
-            _get_collection(scope, collection_id, term_regex=term_regex)
+            _get_collection(module, scope, collection_id, term_regex=term_regex)
 
         # Create standard collections.
         collections = [i for i in module.COLLECTIONS if inspect.isfunction(i[1])]
         for collection_id, term_factory in collections:
             ctx = _MappingExecutionContext(project, collection_id, ini_section)
-            collection = _get_collection(scope, collection_id)
+            collection = _get_collection(module, scope, collection_id)
             try:
                 term_factory = term_factory()
             except TypeError:
@@ -143,16 +143,22 @@ def _get_scope(authority, project):
     )
 
 
-def _get_collection(scope, collection_id, term_regex=None):
+def _get_collection(module, scope, collection_id, term_regex=None):
     """Factory method to return vocabulary collection.
 
     """
+    try:
+        data = module.COLLECTION_DATA[collection_id]
+    except (AttributeError, KeyError):
+        data = None
+
     return pyessv.create_collection(
         scope,
         collection_id,
         "ESGF publisher-config CV collection: ".format(collection_id),
         label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
-        term_regex=term_regex
+        term_regex=term_regex,
+        data=data
     )
 
 
