@@ -31,17 +31,3 @@ alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh
 # Vocabulary writing commands.
 alias pyessv-write-wcrp-cmip6-vocabs=$PYESSV_LIB_HOME/sh/writers/wcrp/cmip6/write.sh
 alias pyessv-write-esgf-publisher-vocabs=$PYESSV_LIB_HOME/sh/writers/esgf-publisher/write.sh
-
-
-
-_reset_cmip6()
-{
-	esdoc-archive-delete-documents cmip6
-	esdoc-ws-db-flush cmip6
-	esdoc-cmip6-write-experiment-cim-documents
-	esdoc-cmip6-write-experiment-config
-	esdoc-cmip6-write-experiment-d3
-	esdoc-cmip6-archive-experiment-cim-documents
-	esdoc-ws-db-ingest
-}
-alias esdoc-cmip6-reset=_reset_cmip6
