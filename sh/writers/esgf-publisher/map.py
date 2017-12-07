@@ -82,8 +82,7 @@ def _main(args):
                 _get_term(collection, term_data)
 
     # Add to archive & persist to file system.
-    pyessv.add(authority)
-    pyessv.save()
+    pyessv.archive(authority)
 
 
 class _MappingExecutionContext(object):

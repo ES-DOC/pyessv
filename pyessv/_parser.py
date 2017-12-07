@@ -10,7 +10,7 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-from pyessv._archive import load
+from pyessv._loader import load
 from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import PARSING_STRICTNESS_0

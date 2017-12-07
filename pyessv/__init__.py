@@ -11,17 +11,14 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.4.3.0'
+__version__ = '0.4.3.1'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
 
 
 
-from pyessv._archive import add
-from pyessv._archive import get_random
-from pyessv._archive import load
-from pyessv._archive import save
+from pyessv._archive import archive
 
 from pyessv._codecs import decode
 from pyessv._codecs import encode
@@ -62,6 +59,9 @@ from pyessv._governance import reject
 from pyessv._governance import reset
 
 from pyessv._initializer import init
+
+from pyessv._loader import load_random
+from pyessv._loader import load
 
 from pyessv._model import Authority
 from pyessv._model import Collection

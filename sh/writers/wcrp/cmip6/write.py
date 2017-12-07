@@ -236,11 +236,8 @@ def _main(args):
     with open(_UID_FPATH, 'w') as fstream:
         fstream.write(json.dumps(_UID_MAP))
 
-    # Add to the archive.
-    pyessv.add(_AUTHORITY)
-
-    # Save (to file system).
-    pyessv.save()
+    # Add to archive & persist to file system.
+    pyessv.archive(_AUTHORITY)
 
 
 def _create_collection(source, scope, collection_id, cfg):

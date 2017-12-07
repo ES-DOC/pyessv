@@ -56,10 +56,7 @@ _EXCEPTIONS = {
 # Set of functions exposed by library.
 _FUNCS = {
     # ... archive
-    'add',
-    'get_random',
-    'load',
-    'save',
+    'archive',
     # ... codecs
     'decode',
     'encode',
@@ -77,6 +74,9 @@ _FUNCS = {
     'reset',
     # ... initialisation
     'init',
+    # ... loader
+    'load_random',
+    'load',
     # ... logging
     'log',
     'log_error',
