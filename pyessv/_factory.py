@@ -14,8 +14,6 @@ import uuid
 
 import arrow
 
-import pyessv
-
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_SET

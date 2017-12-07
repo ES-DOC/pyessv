@@ -15,7 +15,6 @@ import inspect
 import re
 import uuid
 
-import pyessv
 from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
@@ -70,12 +69,14 @@ def assert_namespace(identifier, min_length=1, max_length=4):
 
 
 def assert_pattern(val, info):
+    from pyessv._archive import load
+
     pattern = info[0]
     collections = []
     for defn in info[1:]:
         parts = defn.split(':')
         field = parts[-1] if parts[-1] in PARSING_NODE_FIELDS else 'canonical_name'
-        collection = pyessv.load(':'.join(parts[0:3]))
+        collection = load(':'.join(parts[0:3]))
         collections.append((collection, field))
 
     print namespaces

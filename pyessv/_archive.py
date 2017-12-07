@@ -20,6 +20,7 @@ from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._io_manager import write
 from pyessv._model import Authority
 from pyessv._model import Term
+from pyessv._utils import logger
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_canonical_name
@@ -45,6 +46,9 @@ def load(identifier):
     result = _load_by_namespace(identifier)
     if result is None:
         result = _load_by_uid(identifier)
+
+    if result is None:
+        logger.log_warning('Identifier could not be mapped to an archived vocabulary entity: {}'.format(identifier))
 
     return result
 

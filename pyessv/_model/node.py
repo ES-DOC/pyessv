@@ -51,6 +51,16 @@ class Node(object):
         return self.namespace
 
 
+    def __getattr__(self, name):
+        """Instance attribute getter.
+
+        """
+        try:
+            return self.data[name]
+        except KeyError:
+            raise AttributeError('{} unknown attribute'.format(name))
+
+
     @property
     def name(self):
         """Helper attribute to return canonical_name.
@@ -183,10 +193,21 @@ class IterableNode(Node):
         return self[key] is not None
 
 
+    def __getattr__(self, name):
+        """Instance attribute getter.
+
+        """
+        try:
+            return self[name.lower()]
+        except KeyError:
+            raise AttributeError('{} unknown attribute'.format(name))
+
+
     def __getitem__(self, key):
         """Returns a child section item.
 
         """
+        # Match against a uid | canonical name.
         comparator = Node.get_comparator(key)
         for item in self:
             if comparator(item) == key:

@@ -12,7 +12,9 @@
 
 """
 import os
+import collections
 
+import pyessv
 from pyessv._cache import cache
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._io_manager import read
@@ -28,8 +30,18 @@ def init():
 	if not os.path.isdir(DIR_ARCHIVE):
 		raise EnvironmentError('{} directory does not exists'.format(DIR_ARCHIVE))
 
-	# Read set of authorities from file system & cache.
+	# Load set of authorities from file system.
 	logger.log('Loading vocabularies from {}:'.format(DIR_ARCHIVE))
+	loaded = []
 	for authority in read():
+		loaded.append(authority)
 		logger.log('... loaded: {}'.format(authority))
 		cache(authority)
+
+	# Cache.
+	for authority in loaded:
+		cache(authority)
+
+	# Expose as psuedo-constants.
+	Vocabs = collections.namedtuple('Vocabs', [i.canonical_name.replace('-', '_') for i in loaded])
+	pyessv.vocabs = Vocabs._make(loaded)

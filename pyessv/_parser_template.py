@@ -11,9 +11,9 @@
 
 
 """
-import pyessv
 from pyessv._exceptions import TemplateParsingError
 from pyessv._model.collection import Collection
+from pyessv._model.term import Term
 from pyessv._utils.compat import  basestring
 
 
@@ -31,6 +31,8 @@ class TemplateParser(object):
         :param str seprarator: Seperator to apply when parsing.
 
         """
+        from pyessv._archive import load
+
         self.seperator = seperator
         self.template_parts = template.split(seperator)
         self.template = template
@@ -40,7 +42,7 @@ class TemplateParser(object):
         collection_idx = 0
         for idx, part in enumerate(self.template_parts):
             if part == '{}':
-                self.template_parts[idx] = pyessv.load(collections[collection_idx])
+                self.template_parts[idx] = load(collections[collection_idx])
                 collection_idx += 1
 
 
@@ -69,7 +71,7 @@ class TemplateParser(object):
             term = collection.is_matched(name, self.strictness)
             if term == False:
                 raise TemplateParsingError('vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, val))
-            if isinstance(term, pyessv.Term):
+            if isinstance(term, Term):
                 terms.add(term)
 
         return terms

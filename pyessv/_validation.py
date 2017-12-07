@@ -16,7 +16,6 @@ import inspect
 import re
 import uuid
 
-import pyessv
 from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME

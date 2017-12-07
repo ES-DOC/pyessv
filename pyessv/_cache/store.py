@@ -46,7 +46,6 @@ def get_cached(identifier=None, store_type=CACHE_STORE_MEMORY):
     :rtype: pyessv.Node | list[Authority]
 
     """
-
     assert store_type in CACHE_STORE_TYPES, 'Invalid cache store type'
 
     return _STORES[store_type].get_cached(identifier)
