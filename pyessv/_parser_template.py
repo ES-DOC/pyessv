@@ -63,7 +63,7 @@ class TemplateParser(object):
             # Verify constant match.
             if isinstance(template_part, basestring):
                 if template_part != name:
-                    raise TemplateParsingError(val)
+                    raise TemplateParsingError('{} :: {}'.format(name, val))
                 continue
 
             # Verify collection match.

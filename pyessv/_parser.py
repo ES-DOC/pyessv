@@ -21,12 +21,9 @@ from pyessv._constants import PARSING_STRICTNESS_4
 from pyessv._exceptions import ParsingError
 from pyessv._utils.compat import str
 
-from pyessv._model import Collection
-from pyessv._model import Term
 
 
-
-def parse_namespace(
+def parse(
     namespace,
     strictness=PARSING_STRICTNESS_2,
     field='canonical_name'
@@ -38,34 +35,16 @@ def parse_namespace(
     :param str field: Term field to return.
 
     """
-    ns = str(namespace).split(':')
-    assert len(ns) >= 1 and len(ns) <= 4, 'Invalid namespace'
-
-    ns = ns + [None for i in range(4 - len(ns))]
-
-    return parse(ns[0], ns[1], ns[2], ns[3], strictness, field)
-
-
-def parse(
-    authority,
-    scope=None,
-    collection=None,
-    term=None,
-    strictness=PARSING_STRICTNESS_2,
-    field='canonical_name'
-    ):
-    """Parses a name within a vocabulary hierachy.
-
-    :param str authority: Vocabulary authority, e.g. wcrp.
-    :param str scope: Vocabulary scope, e.g. global.
-    :param str collection: Vocabulary collection, e.g. institute-id.
-    :param str term: Vocabulary term, e.g. ipsl.
-    :param int strictness: Strictness level to apply when applying lookup rules.
-    :param str field: Term field to return.
-
-    """
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness'
     assert field in PARSING_NODE_FIELDS, 'Invalid field'
+
+    # Set namespace
+    ns = str(namespace).strip().split(':')
+    assert len(ns) >= 1 and len(ns) <= 4, 'Invalid namespace'
+    ns = ns + [None for i in range(4 - len(ns))]
+
+    # Destructure.
+    authority, scope, collection, term = ns
 
     # Set parsing targets.
     targets = [

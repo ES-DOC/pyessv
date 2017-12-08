@@ -55,6 +55,8 @@ class Node(object):
         """Instance attribute getter.
 
         """
+        name = name.replace('_', '-')
+        print 777, name
         try:
             return self.data[name]
         except KeyError:
@@ -198,7 +200,7 @@ class IterableNode(Node):
 
         """
         try:
-            return self[name.lower()]
+            return self[name.lower().replace('_', '-')]
         except KeyError:
             raise AttributeError('{} unknown attribute'.format(name))
 

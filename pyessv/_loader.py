@@ -45,7 +45,7 @@ def load(identifier):
         result = _load_by_uid(identifier)
 
     if result is None:
-        logger.log_warning('Identifier could not be mapped to an archived vocabulary entity: {}'.format(identifier))
+        logger.log_warning('Cannot map identifier to a vocabulary entity: {}'.format(identifier))
 
     return result
 

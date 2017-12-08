@@ -83,8 +83,8 @@ _FUNCS = {
     'log_warning',
     # ... parsing
     'parse',
-    'parse_namespace',
     'parse_dataset_identifer',
+    'parse_dataset_identifers',
     # ... validation
     'get_errors',
     'is_valid',

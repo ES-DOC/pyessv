@@ -39,64 +39,31 @@ def test_parse_name():
     for typekey, canonical_name, synonyms, parent in _INPUTS:
         for synonym in synonyms:
             for name, expected, strictness in _get_config(canonical_name, synonym):
-                for func in (_test_parse_name, ):
-                    target = func.__name__.split('_')[-1]
-                    desc = 'parse --> {}: {} [strictness={}, target={}]'.format(
-                        typekey, name, strictness, target
-                        )
-                    tu.init(func, desc)
-                    yield func, typekey, name, expected, strictness, parent
+                desc = 'parse --> {}: {} [strictness={}]'.format(typekey, name, strictness)
+                tu.init(_test_parse_name, desc)
+                yield _test_parse_name, typekey, name, expected, strictness, parent
 
 
 def _test_parse_name(typekey, name, expected, strictness, parent):
     """Asserts name test.
 
     """
-    s = c = t = None
     if typekey == LIB.NODE_TYPEKEY_AUTHORITY:
-        a = name
+        namespace = name
     elif typekey == LIB.NODE_TYPEKEY_SCOPE:
-        a = tu.AUTHORITY_NAME
-        s = name
+        namespace = '{}:{}'.format(tu.AUTHORITY_NAME, name)
     elif typekey == LIB.NODE_TYPEKEY_COLLECTION:
-        a = tu.AUTHORITY_NAME
-        s = tu.SCOPE_NAME
-        c = name
+        namespace = '{}:{}:{}'.format(tu.AUTHORITY_NAME, tu.SCOPE_NAME, name)
     elif typekey == LIB.NODE_TYPEKEY_TERM:
-        a = tu.AUTHORITY_NAME
-        s = tu.SCOPE_NAME
-        c = parent
-        t = name
+        namespace = '{}:{}:{}:{}'.format(tu.AUTHORITY_NAME, tu.SCOPE_NAME, parent, name)
 
     try:
-        result = LIB.parse(a, s, c, t, strictness=strictness)
+        result = LIB.parse(namespace, strictness=strictness)
     except LIB.ParsingError:
         result = LIB.ParsingError
 
     assert result == expected, \
            'Name parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typekey, name, result, expected)
-
-
-def _test_parse_namespace(typekey, name, expected, strictness, parent):
-    """Asserts namespace test.
-
-    """
-    if typekey == LIB.NODE_TYPEKEY_AUTHORITY:
-        ns = name
-    elif typekey == LIB.NODE_TYPEKEY_SCOPE:
-        ns = "{}:{}".format(tu.AUTHORITY_NAME, name)
-    elif typekey == LIB.NODE_TYPEKEY_COLLECTION:
-        ns = "{}:{}:{}".format(tu.AUTHORITY_NAME, tu.SCOPE_NAME, name)
-    elif typekey == LIB.NODE_TYPEKEY_TERM:
-        ns = "{}:{}:{}:{}".format(tu.AUTHORITY_NAME, tu.SCOPE_NAME, parent, name)
-
-    try:
-        result = LIB.parse_namespace(ns, strictness)
-    except LIB.ParsingError:
-        result = LIB.ParsingError
-
-    assert result == expected, \
-           'Namespace parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typekey, name, result, expected)
 
 
 def _get_config(canonical_name, synonym):
