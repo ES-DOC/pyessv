@@ -27,7 +27,7 @@ from pyessv._utils.formatter import format_string
 
 
 
-def load(identifier):
+def load(identifier, verbose=True):
     """Loads a vocabulary node from archive.
 
     :param str identifier: Vocabulary node identifier.
@@ -44,7 +44,7 @@ def load(identifier):
     if result is None:
         result = _load_by_uid(identifier)
 
-    if result is None:
+    if result is None and verbose:
         logger.log_warning('Cannot map identifier to a vocabulary entity: {}'.format(identifier))
 
     return result
