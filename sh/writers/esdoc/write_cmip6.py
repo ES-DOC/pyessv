@@ -13,9 +13,6 @@ import pyessv
 import utils
 
 
-# Set required vocabs.
-WCRP = pyessv.vocabs.wcrp
-
 
 def _write():
     """Writes errata vocabularies to pyessv-archive.
@@ -64,12 +61,14 @@ def _write_model_topic(scope):
 
     pyessv.create_term(collection, 'toplevel',
         create_date=utils.CREATE_DATE,
+        description='Top Level',
         label='Top Level'
     )
 
-    for term in WCRP.cmip6.realm:
+    for term in pyessv.WCRP.cmip6.realm:
         pyessv.create_term(collection, term.raw_name,
-            create_date=utils.CREATE_DATE
+            create_date=utils.CREATE_DATE,
+            label=term.description,
         )
 
 

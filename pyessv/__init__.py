@@ -17,7 +17,6 @@ __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
 
 
-
 from pyessv._archive import archive
 
 from pyessv._codecs import decode

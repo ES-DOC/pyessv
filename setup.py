@@ -22,14 +22,7 @@ from setuptools.dist import Distribution
 # List of 3rd party python dependencies.
 _REQUIRES = [
     'arrow',
-    'feedparser',
-    'lxml',
-    'nose',
-    'requests',
-    'tornado',
-    'xlsxwriter',
-    'xlrd',
-    'jupyter'
+    'nose'
     ]
 
 

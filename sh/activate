@@ -6,6 +6,9 @@
 export PYESSV_LIB_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PYESSV_LIB_HOME="$( cd "$( dirname "${PYESSV_LIB_HOME[0]}" )" && pwd )"
 
+# Set python path
+export PYTHONPATH=$PYESSV_LIB_HOME:$PYTHONPATH
+
 # Set archive directory.
 mkdir -p $HOME/.esdoc/pyessv-archive
 
@@ -16,7 +19,7 @@ mkdir -p $HOME/.esdoc/pyessv-archive
 # Ensure shell scripts are executable.
 chmod a+x $PYESSV_LIB_HOME/sh/*.sh
 chmod a+x $PYESSV_LIB_HOME/sh/writers/esdoc/*.sh
-chmod a+x $PYESSV_LIB_HOME/sh/writers/esgf-publisher/*.sh
+chmod a+x $PYESSV_LIB_HOME/sh/writers/esgf/*.sh
 chmod a+x $PYESSV_LIB_HOME/sh/writers/wcrp/*.sh
 
 # ###############################################################
