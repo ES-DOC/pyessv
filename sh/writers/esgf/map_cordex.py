@@ -48,7 +48,7 @@ def yield_domain(ctx):
 	"""Yields domain information to be converted to pyessv terms.
 
 	"""
-	for _, domain_name, domain_description in ctx.ini_section.get_option('domain_description_map', '\n', '|'):
+	for domain_name, domain_description in ctx.ini_section.get_option('domain_description_map', '\n', '|'):
 		yield domain_name, domain_name, domain_description
 
 
@@ -64,5 +64,5 @@ def yield_rcm_name(ctx):
 	"""Yields rcm name information to be converted to pyessv terms.
 
 	"""
-	for _, _, rcm_name in ctx.ini_section.get_option('rcm_name_map', '\n', '|'):
+	for _, rcm_name in ctx.ini_section.get_option('rcm_name_map', '\n', '|'):
 		yield rcm_name

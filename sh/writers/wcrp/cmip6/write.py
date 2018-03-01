@@ -70,15 +70,6 @@ _SCOPE_COLLECTIONS = {
             'ommitted': [],
             'term_regex': None
         },
-        'ensemble': {
-            'cim_document_type': None,
-            'cim_document_type_synonym': None,
-            'data_factory': None,
-            'is_virtual': True,
-            'label': None,
-            'ommitted': [],
-            'term_regex': r'r[0-9]i[0-9]p[0-9]f[0-9]',
-        },
         'experiment_id': {
             'cim_document_type': 'cim.2.designing.NumericalExperiment',
             'cim_document_type_synonym': 'experiment',
@@ -114,6 +105,15 @@ _SCOPE_COLLECTIONS = {
             'label': None,
             'ommitted': [],
             'term_regex': None
+        },
+        'member_id': {
+            'cim_document_type': None,
+            'cim_document_type_synonym': None,
+            'data_factory': None,
+            'is_virtual': True,
+            'label': None,
+            'ommitted': [],
+            'term_regex': r'r[0-9]i[0-9]p[0-9]f[0-9]',
         },
         'nominal_resolution': {
             'cim_document_type': None,
@@ -178,7 +178,7 @@ _SCOPE_COLLECTIONS = {
             'ommitted': [],
             'term_regex': None
         },
-        'variable': {
+        'variable_id': {
             'cim_document_type': None,
             'cim_document_type_synonym': None,
             'data_factory': None,

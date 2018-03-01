@@ -16,10 +16,10 @@ from pyessv._constants import PARSING_STRICTNESS_1
 
 
 # Template extracted from esgf ini file (for reference purpose only).
-_INI_PATTERN = '%(mip_era)s.%(activity)s.%(institute)s.%(source_id)s.%(experiment)s.%(ensemble)s.%(cmor_table)s.%(variable)s.%(grid_label)s'
+_INI_PATTERN = 'CMIP6.%(activity_id)s.%(institution_id)s.%(source_id)s.%(experiment_id)s.%(member_id)s.%(table_id)s.%(variable_id)s.%(grid_label)s'
 
 # Template that identifiers must conform to.
-_TEMPLATE = 'cmip6.{}.{}.{}.{}.{}.{}.{}.{}'
+_TEMPLATE = 'CMIP6.{}.{}.{}.{}.{}.{}.{}.{}'
 
 # Collections injected into template.
 _COLLECTIONS = (
@@ -27,9 +27,16 @@ _COLLECTIONS = (
     'wcrp:cmip6:institution-id',
     'wcrp:cmip6:source-id',
     'wcrp:cmip6:experiment-id',
-    'wcrp:cmip6:ensemble',
+    # changed
+    # 'wcrp:cmip6:ensemble',
+    'wcrp:cmip6:member-id',
+
     'wcrp:cmip6:table-id',
-    'wcrp:cmip6:variable',
+
+    # changed
+    # 'wcrp:cmip6:variable',
+    'wcrp:cmip6:variable-id',
+
     'wcrp:cmip6:grid-label'
     )
 

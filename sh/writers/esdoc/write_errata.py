@@ -231,7 +231,7 @@ def _write_projects(scope):
                 "wcrp:cmip6:institution-id",
                 "wcrp:cmip6:experiment-id",
                 "wcrp:cmip6:source-id",
-                "wcrp:cmip6:variable"
+                "wcrp:cmip6:variable-id"
             ],
             "is_pid_client": True,
             "is_documented": True
