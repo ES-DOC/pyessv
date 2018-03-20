@@ -48,7 +48,7 @@ def get_institute_sources(institution_id):
     return [i for i in scope.source_id if _is_related(i)]
 
 
-def get_source_realms(source_id):
+def get_source_realms(source_id=None):
     """Returns collection of realms related to a source identifier.
 
     :param str source_id: ID of a source.
@@ -62,4 +62,4 @@ def get_source_realms(source_id):
 
     scope = _get_scope()
 
-    return [i for i in scope.realm if _is_realized(i)]
+    return scope.realm if source_id is None else [i for i in scope.realm if _is_realized(i)]
