@@ -27,16 +27,9 @@ _COLLECTIONS = (
     'wcrp:cmip6:institution-id',
     'wcrp:cmip6:source-id',
     'wcrp:cmip6:experiment-id',
-    # changed
-    # 'wcrp:cmip6:ensemble',
     'wcrp:cmip6:member-id',
-
     'wcrp:cmip6:table-id',
-
-    # changed
-    # 'wcrp:cmip6:variable',
     'wcrp:cmip6:variable-id',
-
     'wcrp:cmip6:grid-label'
     )
 
