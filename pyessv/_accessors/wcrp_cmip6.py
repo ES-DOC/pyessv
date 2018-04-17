@@ -40,10 +40,14 @@ def get_institute_sources(institution_id):
     :rtype: list
 
     """
-    def _is_related(source):
-        return institution_id.canonical_name in [i.lower() for i in source.data['institution_id']]
-
     scope = _get_scope()
+    try:
+        institution_id = institution_id.canonical_name
+    except AttributeError:
+        institution_id = institution_id
+
+    def _is_related(source):
+        return institution_id in [i.lower() for i in source.data['institution_id']]
 
     return [i for i in scope.source_id if _is_related(i)]
 
