@@ -40,7 +40,7 @@ def create_authority(
     url=None,
     create_date=None,
     data=None,
-    synonyms=[]
+    alternative_names=[]
     ):
     """Instantiates, initialises & returns a term authority.
 
@@ -50,7 +50,7 @@ def create_authority(
     :param str url: Further information URL.
     :param datetime create_date: Creation date.
     :param dict data: Arbirtrary data.
-    :param list synonyms: Collection of associated synonyms.
+    :param list alternative_names: Collection of associated alternative names.
 
     :returns: A vocabulary authority, e.g. wcrp.
     :rtype: pyessv.Authority
@@ -63,7 +63,7 @@ def create_authority(
         label=label,
         url=url,
         create_date=create_date,
-        synonyms=synonyms,
+        alternative_names=alternative_names,
         data=data
         )
 
@@ -76,7 +76,7 @@ def create_scope(
     url=None,
     create_date=None,
     data=None,
-    synonyms=[]
+    alternative_names=[]
     ):
     """Instantiates, initialises & returns a term scope.
 
@@ -87,7 +87,7 @@ def create_scope(
     :param str url: Further information URL.
     :param datetime create_date: Creation date.
     :param dict data: Arbirtrary data.
-    :param list synonyms: Collection of associated synonyms.
+    :param list alternative_names: Collection of associated alternative names.
 
     :returns: A vocabulary scope, e.g. cmip6.
     :rtype: pyessv.Scope
@@ -104,7 +104,7 @@ def create_scope(
         label=label,
         url=url,
         create_date=create_date or authority.create_date,
-        synonyms=synonyms,
+        alternative_names=alternative_names,
         data=data,
         callback=_callback
         )
@@ -118,7 +118,7 @@ def create_collection(
     url=None,
     create_date=None,
     data=None,
-    synonyms=[],
+    alternative_names=[],
     term_regex=None
     ):
     """Instantiates, initialises & returns a regular expression term collection.
@@ -130,7 +130,7 @@ def create_collection(
     :param str url: Further information URL.
     :param datetime create_date: Creation date.
     :param dict data: Arbirtrary data.
-    :param list synonyms: Collection of associated synonyms.
+    :param list alternative_names: Collection of associated alternative names.
     :param str|tuple term_regex: Regular expression information to be applied to terms.
 
     :returns: A vocabulary collection, e.g. insitution-id.
@@ -152,7 +152,7 @@ def create_collection(
         label=label,
         url=url,
         create_date=create_date or scope.create_date,
-        synonyms=synonyms,
+        alternative_names=alternative_names,
         data=data,
         callback=_callback
         )
@@ -165,7 +165,7 @@ def create_term(
     url=None,
     create_date=None,
     data=None,
-    synonyms=[]
+    alternative_names=[]
     ):
     """Instantiates, initialises & returns a term.
 
@@ -176,7 +176,7 @@ def create_term(
     :param str url: Further information URL.
     :param datetime create_date: Creation date.
     :param dict data: Arbirtrary data.
-    :param list synonyms: Collection of associated synonyms.
+    :param list alternative_names: Collection of associated alternative names.
 
     :returns: A vocabulary term, e.g. ipsl.
     :rtype: pyessv.Term
@@ -193,7 +193,7 @@ def create_term(
         label=label,
         url=url,
         create_date=create_date or collection.create_date,
-        synonyms=synonyms,
+        alternative_names=alternative_names,
         data=data,
         callback=_callback
         )
@@ -230,7 +230,7 @@ def _create_node(
     label,
     url,
     create_date,
-    synonyms,
+    alternative_names,
     data,
     callback = None
     ):
@@ -239,12 +239,12 @@ def _create_node(
     """
     # Set core attributes.
     node = typeof()
-    node.label = label or format_string(raw_name)
+    node.alternative_names = alternative_names
     node.canonical_name = format_canonical_name(raw_name)
-    node.raw_name = format_string(raw_name)
     node.create_date = create_date or arrow.utcnow().datetime
     node.data = data
-    node.synonyms = synonyms
+    node.label = label or format_string(raw_name)
+    node.raw_name = format_string(raw_name)
     node.uid = uuid.uuid4()
 
     # Set other attributes.

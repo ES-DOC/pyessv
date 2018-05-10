@@ -11,13 +11,15 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.4.5.0'
+__version__ = '0.5.1.0'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
 
 
 from pyessv._archive import archive
+
+from pyessv._cache import get_cached
 
 from pyessv._codecs import decode
 from pyessv._codecs import encode
@@ -78,6 +80,8 @@ from pyessv._utils.logger import log_warning
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
 from pyessv._validation import validate
+
+from pyessv._ws import app as web_service
 
 
 # Auto-initialize.

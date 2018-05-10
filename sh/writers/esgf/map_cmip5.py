@@ -37,11 +37,11 @@ COLLECTIONS = {
 COLLECTION_DATA = {
 	'experiment': {
 		'cim_document_type': 'cim.1.activity.NumericalExperiment',
-		'cim_document_type_synonym': 'experiment'
+		'cim_document_type_alternative_name': 'experiment'
 	},
 	'model': {
 		'cim_document_type': 'cim.1.software.ModelComponent',
-		'cim_document_type_synonym': 'model'
+		'cim_document_type_alternative_name': 'model'
 	}
 }
 

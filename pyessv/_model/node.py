@@ -38,7 +38,7 @@ class Node(object):
         self.description = None
         self.label = None
         self.raw_name = None
-        self.synonyms = list()
+        self.alternative_names = list()
         self.typekey = typekey
         self.uid = None
         self.url = None
@@ -77,7 +77,7 @@ class Node(object):
         """Returns all term names.
 
         """
-        result = [self.canonical_name, self.raw_name] + self.synonyms
+        result = [self.canonical_name, self.raw_name] + self.alternative_names
         result = [t for t in result if t is not None and len(t) > 0]
 
         return set(sorted(result))
@@ -111,6 +111,9 @@ class Node(object):
         """Returns set of validators.
 
         """
+        def _alternative_names():
+            assert_iterable(self.alternative_names, assert_string)
+
         def _create_date():
             assert isinstance(self.create_date, datetime.datetime)
 
@@ -128,9 +131,6 @@ class Node(object):
             if self.label is not None:
                 assert_string(self.label)
 
-        def _synonyms():
-            assert_iterable(self.synonyms, assert_string)
-
         def _typekey():
             assert self.typekey in NODE_TYPEKEY_SET
 
@@ -142,11 +142,11 @@ class Node(object):
                 assert_url(self.url)
 
         return (
+            _alternative_names,
             _create_date,
             _data,
             _description,
             _label,
-            _synonyms,
             _typekey,
             _uid,
             _url
@@ -221,9 +221,9 @@ class IterableNode(Node):
             if key == item.raw_name:
                 return item
 
-        # Match against a synonym.
+        # Match against an alternative name.
         for item in self:
-            if key in item.synonyms:
+            if key in item.alternative_names:
                 return item
 
 

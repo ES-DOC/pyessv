@@ -87,7 +87,7 @@ PARSING_STRICTNESS_1 = 1
 # Parsing strictness: canonical-name + raw-name;
 PARSING_STRICTNESS_2 = 2
 
-# Parsing strictness: 2 + synonyms
+# Parsing strictness: 2 + alternative_names
 PARSING_STRICTNESS_3 = 3
 
 # Parsing strictness: 3 + case-insensitive
@@ -107,12 +107,12 @@ REGEX_CANONICAL_NAME = r'^[a-z0-9\-]*$'
 
 # Standard node fields.
 STANDARD_NODE_FIELDS = (
+    'alternative_names',
     'canonical_name',
     'create_date',
     'description',
     'label',
     'raw_name',
-    'synonyms',
     'typekey',
     'uid',
     'url',

@@ -112,7 +112,7 @@ class _NodeInfo(object):
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_3:
-            if self.name in {node.canonical_name, node.raw_name}.union(set(node.synonyms)):
+            if self.name in {node.canonical_name, node.raw_name}.union(set(node.alternative_names)):
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_4:

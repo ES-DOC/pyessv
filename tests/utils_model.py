@@ -25,7 +25,7 @@ AUTHORITY = None
 AUTHORITY_DESCRIPTION = 'authority-description'
 AUTHORITY_NAME = 'authority'
 AUTHORITY_NAMESPACE = AUTHORITY_NAME
-AUTHORITY_SYNONYMS = ['authority-synonym-1', 'authority-synonym-2']
+AUTHORITY_ALTERNATIVE_NAMES = ['authority-alternative-name-1', 'authority-alternative-name-2']
 AUTHORITY_URL = 'https://github.com/ES-DOC/pyesssv-archive/{}'.format(AUTHORITY_NAME)
 
 
@@ -41,7 +41,7 @@ def create_authority():
     AUTHORITY = LIB.create_authority(
         name=AUTHORITY_NAME,
         description=AUTHORITY_DESCRIPTION,
-        synonyms=AUTHORITY_SYNONYMS,
+        alternative_names=AUTHORITY_ALTERNATIVE_NAMES,
         url=AUTHORITY_URL
         )
     create_scope()
@@ -54,7 +54,7 @@ SCOPE = None
 SCOPE_DESCRIPTION = 'scope-description'
 SCOPE_NAME = 'scope'
 SCOPE_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME])
-SCOPE_SYNONYMS = ['scope-synonym-1', 'scope-synonym-2']
+SCOPE_ALTERNATIVE_NAMES = ['scope-alternative-name-1', 'scope-alternative-name-2']
 SCOPE_URL = '{}/{}'.format(AUTHORITY_URL, SCOPE_NAME)
 
 
@@ -71,7 +71,7 @@ def create_scope():
         authority=AUTHORITY or create_authority(),
         name=SCOPE_NAME,
         description=SCOPE_DESCRIPTION,
-        synonyms=SCOPE_SYNONYMS,
+        alternative_names=SCOPE_ALTERNATIVE_NAMES,
         url=SCOPE_URL
         )
     create_collection_01()
@@ -86,7 +86,7 @@ COLLECTION_01 = None
 COLLECTION_01_DESCRIPTION = 'collection-01-description'
 COLLECTION_01_NAME = 'collection-01'
 COLLECTION_01_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_01_NAME])
-COLLECTION_01_SYNONYMS = ['collection-01-synonym-1', 'collection-01-synonym-2']
+COLLECTION_01_ALTERNATIVE_NAMES = ['collection-01-alternative-name-1', 'collection-01-alternative-name-2']
 COLLECTION_01_URL = '{}/{}'.format(SCOPE_URL, COLLECTION_01_NAME)
 
 
@@ -103,7 +103,7 @@ def create_collection_01():
         scope=SCOPE or create_scope(),
         name=COLLECTION_01_NAME,
         description=COLLECTION_01_DESCRIPTION,
-        synonyms=COLLECTION_01_SYNONYMS,
+        alternative_names=COLLECTION_01_ALTERNATIVE_NAMES,
         url=COLLECTION_01_URL
         )
     create_term_01()
@@ -116,7 +116,7 @@ COLLECTION_02 = None
 COLLECTION_02_DESCRIPTION = 'collection-02-description'
 COLLECTION_02_NAME = 'collection-02'
 COLLECTION_02_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_02_NAME])
-COLLECTION_02_SYNONYMS = ['collection-02-synonym-1', 'collection-02-synonym-2']
+COLLECTION_02_ALTERNATIVE_NAMES = ['collection-02-alternative-name-1', 'collection-02-alternative-name-2']
 COLLECTION_02_TERM_REGEX = r'^[A-z0-9\-]*$'
 COLLECTION_02_URL = '{}/{}'.format(SCOPE_URL, COLLECTION_02_NAME)
 
@@ -134,7 +134,7 @@ def create_collection_02():
         scope=SCOPE or create_scope(),
         name=COLLECTION_02_NAME,
         description=COLLECTION_02_DESCRIPTION,
-        synonyms=COLLECTION_02_SYNONYMS,
+        alternative_names=COLLECTION_02_ALTERNATIVE_NAMES,
         term_regex=COLLECTION_02_TERM_REGEX,
         url=COLLECTION_02_URL
         )
@@ -148,7 +148,7 @@ COLLECTION_03 = None
 COLLECTION_03_DESCRIPTION = 'collection-03-description'
 COLLECTION_03_NAME = 'collection-03'
 COLLECTION_03_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_03_NAME])
-COLLECTION_03_SYNONYMS = ['collection-03-synonym-1', 'collection-03-synonym-2']
+COLLECTION_03_ALTERNATIVE_NAMES = ['collection-03-alternative-name-1', 'collection-03-alternative-name-2']
 COLLECTION_03_TERM_REGEX = r'^[A-z0-9\-]*$'
 COLLECTION_03_URL = '{}/{}'.format(SCOPE_URL, COLLECTION_03_NAME)
 
@@ -166,7 +166,7 @@ def create_collection_03():
         scope=SCOPE or create_scope(),
         name=COLLECTION_03_NAME,
         description=COLLECTION_03_DESCRIPTION,
-        synonyms=COLLECTION_03_SYNONYMS,
+        alternative_names=COLLECTION_03_ALTERNATIVE_NAMES,
         term_regex=COLLECTION_03_TERM_REGEX,
         url=COLLECTION_03_URL
         )
@@ -180,7 +180,7 @@ TERM_01 = None
 TERM_01_DESCRIPTION = 'term-01-description'
 TERM_01_NAME = 'term-01'
 TERM_01_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_01_NAME, TERM_01_NAME])
-TERM_01_SYNONYMS = ['term-01-synonym-1', 'term-01-synonym-2']
+TERM_01_ALTERNATIVE_NAMES = ['term-01-alternative-name-1', 'term-01-alternative-name-2']
 TERM_01_URL = '{}/{}'.format(COLLECTION_01_URL, TERM_01_NAME)
 
 
@@ -197,7 +197,7 @@ def create_term_01(collection=None):
         collection=collection or COLLECTION_01 or create_collection_01(),
         name=TERM_01_NAME,
         description=TERM_01_DESCRIPTION,
-        synonyms=TERM_01_SYNONYMS,
+        alternative_names=TERM_01_ALTERNATIVE_NAMES,
         url=TERM_01_URL
         )
 
@@ -209,7 +209,7 @@ TERM_02 = None
 TERM_02_DESCRIPTION = 'term-02-description'
 TERM_02_NAME = 'term-02'
 TERM_02_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_02_NAME, TERM_02_NAME])
-TERM_02_SYNONYMS = ['term-02-synonym-1', 'term-02-synonym-2']
+TERM_02_ALTERNATIVE_NAMES = ['term-02-alternative-name-1', 'term-02-alternative-name-2']
 TERM_02_URL = '{}/{}'.format(COLLECTION_02_URL, TERM_02_NAME)
 
 
@@ -226,7 +226,7 @@ def create_term_02(collection=None):
         collection=collection or COLLECTION_02 or create_collection_02(),
         name=TERM_02_NAME,
         description=TERM_02_DESCRIPTION,
-        synonyms=TERM_02_SYNONYMS,
+        alternative_names=TERM_02_ALTERNATIVE_NAMES,
         url=TERM_02_URL
         )
 
@@ -238,7 +238,7 @@ TERM_03 = None
 TERM_03_DESCRIPTION = 'term-03-description'
 TERM_03_NAME = '{}-TESTING-{}'.format(TERM_01_NAME, TERM_02_NAME)
 TERM_03_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_03_NAME, TERM_03_NAME])
-TERM_03_SYNONYMS = ['term-03-synonym-1', 'term-03-synonym-2']
+TERM_03_ALTERNATIVE_NAMES = ['term-03-alternative-name-1', 'term-03-alternative-name-2']
 TERM_03_URL = '{}/{}'.format(COLLECTION_03_URL, TERM_03_NAME)
 
 
@@ -255,7 +255,7 @@ def create_term_03(collection=None):
         collection=collection or COLLECTION_03 or create_collection_03(),
         name=TERM_03_NAME,
         description=TERM_03_DESCRIPTION,
-        synonyms=TERM_03_SYNONYMS,
+        alternative_names=TERM_03_ALTERNATIVE_NAMES,
         url=TERM_03_URL
         )
 

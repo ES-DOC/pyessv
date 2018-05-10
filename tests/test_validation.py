@@ -43,7 +43,7 @@ _TEST_INFO = {
     ],
     LIB.Term: _NODE_TEST_INFO + [
         ('status', ('', '  ', [123])),
-        ('synonyms', ('', '  ', [123])),
+        ('alternative_names', ('', '  ', [123])),
     ],
 }
 

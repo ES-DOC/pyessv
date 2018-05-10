@@ -137,9 +137,9 @@ class Collection(IterableNode):
                 if name in {term.canonical_name, term.raw_name}:
                     return term
 
-            # match by: synonym
+            # match by: alternative_name
             if strictness == PARSING_STRICTNESS_3:
-                if name in {term.canonical_name, term.raw_name}.union(set(term.synonyms)):
+                if name in {term.canonical_name, term.raw_name}.union(set(term.alternative_names)):
                     return term
 
             # match by: all (case-insensitive)

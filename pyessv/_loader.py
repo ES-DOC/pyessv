@@ -27,7 +27,7 @@ from pyessv._utils.formatter import format_string
 
 
 
-def load(identifier, verbose=True):
+def load(identifier=None, verbose=True):
     """Loads a vocabulary node from archive.
 
     :param str identifier: Vocabulary node identifier.
@@ -36,16 +36,17 @@ def load(identifier, verbose=True):
     :rtype: pyessv.Node | None
 
     """
-    assert isinstance(identifier, basestring)
+    assert isinstance(identifier, (type(None), basestring))
+
+    if identifier is None:
+        return set(get_cached(Authority))
 
     identifier = identifier.strip()
-
     result = _load_by_namespace(identifier)
     if result is None:
         result = _load_by_uid(identifier)
-
-    if result is None and verbose:
-        logger.log_warning('Cannot map identifier to a vocabulary entity: {}'.format(identifier))
+        if result is None and verbose:
+            logger.log_warning('Cannot map identifier to a vocabulary entity: {}'.format(identifier))
 
     return result
 
@@ -61,8 +62,10 @@ def _load_by_namespace(identifier):
     """
     # Skip if identifier is not a namespace.
     ns = str(identifier).split(':')
-    if len(ns) < 1 or len(ns) > 4:
-        return
+    if len(ns) == 0:
+        return get_cached(Authority)
+    if len(ns) > 4:
+        return None
 
     # Unpack.
     authority = scope = collection = term = None
@@ -137,8 +140,8 @@ def _is_matched(node, identifier):
     elif identifier == format_string(node.uid).lower():
         return True
 
-    # Matched by synonyms.
-    elif identifier in [format_string(i).lower() for i in node.synonyms]:
+    # Matched by alternative names.
+    elif identifier in [format_string(i).lower() for i in node.alternative_names]:
         return True
 
     return False

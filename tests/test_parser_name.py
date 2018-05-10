@@ -36,9 +36,9 @@ def test_parse_name():
     """Test parsing of names at various levels.
 
     """
-    for typekey, canonical_name, synonyms, parent in _INPUTS:
-        for synonym in synonyms:
-            for name, expected, strictness in _get_config(canonical_name, synonym):
+    for typekey, canonical_name, alternative_names, parent in _INPUTS:
+        for alternative_name in alternative_names:
+            for name, expected, strictness in _get_config(canonical_name, alternative_name):
                 desc = 'parse --> {}: {} [strictness={}]'.format(typekey, name, strictness)
                 tu.init(_test_parse_name, desc)
                 yield _test_parse_name, typekey, name, expected, strictness, parent
@@ -66,7 +66,7 @@ def _test_parse_name(typekey, name, expected, strictness, parent):
            'Name parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typekey, name, result, expected)
 
 
-def _get_config(canonical_name, synonym):
+def _get_config(canonical_name, alternative_name):
     """Returns node test configuration.
 
     """
@@ -75,9 +75,9 @@ def _get_config(canonical_name, synonym):
         # (canonical_name.upper(), LIB.ParsingError, 1),
         # (canonical_name.upper(), LIB.ParsingError, 2),
         # (canonical_name.upper(), canonical_name, 3),
-        # (synonym, LIB.ParsingError, 0),
-        # (synonym, LIB.ParsingError, 1),
-        # (synonym.upper(), LIB.ParsingError, 2),
-        # (synonym, canonical_name, 2)
+        # (alternative_name, LIB.ParsingError, 0),
+        # (alternative_name, LIB.ParsingError, 1),
+        # (alternative_name.upper(), LIB.ParsingError, 2),
+        # (alternative_name, canonical_name, 2)
     ]
 

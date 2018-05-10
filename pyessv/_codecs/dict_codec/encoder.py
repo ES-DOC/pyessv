@@ -107,8 +107,8 @@ def _encode_node(instance):
         obj['data'] = instance.data
     if bool(instance.description):
         obj['description'] = instance.description
-    if bool(instance.synonyms):
-        obj['synonyms'] = instance.synonyms
+    if bool(instance.alternative_names):
+        obj['alternative_names'] = instance.alternative_names
     if bool(instance.url):
         obj['url'] = instance.url
 

@@ -63,7 +63,7 @@ _SCOPE_COLLECTIONS = {
     _SCOPE_CMIP6: {
         'activity_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': 'Activity',
@@ -72,7 +72,7 @@ _SCOPE_COLLECTIONS = {
         },
         'experiment_id': {
             'cim_document_type': 'cim.2.designing.NumericalExperiment',
-            'cim_document_type_synonym': 'experiment',
+            'cim_document_type_alternative_name': 'experiment',
             'data_factory': lambda obj, name: obj[name],
             'is_virtual': False,
             'label': None,
@@ -81,7 +81,7 @@ _SCOPE_COLLECTIONS = {
         },
         'frequency': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -90,7 +90,7 @@ _SCOPE_COLLECTIONS = {
         },
         'grid_label': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -99,7 +99,7 @@ _SCOPE_COLLECTIONS = {
         },
         'institution_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': lambda obj, name: {'postal_address': obj[name]},
             'is_virtual': False,
             'label': None,
@@ -108,7 +108,7 @@ _SCOPE_COLLECTIONS = {
         },
         'member_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
@@ -117,7 +117,7 @@ _SCOPE_COLLECTIONS = {
         },
         'nominal_resolution': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -126,7 +126,7 @@ _SCOPE_COLLECTIONS = {
         },
         'realm': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': lambda obj, name: {'description': obj[name]},
             'is_virtual': False,
             'label': None,
@@ -135,7 +135,7 @@ _SCOPE_COLLECTIONS = {
         },
         'required_global_attributes': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -144,7 +144,7 @@ _SCOPE_COLLECTIONS = {
         },
         'source_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': lambda obj, name: obj[name],
             'is_virtual': False,
             'label': None,
@@ -153,7 +153,7 @@ _SCOPE_COLLECTIONS = {
         },
         'source_type': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -162,7 +162,7 @@ _SCOPE_COLLECTIONS = {
         },
         'sub_experiment_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': lambda obj, name: {'description': obj[name]},
             'is_virtual': False,
             'label': None,
@@ -171,7 +171,7 @@ _SCOPE_COLLECTIONS = {
         },
         'table_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -180,7 +180,7 @@ _SCOPE_COLLECTIONS = {
         },
         'variable_id': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
@@ -189,7 +189,7 @@ _SCOPE_COLLECTIONS = {
         },
         'version': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
@@ -200,7 +200,7 @@ _SCOPE_COLLECTIONS = {
     _SCOPE_GLOBAL: {
         'mip_era': {
             'cim_document_type': None,
-            'cim_document_type_synonym': None,
+            'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': False,
             'label': None,
@@ -254,7 +254,7 @@ def _create_collection(source, scope, collection_id, cfg):
         term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME,
         data = None if cfg['cim_document_type'] is None else {
             'cim_document_type': cfg['cim_document_type'],
-            'cim_document_type_synonym': cfg['cim_document_type_synonym']
+            'cim_document_type_alternative_name': cfg['cim_document_type_alternative_name']
             }
         )
 

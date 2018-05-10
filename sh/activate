@@ -18,9 +18,8 @@ mkdir -p $HOME/.esdoc/pyessv-archive
 
 # Ensure shell scripts are executable.
 chmod a+x $PYESSV_LIB_HOME/sh/*.sh
-chmod a+x $PYESSV_LIB_HOME/sh/writers/esdoc/*.sh
-chmod a+x $PYESSV_LIB_HOME/sh/writers/esgf/*.sh
-chmod a+x $PYESSV_LIB_HOME/sh/writers/wcrp/*.sh
+chmod a+x $PYESSV_LIB_HOME/sh/writers/*/*.sh
+chmod a+x $PYESSV_LIB_HOME/sh/ws/*.sh
 
 # ###############################################################
 # STANDARD-SECTION: ALIASES
@@ -36,3 +35,7 @@ alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh
 alias pyessv-write-esdoc=$PYESSV_LIB_HOME/sh/writers/esdoc/write.sh
 alias pyessv-write-esgf=$PYESSV_LIB_HOME/sh/writers/esgf/write.sh
 alias pyessv-write-wcrp=$PYESSV_LIB_HOME/sh/writers/wcrp/write.sh
+
+# Web-service commands.
+alias pyessv-ws-install=$PYESSV_LIB_HOME/sh/ws/install.sh
+alias pyessv-ws-run=$PYESSV_LIB_HOME/sh/ws/run.sh
