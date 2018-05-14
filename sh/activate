@@ -9,6 +9,9 @@ export PYESSV_LIB_HOME="$( cd "$( dirname "${PYESSV_LIB_HOME[0]}" )" && pwd )"
 # Set python path
 export PYTHONPATH=$PYESSV_LIB_HOME:$PYTHONPATH
 
+# Set pip
+export PYESSV_WS_PIP=pip
+
 # Set archive directory.
 mkdir -p $HOME/.esdoc/pyessv-archive
 

@@ -31,7 +31,7 @@ def _get_config_fpath(config_path):
 
     """
     path = os.getenv('PYESSV_LIB_HOME')
-    path = os.path.join(path, "ops/ws/config")
+    path = os.path.join(path, "ops/config")
     path = os.path.join(path, _CONFIG_FPATH)
     if not os.path.exists(path):
         raise ConfigFileNotFoundException(fpath)
