@@ -11,7 +11,7 @@ main()
 	log "initialized web-service daemon"
 
 	sleep 3.0
-	source $PYESSV_LIB_HOME/sh/daemon_status.sh
+	source $PYESSV_LIB_HOME/sh/ws/daemon_status.sh
 }
 
 # Invoke entry point.
