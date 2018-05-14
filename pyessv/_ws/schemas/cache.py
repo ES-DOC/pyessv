@@ -17,7 +17,12 @@ from pyessv._ws.schemas import loader
 
 
 # Cached store of loaded schemas.
-_store = collections.defaultdict(dict)
+_STORE = collections.defaultdict(dict)
+
+# Set of endpoint substitutions.
+_SUBSTITUTIONS = {
+	'/1/retrieve',
+}
 
 
 
@@ -27,16 +32,26 @@ def init(endpoints):
 	:param dict endpoints: Map of application endpoints.
 
 	"""
-	for endpoint in endpoints:
+	for endpoint in {'/1/retrieve',}:
 		for typeof in {'body', 'params', 'headers'}:
-			_store[typeof][endpoint] = loader.load(typeof, endpoint)
+			_STORE[typeof][endpoint] = loader.load(typeof, endpoint)
+
+	for endpoint in endpoints:
+		if endpoint.startswith('/1/retrieve'):
+			break
+		for typeof in {'body', 'params', 'headers'}:
+			_STORE[typeof][endpoint] = loader.load(typeof, endpoint)
 
 
 def get_schema(typeof, endpoint):
 	"""Gets a schema from cache.
 
 	"""
+	for ep in _SUBSTITUTIONS:
+		if endpoint.startswith(ep):
+			endpoint = ep
+
 	try:
-		return _store[typeof][endpoint]
+		return _STORE[typeof][endpoint]
 	except KeyError:
 		pass

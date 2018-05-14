@@ -36,6 +36,22 @@ class RequestValidationException(WebServiceError):
         super(RequestValidationException, self).__init__(msg, constants.HTTP_RESPONSE_BAD_REQUEST_ERROR)
 
 
+class InvalidJSONError(RequestValidationException):
+    """Raised if the submitted request data is invalid according to a JSON schema.
+
+    """
+    def __init__(self, json_err):
+        """Instance constructor.
+
+        """
+        msg = json_err.message.strip()
+        try:
+            self.field = json_err.path[0]
+        except Exception as err:
+            self.field = msg.split("'")[1]
+        super(InvalidJSONError, self).__init__(msg)
+
+
 class UnknownEndpointException(WebServiceError):
     """Base class for unknown endpoint exceptions.
 
@@ -61,5 +77,6 @@ class ConfigFileNotFoundException(WebServiceError):
 
 # Map of managed error codes.
 ERROR_CODES = {
-    ConfigFileNotFoundException: 900,
+    InvalidJSONError: 900,
+    ConfigFileNotFoundException: 901,
 }

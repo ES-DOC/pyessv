@@ -17,6 +17,11 @@ from pyessv._ws.utils import exceptions
 from pyessv._ws.schemas import get_schema
 
 
+DDD = {
+    '/1/retrieve',
+}
+
+
 def validate_request(handler):
     """Validates request against mapped JSON schemas.
 

@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "additionalProperties": true,
+    "properties": {
+        "status": {
+            "includeMeta": {
+                "enum": [
+                    "true",
+                    "false"
+                ],
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "enum"
+            },
+            "type": "array"
+        }
+    },
+    "title": "ES-DOC pyessv JSON schema: endpoint = /1/retrieve",
+    "type": "object"
+}
