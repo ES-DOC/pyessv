@@ -20,6 +20,11 @@ from pyessv._ws.utils.http import process_request
 
 
 
+
+# Query parameters.
+_PARAM_INCLUDE_META = 'includeMeta'
+
+
 class RetrieveRequestHandler(tornado.web.RequestHandler):
     """Retrieve node request handler.
 
@@ -87,11 +92,11 @@ def _encode_node(node):
         'canonical_name': node.canonical_name,
         'description': node.description,
         'label': node.label,
+        'raw_name': node.raw_name,
         'url': node.url,
         'meta': {
             'create_date': node.create_date,
             'namespace': node.namespace,
-            'raw_name': node.raw_name,
             'typekey': node.typekey,
             'uid': node.uid
         }
