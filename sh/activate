@@ -40,5 +40,5 @@ alias pyessv-write-esgf=$PYESSV_LIB_HOME/sh/writers/esgf/write.sh
 alias pyessv-write-wcrp=$PYESSV_LIB_HOME/sh/writers/wcrp/write.sh
 
 # Web-service commands.
+alias pyessv-ws=$PYESSV_LIB_HOME/sh/ws/run.sh
 alias pyessv-ws-install=$PYESSV_LIB_HOME/sh/ws/install.sh
-alias pyessv-ws-run=$PYESSV_LIB_HOME/sh/ws/run.sh

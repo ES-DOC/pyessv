@@ -9,8 +9,6 @@
 
 
 """
-import pyesdoc
-
 from pyessv._ws.utils import constants
 
 
