@@ -32,6 +32,10 @@ _ARGS.add_argument(
 # Ensure we use fixed creation date.
 _CREATE_DATE = arrow.get('2017-06-21 00:00:00.000000+0000').datetime
 
+# CMIP6 insititutional homepages.
+with open(os.path.join(os.path.dirname(__file__), 'institution_homepages.json')) as fstream:
+    _INSTITUTIONAL_HOMEPAGES = json.loads(fstream.read())
+
 # CV authority = WCRP.
 _AUTHORITY = pyessv.create_authority(
     'WCRP',
@@ -100,7 +104,7 @@ _SCOPE_COLLECTIONS = {
         'institution_id': {
             'cim_document_type': None,
             'cim_document_type_alternative_name': None,
-            'data_factory': lambda obj, name: {'postal_address': obj[name]},
+            'data_factory': lambda obj, name: _get_institution_data(obj, name),
             'is_virtual': False,
             'label': None,
             'ommitted': [],
@@ -322,6 +326,16 @@ def _get_wcrp_cv(source, scope, collection_id):
     fpath = os.path.join(source, fname)
     with open(fpath, 'r') as fstream:
         return json.loads(fstream.read())[collection_id]
+
+
+def _get_institution_data(obj, name):
+    """Returns data related to an institution.
+
+    """
+    return {
+        'homepages': [i.strip() for i in _INSTITUTIONAL_HOMEPAGES.get(name, [])],
+        'postal_address': obj[name],
+        }
 
 
 # Entry point.
