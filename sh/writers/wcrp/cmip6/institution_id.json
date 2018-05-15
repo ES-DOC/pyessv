@@ -1,0 +1,534 @@
+[
+	{
+		"code": "AER",
+		"postalAddress": "Research and Climate Group, Atmospheric and Environmental Research, 131 Hartwell Avenue, Lexington, MA 02421, USA",
+		"homepage": "https://www.aer.com",
+		"consortia": []
+	},
+	{
+		"code": "AWI",
+		"postalAddress": "Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research, Am Handelshafen 12, 27570 Bremerhaven, Germany",
+		"homepage": "https://www.awi.de/en.html",
+		"consortia": []
+	},
+	{
+		"code": "BCC",
+		"postalAddress": "Beijing Climate Center, Beijing 100081, China",
+		"homepage": "http://bcc.ncc-cma.net",
+		"consortia": []
+	},
+	{
+		"code": "BNU",
+		"postalAddress": "Beijing Normal University, Beijing 100875, China",
+		"homepage": "http://english.bnu.edu.cn",
+		"consortia": []
+	},
+	{
+		"code": "CAMS",
+		"postalAddress": "Chinese Academy of Meteorological Sciences, Beijing 100081, China",
+		"homepage": "http://www.cma.gov.cn",
+		"consortia": []
+	},
+	{
+		"code": "CAS",
+		"postalAddress": "Chinese Academy of Sciences, Beijing 100029, China",
+		"homepage": "http://iap.cas.cn",
+		"consortia": []
+	},
+	{
+		"code": "CCCR-IITM",
+		"postalAddress": "Centre for Climate Change Research, Indian Institute of Tropical Meteorology Pune, Maharashtra 411 008, India",
+		"homepage": "http://cccr.tropmet.res.in",
+		"consortia": []
+	},
+	{
+		"code": "CCCma",
+		"postalAddress": "Canadian Centre for Climate Modelling and Analysis, Victoria, BC V8P 5C2, Canada",
+		"homepage": "https://www.canada.ca/en/environment-climate-change/services/climate-change/centre-modelling-analysis.html",
+		"consortia": []
+	},
+	{
+		"code": "CMCC",
+		"postalAddress": "Fondazione Centro Euro-Mediterraneo sui Cambiamenti Climatici, Lecce 73100, Italy",
+		"homepage": "https://www.cmcc.it",
+		"consortia": []
+	},
+	{
+		"code": "CNRM-CERFACS",
+		"postalAddress": "",
+		"homepage": "",
+		"consortia": [
+			{
+				"code": "CNRM",
+				"postalAddress": "Centre National de Recherches Meteorologiques, Toulouse 31057, France",
+				"homepage": "http://www.umr-cnrm.fr"
+			},
+			{
+				"code": "CERFACS",
+				"postalAddress": "Centre Europeen de Recherche et de Formation Avancee en Calcul Scientifique, Toulouse 31057, France",
+				"homepage": "http://www.cerfacs.fr"
+			}
+		]
+	},
+	{
+		"code": "CSIR-CSIRO",
+		"postalAddress": "",
+		"homepage": "",
+		"consortia": [
+			{
+				"code": "CSIR",
+				"postalAddress": "Council for Scientific and Industrial Research - Natural Resources and the Environment, Pretoria, 0001, South Africa",
+				"homepage": "https://www.csir.co.za"
+			},
+			{
+				"code": "CSIRO",
+				"postalAddress": "GPO Box 1700, Canberra ACT 2601, Australia",
+				"homepage": "https://www.csiro.au/"
+			}
+		]
+	},
+	{
+		"code": "CSIRO-BOM",
+		"postalAddress": "Commonwealth Scientific and Industrial Research Organisation and Bureau of Meteorology, Melbourne, Victoria 3208, Australia",
+		"homepage": "",
+		"consortia": [
+			{
+				"code": "CSIRO",
+				"postalAddress": "GPO Box 1700, Canberra ACT 2601, Australia",
+				"homepage": "https://www.csiro.au/"
+			},
+			{
+				"code": "BOM",
+				"postalAddress": "Bureau of Meteorology, Melbourne, Victoria 3208, Australia",
+				"homepage": "https://www.csiro.au"
+			}
+		]
+	},
+	{
+		"code": "DWD",
+		"postalAddress": "Deutscher Wetterdienst, Offenbach am Main 63067, Germany",
+		"homepage": "https://www.dwd.de",
+		"consortia": []
+	},
+	{
+		"code": "EC-Earth-Consortium",
+		"postalAddress": "EC-Earth consortium, Rossby Center, Swedish Meteorological and Hydrological Institute/SMHI, SE-601 76 Norrkoping, Sweden",
+		"homepage": "http://www.ec-earth.org",
+		"consortia": [
+			{
+				"code": "AEMET",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "BSC",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "CNR-ISAC",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "DMI",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "ENEA",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "FMI",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Geomar",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "ICHEC",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "ICTP",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "IDL",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "IMAU",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "IPMA",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "KIT",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "KNMI",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Lund University",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Met Eireann",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "NLeSC",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "NTNU",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Oxford University",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "surfSARA",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "SMHI",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Stockholm University",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Unite ASTR",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "University College Dublin",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "University of Bergen",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "University of Santiago de Compostela",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Uppsala University",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Utrecht University",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Vrije Universiteit",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Wageningen University",
+				"postalAddress": "",
+				"homepage": ""
+			}
+		]
+	},
+	{
+		"code": "FIO-RONM",
+		"postalAddress": "",
+		"homepage": "",
+		"consortia": [
+			{
+				"code": "FIO",
+				"postalAddress": "First Institute of Oceanography, State Oceanic Administration, Qingdao 266061, China",
+				"homepage": "http://www.fio.org.cn"
+			},
+			{
+				"code": "RONM",
+				"postalAddress": "Laboratory for Regional Oceanography and Numerical Modeling, Qingdao National Laboratory for Marine Science and Technology, Qingdao 266237, China",
+				"homepage": "http://www.qnlm.ac"
+			}
+		]
+	},
+	{
+		"code": "HAMMOZ-Consortium",
+		"postalAddress": "",
+		"homepage": "http://www.c2sm.ethz.ch/services/global-climate-modeling.html",
+		"consortia": [
+			{
+				"code": "ETH",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "MPI-M",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Forschungszentrum Julich",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "University of Oxford",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Finnish Meteorological Institute",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "Leibniz Institute for Tropospheric Research",
+				"postalAddress": "",
+				"homepage": ""
+			},
+			{
+				"code": "C2SM",
+				"postalAddress": "",
+				"homepage": ""
+			}
+		]
+	},
+	{
+		"code": "IIASA",
+		"postalAddress": "International Institute for Applied Systems Analysis (IIASA), Schlossplatz 1 - A-2361 Laxenburg, Austria",
+		"homepage": "http://www.iiasa.ac.at",
+		"consortia": []
+	},
+	{
+		"code": "INM",
+		"postalAddress": "Institute for Numerical Mathematics, Russian Academy of Science, Moscow 119991, Russia",
+		"homepage": "www.inm.ras.ru",
+		"consortia": []
+	},
+	{
+		"code": "INPE",
+		"postalAddress": "National Institute for Space Research, Cachoeira Paulista, SP 12630-000, Brazil",
+		"homepage": "www.inpe.br",
+		"consortia": []
+	},
+	{
+		"code": "IPSL",
+		"postalAddress": "Institut Pierre Simon Laplace, Paris 75252, France",
+		"homepage": "https://www.ipsl.fr",
+		"consortia": []
+	},
+	{
+		"code": "KIOST",
+		"postalAddress": "Korea Institute of Ocean Science & Technology, Busan 49111, Republic of Korea",
+		"homepage": "http://www.kiost.ac.kr",
+		"consortia": []
+	},
+	{
+		"code": "MESSy-Consortium",
+		"postalAddress": "https://www.messy-interface.org",
+		"homepage": "",
+		"consortia": []
+	},
+	{
+		"code": "MIROC",
+		"postalAddress": "",
+		"homepage": "",
+		"consortia": [
+			{
+				"code": "JAMSTEC",
+				"postalAddress": "Japan Agency for Marine-Earth Science and Technology, Kanagawa 236-0001, Japan",
+				"homepage": "www.jamstec.go.jp"
+			},
+			{
+				"code": "AORI",
+				"postalAddress": "Atmosphere and Ocean Research Institute, The University of Tokyo, Chiba 277-8564, Japan",
+				"homepage": "www.aori.u-tokyo.ac.jp"
+			},
+			{
+				"code": "NIES",
+				"postalAddress": "National Institute for Environmental Studies, Ibaraki 305-8506, Japan",
+				"homepage": "www.nies.go.jp"
+			},
+			{
+				"code": "R-CCS",
+				"postalAddress": "RIKEN Center for Computational Science, Hyogo 650-0047, Japan",
+				"homepage": "www.riken.jp"
+			}
+		]
+	},
+	{
+		"code": "MOHC",
+		"postalAddress": "Met Office Hadley Centre, Fitzroy Road, Exeter, Devon, EX1 3PB, UK",
+		"homepage": "https://www.metoffice.gov.uk",
+		"consortia": []
+	},
+	{
+		"code": "MPI-M",
+		"postalAddress": "Max Planck Institute for Meteorology, Hamburg 20146, Germany",
+		"homepage": "https://www.mpimet.mpg.de",
+		"consortia": []
+	},
+	{
+		"code": "MRI",
+		"postalAddress": "Meteorological Research Institute, Tsukuba, Ibaraki 305-0052, Japan",
+		"homepage": "www.mri-jma.go.jp",
+		"consortia": []
+	},
+	{
+		"code": "NASA-GISS",
+		"postalAddress": "Goddard Institute for Space Studies, New York, NY 10025, USA",
+		"homepage": "https://www.giss.nasa.gov",
+		"consortia": []
+	},
+	{
+		"code": "NCAR",
+		"postalAddress": "National Center for Atmospheric Research, Climate and Global Dynamics Laboratory, 1850 Table Mesa Drive, Boulder, CO 80305, USA",
+		"homepage": "https://ncar.ucar.edu",
+		"consortia": []
+	},
+	{
+		"code": "NCC",
+		"postalAddress": "c/o MET-Norway, Henrik Mohns plass 1, Oslo 0313, Norway",
+		"homepage": "https://folk.uib.no/ngfhd/EarthClim/index.htm",
+		"consortia": [
+			{
+				"code": "CICERO",
+				"postalAddress": "Center for International Climate and Environmental Research, Oslo 0349",
+				"homepage": ""
+			},
+			{
+				"code": "MET-Norway",
+				"postalAddress": "Norwegian Meteorological Institute, Oslo 0313",
+				"homepage": ""
+			},
+			{
+				"code": "NERSC",
+				"postalAddress": "Nansen Environmental and Remote Sensing Center, Bergen 5006",
+				"homepage": ""
+			},
+			{
+				"code": "NILU",
+				"postalAddress": "Norwegian Institute for Air Research, Kjeller 2027",
+				"homepage": ""
+			},
+			{
+				"code": "UiB",
+				"postalAddress": "University of Bergen, Bergen 5007",
+				"homepage": ""
+			},
+			{
+				"code": "UiO",
+				"postalAddress": "University of Oslo, Oslo 0313",
+				"homepage": ""
+			},
+			{
+				"code": "UNI",
+				"postalAddress": "Uni Research, Bergen 5008",
+				"homepage": ""
+			},
+			{
+				"code": "NILU",
+				"postalAddress": "Norwegian Institute for Air Research, Kjeller 2027",
+				"homepage": ""
+			},
+			{
+				"code": "NILU",
+				"postalAddress": "Norwegian Institute for Air Research, Kjeller 2027",
+				"homepage": ""
+			}
+		]
+	},
+	{
+		"code": "NERC",
+		"postalAddress": "Natural Environment Research Council, STFC-RAL, Harwell, Oxford, OX11 0QX, UK",
+		"homepage": "https://nerc.ukri.org",
+		"consortia": []
+	},
+	{
+		"code": "NIMS-KMA",
+		"postalAddress": "National Institute of Meteorological Sciences/Korea Meteorological Administration, Climate Research Division, Seoho-bukro 33, Seogwipo-si, Jejudo 63568, Republic of Korea",
+		"homepage": "www.nimr.go.kr",
+		"consortia": []
+	},
+	{
+		"code": "NIWA",
+		"postalAddress": "National Institute of Water and Atmospheric Research, Hataitai, Wellington 6021, New Zealand",
+		"homepage": "https://www.niwa.co.nz",
+		"consortia": []
+	},
+	{
+		"code": "NOAA-GFDL",
+		"postalAddress": "National Oceanic and Atmospheric Administration, Geophysical Fluid Dynamics Laboratory, Princeton, NJ 08540, USA",
+		"homepage": "https://www.gfdl.noaa.gov",
+		"consortia": []
+	},
+	{
+		"code": "NUIST",
+		"postalAddress": "Nanjing University of Information Science and Technology, Nanjing, 210044, China",
+		"homepage": "www.nuist.edu.cn",
+		"consortia": []
+	},
+	{
+		"code": "PCMDI",
+		"postalAddress": "Program for Climate Model Diagnosis and Intercomparison, Lawrence Livermore National Laboratory, Livermore, CA 94550, USA",
+		"homepage": "https://pcmdi.llnl.gov",
+		"consortia": []
+	},
+	{
+		"code": "SNU",
+		"postalAddress": "Seoul National University, Seoul 08826, Republic of Korea",
+		"homepage": "http://www.useoul.edu",
+		"consortia": []
+	},
+	{
+		"code": "THU",
+		"postalAddress": "Department of Earth System Science, Tsinghua University, Beijing 100084, China",
+		"homepage": "www.cess.tsinghua.edu.cn",
+		"consortia": []
+	},
+	{
+		"code": "UHH",
+		"postalAddress": "Universitat Hamburg, Hamburg 20148, Germany",
+		"homepage": "https://www.uni-hamburg.de",
+		"consortia": []
+	},
+	{
+		"code": "UofT",
+		"postalAddress": "Department of Physics, University of Toronto, 60 St George Street, Toronto, ON M5S1A7, Canada",
+		"homepage": "https://www.physics.utoronto.ca",
+		"consortia": []
+	}
+]
