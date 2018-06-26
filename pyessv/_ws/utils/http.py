@@ -9,6 +9,8 @@
 
 
 """
+import pyessv
+
 from pyessv._ws.utils import logger
 from pyessv._ws.utils.constants import *
 from pyessv._ws.utils.convertor import to_dict
@@ -98,6 +100,7 @@ def _write_json(handler, data):
     """Writes HTTP response JSON data.
 
     """
+    data['pyessvVersion'] = pyessv.__version__
     handler.write(to_dict(data, to_camel_case))
     handler.set_header("Content-Type", "application/json; charset=utf-8")
 
@@ -226,4 +229,3 @@ def _invoke_task(handler, task, err=None):
             task(err)
         else:
             task()
-

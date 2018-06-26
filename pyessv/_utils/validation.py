@@ -78,5 +78,3 @@ def assert_pattern(val, info):
         field = parts[-1] if parts[-1] in PARSING_NODE_FIELDS else 'canonical_name'
         collection = load(':'.join(parts[0:3]))
         collections.append((collection, field))
-
-    print namespaces

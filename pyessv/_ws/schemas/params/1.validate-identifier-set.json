@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "additionalProperties": false,
+    "properties": {
+        "identifierType": {
+            "items": {
+                "enum": [
+                    "dataset",
+                    "file"
+                ],
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "project": {
+            "items": {
+                "enum": [
+                    "cmip5",
+                    "cmip6",
+                    "cordex"
+                ],
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "string"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "identifierType",
+        "project"
+    ],
+    "title": "ES-DOC pyessv JSON schema: endpoint = /1/validate-identifier-set",
+    "type": "object"
+}

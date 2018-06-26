@@ -1,3 +1,4 @@
 from pyessv._ws.handlers.heartbeat import HeartbeatRequestHandler
 from pyessv._ws.handlers.retrieve import RetrieveRequestHandler
-
+from pyessv._ws.handlers.validate_identifier import ValidateIdentifierHandler
+from pyessv._ws.handlers.validate_identifier_set import ValidateIdentifierSetHandler

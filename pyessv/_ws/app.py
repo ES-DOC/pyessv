@@ -57,9 +57,15 @@ def _get_app_endpoints():
                         collection.canonical_name,
                         term.canonical_name)
                         )
+    endpoints = [(i, handlers.RetrieveRequestHandler) for i in endpoints]
+    endpoints += [
+        (r'/', handlers.HeartbeatRequestHandler),
+        (r'/status', handlers.HeartbeatRequestHandler),
+        (r'/1/validate-identifier', handlers.ValidateIdentifierHandler),
+        (r'/1/validate-identifier-set', handlers.ValidateIdentifierSetHandler)
+        ]
 
-    return set([(r'/', handlers.HeartbeatRequestHandler), (r'/status', handlers.HeartbeatRequestHandler)] + \
-               [(i, handlers.RetrieveRequestHandler) for i in endpoints])
+    return set(endpoints)
 
 
 def _get_app_settings():

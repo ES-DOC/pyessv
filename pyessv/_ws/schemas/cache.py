@@ -25,21 +25,20 @@ _SUBSTITUTIONS = {
 }
 
 
-
 def init(endpoints):
 	"""Initializes cache from schemas upon file system.
 
 	:param dict endpoints: Map of application endpoints.
 
 	"""
-	for endpoint in {'/1/retrieve',}:
-		for typeof in {'body', 'params', 'headers'}:
-			_STORE[typeof][endpoint] = loader.load(typeof, endpoint)
+    # Load retrieve json scehmas.
+	for typeof in {'body', 'params', 'headers'}:
+		_STORE[typeof]['/1/retrieve'] = loader.load(typeof, '/1/retrieve')
 
-	for endpoint in endpoints:
-		if endpoint.startswith('/1/retrieve'):
-			break
+    # Load other json scehmas.
+	for endpoint in [i for i in endpoints if not i.startswith('/1/retrieve')]:
 		for typeof in {'body', 'params', 'headers'}:
+            # payload = loader.load(typeof, endpoint)
 			_STORE[typeof][endpoint] = loader.load(typeof, endpoint)
 
 

@@ -28,7 +28,7 @@ def load(typeof, endpoint):
 			with open(fpath, 'r') as fstream:
 				schema = json.loads(fstream.read())
 		except Exception as err:
-			print endpoint, err
+			print endpoint, typeof, err
 			pass
 		else:
 			extender.extend(schema, typeof, endpoint)

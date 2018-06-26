@@ -66,6 +66,8 @@ _FUNCS = {
     'create_template_parser',
     'create_scope',
     'create_term',
+    # ... factory for testing
+    'get_test_datasets',
     # ... governance
     'accept',
     'deprecate',
@@ -114,4 +116,3 @@ def test_library_exports():
             desc = 'library exposes {} --> {}'.format(member_type, member)
             tu.init(_test_member, desc)
             yield _test_member, member, member_type
-

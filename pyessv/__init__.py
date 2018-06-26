@@ -11,7 +11,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.5.1.0'
+__version__ = '0.5.2.0'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
@@ -52,6 +52,8 @@ from pyessv._factory import create_collection
 from pyessv._factory import create_template_parser
 from pyessv._factory import create_scope
 from pyessv._factory import create_term
+
+from pyessv._factory_for_testing import get_test_datasets
 
 from pyessv._governance import accept
 from pyessv._governance import deprecate

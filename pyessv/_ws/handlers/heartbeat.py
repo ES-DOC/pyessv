@@ -33,7 +33,6 @@ class HeartbeatRequestHandler(tornado.web.RequestHandler):
             """
             self.output = {
                 "message": "ES-DOC PYESSV web service is operational @ {}".format(dt.datetime.utcnow()),
-                "version": pyessv.__version__
             }
 
         # Process request.
