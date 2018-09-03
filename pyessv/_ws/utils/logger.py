@@ -36,8 +36,8 @@ def _get_formatted_message(msg, module, level):
     if msg is None:
         return _NULL_MSG
 
-    return "{} [{}] :: ES-DOC > {} : {}".format(
-        unicode(arrow.get())[0:-13],
+    return "{} [{}] :: ESDOC-PYESSV-{} :: {}".format(
+        unicode(arrow.get())[0:-6],
         level,
         module,
         unicode(msg).strip()
@@ -155,7 +155,7 @@ def log_web(msg, level=LOG_LEVEL_INFO):
     :param str level: Message level (e.g. INFO).
 
     """
-    log(msg, "WEB", level)
+    log(msg, "WS", level)
 
 
 def log_web_warning(msg):
@@ -182,4 +182,4 @@ def log_web_error(err):
     :param Exception err: Exception to be logged.
 
     """
-    log_error(err, "WEB")
+    log_error(err, "WS")

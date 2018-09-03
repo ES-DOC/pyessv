@@ -3,7 +3,7 @@
 # Wraps standard echo by adding application prefix.
 log()
 {
-	declare now=`date +%Y-%m-%dT%H:%M:%S`
+	declare now=`date +%Y-%m-%dT%H:%M:%S:000000`
 	declare tabs=''
 	if [ "$1" ]; then
 		if [ "$2" ]; then
@@ -11,11 +11,11 @@ log()
 			do
 				declare tabs+='\t'
 			done
-	    	echo -e $now" [INFO] :: PYESSV-LIB > "$tabs$1
+	    	echo -e $now" [INFO] :: ESDOC-PYESSV :: "$tabs$1
 	    else
-	    	echo -e $now" [INFO] :: PYESSV-LIB > "$1
+	    	echo -e $now" [INFO] :: ESDOC-PYESSV :: "$1
 	    fi
 	else
-	    echo -e $now" [INFO] :: PYESSV-LIB > "
+	    echo -e $now" [INFO] :: ESDOC-PYESSV :: "
 	fi
 }

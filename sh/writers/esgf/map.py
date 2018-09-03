@@ -33,7 +33,7 @@ _ARGS.add_argument(
     )
 
 # Relative path to ini file.
-_INI_FPATH = 'publisher-configs/ini/esg.{}.ini'
+_INI_FPATH = 'esgf-prod/publisher/ini/esg.{}.ini'
 
 # Set of mapping modules.
 _MODULES = {
@@ -59,7 +59,11 @@ def _main(args):
         ini_section = _IniSection(project, args.source)
 
         # Create scope.
-        scope = _get_scope(authority, project)
+        scope = pyessv.load('wcrp:{}'.format(project))
+        if not scope:
+            scope = _create_scope(authority, project)
+
+        # Set scope data.
         scope.data = scope.data or dict()
         for field in module.SCOPE_DATA:
             scope.data[field] = ini_section.get_option(field, raw=True)
@@ -67,13 +71,13 @@ def _main(args):
         # Create regex collections.
         collections = [i for i in module.COLLECTIONS if not inspect.isfunction(i[1])]
         for collection_id, term_regex in collections:
-            _get_collection(module, scope, collection_id, term_regex=term_regex)
+            _create_collection(module, scope, collection_id, term_regex=term_regex)
 
         # Create standard collections.
         collections = [i for i in module.COLLECTIONS if inspect.isfunction(i[1])]
         for collection_id, term_factory in collections:
             ctx = _MappingExecutionContext(project, collection_id, ini_section)
-            collection = _get_collection(module, scope, collection_id)
+            collection = _create_collection(module, scope, collection_id)
             try:
                 term_factory = term_factory()
             except TypeError:
@@ -129,11 +133,11 @@ class _IniSection(object):
         return data
 
 
-def _get_scope(authority, project):
+def _create_scope(authority, project):
     """Factory method to return vocabulary scope.
 
     """
-    return pyessv.load('wcrp:{}'.format(project)) or pyessv.create_scope(
+    return pyessv.create_scope(
         authority,
         project,
         description='ESGF publisher controlled Vocabularies (CVs) for use in {}'.format(project.upper()),
@@ -142,7 +146,7 @@ def _get_scope(authority, project):
     )
 
 
-def _get_collection(module, scope, collection_id, term_regex=None):
+def _create_collection(module, scope, collection_id, term_regex=None):
     """Factory method to return vocabulary collection.
 
     """
