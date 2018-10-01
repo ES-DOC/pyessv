@@ -90,7 +90,7 @@ def _read_authority(dpath):
     :rtype: pyessv.Authority
 
     """
-    assert isfile(join(dpath, _MANIFEST)), 'Invalid authority MANIFEST'
+    assert isfile(join(dpath, _MANIFEST)), 'Invalid authority MANIFEST: {}/MANIFEST'.format(dpath)
 
     # Read authority from manifest.
     fpath = join(dpath, _MANIFEST)
