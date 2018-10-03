@@ -22,13 +22,25 @@ def _get_scope():
     return pyessv.WCRP.cmip6
 
 
-def get_institutes():
+def get_institutes(inject_test_institutes=False):
     """Returns set of participating institutes.
 
     """
     scope = _get_scope()
 
+    # Inject test institutes (on demand).
+    if inject_test_institutes:
+        for idx in range(1, 4):
+            pyessv.create_term(scope.institution_id, 'test-institute-{}'.format(idx))
+
     return scope.institution_id
+
+
+def _get_test_institute(collection, idx):
+    return pyessv.create_term(
+        collection, 
+        'test-institute-{}'.format(idx),
+        'A test institute')
 
 
 def get_institute_sources(institution_id):
@@ -41,10 +53,14 @@ def get_institute_sources(institution_id):
 
     """
     scope = _get_scope()
+
     try:
         institution_id = institution_id.canonical_name
     except AttributeError:
         institution_id = institution_id
+
+    if institution_id.startswith('test-institute'):
+        return [i for i in scope.source_id]
 
     def _is_related(source):
         return institution_id in [i.lower() for i in source.data['institution_id']]
