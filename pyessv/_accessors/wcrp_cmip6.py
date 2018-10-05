@@ -22,7 +22,7 @@ def _get_scope():
     return pyessv.WCRP.cmip6
 
 
-def get_institutes(inject_test_institutes=False):
+def get_institutes():
     """Returns set of participating institutes.
 
     """
