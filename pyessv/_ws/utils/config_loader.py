@@ -41,10 +41,11 @@ def _get_config_fpath(config_path):
 
     """
     path = os.getenv('PYESSV_LIB_HOME')
-    path = os.path.join(path, "ops/config")
-    path = os.path.join(path, _CONFIG_FPATH)
-    if os.path.exists(path):
-        return path
+    if path is not None:        
+        path = os.path.join(path, "ops/config")
+        path = os.path.join(path, _CONFIG_FPATH)
+        if os.path.exists(path):
+            return path
 
 
 def _init():
