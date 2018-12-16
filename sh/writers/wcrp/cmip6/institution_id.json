@@ -6,6 +6,12 @@
 		"consortia": []
 	},
 	{
+		"code": "AS-RCEC",
+		"postalAddress": "Research Center for Environmental Changes, Nankang, Taipei 11529, Taiwan",
+		"homepage": "http://www.rcec.sinica.edu.tw",
+		"consortia": []
+	},
+	{
 		"code": "AWI",
 		"postalAddress": "Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research, Am Handelshafen 12, 27570 Bremerhaven, Germany",
 		"homepage": "https://www.awi.de/en.html",
