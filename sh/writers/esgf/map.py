@@ -20,8 +20,7 @@ import pyessv
 import map_cmip5
 import map_cmip6
 import map_cordex
-
-
+import map_input4mips
 
 # Define command line options.
 _ARGS = argparse.ArgumentParser('Maps ESGF publisher ini files to normalized pyessv vocabulary format.')
@@ -29,12 +28,9 @@ _ARGS.add_argument(
     '--source',
     help='Directory within which ESGF publisher ini files will be read.',
     dest='source',
+    default='/Users/glipsl/Documents/work/esgf-config/publisher-configs/ini',
     type=str
     )
-
-# Relative path to ini file.
-_INI_FPATH = '/Users/glipsl/Documents/work/esgf-config/publisher-configs/ini/esg.{}.ini'
-#_INI_FPATH = 'esgf-prod/publisher/ini/esg.{}.ini'
 
 # Set of mapping modules.
 _MODULES = {
@@ -49,6 +45,9 @@ def _main(args):
     """Main entry point.
 
     """
+    if not os.path.isdir(args.source):
+        raise ValueError('ESGF vocab directory does not exist')
+
     # Create authority.
     authority = pyessv.load('wcrp')
 
@@ -112,7 +111,7 @@ class _IniSection(object):
         """Instance constructor.
 
         """
-        fpath = os.path.join(source_dir, _INI_FPATH.format(project))
+        fpath = os.path.join(source_dir, 'esg.{}.ini'.format(project))
         if not os.path.isfile(fpath):
             raise ValueError('ESGF ini file does not exist: {}'.format(fpath))
         self.parser = ConfigParser()
@@ -156,15 +155,22 @@ def _create_collection(module, scope, collection_id, term_regex=None):
         data = module.COLLECTION_DATA[collection_id]
     except (AttributeError, KeyError):
         data = None
-
-    return pyessv.create_collection(
-        scope,
-        collection_id,
-        "ESGF publisher-config CV collection: ".format(collection_id),
-        label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
-        term_regex=term_regex,
-        data=data
-    )
+    if collection_id.lower().replace('_', '-') in [collection.name for collection in scope.collections]:
+        collection = scope[collection_id]
+        collection.description = "ESGF publisher-config CV collection: ".format(collection_id),
+        collection.label = collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR')
+        collection.term_regex = term_regex
+        collection.data = data
+        return collection
+    else:
+        return pyessv.create_collection(
+            scope,
+            collection_id,
+            "ESGF publisher-config CV collection: ".format(collection_id),
+            label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
+            term_regex=term_regex,
+            data=data
+        )
 
 
 def _get_term(collection, term_info):

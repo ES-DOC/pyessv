@@ -6,6 +6,12 @@
 		"consortia": []
 	},
 	{
+		"code": "AS-RCEC",
+		"postalAddress": "Research Center for Environmental Changes, Academia Sinica, Nankang, Taipei 11529, Taiwan",
+		"homepage": "http://www.rcec.sinica.edu.tw/?lang=en",
+		"consortia": []
+	},
+	{
 		"code": "AWI",
 		"postalAddress": "Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research, Am Handelshafen 12, 27570 Bremerhaven, Germany",
 		"homepage": "https://www.awi.de/en.html",
@@ -554,6 +560,23 @@
 		"postalAddress": "Program for Climate Model Diagnosis and Intercomparison, Lawrence Livermore National Laboratory, Livermore, CA 94550, USA",
 		"homepage": "https://pcmdi.llnl.gov",
 		"consortia": []
+	},
+		{
+		"code": "RTE-RRTMGP-Consortium",
+		"postalAddress": "c/o AER, 131 Hartwell Avenue, Lexington, MA 02421, USA",
+		"homepage": "",
+		"consortia": [
+			{
+				"code": "AER",
+				"postalAddress": "Atmospheric and Environmental Research, Lexington, MA 02421, USA",
+				"homepage": ""
+			},
+			{
+				"code": "UColorado",
+				"postalAddress": "University of Colorado, Boulder, CO 80309, USA",
+				"homepage": ""
+			}
+		]
 	},
 	{
 		"code": "SNU",

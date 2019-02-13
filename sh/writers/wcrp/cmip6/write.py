@@ -199,7 +199,7 @@ _SCOPE_COLLECTIONS = {
             'is_virtual': True,
             'label': None,
             'ommitted': [],
-            'term_regex': r'^[0-9]*$',
+            'term_regex': r'^[0-9]{8}$',
         }
     },
     _SCOPE_GLOBAL: {
@@ -250,18 +250,29 @@ def _create_collection(source, scope, collection_id, cfg):
 
     """
     # Create collection.
-    collection = pyessv.create_collection(
-        scope,
-        collection_id,
-        "WCRP CMIP6 CV collection: ".format(collection_id),
-        label=cfg['label'] or collection_id.title().replace('_Id', '_ID').replace('_', ' '),
-        create_date=_CREATE_DATE,
-        term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME,
-        data = None if cfg['cim_document_type'] is None else {
-            'cim_document_type': cfg['cim_document_type'],
-            'cim_document_type_alternative_name': cfg['cim_document_type_alternative_name']
+    if collection_id.lower().replace('_', '-') in [collection.name for collection in scope.collections]:
+        collection = scope[collection_id]
+        collection.description = "WCRP CMIP6 CV collection: ".format(collection_id),
+        collection.label = cfg['label'] or collection_id.title().replace('_Id', '_ID').replace('_', ' '),
+        collection.create_date = _CREATE_DATE,
+        collection.term_regex = cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME,
+        collection.data = None if cfg['cim_document_type'] is None else {
+                'cim_document_type': cfg['cim_document_type'],
+                'cim_document_type_alternative_name': cfg['cim_document_type_alternative_name']
             }
-        )
+    else:
+        collection = pyessv.create_collection(
+            scope,
+            collection_id,
+            "WCRP CMIP6 CV collection: ".format(collection_id),
+            label=cfg['label'] or collection_id.title().replace('_Id', '_ID').replace('_', ' '),
+            create_date=_CREATE_DATE,
+            term_regex=cfg['term_regex'] or pyessv.REGEX_CANONICAL_NAME,
+            data = None if cfg['cim_document_type'] is None else {
+                'cim_document_type': cfg['cim_document_type'],
+                'cim_document_type_alternative_name': cfg['cim_document_type_alternative_name']
+                }
+            )
 
     # Load JSON data & create terms (if collection is not a virtual one).
     if cfg['is_virtual'] == False:

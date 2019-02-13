@@ -1,4 +1,4 @@
-≤#!/bin/bash
+#!/bin/bash
 
 # Import utils.
 source $PYESSV_LIB_HOME/sh/utils.sh

@@ -17,11 +17,8 @@ from utils import yield_comma_delimited_options
 
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
-	('variable_id', r'^[A-Za-z0-9]*$'),
 	('las_time_delta', lambda: yield_las_time_delta),
 	('thredds_exclude_variables', yield_comma_delimited_options),
-	('version', r'^v[0-9]{8}$'),
-	('member_id', r'r[0-9]+i[0-9]+p[0-9]+'),
 }
 
 # Fields extracted from ini file & appended as data to the scope.
