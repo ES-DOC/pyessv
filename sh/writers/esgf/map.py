@@ -33,10 +33,12 @@ _ARGS.add_argument(
     )
 
 # Relative path to ini file.
-_INI_FPATH = 'esgf-prod/publisher/ini/esg.{}.ini'
+_INI_FPATH = '/Users/glipsl/Documents/work/esgf-config/publisher-configs/ini/esg.{}.ini'
+#_INI_FPATH = 'esgf-prod/publisher/ini/esg.{}.ini'
 
 # Set of mapping modules.
 _MODULES = {
+    map_input4mips,
     map_cmip5,
     map_cmip6,
     map_cordex

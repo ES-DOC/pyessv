@@ -20,7 +20,7 @@ from utils import yield_pipe_delimited_options
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
 	('cmor_table', yield_comma_delimited_options),
-	('ensemble', r'r[0-9]i[0-9]p[0-9]'),
+	('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
 	('experiment', yield_pipe_delimited_options),
 	('institute', lambda: yield_institute),
 	('las_time_delta', lambda: yield_las_time_delta),
@@ -49,8 +49,7 @@ COLLECTION_DATA = {
 SCOPE_DATA = {
 	'filename_format',
 	'directory_format',
-	'dataset_id',
-	'dataset_name_format'
+	'dataset_id'
 }
 
 
