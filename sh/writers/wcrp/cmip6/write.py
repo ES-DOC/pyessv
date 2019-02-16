@@ -13,7 +13,6 @@ import argparse
 import json
 import os
 import uuid
-
 import arrow
 
 import pyessv
