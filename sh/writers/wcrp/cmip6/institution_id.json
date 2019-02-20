@@ -3,27 +3,31 @@
     "code": "AER",
     "name": "Research and Climate Group, Atmospheric and Environmental Research",
     "postalAddress": "131 Hartwell Avenue, Lexington, MA 02421, USA",
-    "homepage": "https://www.aer.com",
+    "coordinates": "-71.270184,42.4624917",
+    "homepage": "https://www.aer.com/",
     "consortia": []
   },
   {
     "code": "AS-RCEC",
-    "name": "Research Center for Environmental Changes, Academia Sinica",
+    "name": "Academia Sinica - Research Centre for Environmental Changes",
     "postalAddress": "Nankang, Taipei 11529, Taiwan",
-    "homepage": "http://www.rcec.sinica.edu.tw/?lang=en",
+    "coordinates": "121.6119931,25.0400451",
+    "homepage": "http://www.rcec.sinica.edu.tw/",
     "consortia": []
   },
   {
     "code": "AWI",
     "name": "Alfred Wegener Institute",
-    "postalAddress": " Helmholtz Centre for Polar and Marine Research, Am Handelshafen 12, 27570 Bremerhaven, Germany",
-    "homepage": "https://www.awi.de/en.html",
+    "postalAddress": "Helmholtz Centre for Polar and Marine Research, Am Handelshafen 12, 27570 Bremerhaven, Germany",
+    "coordinates": "8.5783268,53.5332586",
+    "homepage": "https://www.awi.de/",
     "consortia": []
   },
   {
     "code": "BCC",
-    "name": "Beijing Climate Center",
+    "name": "Beijing Climate Centre",
     "postalAddress": "46 Zhongguancun S St, BeiXiaGuan, Haidian Qu, Beijing 100081, China",
+    "coordinates": "116.3248713,39.9490761",
     "homepage": "http://bcc.ncc-cma.net",
     "consortia": []
   },
@@ -31,6 +35,7 @@
     "code": "BNU",
     "name": "Beijing Normal University",
     "postalAddress": "19 Xinjiekou Outer St, BeiTaiPingZhuang, Haidian Qu, Beijing 100875, China",
+    "coordinates": "116.3640728,39.9619578",
     "homepage": "http://english.bnu.edu.cn",
     "consortia": []
   },
@@ -38,34 +43,39 @@
     "code": "CAMS",
     "name": "Chinese Academy of Meteorological Sciences",
     "postalAddress": "46 Zhongguancun S St, BeiXiaGuan, Haidian Qu, Beijing 100081, China",
+    "coordinates": "116.3246649,39.9463683",
     "homepage": "http://www.cma.gov.cn",
     "consortia": []
   },
   {
     "code": "CAS",
-    "name": "Chinese Academy of Sciences",
+    "name": "Chinese Academy of Sciences - Institute of Atmospheric Physics",
     "postalAddress": "Chaoyang Qu, Beichen, Beijing 100029, China",
-    "homepage": "http://iap.cas.cn",
+    "coordinates": "116.3849523,39.9779661",
+    "homepage": "http://english.iap.cas.cn/",
     "consortia": []
   },
   {
     "code": "CCCR-IITM",
-    "name": "Centre for Climate Change Research, Indian Institute of Tropical Meteorology",
+    "name": "Centre for Climate Change Research - Indian Institute of Tropical Meteorology",
     "postalAddress": "Pune, Maharashtra 411 008, India",
+    "coordinates": "73.804219,18.537919",
     "homepage": "http://cccr.tropmet.res.in",
     "consortia": []
   },
   {
     "code": "CCCma",
     "name": "Canadian Centre for Climate Modelling and Analysis",
-    "postalAddress": "Victoria, BC V8P 5C2, Canada",
-    "homepage": "https://www.canada.ca/en/environment-climate-change/services/climate-change/centre-modelling-analysis.html",
+    "postalAddress": "University of Victoria, BC V8P 5C2, Canada",
+    "coordinates": "-123.3123302,48.4635561",
+    "homepage": "https://www.canada.ca/en/environment-climate-change/services/climate-change/science-research-data/modeling-projections-analysis/centre-modelling-analysis.html",
     "consortia": []
   },
   {
     "code": "CMCC",
-    "name": "Fondazione Centro Euro-Mediterraneo sui Cambiamenti Climatici",
+    "name": "Euro-Mediterranean Centre on Climate Change",
     "postalAddress": "Lecce 73100, Italy",
+    "coordinates": "18.1695737,40.352697",
     "homepage": "https://www.cmcc.it",
     "consortia": []
   },
@@ -73,18 +83,21 @@
     "code": "CNRM-CERFACS",
     "name": "",
     "postalAddress": "",
+    "coordinates": "",
     "homepage": "",
     "consortia": [
       {
         "code": "CNRM",
-        "name": "Centre National de Recherches Meteorologiques",
+        "name": "National Centre for Meteorological Research",
         "postalAddress": "31057 Toulouse, France",
+        "coordinates": "1.374023,43.5757603",
         "homepage": "http://www.umr-cnrm.fr"
       },
       {
         "code": "CERFACS",
-        "name": "Centre Europeen de Recherche et de Formation Avancee en Calcul Scientifique",
+        "name": "European Centre of Research and Teaching in Advanced Scientific Computing",
         "postalAddress": "31100 Toulouse, France",
+        "coordinates": "1.3721216,43.5761239",
         "homepage": "http://www.cerfacs.fr"
       }
     ]
@@ -93,18 +106,21 @@
     "code": "CSIR-CSIRO",
     "name": "",
     "postalAddress": "",
+    "coordinates": "",
     "homepage": "",
     "consortia": [
       {
         "code": "CSIR",
         "name": "Council for Scientific and Industrial Research - Natural Resources and the Environment",
         "postalAddress": "Pretoria, 0001, South Africa",
+        "coordinates": "28.2746663,-25.7543385",
         "homepage": "https://www.csir.co.za"
       },
       {
         "code": "CSIRO",
         "name": "Commonwealth Scientific and Industrial Research Organisation",
         "postalAddress": "Aspendale, Victoria 3195, Australia",
+        "coordinates": "145.0435415,-38.0028413",
         "homepage": "https://www.csiro.au/"
       }
     ]
@@ -113,27 +129,53 @@
     "code": "CSIRO",
     "name": "Commonwealth Scientific and Industrial Research Organisation",
     "postalAddress": "Aspendale, Victoria 3195, Australia",
+    "coordinates": "145.0435415,-38.0028413",
     "homepage": "https://www.csiro.au/",
     "consortia": []
   },
   {
     "code": "CSIRO-ARCCSS-BoM",
-    "name": "Commonwealth Scientific and Industrial Research Organisation, Australian Research Council Centre of Excellence for Climate System Science, and Bureau of Meteorology",
-    "postalAddress": "Aspendale, Victoria 3195, Australia",
+    "name": "",
+    "postalAddress": "",
+    "coordinates": "",
     "homepage": "",
-    "consortia": []
+    "consortia": [
+      {
+        "code": "CSIRO",
+        "name": "Commonwealth Scientific and Industrial Research Organisation",
+        "postalAddress": "Aspendale, Victoria 3195, Australia",
+        "coordinates": "145.0435415,-38.0028413",
+        "homepage": "https://www.csiro.au/"
+      },
+      {
+        "code": "ARCCSS",
+        "name": "Australian Research Council - Centre of Excellence for Climate System Science",
+        "postalAddress": "UNSW Sydney NSW 2052, Australia",
+        "coordinates": "151.2277251,-33.9166077",
+        "homepage": "https://www.climatescience.org.au/tags/arccss"
+      },
+      {
+        "code": "BoM",
+        "name": "Bureau of Meteorology",
+        "postalAddress": "Aspendale, Victoria 3195, Australia",
+        "coordinates": "144.9486767,-37.8196597",
+        "homepage": "http://www.bom.gov.au/"
+      }
+    ]
   },
   {
     "code": "DKRZ",
-    "name": "Deutsches Klimarechenzentrum",
+    "name": "German Climate Computing Centre",
     "postalAddress": "Hamburg 20146, Germany",
+    "coordinates": "9.9742932,53.566859",
     "homepage": "https://www.dkrz.de",
     "consortia": []
   },
   {
     "code": "DWD",
-    "name": "Deutscher Wetterdienst",
+    "name": "German Meteorological Service",
     "postalAddress": "Offenbach am Main 63067, Germany",
+    "coordinates": "8.7454554,50.103181",
     "homepage": "https://www.dwd.de",
     "consortia": []
   },
@@ -141,243 +183,283 @@
     "code": "E3SM-Project",
     "name": "",
     "postalAddress": "LLNL Climate Program, c/o David C. Bader, Principal Investigator, L-103, 7000 East Avenue, Livermore, CA 94550, USA",
+    "coordinates": "",
     "homepage": "https://e3sm.org",
     "consortia": [
       {
         "code": "LLNL",
         "name": "Lawrence Livermore National Laboratory",
         "postalAddress": "Livermore, CA 94550, USA",
-        "homepage": ""
+        "coordinates": "-121.7120818,37.6855669",
+        "homepage": "https://www.llnl.gov/"
       },
       {
         "code": "ANL",
         "name": "Argonne National Laboratory",
         "postalAddress": "Argonne, IL 60439, USA",
-        "homepage": ""
+        "coordinates": "-87.9807607,41.7183082",
+        "homepage": "https://www.anl.gov/"
       },
       {
         "code": "BNL",
         "name": "Brookhaven National Laboratory",
         "postalAddress": "Upton, NY 11973, USA",
-        "homepage": ""
+        "coordinates": "-72.8772459,40.8650217",
+        "homepage": "https://www.bnl.gov/"
       },
       {
         "code": "LANL",
         "name": "Los Alamos National Laboratory",
         "postalAddress": "Los Alamos, NM 87545, USA",
-        "homepage": ""
+        "coordinates": "-106.2893507,35.8440625",
+        "homepage": "https://www.lanl.gov/"
       },
       {
         "code": "LBNL",
         "name": "Lawrence Berkeley National Laboratory",
         "postalAddress": "Berkeley, CA 94720, USA",
-        "homepage": ""
+        "coordinates": "-122.2489404,37.8760999",
+        "homepage": "https://www.lbl.gov/"
       },
       {
         "code": "ORNL",
         "name": "Oak Ridge National Laboratory",
         "postalAddress": "Oak Ridge, TN 37831, USA",
-        "homepage": ""
+        "coordinates": "-84.3122027,35.9311973",
+        "homepage": "https://www.ornl.gov/"
       },
       {
         "code": "PNNL",
         "name": "Pacific Northwest National Laboratory",
         "postalAddress": "Richland, WA 99352, USA",
-        "homepage": ""
+        "coordinates": "-119.281751,46.3449569",
+        "homepage": "https://www.pnnl.gov/"
       },
       {
         "code": "SNL",
         "name": "Sandia National Laboratories",
         "postalAddress": "Albuquerque, NM 87185, USA",
-        "homepage": ""
+        "coordinates": "-106.5361761,35.0571864",
+        "homepage": "https://www.sandia.gov/"
       }
     ]
   },
   {
     "code": "EC-Earth-Consortium",
-    "name": "EC-Earth consortium",
-    "postalAddress": "Rossby Center, Swedish Meteorological and Hydrological Institute/SMHI, SE-601 76 Norrkoping, Sweden",
+    "name": "",
+    "postalAddress": "Rossby Centre, Swedish Meteorological and Hydrological Institute/SMHI, SE-601 76 Norrkoping, Sweden",
+    "coordinates": "",
     "homepage": "http://www.ec-earth.org",
     "consortia": [
       {
         "code": "AEMET",
-        "name": "Agencia Estatal de Meteorología",
+        "name": "State Agency of Meteorology",
         "postalAddress": "Madrid, Spain",
-        "homepage": ""
+        "coordinates": "-3.710596,40.4551298",
+        "homepage": "http://www.aemet.es/"
       },
       {
         "code": "BSC",
-        "name": "Barcelona Supercomputing Center",
+        "name": "Barcelona Supercomputing Centre",
         "postalAddress": "08034 Barcelona, Spain",
-        "homepage": ""
+        "coordinates": "2.1133605,41.3891836",
+        "homepage": "https://www.bsc.es/"
       },
       {
         "code": "CNR-ISAC",
         "name": "National Research Council of Italy - Institute of Atmospheric Sciences and Climate",
         "postalAddress": "40129 Bologna, Italy",
-        "homepage": ""
+        "coordinates": "12.6465794,41.8397585",
+        "homepage": "http://www.isac.cnr.it/"
       },
       {
         "code": "DMI",
         "name": "Danish Meteorological Institute",
         "postalAddress": "Lyngbyvej 100, 2100 København, Denmark",
-        "homepage": ""
+        "coordinates": "12.560184,55.7154272",
+        "homepage": "https://www.dmi.dk/"
       },
       {
         "code": "ENEA",
-        "name": "Agenzia nazionale per le nuove tecnologie, energia e lo sviluppo economico sostenibile",
+        "name": "Italian National Agency for New Technologies, Energy and Sustainable Economic Development",
         "postalAddress": "Lungotevere Thaon di Revel, 00196 Rome, Italy",
-        "homepage": ""
+        "coordinates": "12.4443963,41.9276779",
+        "homepage": "http://www.enea.it/"
       },
       {
         "code": "FMI",
         "name": "Finnish Meteorological Institute",
         "postalAddress": "FI-00101 Helsinki, Finland",
-        "homepage": ""
+        "coordinates": "24.958809,60.2037321",
+        "homepage": "https://en.ilmatieteenlaitos.fi/"
       },
       {
         "code": "GEOMAR",
-        "name": "Helmholtz-Zentrum für Ozeanforschung Kiel",
+        "name": "Helmholtz Centre for Ocean Research Kiel",
         "postalAddress": "24148 Kiel, Germany",
-        "homepage": ""
+        "coordinates": "10.180455,54.3272022",
+        "homepage": "https://www.geomar.de/"
       },
       {
         "code": "ICHEC",
         "name": "High-Resolution Climate Projections for Ireland",
         "postalAddress": "Grand Canal Quay, Dublin 2, Ireland",
-        "homepage": ""
+        "coordinates": "-6.2415096,53.3419272",
+        "homepage": "https://www.ichec.ie/"
       },
       {
         "code": "ICTP",
         "name": "International Centre for Theoretical Physics",
-        "postalAddress": "Trieste,  Italy",
-        "homepage": ""
+        "postalAddress": "Trieste, Italy",
+        "coordinates": "13.7161402,45.7037944",
+        "homepage": "https://www.ictp.it/"
       },
       {
         "code": "IDL",
-        "name": "Instituto Dom Luiz",
+        "name": "Institute Dom Luiz",
         "postalAddress": "Lisboa, Portugal",
-        "homepage": ""
+        "coordinates": "-9.1589045,38.7562794",
+        "homepage": "http://idl.campus.ciencias.ulisboa.pt/"
       },
       {
         "code": "IMAU",
         "name": "Institute for Marine and Atmospheric research Utrecht",
         "postalAddress": "3584 CS Utrecht, Netherlands",
-        "homepage": ""
+        "coordinates": "5.166065,52.0892621",
+        "homepage": "https://www.uu.nl/en/research/institute-for-marine-and-atmospheric-research-imau"
       },
       {
         "code": "IPMA",
         "name": "Portugese Institute of the Sea and the Atmosphere",
         "postalAddress": "1749-077 Lisboa, Portugal",
-        "homepage": ""
+        "coordinates": "-9.2318443,38.6975018",
+        "homepage": "https://www.ipma.pt/en/oipma/"
       },
       {
         "code": "KIT",
-        "name": "Karlsruhe Institut of Technology - Climate and Environment Center",
+        "name": "Karlsruhe Institut of Technology - Climate and Environment Centre",
         "postalAddress": "Karlsruhe 76131, Germany",
-        "homepage": ""
+        "coordinates": "8.4261962,49.0917445",
+        "homepage": "http://www.klima-umwelt.kit.edu/english/"
       },
       {
         "code": "KNMI",
         "name": "The Royal Netherlands Meteorological Institute",
         "postalAddress": "Utrechtseweg 297, 3731 GA De Bilt, Netherlands",
-        "homepage": ""
+        "coordinates": "5.1758105,52.1015474",
+        "homepage": "https://www.knmi.nl/over-het-knmi/"
       },
       {
         "code": "Lund University",
         "name": "Lund University",
         "postalAddress": "Lund, Sweden",
-        "homepage": ""
+        "coordinates": "13.2017081,55.7108713",
+        "homepage": "https://www.lunduniversity.lu.se/"
       },
       {
         "code": "Met Eireann",
         "name": "Irish Meteorological Service",
         "postalAddress": "Dublin 9, Ireland",
-        "homepage": ""
+        "coordinates": "-6.2718252,53.375895",
+        "homepage": "https://www.met.ie/"
       },
       {
         "code": "NLeSC",
-        "name": "Netherlands eScience Center",
+        "name": "Netherlands eScience Centre",
         "postalAddress": "1098 XG Amsterdam, Netherlands",
-        "homepage": ""
+        "coordinates": "4.9522207,52.3569114",
+        "homepage": "https://www.escienceCentre.nl/"
       },
       {
         "code": "NTNU",
         "name": "Norwegian University of Science and Technology",
         "postalAddress": "NO-7491 Trondheim, Norway",
-        "homepage": ""
+        "coordinates": "10.4006716,63.4192565",
+        "homepage": "https://www.ntnu.edu/"
       },
       {
         "code": "University of Oxford",
         "name": "University of Oxford - Department of Physics",
         "postalAddress": "Parks Road, Oxford OX1 3PU, UK",
-        "homepage": ""
+        "coordinates": "-1.2617582,51.7596653",
+        "homepage": "https://www.physics.ox.ac.uk/"
       },
       {
         "code": "surfSARA",
         "name": "High Performance Computing and data infrastructure for science and industry",
         "postalAddress": "1098 XG Amsterdam, Netherlands",
-        "homepage": ""
+        "coordinates": "4.9524785,52.3567326",
+        "homepage": "https://www.surf.nl/en/about-surf/subsidiaries/surfsara/"
       },
       {
         "code": "SMHI",
         "name": "Swedish Meteorological and Hydrological Institute",
         "postalAddress": "SE-601 76 Norrkoping, Sweden",
-        "homepage": ""
+        "coordinates": "16.1459174,58.5812034",
+        "homepage": "https://www.smhi.se/"
       },
       {
         "code": "Stockholm University",
         "name": "Stockholm University",
         "postalAddress": "Frescativägen, 114 19 Stockholm, Sweden",
-        "homepage": ""
+        "coordinates": "18.0556423,59.3621764",
+        "homepage": "https://www.su.se/"
       },
       {
-        "code": "Unite ASTR",
-        "name": "",
-        "postalAddress": "",
-        "homepage": ""
+        "code": "UCL-ASTR",
+        "name": "Catholic University of Louvain - Institute of Astronomy and Geophysic",
+        "postalAddress": "1348 Ottignies-Louvain-la-Neuve, Belgium",
+        "coordinates": "4.6134022,50.6696909",
+        "homepage": "https://uclouvain.be/"
       },
       {
         "code": "UCD",
         "name": "University College Dublin",
         "postalAddress": "Belfield Downs, Dublin, Ireland",
-        "homepage": ""
+        "coordinates": "-6.2263539,53.3082472",
+        "homepage": "https://www.ucd.ie/"
       },
       {
         "code": "UiB",
         "name": "University of Bergen",
         "postalAddress": "5007 Bergen, Norway",
-        "homepage": ""
+        "coordinates": "5.3195662,60.3878612",
+        "homepage": "https://www.uib.no/"
       },
       {
         "code": "USC",
         "name": "University of Santiago de Compostela",
         "postalAddress": "15705 Santiago de Compostela, Coruna, Spain",
-        "homepage": ""
+        "coordinates": "-8.5471613,42.8885264",
+        "homepage": "http://www.usc.es"
       },
       {
         "code": "Uppsala University",
         "name": "Uppsala University",
         "postalAddress": "752 36 Uppsala, Sweden",
-        "homepage": ""
+        "coordinates": "17.6278206,59.8509032",
+        "homepage": "https://www.uu.se/"
       },
       {
         "code": "Utrecht University",
         "name": "Utrecht University",
         "postalAddress": "3512 JE Utrecht, Netherlands",
-        "homepage": ""
+        "coordinates": "5.1204131,52.090156",
+        "homepage": "https://www.uu.nl/"
       },
       {
-        "code": "Vrije Universiteit",
-        "name": "Vrije Universiteit",
+        "code": "Vrije University",
+        "name": "Vrije University",
         "postalAddress": "1081 HV Amsterdam, Netherlands",
-        "homepage": ""
+        "coordinates": "4.8635312,52.3337601",
+        "homepage": "https://www.vu.nl/"
       },
       {
-        "code": "Wageningen University",
-        "name": "Wageningen University",
+        "code": "WUR",
+        "name": "Wageningen University and Research",
         "postalAddress": "6708 PB Wageningen, Netherlands",
-        "homepage": ""
+        "coordinates": "5.6635809,51.9845591",
+        "homepage": "https://www.wur.nl/"
       }
     ]
   },
@@ -385,6 +467,7 @@
     "code": "ECMWF",
     "name": "European Centre for Medium-Range Weather Forecasts",
     "postalAddress": "Reading RG2 9AX, UK",
+    "coordinates": "-0.9673693,51.4158008",
     "homepage": "https://www.ecmwf.int",
     "consortia": []
   },
@@ -392,18 +475,21 @@
     "code": "FIO-QLNM",
     "name": "",
     "postalAddress": "",
+    "coordinates": "",
     "homepage": "",
     "consortia": [
       {
         "code": "FIO",
         "name": "First Institute of Oceanography",
         "postalAddress": "State Oceanic Administration, Qingdao 266061, China",
+        "coordinates": "120.4591235,36.102526",
         "homepage": "http://www.fio.org.cn"
       },
       {
         "code": "QLNM",
         "name": "Laboratory for Regional Oceanography and Numerical Modeling",
         "postalAddress": "Qingdao National Laboratory for Marine Science and Technology, Qingdao 266237, China",
+        "coordinates": "120.335152,36.0648556",
         "homepage": "http://www.qnlm.ac"
       }
     ]
@@ -412,49 +498,57 @@
     "code": "HAMMOZ-Consortium",
     "name": "",
     "postalAddress": "",
+    "coordinates": "",
     "homepage": "http://www.c2sm.ethz.ch/services/global-climate-modeling.html",
     "consortia": [
       {
         "code": "ETH",
         "name": "Swiss Federal Institute of Technology in Zurich",
         "postalAddress": "CH-8092 Zürich, Switzerland",
-        "homepage": ""
+        "coordinates": "8.5466699,47.3763147",
+        "homepage": "https://www.ethz.ch/"
       },
       {
         "code": "MPI-M",
-        "name": "Max-Planck-Institut for Meteorology",
+        "name": "Max-Planck-Institute for Meteorology",
         "postalAddress": "Bundesstraße 53, 20146 Hamburg, Germany",
+        "coordinates": "4.4280207,50.5873625",
         "homepage": "https://www.mpimet.mpg.de"
       },
       {
-        "code": "Forschungszentrum Julich",
-        "name": "Forschungszentrum Julich",
-        "postalAddress": "52428 Jülich, Germany",
-        "homepage": ""
+        "code": "Julich Research Centre",
+        "name": "Julich Research Centre",
+        "postalAddress": "52428 Julich, Germany",
+        "coordinates": "6.3961949,50.9017598",
+        "homepage": "http://www.fz-juelich.de/"
       },
       {
         "code": "University of Oxford",
         "name": "University of Oxford - Department of Physics",
         "postalAddress": "Parks Road, Oxford OX1 3PU, UK",
-        "homepage": ""
+        "coordinates": "-1.2617582,51.7596653",
+        "homepage": "https://www.physics.ox.ac.uk/"
       },
       {
         "code": "FMI",
         "name": "Finnish Meteorological Institute",
         "postalAddress": "FI-00101 Helsinki, Finland",
-        "homepage": ""
+        "coordinates": "24.958809,60.2037321",
+        "homepage": "https://en.ilmatieteenlaitos.fi/"
       },
       {
         "code": "TROPOS",
         "name": "Leibniz Institute for Tropospheric Research",
         "postalAddress": "04318 Leipzig, Germany",
-        "homepage": ""
+        "coordinates": "12.4324039,51.3524953",
+        "homepage": "https://www.tropos.de/"
       },
       {
         "code": "C2SM",
-        "name": "Center for Climate Systems Modeling",
+        "name": "Centre for Climate Systems Modeling",
         "postalAddress": "8092 Zürich, Switzerland",
-        "homepage": ""
+        "coordinates": "8.5461963,47.3792266",
+        "homepage": "http://www.c2sm.ethz.ch/"
       }
     ]
   },
@@ -462,66 +556,225 @@
     "code": "INM",
     "name": "Institute for Numerical Mathematics",
     "postalAddress": "Russian Academy of Science, Moscow 119991, Russia",
-    "homepage": "www.inm.ras.ru",
+    "coordinates": "37.5529374,55.69222",
+    "homepage": "http://www.inm.ras.ru",
     "consortia": []
   },
   {
     "code": "INPE",
-    "name": "Instituto Nacional de Pesquisas Espaciais",
+    "name": "National Institute for Space Research",
     "postalAddress": "Cachoeira Paulista, SP 12630-000, Brazil",
-    "homepage": "www.inpe.br",
+    "coordinates": "-45.8633628,-23.2069329",
+    "homepage": "http://www.inpe.br",
     "consortia": []
   },
   {
     "code": "IPSL",
-    "name": "Institut Pierre Simon Laplace",
+    "name": "Institute Pierre Simon Laplace",
     "postalAddress": "Paris 75252, France",
-    "homepage": "https://www.ipsl.fr",
-    "consortia": []
+    "coordinates": "",
+    "homepage": "",
+    "consortia": [
+      {
+        "code": "IPSL",
+        "name": "Institute Pierre Simon Laplace",
+        "postalAddress": "Paris 75252, France",
+        "coordinates": "2.3551085,48.8463839",
+        "homepage": "https://www.ipsl.fr"
+      },
+      {
+        "code": "IPSL-X",
+        "name": "Institute Pierre Simon Laplace - Site Polytechnique",
+        "postalAddress": "Ecole Polytechnique, 91128 Palaiseau, France",
+        "coordinates": "2.2075416,48.7122475",
+        "homepage": "https://www.ipsl.fr"
+      },
+      {
+        "code": "TGCC",
+        "name": "High-Computing Centre - Atomic Energy Commission",
+        "postalAddress": "2 Rue de la Piquetterie, 91680 Bruyères-le-Châtel, France",
+        "coordinates": "2.1913282,48.5966081",
+        "homepage": "http://www-hpc.cea.fr/"
+      },
+      {
+        "code": "IDRIS",
+        "name": "Institute of Development and Informatics and Scientific Resources",
+        "postalAddress": "University of Paris-Saclay, 91403 Orsay, France",
+        "coordinates": "2.175324,48.707193",
+        "homepage": "http://www.idris.fr/"
+      }
+    ]
   },
   {
     "code": "KIOST",
     "name": "Korea Institute of Ocean Science and Technology",
     "postalAddress": "Busan 49111, South Korea",
+    "coordinates": "129.07761,35.075381",
     "homepage": "http://www.kiost.ac.kr",
     "consortia": []
   },
   {
     "code": "MESSy-Consortium",
-    "name": "Institute for Physics of the Atmosphere - Deutsches Zentrum fur Luft und Raumfahrt (DLR)",
-    "postalAddress": "Wessling, Bavaria 82234, Germany",
+    "name": "",
+    "postalAddress": "",
+    "coordinates": "",
     "homepage": "https://www.messy-interface.org",
-    "consortia": []
+    "consortia": [
+      {
+        "code": "DLR",
+        "name": "German Aerospace Center",
+        "postalAddress": "Kalkhorstweg 53, 17235 Neustrelitz, Germany",
+        "coordinates": "13.0538611,53.330336",
+        "homepage": "https://www.dlr.de/pa/en/"
+      },
+      {
+        "code": "KIT",
+        "name": "Karlsruhe Institut of Technology - Climate and Environment Centre",
+        "postalAddress": "Karlsruhe 76131, Germany",
+        "coordinates": "8.4261962,49.0917445",
+        "homepage": "http://www.klima-umwelt.kit.edu/english/"
+      },
+      {
+        "code": "Julich Research Centre",
+        "name": "Julich Research Centre",
+        "postalAddress": "52428 Julich, Germany",
+        "coordinates": "6.3961949,50.9017598",
+        "homepage": "http://www.fz-juelich.de/"
+      },
+      {
+        "code": "MPI-C",
+        "name": "Max Planck Institute for Chemistry",
+        "postalAddress": "Hahn-Meitner-Weg 1, 55128 Mainz, Germany",
+        "coordinates": "8.2268112,49.9909825",
+        "homepage": "https://www.mpg.de"
+      },
+      {
+        "code": "The Cyprus Institute",
+        "name": "The Cyprus Institute",
+        "postalAddress": "Nicosia, Cyprus",
+        "coordinates": "33.381372,35.141418",
+        "homepage": "https://www.cyi.ac.cy/"
+      },
+      {
+        "code": "Free University of Berlin",
+        "name": "Free University of Berlin",
+        "postalAddress": "Kaiserswerther Str. 16-18, 14195 Berlin, Germany",
+        "coordinates": "13.28749,52.4525296",
+        "homepage": "https://www.fu-berlin.de/"
+      },
+      {
+        "code": "UHH",
+        "name": "University of Hamburg",
+        "postalAddress": "Hamburg 20148, Germany",
+        "coordinates": "9.9846195,53.5665641",
+        "homepage": "https://www.uni-hamburg.de"
+      },
+      {
+        "code": "KAUST",
+        "name": "King Abdullah University of Science and Technology",
+        "postalAddress": "Thuwal 23955, Saudi Arabia",
+        "coordinates": "39.104697,22.309465",
+        "homepage": "https://www.kaust.edu.sa/"
+      },
+      {
+        "code": "Sun Yat-sen University",
+        "name": "Sun Yat-sen University",
+        "postalAddress": "135 Xingang W Rd, BinJiang Lu, Haizhu Qu, Guangzhou Shi, Guangdong Sheng, China",
+        "coordinates": "113.298883,23.0965384",
+        "homepage": "http://www.sysu.edu.cn/"
+      },
+      {
+        "code": "Aarhus University",
+        "name": "10.2030118,56.1681384",
+        "postalAddress": "Nordre Ringgade 1, 8000 Aarhus C, Denmark",
+        "coordinates": "9.9846195,53.5665641",
+        "homepage": "https://international.au.dk/"
+      },
+      {
+        "code": "TUDelft",
+        "name": "Delft University of Technology",
+        "postalAddress": "Mekelweg 5, 2628 CD Delft, Netherlands",
+        "coordinates": "4.3732982,52.0021256",
+        "homepage": "https://www.tudelft.nl/"
+      },
+      {
+        "code": "WUR",
+        "name": "Wageningen University and Research",
+        "postalAddress": "6708 PB Wageningen, Netherlands",
+        "coordinates": "5.6635809,51.9845591",
+        "homepage": "https://www.wur.nl/"
+      },
+      {
+        "code": "Bonn University",
+        "name": "Institute for Meteorology - Bonn University",
+        "postalAddress": "Auf dem Hügel 20, 53121 Bonn, Germany",
+        "coordinates": "7.0708102,50.731177",
+        "homepage": "https://www.meteo.uni-bonn.de/"
+      },
+      {
+        "code": "CMA",
+        "name": "China Meteorological Administration",
+        "postalAddress": "BeiXiaGuan, Haidian Qu, Beijing Shi, China",
+        "coordinates": "116.324554,39.9477812",
+        "homepage": "http://www.cma.gov.cn/"
+      },
+      {
+        "code": "University of Connecticut",
+        "name": "University of Connecticut",
+        "postalAddress": "Storrs, Connecticut 06269, USA",
+        "coordinates": "-72.2539805,41.8077414",
+        "homepage": "https://uconn.edu/"
+      },
+      {
+        "code": "University of Johannes Gutenberg",
+        "name": "University of Johannes Gutenberg",
+        "postalAddress": "Saarstraße 21, 55122 Mainz, Germany",
+        "coordinates": "8.2415552,49.9924943",
+        "homepage": "http://www.uni-mainz.de/"
+      },
+      {
+        "code": "IGCE",
+        "name": "Institute of Global Climate and Ecology of Roshydromet and RAS",
+        "postalAddress": "Leninsky Ave, 14, Moskva, Russia",
+        "coordinates": "37.5756359,55.7107927",
+        "homepage": ""
+      }
+    ]
   },
   {
     "code": "MIROC",
     "name": "",
     "postalAddress": "",
+    "coordinates": "",
     "homepage": "",
     "consortia": [
       {
         "code": "JAMSTEC",
         "name": "Japan Agency for Marine-Earth Science and Technology",
         "postalAddress": "Kanagawa 236-0001, Japan",
-        "homepage": "www.jamstec.go.jp"
+        "coordinates": "139.649923,35.320171",
+        "homepage": "http://www.jamstec.go.jp"
       },
       {
         "code": "AORI",
         "name": "Atmosphere and Ocean Research Institute - University of Tokyo",
         "postalAddress": "Chiba 277-8564, Japan",
-        "homepage": "www.aori.u-tokyo.ac.jp"
+        "coordinates": "139.9330266,35.8998815",
+        "homepage": "http://www.aori.u-tokyo.ac.jp"
       },
       {
         "code": "NIES",
         "name": "National Institute for Environmental Studies",
         "postalAddress": "Ibaraki 305-8506, Japan",
-        "homepage": "www.nies.go.jp"
+        "coordinates": "140.1194881,36.0500792",
+        "homepage": "http://www.nies.go.jp"
       },
       {
         "code": "R-CCS",
-        "name": "RIKEN Center for Computational Science",
+        "name": "RIKEN Centre for Computational Science",
         "postalAddress": "Hyogo 650-0047, Japan",
-        "homepage": "www.riken.jp"
+        "coordinates": "135.2207105,34.6533937",
+        "homepage": "http://www.riken.jp"
       }
     ]
   },
@@ -529,13 +782,44 @@
     "code": "MOHC",
     "name": "Met Office Hadley Centre",
     "postalAddress": "Fitzroy Road, Exeter, Devon, EX1 3PB, UK",
+    "coordinates": "-3.47577,50.7265528",
     "homepage": "https://www.metoffice.gov.uk",
-    "consortia": []
+    "consortia": [
+      {
+        "code": "MOHC",
+        "name": "Met Office Hadley Centre",
+        "postalAddress": "Fitzroy Road, Exeter, Devon, EX1 3PB, UK",
+        "coordinates": "-3.47577,50.7265528",
+        "homepage": "https://www.metoffice.gov.uk"
+      },
+      {
+        "code": "NCAS",
+        "name": "National Centre for Atmospheric Science",
+        "postalAddress": "71-75 Clarendon Rd, Leeds LS2 9PH, UK",
+        "coordinates": "-1.5613477,53.804464",
+        "homepage": "https://www.ncas.ac.uk/"
+      },
+      {
+        "code": "STFC",
+        "name": "Science and Technology Facilities Council",
+        "postalAddress": "Polaris House, North Star Avenue, Swindon SN2 1SZ, UK",
+        "coordinates": "-1.7854037,51.5667586",
+        "homepage": "https://stfc.ukri.org/"
+      },
+      {
+        "code": "CEDA",
+        "name": "Centre for Environmental Data Analysis",
+        "postalAddress": "Rutherford Appleton Laboratory, Harwell Oxford, UK",
+        "coordinates": "-1.3167481,51.573797",
+        "homepage": "http://www.ceda.ac.uk/"
+      }
+    ]
   },
   {
     "code": "MPI-M",
-    "name": "Max-Planck-Institut for Meteorology",
+    "name": "Max-Planck-Institute for Meteorology",
     "postalAddress": "Bundesstraße 53, 20146 Hamburg, Germany",
+    "coordinates": "4.4280207,50.5873625",
     "homepage": "https://www.mpimet.mpg.de",
     "consortia": []
   },
@@ -543,77 +827,89 @@
     "code": "MRI",
     "name": "Meteorological Research Institute",
     "postalAddress": "Tsukuba, Ibaraki 305-0052, Japan",
-    "homepage": "www.mri-jma.go.jp",
+    "coordinates": "140.1254479,36.0550149",
+    "homepage": "http://www.mri-jma.go.jp",
     "consortia": []
   },
   {
     "code": "NASA-GISS",
     "name": "National Aeronautics and Space Administration - Goddard Institute for Space Studies",
     "postalAddress": "New York, NY 10025, USA",
+    "coordinates": "-73.9674136,40.8054755",
     "homepage": "https://www.giss.nasa.gov",
     "consortia": []
   },
   {
     "code": "NCAR",
-    "name": "National Center for Atmospheric Research - Climate and Global Dynamics Laboratory",
+    "name": "National Centre for Atmospheric Research - Climate and Global Dynamics Laboratory",
     "postalAddress": "1850 Table Mesa Drive, Boulder, CO 80305, USA",
-    "homepage": "https://ncar.ucar.edu",
+    "coordinates": "-105.2750307,39.9783179",
+    "homepage": "https://www.cgd.ucar.edu/",
     "consortia": []
   },
   {
     "code": "NCC",
     "name": "",
     "postalAddress": "c/o MET-Norway, Henrik Mohns plass 1, Oslo 0313, Norway",
+    "coordinates": "",
     "homepage": "https://folk.uib.no/ngfhd/EarthClim/index.htm",
     "consortia": [
       {
         "code": "CICERO",
-        "name": "Center for International Climate and Environmental Research",
+        "name": "Centre for International Climate and Environmental Research",
         "postalAddress": "Oslo 0349, Norway",
-        "homepage": ""
+        "coordinates": "10.715636,59.9418174",
+        "homepage": "https://www.cicero.oslo.no/"
       },
       {
         "code": "MET-Norway",
         "name": "Norwegian Meteorological Institute",
         "postalAddress": "Oslo 0313, Norway",
-        "homepage": ""
+        "coordinates": "10.7184724,59.9426784",
+        "homepage": "https://www.met.no/"
       },
       {
         "code": "NERSC",
-        "name": "Nansen Environmental and Remote Sensing Center",
+        "name": "Nansen Environmental and Remote Sensing Centre",
         "postalAddress": "Bergen 5006, Norway",
-        "homepage": ""
+        "coordinates": "5.326931,60.382281",
+        "homepage": "https://www.nersc.no/"
       },
       {
         "code": "NILU",
         "name": "Norwegian Institute for Air Research",
         "postalAddress": "Kjeller 2027, Norway",
-        "homepage": ""
+        "coordinates": "11.0510369,59.9754769",
+        "homepage": "https://www.nilu.no/"
       },
       {
         "code": "UiB",
         "name": "University of Bergen",
-        "postalAddress": "Bergen 5007, Norway",
-        "homepage": ""
+        "postalAddress": "5007 Bergen, Norway",
+        "coordinates": "5.3195662,60.3878612",
+        "homepage": "https://www.uib.no/"
       },
       {
         "code": "UiO",
-        "name": "University of Oslo,",
+        "name": "University of Oslo",
         "postalAddress": "Oslo 0313, Norway",
-        "homepage": ""
+        "coordinates": "10.7217496,59.9399586",
+        "homepage": "https://www.uio.no/"
       },
       {
         "code": "UNI",
         "name": "Uni Research",
         "postalAddress": "Bergen 5008, Norway",
-        "homepage": ""
+        "coordinates": "5.3329406,60.3845364",
+        "homepage": "https://uni.no/"
       }
     ]
   },
   {
     "code": "NERC",
     "name": "Natural Environment Research Council",
-    "postalAddress": "STFC-RAL, Harwell, Oxford, OX11 0QX, UK",
+    "postalAddress": "Polaris House, North Star Avenue, Swindon, UK",
+    "coordinates": "-1.7858819,51.5674569",
     "homepage": "https://nerc.ukri.org",
     "consortia": []
   },
@@ -621,13 +917,15 @@
     "code": "NIMS-KMA",
     "name": "National Institute of Meteorological Sciences - Korea Meteorological Administration - Climate Research Division",
     "postalAddress": "Seoho-bukro 33, Seogwipo-si, Jejudo 63568, South Korea",
-    "homepage": "www.nimr.go.kr",
+    "coordinates": "126.5186035,33.2716914",
+    "homepage": "http://www.nimr.go.kr",
     "consortia": []
   },
   {
     "code": "NIWA",
     "name": "National Institute of Water and Atmospheric Research",
-    "postalAddress": "Hataitai, Wellington 6021, New Zealand",
+    "postalAddress": "41 Market Pl, Auckland, 1010, New Zealand",
+    "coordinates": "174.7610026,-36.844365",
     "homepage": "https://www.niwa.co.nz",
     "consortia": []
   },
@@ -635,6 +933,7 @@
     "code": "NOAA-GFDL",
     "name": "National Oceanic and Atmospheric Administration - Geophysical Fluid Dynamics Laboratory",
     "postalAddress": "Princeton, NJ 08540, USA",
+    "coordinates": "-74.615815,40.345619",
     "homepage": "https://www.gfdl.noaa.gov",
     "consortia": []
   },
@@ -642,13 +941,15 @@
     "code": "NUIST",
     "name": "Nanjing University of Information Science and Technology",
     "postalAddress": "Nanjing, 210044, China",
-    "homepage": "www.nuist.edu.cn",
+    "coordinates": "118.726956,32.20541",
+    "homepage": "http://www.nuist.edu.cn",
     "consortia": []
   },
   {
     "code": "PCMDI",
     "name": "Program for Climate Model Diagnosis and Intercomparison - Lawrence Livermore National Laboratory",
     "postalAddress": "Livermore, CA 94550, USA",
+    "coordinates": "-121.7120818,37.6855669",
     "homepage": "https://pcmdi.llnl.gov",
     "consortia": []
   },
@@ -656,19 +957,22 @@
     "code": "RTE-RRTMGP-Consortium",
     "name": "",
     "postalAddress": "c/o AER, 131 Hartwell Avenue, Lexington, MA 02421, USA",
+    "coordinates": "",
     "homepage": "",
     "consortia": [
       {
         "code": "AER",
         "name": "Research and Climate Group, Atmospheric and Environmental Research",
         "postalAddress": "131 Hartwell Avenue, Lexington, MA 02421, USA",
-        "homepage": "https://www.aer.com"
+        "coordinates": "-71.270184,42.4624917",
+        "homepage": "https://www.aer.com/"
       },
       {
         "code": "UColorado",
         "name": "University of Colorado",
         "postalAddress": "Boulder, CO 80309, USA",
-        "homepage": ""
+        "coordinates": "-105.2681304,40.0075851",
+        "homepage": "https://www.colorado.edu/"
       }
     ]
   },
@@ -676,6 +980,7 @@
     "code": "SNU",
     "name": "Seoul National University",
     "postalAddress": "Seoul 08826, South Korea",
+    "coordinates": "126.9519443,37.460339",
     "homepage": "http://www.useoul.edu",
     "consortia": []
   },
@@ -683,20 +988,23 @@
     "code": "THU",
     "name": "Tsinghua University - Department of Earth System Science",
     "postalAddress": "Beijing 100084, China",
-    "homepage": "www.cess.tsinghua.edu.cn",
+    "coordinates": "116.3222908,40.0000036",
+    "homepage": "http://www.cess.tsinghua.edu.cn",
     "consortia": []
   },
   {
     "code": "UA",
     "name": "University of Arizona - Department of Geosciences",
     "postalAddress": "Tucson, AZ 85721, USA",
+    "coordinates": "-110.9548639,32.2297642",
     "homepage": "https://www.geo.arizona.edu",
     "consortia": []
   },
   {
     "code": "UHH",
-    "name": "Universitat Hamburg",
+    "name": "University of Hamburg",
     "postalAddress": "Hamburg 20148, Germany",
+    "coordinates": "9.9846195,53.5665641",
     "homepage": "https://www.uni-hamburg.de",
     "consortia": []
   },
@@ -704,6 +1012,7 @@
     "code": "UTAS",
     "name": "University of Tasmania - Institute for Marine and Antarctic Studies",
     "postalAddress": "Hobart, Tasmania 7001, Australia",
+    "coordinates": "147.3357869,-42.8861436",
     "homepage": "http://www.imas.utas.edu.au",
     "consortia": []
   },
@@ -711,6 +1020,7 @@
     "code": "UofT",
     "name": "University of Toronto - Department of Physics",
     "postalAddress": "60 St George Street, Toronto, ON M5S1A7, Canada",
+    "coordinates": "-79.3980754,43.6606903",
     "homepage": "https://www.physics.utoronto.ca",
     "consortia": []
   }
