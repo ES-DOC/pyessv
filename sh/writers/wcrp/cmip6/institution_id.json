@@ -512,7 +512,7 @@
         "code": "MPI-M",
         "name": "Max-Planck-Institute for Meteorology",
         "postalAddress": "Bundesstraße 53, 20146 Hamburg, Germany",
-        "coordinates": "4.4280207,50.5873625",
+        "coordinates": "9.9745966,53.5679292",
         "homepage": "https://www.mpimet.mpg.de"
       },
       {
@@ -819,7 +819,7 @@
     "code": "MPI-M",
     "name": "Max-Planck-Institute for Meteorology",
     "postalAddress": "Bundesstraße 53, 20146 Hamburg, Germany",
-    "coordinates": "4.4280207,50.5873625",
+    "coordinates": "9.9745966,53.5679292",
     "homepage": "https://www.mpimet.mpg.de",
     "consortia": []
   },
