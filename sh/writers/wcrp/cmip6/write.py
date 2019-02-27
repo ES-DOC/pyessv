@@ -117,7 +117,7 @@ _SCOPE_COLLECTIONS = {
             'is_virtual': True,
             'label': None,
             'ommitted': [],
-            'term_regex': r'r[0-9]+i[0-9]+p[0-9]+f[0-9]+',
+            'term_regex': r'(s[0-9]{4}-)?r[0-9]+i[0-9]+p[0-9]+f[0-9]+',
         },
         'nominal_resolution': {
             'cim_document_type': None,
