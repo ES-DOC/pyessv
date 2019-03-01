@@ -34,7 +34,7 @@ _ARGS.add_argument(
 
 # Set of mapping modules.
 _MODULES = {
-    map_input4mips,
+    # map_input4mips,
     map_cmip5,
     map_cmip6,
     map_cordex

@@ -38,15 +38,20 @@ _COLLECTIONS = (
     'wcrp:cordex:variable',
     )
 
+# Instantiated & cached parser instance.
+_PARSER = None
 
 def parse(identifier):
     """Parses a CMIP6 dataset identifier.
 
     """
-    parser = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
+    # Instantiate parser JIT.
+    global _PARSER
+    if _PARSER is None:
+        _PARSER = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
 
     # Strip version suffix.
     if '#' in identifier:
       identifier = identifier.split('#')[0]
 
-    return parser.parse(identifier)
+    return _PARSER.parse(identifier)
