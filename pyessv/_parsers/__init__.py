@@ -16,6 +16,7 @@ import collections
 from pyessv._parsers.cmip5_dataset_id import parse as parse_cmip5_dataset_id
 from pyessv._parsers.cmip6_dataset_id import parse as parse_cmip6_dataset_id
 from pyessv._parsers.cordex_dataset_id import parse as parse_cordex_dataset_id
+from pyessv._parsers.input4mips_dataset_id import parse as parse_input4mips_dataset_id
 from pyessv._utils.compat import basestring
 
 
@@ -24,7 +25,8 @@ from pyessv._utils.compat import basestring
 _DATASET_ID_PARSERS = {
     'cmip5': parse_cmip5_dataset_id,
     'cmip6': parse_cmip6_dataset_id,
-    'cordex': parse_cordex_dataset_id
+    'cordex': parse_cordex_dataset_id,
+    'input4mips': parse_input4mips_dataset_id
 }
 
 

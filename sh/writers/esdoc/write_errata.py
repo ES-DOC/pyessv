@@ -253,20 +253,20 @@ def _write_projects(scope):
         }
     )
 
-    # pyessv.create_term(collection, 'input4mips',
-    #     create_date=utils.CREATE_DATE,
-    #     label='input4MIPs',
-    #     data={
-    #         "facets": [
-    #             "wcrp:input4mips:target-mip",
-    #             "wcrp:input4mips:institution-id",
-    #             "wcrp:input4mips:source-id",
-    #             "wcrp:input4mips:variable-id"
-    #         ],
-    #         "is_pid_client": True,
-    #         "is_documented": False
-    #     }
-    # )
+    pyessv.create_term(collection, 'input4mips',
+        create_date=utils.CREATE_DATE,
+        label='input4MIPs',
+        data={
+            "facets": [
+                "wcrp:input4mips:target-mip",
+                "wcrp:input4mips:institution-id",
+                "wcrp:input4mips:source-id",
+                "wcrp:input4mips:variable-id"
+            ],
+            "is_pid_client": True,
+            "is_documented": False
+        }
+    )
 
 
 # Entry point.

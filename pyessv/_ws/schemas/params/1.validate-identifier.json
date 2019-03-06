@@ -27,7 +27,8 @@
                 "enum": [
                     "cmip5",
                     "cmip6",
-                    "cordex"
+                    "cordex",
+                    "input4mips"
                 ],
                 "maxItems": 1,
                 "minItems": 1,

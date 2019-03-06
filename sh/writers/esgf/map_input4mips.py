@@ -13,7 +13,6 @@ from utils import yield_comma_delimited_options
 from utils import yield_pipe_delimited_options
 
 
-
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
 	('variable_id', yield_comma_delimited_options),
