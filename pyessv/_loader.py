@@ -43,10 +43,8 @@ def load(identifier=None, verbose=True):
 
     identifier = identifier.strip()
     result = _load_by_namespace(identifier)
-    if result is None:
-        result = _load_by_uid(identifier)
-        if result is None and verbose:
-            logger.log_warning('Cannot map identifier to a vocabulary entity: {}'.format(identifier))
+    if result is None and verbose:
+        logger.log_warning('Cannot map identifier to a vocabulary entity: {}'.format(identifier))
 
     return result
 
@@ -105,23 +103,6 @@ def _load_by_namespace(identifier):
                     return create_term(c, term)
 
 
-def _load_by_uid(identifier):
-    """Loads a vocabulary node from archive by trying to match it's unique identifier.
-
-    :param str identifier: Vocabulary node unique identifier.
-
-    :returns: First matching vocabulary node.
-    :rtype: pyessv.Node | None
-
-    """
-    try:
-        uuid.UUID(identifier)
-    except ValueError:
-        pass
-    else:
-        return get_cached(str(identifier))
-
-
 def _is_matched(node, identifier):
     """Returns flag indicating whether node identifier is a match.
 
@@ -134,10 +115,6 @@ def _is_matched(node, identifier):
 
     # Matched by raw name.
     if identifier == node.raw_name.lower():
-        return True
-
-    # Matched by uid.
-    elif identifier == format_string(node.uid).lower():
         return True
 
     # Matched by alternative names.

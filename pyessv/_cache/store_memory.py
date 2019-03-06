@@ -28,7 +28,6 @@ def cache(node):
 
     """
     _DATA[node.namespace] = node
-    _DATA[str(node.uid)] = node
     try:
         iter(node)
     except TypeError:
@@ -42,7 +41,6 @@ def get_cached(cache_filter):
     """Returns a cached node.
 
     :param str|class filter: Cache filter expression.
-    :param str store_type: Cache store type.
 
     :returns: A pointer to a vocabulary node or a set of nodes.
     :rtype: pyessv.Node | list[Authority]

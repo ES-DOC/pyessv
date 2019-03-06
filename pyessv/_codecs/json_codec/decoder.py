@@ -12,7 +12,6 @@
 
 """
 import datetime
-import uuid
 
 from pyessv._codecs.dict_codec import decoder as dict_decoder
 from pyessv._utils import convert
@@ -59,10 +58,7 @@ class _JSONDecoder(json.JSONDecoder):
         json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
         self.key_formatter = key_formatter
         self.to_namedtuple = to_namedtuple
-        self.value_parsers = [
-            self._to_datetime,
-            self._to_uuid
-            ]
+        self.value_parsers = [self._to_datetime]
 
 
     def dict_to_object(self, d):
@@ -99,22 +95,6 @@ class _JSONDecoder(json.JSONDecoder):
                     else:
                         d[k] = v
                         return True
-
-        return False
-
-
-    def _to_uuid(self, d, k, v):
-        """Converts a value to uuid.UUID.
-
-        """
-        if isinstance(v, basestring) and len(v):
-            try:
-                v = uuid.UUID(v)
-            except ValueError:
-                pass
-            else:
-                d[k] = v
-                return True
 
         return False
 

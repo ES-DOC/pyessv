@@ -14,7 +14,6 @@
 import datetime
 import inspect
 import re
-import uuid
 
 from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET

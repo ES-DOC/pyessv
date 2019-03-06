@@ -12,7 +12,6 @@
 
 """
 import datetime
-import uuid
 
 import arrow
 
@@ -40,7 +39,6 @@ class Node(object):
         self.raw_name = None
         self.alternative_names = list()
         self.typekey = typekey
-        self.uid = None
         self.url = None
 
 
@@ -134,9 +132,6 @@ class Node(object):
         def _typekey():
             assert self.typekey in NODE_TYPEKEY_SET
 
-        def _uid():
-            assert isinstance(self.uid, uuid.UUID)
-
         def _url():
             if self.url is not None:
                 assert_url(self.url)
@@ -148,26 +143,8 @@ class Node(object):
             _description,
             _label,
             _typekey,
-            _uid,
             _url
             )
-
-
-    @staticmethod
-    def get_comparator(key):
-        """Returns an item from managed collection.
-
-        """
-        if isinstance(key, uuid.UUID):
-            return lambda i: i.uid
-        else:
-            key = str(key).strip().lower()
-            try:
-                uuid.UUID(key)
-            except ValueError:
-                return lambda i: i.canonical_name
-            else:
-                return lambda i: str(i.uid)
 
 
 class IterableNode(Node):
@@ -210,10 +187,9 @@ class IterableNode(Node):
         """Returns a child section item.
 
         """
-        # Match against a uid | canonical name.
-        comparator = Node.get_comparator(key)
+        # Match against a canonical name.
         for item in self:
-            if comparator(item) == key:
+            if item.canonical_name == key:
                 return item
 
         # Match against a raw name.

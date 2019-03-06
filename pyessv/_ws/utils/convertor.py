@@ -14,14 +14,13 @@ import datetime
 import json
 import re
 import time
-import uuid
 
 
 # Set of types to be ignored when jsonifying.
 _IGNOREABLE = (int, float, long, type(None), unicode)
 
 # Set of unicodeable types used in jsonifying.
-_UNICODEABLE = (basestring, datetime.datetime, uuid.UUID)
+_UNICODEABLE = (basestring, datetime.datetime)
 
 # Values considered to be abbreviations.
 _ABBREVIATIONS = ("id", "uid", "uuid")

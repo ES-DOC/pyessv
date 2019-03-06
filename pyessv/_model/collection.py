@@ -12,7 +12,6 @@
 
 """
 import re
-import uuid
 
 from pyessv._constants import NODE_TYPEKEY_COLLECTION
 from pyessv._constants import PARSING_STRICTNESS_0

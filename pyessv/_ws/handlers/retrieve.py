@@ -102,8 +102,7 @@ def _encode_node(node, include_meta):
         obj['meta'] = {
             'create_date': node.create_date,
             'namespace': node.namespace,
-            'typekey': node.typekey,
-            'uid': node.uid
+            'typekey': node.typekey
         }
 
     return obj

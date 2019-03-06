@@ -13,7 +13,6 @@
 """
 import inspect
 import re
-import uuid
 
 from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._utils.compat import basestring

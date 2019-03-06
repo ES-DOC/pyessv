@@ -114,7 +114,6 @@ STANDARD_NODE_FIELDS = (
     'label',
     'raw_name',
     'typekey',
-    'uid',
     'url',
     )
 

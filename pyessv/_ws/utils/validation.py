@@ -10,8 +10,6 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import uuid
-
 import arrow
 import requests
 import pyessv
@@ -130,17 +128,6 @@ def validate_str(val, var):
 
     if not len(val):
         raise ValueError('{0} is empty string'.format(var))
-
-
-def validate_uid(val, var):
-    """Validaes a universally unique identifier.
-
-    """
-    if not isinstance(val, uuid.UUID):
-        try:
-            uuid.UUID(val)
-        except ValueError:
-            _raise_value_error(val, var, uuid.UUID)
 
 
 def validate_unicode(val, var):

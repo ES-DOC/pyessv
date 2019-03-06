@@ -10,8 +10,6 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import uuid
-
 import arrow
 
 from pyessv._constants import REGEX_CANONICAL_NAME
@@ -245,7 +243,6 @@ def _create_node(
     node.data = data
     node.label = label or format_string(raw_name)
     node.raw_name = format_string(raw_name)
-    node.uid = uuid.uuid4()
 
     # Set other attributes.
     if description is not None:

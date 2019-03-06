@@ -11,8 +11,6 @@
 
 
 """
-import uuid
-
 from pyessv._constants import NODE_TYPEKEY_SCOPE
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._model.collection import Collection

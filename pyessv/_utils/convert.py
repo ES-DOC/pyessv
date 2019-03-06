@@ -16,7 +16,6 @@ import datetime
 import json
 import re
 import types
-import uuid
 
 import arrow
 

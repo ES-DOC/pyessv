@@ -136,7 +136,7 @@ def _read_term(fpath, collection, term_cache):
         term = decode(fstream.read(), ENCODING_JSON)
     term.collection = collection
 
-    term_cache[term.uid] = term
+    term_cache[term.namespace] = term
 
     return term
 

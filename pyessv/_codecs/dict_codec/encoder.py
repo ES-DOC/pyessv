@@ -82,9 +82,9 @@ def _encode_term(instance):
     obj = _encode_node(instance)
     obj['status'] = instance.status
     if bool(instance.parent):
-        obj['parent'] = instance.parent.uid
+        obj['parent'] = instance.parent.namespace
     if bool(instance.associations):
-        obj['associations'] = [i.uid for i in instance.associations]
+        obj['associations'] = [i.namespace for i in instance.associations]
 
     return obj
 
@@ -98,7 +98,6 @@ def _encode_node(instance):
     obj['canonical_name'] = instance.canonical_name
     obj['create_date'] = instance.create_date
     obj['namespace'] = instance.namespace
-    obj['uid'] = instance.uid
     if bool(instance.label) and instance.label != instance.canonical_name:
         obj['label'] = instance.label
     if bool(instance.raw_name) and instance.raw_name != instance.canonical_name:

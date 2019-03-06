@@ -11,8 +11,6 @@
 
 
 """
-import uuid
-
 import arrow
 
 from pyessv._constants import NODE_TYPEKEY_AUTHORITY
@@ -93,8 +91,6 @@ def _decode_term(obj):
     instance = _decode_node(obj, Term)
     instance.associations = obj.get('associations', [])
     instance.status = obj['status']
-    if instance.parent:
-        instance.parent = uuid.UUID(str(obj['parent']))
 
     return instance
 
@@ -111,7 +107,6 @@ def _decode_node(obj, typeof):
     instance.label = obj.get('label', obj['canonical_name'])
     instance.canonical_name = obj['canonical_name']
     instance.raw_name = obj.get('raw_name', obj['canonical_name'])
-    instance.uid = uuid.UUID(str(obj['uid']))
     instance.url = obj.get('url')
 
     return instance

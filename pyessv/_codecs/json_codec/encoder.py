@@ -13,7 +13,6 @@
 """
 import collections
 import datetime
-import uuid
 
 import arrow
 
@@ -32,8 +31,7 @@ _ENCODE_IGNOREABLE = tuple(list(numeric_types) + [type(None), str])
 _ENCODE_STRING = (
     basestring,
     arrow.Arrow,
-    datetime.datetime,
-    uuid.UUID
+    datetime.datetime
     )
 
 
