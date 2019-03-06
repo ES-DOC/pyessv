@@ -11,7 +11,7 @@
 
 """
 from pyessv._factory import create_template_parser
-from pyessv._constants import PARSING_STRICTNESS_1
+from pyessv._constants import PARSING_STRICTNESS_3
 
 
 
@@ -44,7 +44,7 @@ def parse(identifier):
     # Instantiate parser JIT.
     global _PARSER
     if _PARSER is None:
-        _PARSER = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
+        _PARSER = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_3)
 
     # Strip version suffix.
     if '#' in identifier:

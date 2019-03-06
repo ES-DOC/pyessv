@@ -15,6 +15,21 @@ import pyessv
 
 
 
+def get_ini_option(ctx):
+    """Returns an ini file option value.
+
+    :param object ctx: Mapping execution context information.
+
+    :returns: Information to be mapped to a vocabulary term.
+    :rtype: list
+
+    """
+    try:
+        return ctx.ini_section.get_option('{}_options'.format(ctx.collection_id))
+    except ConfigParser.NoOptionError:
+        return ctx.ini_section.get_option(ctx.collection_id)
+
+
 def yield_comma_delimited_options(ctx):
     """Maps comma delimited options to pyessv term attributes.
 
@@ -25,7 +40,7 @@ def yield_comma_delimited_options(ctx):
 
     """
     # Decode options from ini file.
-    options = _get_ini_option(ctx)
+    options = get_ini_option(ctx)
     options = [i.strip() for i in options.split(',')]
     options = [i for i in options if len(i)]
 
@@ -48,7 +63,7 @@ def yield_pipe_delimited_options(ctx):
 
     """
     # Decode options from ini file.
-    options = _get_ini_option(ctx)
+    options = get_ini_option(ctx)
     options = options.split('\n')
     options = options[1:]
 
@@ -60,13 +75,3 @@ def yield_pipe_delimited_options(ctx):
         term_description = option[1]
 
         yield term_name, term_label, term_description
-
-
-def _get_ini_option(ctx):
-    """Returns an ini file option value.
-
-    """
-    try:
-        return ctx.ini_section.get_option('{}_options'.format(ctx.collection_id))
-    except ConfigParser.NoOptionError:
-        return ctx.ini_section.get_option(ctx.collection_id)

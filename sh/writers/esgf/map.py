@@ -46,7 +46,7 @@ def _main(args):
 
     """
     if not os.path.isdir(args.source):
-        raise ValueError('ESGF vocab directory does not exist')
+        raise ValueError('ESGF vocab directory does not exist: {}'.format(args.source))
 
     # Create authority.
     authority = pyessv.load('wcrp')
@@ -178,21 +178,27 @@ def _get_term(collection, term_info):
 
     """
     # Unpack term information.
-    name = label = description = None
+    name = label = description = synonym = None
     if isinstance(term_info, basestring):
         name = term_info
     else:
         try:
-            name, label, description = term_info
+            name, label, description, synonym = term_info
         except ValueError:
             try:
-                name, label = term_info
+                name, label, description = term_info
             except ValueError:
-                name = term_info
+                try:
+                    name, label = term_info
+                except ValueError:
+                    name = term_info
+
+    alternative_names = [] if synonym is None else [synonym]
 
     return pyessv.create_term(collection, name,
         label=label,
-        description=description
+        description=description,
+        alternative_names=alternative_names
     )
 
 
