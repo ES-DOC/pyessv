@@ -38,22 +38,29 @@ SCOPE_DATA = {
 }
 
 def yield_variable_id_options(ctx):
+	"""Yields variable id options to be converted to pyessv terms.
+
+	"""
     # Decode options from ini file.
     opts = get_ini_option(ctx)
     opts = [i.strip() for i in opts.split(',')]
     opts = [i for i in opts if len(i)]
 
+    # Setup collections used to filter out unique options.
     opts_without_hyphen_and_uscore = [i for i in opts if '-' not in i and '_' not in i]
     opts_with_hyphen = [i for i in opts if '-' in i]
     opts_with_uscore = [i for i in opts if '_' in i]
     opts_with_uscore_not_in_hyphen = [i for i in opts_with_uscore if i.replace('_', '-') not in opts_with_hyphen]
 
+    # Options without hyphen and underscore are unique.
     for opt in opts_without_hyphen_and_uscore:
         yield opt, opt, opt
 
+    # Options without hyphen but with underscore are unique.
     for opt in opts_with_uscore_not_in_hyphen:
         yield opt, opt, opt
 
+    # Options with hyphens but no underscore are unique.
     for opt in opts_with_hyphen:
         if opt.replace('-', '_') not in opts_with_uscore:
             yield opt, opt, opt

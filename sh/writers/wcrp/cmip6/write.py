@@ -12,7 +12,6 @@
 import argparse
 import json
 import os
-import uuid
 import arrow
 
 import pyessv
@@ -214,13 +213,6 @@ _SCOPE_COLLECTIONS = {
     }
 }
 
-# Path to file tracking unique identifiers.
-_UID_FPATH = __file__.replace('.py', '.json')
-
-# Map of node namespaces to unique identifiers.
-with open(_UID_FPATH, 'r') as fstream:
-    _UID_MAP = json.loads(fstream.read())
-
 
 def _main(args):
     """Main entry point.
@@ -234,11 +226,6 @@ def _main(args):
         for collection in _SCOPE_COLLECTIONS[scope]:
             cfg = _SCOPE_COLLECTIONS[scope][collection]
             _create_collection(args.source, scope, collection, cfg)
-
-    # Update uid map for next time.
-    _set_node_uid(_AUTHORITY)
-    with open(_UID_FPATH, 'w') as fstream:
-        fstream.write(json.dumps(_UID_MAP))
 
     # Add to archive & persist to file system.
     pyessv.archive(_AUTHORITY)
@@ -308,24 +295,6 @@ def _create_term(collection, raw_name, data):
         create_date=_CREATE_DATE,
         data=data
         )
-
-
-def _set_node_uid(node):
-    """Creates & returns a new term.
-
-    """
-    if node.namespace in _UID_MAP:
-        node.uid = uuid.UUID(_UID_MAP[node.namespace])
-    else:
-        _UID_MAP[node.namespace] = unicode(node.uid)
-
-    try:
-        iter(node)
-    except TypeError:
-        pass
-    else:
-        for node in node:
-            _set_node_uid(node)
 
 
 def _get_wcrp_cv(source, scope, collection_id):
