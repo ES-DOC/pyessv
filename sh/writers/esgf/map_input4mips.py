@@ -38,9 +38,6 @@ SCOPE_DATA = {
 }
 
 def yield_variable_id_options(ctx):
-	"""Yields variable id options to be converted to pyessv terms.
-
-	"""
     # Decode options from ini file.
     opts = get_ini_option(ctx)
     opts = [i.strip() for i in opts.split(',')]
