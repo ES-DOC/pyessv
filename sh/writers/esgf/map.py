@@ -17,10 +17,23 @@ from ConfigParser import ConfigParser
 import arrow
 import pyessv
 
+import map_c3s_cmip5
+import map_c3s_cordex
+import map_cc4e
 import map_cmip5
 import map_cmip6
 import map_cordex
+import map_cordex_adjust
+import map_e3sm
+import map_euclipse
+import map_geomip
 import map_input4mips
+import map_isimip_ft
+import map_lucid
+import map_obs4mips
+import map_pmip3
+import map_primavera
+import map_tamip
 
 # Define command line options.
 _ARGS = argparse.ArgumentParser('Maps ESGF publisher ini files to normalized pyessv vocabulary format.')
@@ -34,10 +47,23 @@ _ARGS.add_argument(
 
 # Set of mapping modules.
 _MODULES = {
-    map_input4mips,
+    map_c3s_cmip5,
+    map_c3s_cordex,
+    map_cc4e,
     map_cmip5,
     map_cmip6,
-    map_cordex
+    map_cordex,
+    map_cordex_adjust,
+    map_e3sm,
+    map_euclipse,
+    map_geomip,
+    map_input4mips,
+    map_isimip_ft,
+    map_lucid,
+    map_obs4mips,
+    map_pmip3,
+    map_primavera,
+    map_tamip
     }
 
 
@@ -54,7 +80,7 @@ def _main(args):
     # Process project modules:
     for module in _MODULES:
         # Set project.
-        project = module.__name__[4:]
+        project = module.__name__[4:].replace('_','-')
 
         # Set ini file handler.
         ini_section = _IniSection(project, args.source)

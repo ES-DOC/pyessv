@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: map_cordex.py
+.. module:: map_cordex_adjust.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: Maps CORDEX ESGF publisher ini file to normalized pyessv format.
+   :synopsis: Maps CORDEX-Adjust ESGF publisher ini file to normalized pyessv format.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
@@ -27,7 +27,7 @@ COLLECTIONS = {
 	('product', yield_comma_delimited_options),
 	('rcm_model', yield_comma_delimited_options),
 	('rcm_name', lambda: yield_rcm_name),
-	('rcm_version', yield_comma_delimited_options),
+	('bias_adjustment', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),

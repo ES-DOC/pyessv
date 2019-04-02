@@ -11,8 +11,6 @@
 """
 from utils import get_ini_option
 from utils import yield_comma_delimited_options
-from utils import yield_pipe_delimited_options
-
 
 
 # Vocabulary collections extracted from ini file.

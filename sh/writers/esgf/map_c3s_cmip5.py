@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: map_cmip6.py
+.. module:: map_c3s_cmip5.py
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: Maps CMIP5 ESGF publisher ini file to normalized pyessv format.
+   :synopsis: Maps C3S-CMIP5 ESGF publisher ini file to normalized pyessv format.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
@@ -14,7 +14,7 @@ from utils import yield_pipe_delimited_options
 
 
 # TODO process map: institute_map = map(model : institute)
-# TODO process map: las_time_delta_map = map(time_frequency : las_time_delta)
+
 
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
@@ -22,7 +22,6 @@ COLLECTIONS = {
 	('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
 	('experiment', yield_pipe_delimited_options),
 	('institute', lambda: yield_institute),
-	('las_time_delta', lambda: yield_las_time_delta),
 	('model', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('product', yield_comma_delimited_options),
@@ -58,11 +57,3 @@ def yield_institute(ctx):
 	"""
 	for _, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
 		yield institute
-
-
-def yield_las_time_delta(ctx):
-	"""Yields las time delta information to be converted to pyessv terms.
-
-	"""
-	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta
