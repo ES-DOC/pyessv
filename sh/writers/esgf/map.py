@@ -45,6 +45,9 @@ _ARGS.add_argument(
     type=str
     )
 
+# Ensure we use fixed creation date.
+_CREATE_DATE = arrow.get('2019-04-02 00:00:00.000000+0000').datetime
+
 # Set of mapping modules.
 _MODULES = {
     map_c3s_cmip5,
@@ -74,8 +77,14 @@ def _main(args):
     if not os.path.isdir(args.source):
         raise ValueError('ESGF vocab directory does not exist: {}'.format(args.source))
 
-    # Create authority.
-    authority = pyessv.load('wcrp')
+    # CV authority = ECMWF.
+    _AUTHORITY = pyessv.create_authority(
+        'ECMWF',
+        'European Center for Medium-Range Weather Forecasts',
+        label='ECMWF',
+        url='https://www.ecmwf.int/',
+        create_date=_CREATE_DATE
+    )
 
     # Process project modules:
     for module in _MODULES:
@@ -85,8 +94,13 @@ def _main(args):
         # Set ini file handler.
         ini_section = _IniSection(project, args.source)
 
-        # Create scope.
-        scope = pyessv.load('wcrp:{}'.format(project))
+        # Load authority & create scope.
+        if project in ['cc4e', 'c3s-cmip5', 'c3s-cordex']:
+            authority = pyessv.load('ecmwf')
+            scope = pyessv.load('ecmwf:{}'.format(project))
+        else:
+            authority = pyessv.load('wcrp')
+            scope = pyessv.load('wcrp:{}'.format(project))
         if not scope:
             scope = _create_scope(authority, project)
 

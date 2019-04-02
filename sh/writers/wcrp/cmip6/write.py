@@ -30,7 +30,7 @@ _ARGS.add_argument(
 # Ensure we use fixed creation date.
 _CREATE_DATE = arrow.get('2017-06-21 00:00:00.000000+0000').datetime
 
-# CMIP6 insititutional data.
+# CMIP6 institutional data.
 with open(os.path.join(os.path.dirname(__file__), 'institution_id.json')) as fstream:
     _INSTITUTIONAL_DATA = json.loads(fstream.read())
     _INSTITUTIONAL_DATA = {i['code']: i for i in _INSTITUTIONAL_DATA}
