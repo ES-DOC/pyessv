@@ -78,13 +78,13 @@ def _main(args):
         raise ValueError('ESGF vocab directory does not exist: {}'.format(args.source))
 
     # CV authority = ECMWF.
-    _AUTHORITY = pyessv.create_authority(
-        'ECMWF',
-        'European Center for Medium-Range Weather Forecasts',
-        label='ECMWF',
-        url='https://www.ecmwf.int/',
-        create_date=_CREATE_DATE
-    )
+    #_AUTHORITY = pyessv.create_authority(
+    #    'ECMWF',
+    #    'European Center for Medium-Range Weather Forecasts',
+    #    label='ECMWF',
+    #    url='https://www.ecmwf.int/',
+    #    create_date=_CREATE_DATE
+    #)
 
     # Process project modules:
     for module in _MODULES:
