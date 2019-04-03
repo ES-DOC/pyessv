@@ -28,7 +28,7 @@ _FIELD_IDENTIFIER_SET = 'identifierSet'
 
 # Map of identifier type to parser.
 _PARSERS = {
-    'dataset': pyessv.parse_dataset_identifers,
+    'dataset': pyessv.parse_dataset_identifiers,
 }
 
 

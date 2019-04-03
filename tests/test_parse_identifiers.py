@@ -21,14 +21,14 @@ import tests.utils as tu
 
 # Test configuration: project, parsing function, template seperator, strictness, identifiers.
 _CONFIG = {
-    ('cmip5', LIB.parse_dataset_identifer, '.', (
+    ('cmip5', LIB.parse_dataset_identifier, '.', (
         'cmip5.output1.IPSL.IPSL-CM5A-LR.aqua4K.3hr.atmos.3hr.r2i1p1',
         'cmip5.output2.IPSL.IPSL-CM5A-LR.historicalMisc.mon.ocean.Omon.r2i1p1'
     )),
-    ('cmip6', LIB.parse_dataset_identifer, '.', (
+    ('cmip6', LIB.parse_dataset_identifier, '.', (
         'cmip6.FAFMIP.IPSL.IPSL-CM6A-LR.amip.r1i1p1f1.Amon.abs550aer.gm',
     )),
-    ('cordex', LIB.parse_dataset_identifer, '.', (
+    ('cordex', LIB.parse_dataset_identifier, '.', (
         'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.HadGEM3-RA.v1.mon.areacella',
         'cordex.output.EUR-11.SMHI.ICHEC-EC-EARTH.rcp85.r12i1p1.RCA4.v1.sem.rsdt'
     )),

@@ -30,7 +30,7 @@ _DATASET_ID_PARSERS = {
 }
 
 
-def parse_dataset_identifers(project, identifiers):
+def parse_dataset_identifiers(project, identifiers):
     """Parses a collection of dataset identifiers.
 
     :param str project: Project code.
@@ -44,12 +44,12 @@ def parse_dataset_identifers(project, identifiers):
 
     result = set()
     for identifier in identifiers:
-        result = result.union(parse_dataset_identifer(project, identifier))
+        result = result.union(parse_dataset_identifier(project, identifier))
 
     return result
 
 
-def parse_dataset_identifer(project, identifier):
+def parse_dataset_identifier(project, identifier):
     """Parses a dataset identifier.
 
     :param str project: Project code.

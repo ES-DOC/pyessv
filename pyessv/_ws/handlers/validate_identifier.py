@@ -26,7 +26,7 @@ _PARAM_PROJECT = 'project'
 
 # Map of identifier type to parser.
 _PARSERS = {
-    'dataset': pyessv.parse_dataset_identifer,
+    'dataset': pyessv.parse_dataset_identifier,
 }
 
 
