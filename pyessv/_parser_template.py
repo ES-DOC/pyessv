@@ -15,7 +15,7 @@ from pyessv._exceptions import TemplateParsingError
 from pyessv._model.collection import Collection
 from pyessv._model.term import Term
 from pyessv._utils.compat import  basestring
-
+import pyessv
 
 
 class TemplateParser(object):
@@ -66,11 +66,13 @@ class TemplateParser(object):
                     raise TemplateParsingError('{} :: {}'.format(name, val))
                 continue
 
-            # Verify collection match.
+            # Verify collection match & create a virtual pyessv.Term.
             collection = template_part
             term = collection.is_matched(name, self.strictness)
             if term == False:
                 raise TemplateParsingError('vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, val))
+            term = pyessv.create_term(collection, name)
+
             if isinstance(term, Term):
                 terms.add(term)
 
