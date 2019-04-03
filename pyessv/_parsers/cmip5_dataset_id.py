@@ -22,7 +22,7 @@ _INI_PATTERN = 'cmip5.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_
 _TEST_IDENTIFIER = 'cmip5.output2.IPSL.IPSL-CM5A-LR.historicalMisc.mon.ocean.Omon.r2i1p1.v20150504'
 
 # Template that identifiers must conform to.
-_TEMPLATE = 'cmip5.{}.{}.{}.{}.{}.{}.{}.{}'
+_TEMPLATE = 'cmip5.{}.{}.{}.{}.{}.{}.{}.{}.{}'
 
 # Collections injected into template.
 _COLLECTIONS = (
@@ -33,7 +33,8 @@ _COLLECTIONS = (
     'wcrp:cmip5:time-frequency',
     'wcrp:cmip5:realm',
     'wcrp:cmip5:cmor-table',
-    'wcrp:cmip5:ensemble'
+    'wcrp:cmip5:ensemble',
+    'wcrp:cmip5:version'
     )
 
 # Instantiated & cached parser instance.
@@ -49,8 +50,7 @@ def parse(identifier):
     if _PARSER is None:
         _PARSER = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
 
-    # Strip version suffix.
-    if '#' in identifier:
-      identifier = identifier.split('#')[0]
+    # Convert version suffix to an identifier element.
+    identifier = identifier.replace('#', '.v')
 
-    return _PARSER.parse(identifier.split('#')[0])
+    return _PARSER.parse(identifier)

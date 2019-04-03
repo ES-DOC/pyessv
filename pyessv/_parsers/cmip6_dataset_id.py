@@ -19,7 +19,7 @@ from pyessv._constants import PARSING_STRICTNESS_1
 _INI_PATTERN = 'CMIP6.%(activity_id)s.%(institution_id)s.%(source_id)s.%(experiment_id)s.%(member_id)s.%(table_id)s.%(variable_id)s.%(grid_label)s'
 
 # Template that identifiers must conform to.
-_TEMPLATE = 'CMIP6.{}.{}.{}.{}.{}.{}.{}.{}'
+_TEMPLATE = 'CMIP6.{}.{}.{}.{}.{}.{}.{}.{}.{}'
 
 # Collections injected into template.
 _COLLECTIONS = (
@@ -30,7 +30,8 @@ _COLLECTIONS = (
     'wcrp:cmip6:member-id',
     'wcrp:cmip6:table-id',
     'wcrp:cmip6:variable-id',
-    'wcrp:cmip6:grid-label'
+    'wcrp:cmip6:grid-label',
+    'wcrp:cmip6:version'
     )
 
 # Instantiated & cached parser instance.
@@ -46,8 +47,7 @@ def parse(identifier):
     if _PARSER is None:
         _PARSER = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
 
-    # Strip version suffix.
-    if '#' in identifier:
-      identifier = identifier.split('#')[0]
+    # Convert version suffix to an identifier element.
+    identifier = identifier.replace('#', '.v')
 
     return _PARSER.parse(identifier)

@@ -22,7 +22,7 @@ _INI_PATTERN = 'cordex.%(product)s.%(domain)s.%(institute)s.%(driving_model)s.%(
 _TEST_IDENTIFIER = 'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.hadgem3-ra.v1.mon.areacella'
 
 # Template that identifiers must conform to.
-_TEMPLATE = 'cordex.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}'
+_TEMPLATE = 'cordex.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}'
 
 # Collections injected into template.
 _COLLECTIONS = (
@@ -36,6 +36,7 @@ _COLLECTIONS = (
     'wcrp:cordex:rcm-version',
     'wcrp:cordex:time-frequency',
     'wcrp:cordex:variable',
+    'wcrp:cordex:version'
     )
 
 # Instantiated & cached parser instance.
@@ -50,8 +51,7 @@ def parse(identifier):
     if _PARSER is None:
         _PARSER = create_template_parser(_TEMPLATE, _COLLECTIONS, PARSING_STRICTNESS_1)
 
-    # Strip version suffix.
-    if '#' in identifier:
-      identifier = identifier.split('#')[0]
+    # Convert version suffix to an identifier element.
+    identifier = identifier.replace('#', '.v')
 
     return _PARSER.parse(identifier)
