@@ -24,7 +24,6 @@ import map_cmip5
 import map_cmip6
 import map_cordex
 import map_cordex_adjust
-import map_e3sm
 import map_euclipse
 import map_geomip
 import map_input4mips
@@ -57,7 +56,6 @@ _MODULES = {
     map_cmip6,
     map_cordex,
     map_cordex_adjust,
-    map_e3sm,
     map_euclipse,
     map_geomip,
     map_input4mips,
@@ -105,9 +103,10 @@ def _main(args):
             scope = _create_scope(authority, project)
 
         # Set scope data.
-        scope.data = scope.data or dict()
-        for field in module.SCOPE_DATA:
-            scope.data[field] = ini_section.get_option(field, raw=True)
+        scope.data = module.SCOPE_DATA or dict()
+        #scope.data = scope.data or dict()
+        #for field in module.SCOPE_DATA:
+        #    scope.data[field] = ini_section.get_option(field, raw=True)
 
         # Create regex collections.
         collections = [i for i in module.COLLECTIONS if not inspect.isfunction(i[1])]

@@ -30,15 +30,57 @@ COLLECTIONS = {
 	('land_use_short', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('version', r'^v[0-9]*$'),
-	('thredds_exclude_variables', yield_comma_delimited_options)
+	('dataset_version', r'latest|^v[0-9]*$'),
+	('thredds_exclude_variables', yield_comma_delimited_options),
+	('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'directory_format',
-	'dataset_id'
+	'filename_template': '{}_{}_{}_{}_{}_{}_{}_{}_{}_{}',
+    'filename_collections': (
+		'impact_model',
+		'model',
+		'experiment',
+		'social_forcing',
+		'co2_forcing',
+		'irrigation_forcing',
+		'land_use_short',
+		'variable'
+		'time_frequency',
+		'file_period'
+		),
+	'directory_template': 'ISIMIP-FT/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+	'directory_collections': (
+		'product',
+		'model',
+		'experiment',
+		'impact_model',
+		'sector_short',
+		'social_forcing',
+		'co2_forcing',
+		'irrigation_forcing',
+		'land_use_short',
+		'variable'
+		'time_frequency',
+		'dataset_version'
+		),
+	'dataset_id_template': 'isimip-ft.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+	'dataset_id_collections': (
+		'product',
+		'impact_model',
+		'sector_short',
+		'model',
+		'experiment',
+		'social_forcing',
+		'co2_forcing',
+		'irrigation_forcing',
+		'time_frequency',
+		'land_use_short',
+		'variable'
+		'dataset_version'
+	)
 }
 
 

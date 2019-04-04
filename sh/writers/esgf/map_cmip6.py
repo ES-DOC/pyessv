@@ -23,9 +23,40 @@ COLLECTIONS = {
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_format',
-	'directory_format',
-	'dataset_id'
+	'filename_template': '{}_{}_{}_{}_{}_{}_{}',
+    'filename_collections': (
+		'variable_id',
+		'table_id',
+		'source_id',
+		'experiment_id',
+		'member_id',
+		'grid_label'
+		'file_period'
+		),
+	'directory_template': 'CMIP6/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+	'directory_collections': (
+		'activity_id',
+		'institution_id',
+		'source_id',
+		'experiment_id',
+		'member_id',
+		'table_id',
+		'variable_id',
+		'grid_label',
+		'dataset_version'
+		),
+	'dataset_id_template': 'CMIP6.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+	'dataset_id_collections': (
+		'activity_id',
+		'institution_id',
+		'source_id',
+		'experiment_id',
+		'member_id',
+		'table_id',
+		'variable_id',
+		'grid_label',
+		'dataset_version'
+		)
 }
 
 

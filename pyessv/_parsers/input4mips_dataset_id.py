@@ -37,7 +37,7 @@ _PARSER = None
 
 
 def parse(identifier):
-    """Parses a CMIP6 dataset identifier.
+    """Parses a input4MIPs dataset identifier.
 
     """
     print identifier

@@ -26,14 +26,46 @@ COLLECTIONS = {
 	('variable', r'^[A-Za-z0-9]*$'),
 	('grid_label', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
-	('version', r'^v[0-9]*$')
+	('dataset_version', r'latest|^v[0-9]*$'),
+	('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_format',
-	'directory_format',
-	'dataset_id'
+	'filename_template': '{}_{}_{}_{}_{}_{}_{}',
+	'filename_collections': (
+		'variable',
+		'cmor_table',
+		'model',
+		'experiment',
+		'ensemble',
+		'grid_label',
+		'file_period'
+	),
+	'directory_template': 'PRIMAVERA/{}/{}=/{}/{}/{}/{}/{}/{}/{}',
+	'directory_collections': (
+		'activity',
+		'institute',
+		'model',
+		'experiment',
+		'ensemble',
+		'cmor_table',
+		'variable',
+		'grid_version',
+		'dataset_version'
+	),
+	'dataset_id_template': 'PRIMAVERA.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+	'dataset_id_collections': (
+		'activity',
+		'institute',
+		'model',
+		'experiment',
+		'ensemble',
+		'cmor_table',
+		'variable',
+		'grid_version',
+		'dataset_version'
+	)
 }
 
 

@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._exceptions import TemplateParsingError
+from pyessv._exceptions import TemplateParsingError, TemplateValueError
 from pyessv._model.collection import Collection
 from pyessv._model.term import Term
 from pyessv._utils.compat import  basestring
@@ -22,19 +22,19 @@ class TemplateParser(object):
     """A vocabulary template parser.
 
     """
-    def __init__(self, template, collections, strictness, seperator='.'):
+    def __init__(self, template, collections, strictness, separator='.'):
         """Instance constructor.
 
         :param str template: Identifier template.
         :param list collections: pyessv collection identifiers.
         :param int strictness: Strictness level to apply when applying name matching rules.
-        :param str seprarator: Seperator to apply when parsing.
+        :param str seprarator: Separator to apply when parsing.
 
         """
         from pyessv._loader import load
 
-        self.seperator = seperator
-        self.template_parts = template.split(seperator)
+        self.separator = separator
+        self.template_parts = template.split(separator)
         self.template = template
         self.strictness = strictness
 
@@ -53,7 +53,7 @@ class TemplateParser(object):
 
         """
         # Verify that number of parts is equal.
-        parts = val.split(self.seperator)
+        parts = val.split(self.separator)
         if len(parts) != len(self.template_parts):
             raise TemplateParsingError('Number of elements is invalid: {}: is {}, expected {}'.format(val, len(parts), len(self.template_parts)))
 
@@ -66,14 +66,16 @@ class TemplateParser(object):
                     raise TemplateParsingError('{} :: {}'.format(name, val))
                 continue
 
-            # Verify collection match & create a virtual pyessv.Term.
+            # Verify collection match.
             collection = template_part
             term = collection.is_matched(name, self.strictness)
             if term == False:
-                raise TemplateParsingError('vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, val))
-            term = pyessv.create_term(collection, name)
+                raise TemplateValueError('vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, name))
 
+            # Create a virtual term if needed.
             if isinstance(term, Term):
                 terms.add(term)
+            else:
+                terms.add(pyessv.create_term(collection, name))
 
         return terms

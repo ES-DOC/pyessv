@@ -65,7 +65,8 @@ class Collection(IterableNode):
         """Gets flag indicating whether the collection is a virtual one (i.e. simply constrained by a reg-ex).
 
         """
-        return len(self) == 0
+        return self.term_regex is not None
+        #return len(self) == 0
 
 
     def get_validators(self):

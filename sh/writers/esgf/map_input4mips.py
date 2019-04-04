@@ -23,16 +23,49 @@ COLLECTIONS = {
 	('grid_label', yield_comma_delimited_options),
 	('institution_id', yield_comma_delimited_options),
 	('realm', yield_comma_delimited_options),
+    ('mip_era', yield_comma_delimited_options),
 	('frequency', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
-	('version', r'^v[0-9]{8}$'),
+	('dataset_version', r'latest|^v[0_9]{8}$'),
+    ('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_format',
-	'directory_format',
-	'dataset_id'
+    'filename_template': '{}_{}_{}_{}_{}_{}_{}',
+    'filename_collections': (
+        'variable_id',
+        'activity_id',
+        'dataset_category',
+        'target_mip',
+        'source_id',
+        'grid_label'
+        'file_period'
+    ),
+    'directory_template': 'input4MIPs/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+    'directory_collections': (
+        'mip_era',
+        'target_mip',
+        'institution_id',
+        'source_id',
+        'realm',
+        'frequency',
+        'variable_id',
+        'grid_label',
+        'dataset_version'
+    ),
+    'dataset_id_template': 'input4MIPs.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+    'dataset_id_collections': (
+        'mip_era',
+        'target_mip',
+        'institution_id',
+        'source_id',
+        'realm',
+        'frequency',
+        'variable_id',
+        'grid_label',
+        'dataset_version'
+    )
 }
 
 def yield_variable_id_options(ctx):

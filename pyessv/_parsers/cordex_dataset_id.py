@@ -43,7 +43,7 @@ _COLLECTIONS = (
 _PARSER = None
 
 def parse(identifier):
-    """Parses a CMIP6 dataset identifier.
+    """Parses a CORDEX dataset identifier.
 
     """
     # Instantiate parser JIT.

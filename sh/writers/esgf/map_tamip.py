@@ -29,14 +29,46 @@ COLLECTIONS = {
 	('realm', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('version', r'^v[0-9]*$')
+	('dataset_version', r'latest|^v[0-9]*$'),
+	('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_format',
-	'directory_format',
-	'dataset_id'
+	'filename_template': '{}_{}_{}_{}_{}_{}',
+    'filename_collections': (
+		'variable',
+		'cmor_table',
+		'model',
+		'experiment',
+		'ensemble',
+		'file_period'
+		),
+	'directory_template': 'TAMIP/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+	'directory_collections': (
+		'product',
+		'institute',
+		'model',
+		'experiment',
+		'time_frequency',
+		'realm',
+		'cmor_table',
+		'ensemble',
+		'dataset_version',
+		'variable'
+		),
+	'dataset_id_template': 'tamip.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+	'dataset_id_collections': (
+		'product',
+		'institute',
+		'model',
+		'experiment',
+		'time_frequency',
+		'realm',
+		'cmor_table',
+		'ensemble',
+		'dataset_version'
+		)
 }
 
 

@@ -35,6 +35,18 @@ class TemplateParsingError(ValueError):
 		super(TemplateParsingError, self).__init__(msg)
 
 
+class TemplateValueError(ValueError):
+	"""A template parsing error raised.
+
+	"""
+	def __init__(self, val):
+		"""Object constructor.
+
+		"""
+		msg = 'A template value error has occurred: {}'.format(val)
+		super(TemplateValueError, self).__init__(msg)
+
+
 class ValidationError(ValueError):
 	"""A validation error raised by the package validator.
 

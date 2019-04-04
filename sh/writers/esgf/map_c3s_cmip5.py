@@ -28,7 +28,8 @@ COLLECTIONS = {
 	('realm', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('version', r'^v[0-9]*$')
+	('dataset_version', r'latest|^v[0-9]*$'),
+	('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 # Arbitrary data associated with a collection.
@@ -45,9 +46,41 @@ COLLECTION_DATA = {
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_format',
-	'directory_format',
-	'dataset_id'
+	'filename_template': '{}_{}_{}_{}_{}_{}',
+    'filename_collections': (
+		'variable',
+		'cmor_table',
+		'model',
+		'experiment',
+		'ensemble',
+		'file_period'
+		),
+	'directory_template': 'C3S-CMIP5/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+	'directory_collections': (
+		'product',
+		'institute',
+		'model',
+		'experiment',
+		'time_frequency',
+		'realm',
+		'cmor_table',
+		'ensemble',
+		'variable',
+		'dataset_version'
+		),
+	'dataset_id_template': 'c3s-cmip5.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+	'dataset_id_collections': (
+		'product',
+		'institute',
+		'model',
+		'experiment',
+		'time_frequency',
+		'realm',
+		'cmor_table',
+		'ensemble',
+		'variable',
+		'dataset_version'
+		)
 }
 
 
