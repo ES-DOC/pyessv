@@ -19,7 +19,7 @@ from pyessv._utils.compat import basestring
 
 # Test identifier (for reference purpose only).
 _TEST_CMIP5_IDENTIFIER = 'cmip5.output2.IPSL.IPSL-CM5A-LR.historicalMisc.mon.ocean.Omon.r2i1p1.v20150504'
-_TEST_CORDEX_IDENTIFIER = 'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.hadgem3-ra.v1.mon.areacella'
+_TEST_CORDEX_IDENTIFIER = 'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.HadGEM3-RA.v1.mon.areacella#20190804'
 
 # Instantiated template
 _TEMPLATE = None

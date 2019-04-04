@@ -31,7 +31,7 @@ COLLECTIONS = {
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('dataset_version', r'latest|v^[0-9]*$'),
+	('dataset_version', r'latest|^v[0-9]*$'),
 	('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
@@ -75,7 +75,7 @@ SCOPE_DATA = {
 		'rcm_version',
 		'time_frequency',
 		'variable',
-		'version'
+		'dataset_version'
 		)
 }
 

@@ -75,7 +75,7 @@ SCOPE_DATA = {
 		'bias_adjustment',
 		'time_frequency',
 		'variable',
-		'version'
+		'dataset_version'
 		)
 }
 

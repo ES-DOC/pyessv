@@ -73,7 +73,7 @@ SCOPE_DATA = {
 		'rcm_version',
 		'time_frequency',
 		'variable',
-		'version'
+		'dataset_version'
 		)
 }
 
