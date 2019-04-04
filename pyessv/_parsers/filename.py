@@ -26,7 +26,16 @@ _TEST_FILENAME = 'tas_Amon_IPSL-CM5A-LR_1pctCO2_r1i1p1_185001-198912.nc'
 _TEST_FILENAME = 'orog_fx_IPSL-CM5A-LR_1pctCO2_r0i0p0.nc'
 _TEST_FILENAME = 'tas_Amon_IPSL-CM5A-LR_1pctCO2_r1i1p1_185001-198912-clim.nc'
 
-# Instantiated & cached parser instance.
+# Instantiated template
+_TEMPLATE = None
+
+# Instantiated template collections
+_COLLECTIONS = None
+
+# Instantiated project.
+_PROJECT = None
+
+# Instantiated parser.
 _PARSER = None
 
 
@@ -62,33 +71,32 @@ def parse_filename(project, filename):
     assert isinstance(project, basestring), 'Invalid project'
     assert isinstance(filename, basestring), 'Invalid filename'
 
-    # Instantiated template
-    _TEMPLATE = None
+    global _PROJECT, _PARSER, _TEMPLATE, _COLLECTIONS
 
-    # Instantiated template collections
-    _COLLECTIONS = None
+    if _PROJECT != project:
 
-    # Get scope corresponding to the project code.
-    scopes = all_scopes()
-    assert project in [scope.name for scope in scopes], 'Unsupported project'
-    scope = [scope for scope in scopes if scope.name == project][0]
+        # Get scope corresponding to the project code.
+        scopes = all_scopes()
+        assert project in [scope.name for scope in scopes], 'Unsupported project'
+        scope = [scope for scope in scopes if scope.name == project][0]
 
-    # Get template from data scope.
-    assert 'filename_template' in scope.data.keys(), 'Filename template not found'
-    _TEMPLATE = scope.data['filename_template']
-    assert isinstance(_TEMPLATE, basestring), 'Invalid template'
+        # Get template from data scope.
+        assert 'filename_template' in scope.data.keys(), 'Filename template not found'
+        _TEMPLATE = scope.data['filename_template']
+        assert isinstance(_TEMPLATE, basestring), 'Invalid template'
 
-    # Get template collections from data scope.
-    assert 'filename_collections' in scope.data.keys(), 'Filename collections not found'
-    _COLLECTIONS = list()
-    for name in scope.data['filename_collections']:
-        _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
-    assert _COLLECTIONS, 'Invalid collections'
+        # Get template collections from data scope.
+        assert 'filename_collections' in scope.data.keys(), 'Filename collections not found'
+        _COLLECTIONS = list()
+        for name in scope.data['filename_collections']:
+            _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
+        assert _COLLECTIONS, 'Invalid collections'
 
-    # Instantiate parser JIT.
-    global _PARSER
-    if _PARSER is None:
+        # Instantiate parser JIT.
         _PARSER = create_template_parser(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1, separator='_')
+
+        # Cached project.
+        _PROJECT = project
 
     # Strip file extension.
     filename = splitext(filename)[0]

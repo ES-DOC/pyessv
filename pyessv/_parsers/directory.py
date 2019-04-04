@@ -24,7 +24,16 @@ _INI_PATTERN = '%(root)s/%(project)s/%(product)s/%(institute)s/%(model)s/%(exper
 _TEST_DIRECTORY = 'CMIP5/output1/IPSL/IPSL-CM5A-LR/1pctCO2/mon/atmos/Amon/r1i1p1/v20110427/tas'
 _TEST_DIRECTORY = 'CMIP5/output1/IPSL/IPSL-CM5A-LR/1pctCO2/mon/atmos/Amon/r1i1p1/latest/tas'
 
-# Instantiated & cached parser instance.
+# Instantiated template
+_TEMPLATE = None
+
+# Instantiated template collections
+_COLLECTIONS = None
+
+# Instantiated project.
+_PROJECT = None
+
+# Instantiated parser.
 _PARSER = None
 
 
@@ -60,32 +69,38 @@ def parse_directory(project, directory):
     assert isinstance(project, basestring), 'Invalid project'
     assert isinstance(directory, basestring), 'Invalid directory'
 
-    # Instantiated template
-    _TEMPLATE = None
+    global _PROJECT, _PARSER, _TEMPLATE, _COLLECTIONS
 
-    # Instantiated template collections
-    _COLLECTIONS = None
+    if _PROJECT != project:
 
-    # Get scope corresponding to the project code.
-    scopes = all_scopes()
-    assert project in [scope.name for scope in scopes], 'Unsupported project'
-    scope = [scope for scope in scopes if scope.name == project][0]
+        # Instantiated template
+        _TEMPLATE = None
 
-    # Get template from data scope.
-    assert 'directory_template' in scope.data.keys(), 'Directory template not found'
-    _TEMPLATE = scope.data['directory_template']
-    assert isinstance(_TEMPLATE, basestring), 'Invalid template'
+        # Instantiated template collections
+        _COLLECTIONS = None
 
-    # Get template collections from data scope.
-    assert 'directory_collections' in scope.data.keys(), 'Template collections not found'
-    _COLLECTIONS = list()
-    for name in scope.data['directory_collections']:
-        _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
-    assert _COLLECTIONS, 'Invalid collections'
+        # Get scope corresponding to the project code.
+        scopes = all_scopes()
+        assert project in [scope.name for scope in scopes], 'Unsupported project'
+        scope = [scope for scope in scopes if scope.name == project][0]
 
-    # Instantiate parser JIT.
-    global _PARSER
-    if _PARSER is None:
+        # Get template from data scope.
+        assert 'directory_template' in scope.data.keys(), 'Directory template not found'
+        _TEMPLATE = scope.data['directory_template']
+        assert isinstance(_TEMPLATE, basestring), 'Invalid template'
+
+        # Get template collections from data scope.
+        assert 'directory_collections' in scope.data.keys(), 'Template collections not found'
+        _COLLECTIONS = list()
+        for name in scope.data['directory_collections']:
+            _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
+        assert _COLLECTIONS, 'Invalid collections'
+
+        # Instantiate parser JIT.
+        global _PARSER
         _PARSER = create_template_parser(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1, separator='/')
+
+        # Cached project.
+        _PROJECT = project
 
     return _PARSER.parse(directory)
