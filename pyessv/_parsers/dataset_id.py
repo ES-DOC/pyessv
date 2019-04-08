@@ -88,7 +88,6 @@ def parse_dataset_identifier(project, identifier):
         assert _COLLECTIONS, 'Invalid collections'
 
         # Instantiate parser JIT.
-        global _PARSER
         _PARSER = create_template_parser(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1)
 
         # Cached project.

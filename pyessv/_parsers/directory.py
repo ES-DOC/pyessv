@@ -97,7 +97,6 @@ def parse_directory(project, directory):
         assert _COLLECTIONS, 'Invalid collections'
 
         # Instantiate parser JIT.
-        global _PARSER
         _PARSER = create_template_parser(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1, separator='/')
 
         # Cached project.
