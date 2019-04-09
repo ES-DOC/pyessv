@@ -58,8 +58,8 @@ def _init():
     if fpath is not None:
         data = json_file_to_namedtuple(fpath)
         logger.log_web("Config file loaded @ {}".format(fpath))
-    else:
-        logger.log_web_warning("Web-service config file not found: reverted to default")
+    #else:
+    #    logger.log_web_warning("Web-service config file not found: reverted to default")
 
 
 # Auto-initialize.
