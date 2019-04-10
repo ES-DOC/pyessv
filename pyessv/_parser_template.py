@@ -11,22 +11,22 @@
 
 
 """
-from pyessv._exceptions import TemplateParsingError, TemplateValueError
-from pyessv._model.collection import Collection
-from pyessv._model.term import Term
-from pyessv._utils.compat import  basestring
 import pyessv
+from pyessv._exceptions import TemplateParsingError, TemplateValueError
+from pyessv._model.term import Term
+from pyessv._utils.compat import basestring
 
 
 class TemplateParser(object):
     """A vocabulary template parser.
 
     """
+
     def __init__(self, template, collections, strictness, separator='.'):
         """Instance constructor.
 
         :param str template: Identifier template.
-        :param list collections: pyessv collection identifiers.
+        :param tuple collections: pyessv collection identifiers.
         :param int strictness: Strictness level to apply when applying name matching rules.
         :param str seprarator: Separator to apply when parsing.
 
@@ -44,7 +44,6 @@ class TemplateParser(object):
             if part == '{}':
                 self.template_parts[idx] = load(collections[collection_idx])
                 collection_idx += 1
-
 
     def parse(self, val):
         """Parses a val against a template.
@@ -70,7 +69,8 @@ class TemplateParser(object):
             collection = template_part
             term = collection.is_matched(name, self.strictness)
             if term == False:
-                raise TemplateValueError('vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, name))
+                raise TemplateValueError(
+                    'vocab={} :: strictness={} :: value={}'.format(collection, self.strictness, name))
 
             # Create a virtual term if needed.
             if isinstance(term, Term):

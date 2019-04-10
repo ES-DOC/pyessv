@@ -72,6 +72,8 @@ from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
 
+from pyessv._builders import build_dataset_identifier
+
 from pyessv._parser import parse
 from pyessv._parsers import parse_dataset_identifier
 from pyessv._parsers import parse_dataset_identifiers
