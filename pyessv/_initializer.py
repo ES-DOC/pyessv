@@ -31,8 +31,17 @@ def init():
 	if not os.path.isdir(DIR_ARCHIVE):
 		raise EnvironmentError('{} directory does not exists'.format(DIR_ARCHIVE))
 
-	# Load set of authorities from file system.
-	authorities = _load_authorities()
+
+def load_cv(authority=None):
+	authorities = []
+	if authority:
+		authority = read(authority=authority)
+		authorities.append(authority)
+		cache(authority)
+	else:
+		for authority in read():
+			authorities.append(authority)
+			cache(authority)
 
 	# Mixin pseudo-constants.
 	_mixin_constants(authorities)
@@ -41,18 +50,18 @@ def init():
 	_mixin_scope_accessors(authorities)
 
 
-def _load_authorities():
-	"""Loads vocabulary authorities from archive.
-
-	"""
-	#ogger.log('Loading vocabularies from {}:'.format(DIR_ARCHIVE))
-	authorities = []
-	for authority in read():
-		authorities.append(authority)
-		#logger.log('... loaded: {}'.format(authority))
-		cache(authority)
-
-	return authorities
+# def _load_authorities():
+# 	"""Loads vocabulary authorities from archive.
+#
+# 	"""
+# 	logger.log('Loading vocabularies from {}:'.format(DIR_ARCHIVE))
+# 	authorities = []
+# 	for authority in read():
+# 		authorities.append(authority)
+# 		logger.log('... loaded: {}'.format(authority))
+# 		cache(authority)
+#
+# 	return authorities
 
 
 def _mixin_constants(authorities):

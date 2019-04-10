@@ -123,7 +123,13 @@ def _main(args):
             except TypeError:
                 pass
             for term_data in term_factory(ctx):
-                _get_term(collection, term_data)
+                try:
+                    term_src, term_dst = term_data
+                    t = _get_term(collection, term_dst)
+                    s = pyessv.load(term_src)
+                    s.associations.append(t)
+                except (ValueError, AttributeError):
+                    _get_term(collection, term_data)
 
     # Add to archive & persist to file system.
     pyessv.archive(authority)

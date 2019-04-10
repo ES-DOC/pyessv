@@ -71,14 +71,18 @@ def delete(target):
         pass
 
 
-def read(archive_dir=DIR_ARCHIVE):
+def read(archive_dir=DIR_ARCHIVE, authority=None):
     """Reads vocabularies from archive folder (~/.esdoc/pyessv-archive) upon file system.
 
     :returns: List of vocabulary authorities loaded from archive folder.
     :rtype: list
 
     """
-    return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
+    if authority:
+        assert '{}/{}'.format(archive_dir, authority), 'Invalid authority'
+        return _read_authority('{}/{}'.format(archive_dir, authority))
+    else:
+        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
 
 def _read_authority(dpath):

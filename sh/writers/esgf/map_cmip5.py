@@ -21,9 +21,9 @@ COLLECTIONS = {
 	('cmor_table', yield_comma_delimited_options),
 	('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
 	('experiment', yield_pipe_delimited_options),
+	('model', yield_comma_delimited_options),
 	('institute', lambda: yield_institute),
 	('las_time_delta', lambda: yield_las_time_delta),
-	('model', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('product', yield_comma_delimited_options),
 	('realm', yield_comma_delimited_options),
@@ -88,8 +88,9 @@ def yield_institute(ctx):
 	"""Yields institute information to be converted to pyessv terms.
 
 	"""
-	for _, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
-		yield institute
+	for model, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
+		src_namespace = 'wcrp:cmip5:model:{}'.format(model.lower().replace('_','-'))
+		yield (src_namespace, institute)
 
 
 def yield_las_time_delta(ctx):

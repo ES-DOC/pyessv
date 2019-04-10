@@ -62,6 +62,7 @@ from pyessv._governance import reject
 from pyessv._governance import reset
 
 from pyessv._initializer import init
+from pyessv._initializer import load_cv
 
 from pyessv._loader import load_random
 from pyessv._loader import load
