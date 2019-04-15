@@ -75,6 +75,9 @@ def _main(args):
     if not os.path.isdir(args.source):
         raise ValueError('ESGF vocab directory does not exist: {}'.format(args.source))
 
+    # Load vocabulary.
+    pyessv.load_cv()
+
     # CV authority = ECMWF.
     #_AUTHORITY = pyessv.create_authority(
     #    'ECMWF',
@@ -83,7 +86,6 @@ def _main(args):
     #    url='https://www.ecmwf.int/',
     #    create_date=_CREATE_DATE
     #)
-
     # Process project modules:
     for module in _MODULES:
         # Set project.
@@ -127,7 +129,10 @@ def _main(args):
                     term_src, term_dst = term_data
                     t = _get_term(collection, term_dst)
                     s = pyessv.load(term_src)
-                    s.associations.append(t)
+                    if t not in s.associations:
+                        s.associations.append(t)
+                    if s not in t.associations:
+                        t.associations.append(s)
                 except (ValueError, AttributeError):
                     _get_term(collection, term_data)
 
@@ -201,7 +206,7 @@ def _create_collection(module, scope, collection_id, term_regex=None):
     except (AttributeError, KeyError):
         data = None
     if collection_id.lower().replace('_', '-') in [collection.name for collection in scope.collections]:
-        collection = scope[collection_id]
+        collection = scope[collection_id.lower().replace('_', '-')]
         collection.description = "ESGF publisher-config CV collection: ".format(collection_id),
         collection.label = collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR')
         collection.term_regex = term_regex
@@ -240,11 +245,18 @@ def _get_term(collection, term_info):
 
     alternative_names = [] if synonym is None else [synonym]
 
-    return pyessv.create_term(collection, name,
-        label=label,
-        description=description,
-        alternative_names=alternative_names
-    )
+    if name.lower().replace('_', '-') in [term.name for term in collection.terms]:
+        term = collection[name.lower().replace('_', '-')]
+        term.label = label
+        term.description = description
+        term.alternative_names = alternative_names
+        return term
+    else:
+        return pyessv.create_term(collection, name,
+            label=label,
+            description=description,
+            alternative_names=alternative_names
+        )
 
 
 # Entry point.

@@ -13,92 +13,97 @@ from utils import yield_comma_delimited_options
 from utils import yield_pipe_delimited_options
 
 
-# TODO process map: las_time_delta_map = map(time_frequency : las_time_delta)
-# TODO process map: rcm_name_map = map(project, rcm_model : rcm_name)
-
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
-	('domain', lambda: yield_domain),
-	('driving_model', yield_comma_delimited_options),
-	('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
-	('experiment', yield_pipe_delimited_options),
-	('institute', yield_comma_delimited_options),
-	('las_time_delta', lambda: yield_las_time_delta),
-	('product', yield_comma_delimited_options),
-	('rcm_model', yield_comma_delimited_options),
-	('rcm_name', lambda: yield_rcm_name),
-	('bias_adjustment', yield_comma_delimited_options),
-	('thredds_exclude_variables', yield_comma_delimited_options),
-	('time_frequency', yield_comma_delimited_options),
-	('variable', yield_comma_delimited_options),
-	('dataset_version', r'latest|v^[0-9]*$'),
-	('file_period', r'fixed|^\d+-\d+(-clim)?$')
+    ('domain', lambda: yield_domain),
+    ('driving_model', yield_comma_delimited_options),
+    ('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
+    ('experiment', yield_pipe_delimited_options),
+    ('institute', yield_comma_delimited_options),
+    ('las_time_delta', lambda: yield_las_time_delta),
+    ('product', yield_comma_delimited_options),
+    ('rcm_model', yield_comma_delimited_options),
+    ('rcm_name', lambda: yield_rcm_name),
+    ('bias_adjustment', yield_comma_delimited_options),
+    ('thredds_exclude_variables', yield_comma_delimited_options),
+    ('time_frequency', yield_comma_delimited_options),
+    ('variable', yield_comma_delimited_options),
+    ('dataset_version', r'latest|v^[0-9]*$'),
+    ('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_template': '{}_{}_{}_{}_{}_{}_{}_{}_{}',
-    'filename_collections': (
-		'variable',
-		'domain',
-		'driving_model',
-		'experiment',
-		'ensemble',
-		'rcm_model',
-		'bias_adjustment',
-		'time_frequency',
-		'file_period'
-		),
-	'directory_template': 'CORDEX-Adjust/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}',
-	'directory_collections': (
-		'product',
-		'domain',
-		'institute',
-		'driving_model',
-		'experiment',
-		'ensemble',
-		'rcm_model',
-		'bias_adjustment',
-		'time_frequency',
-		'variable',
-		'dataset_version'
-		),
-	'dataset_id_template': 'cordex-adjust.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}',
-	'dataset_id_collections': (
-		'product',
-		'domain',
-		'institute',
-		'driving_model',
-		'experiment',
-		'ensemble',
-		'rcm_name',
-		'bias_adjustment',
-		'time_frequency',
-		'variable',
-		'dataset_version'
-		)
+    'filename': {
+        'template': '{}_{}_{}_{}_{}_{}_{}_{}_{}',
+        'collections': (
+            'variable',
+            'domain',
+            'driving_model',
+            'experiment',
+            'ensemble',
+            'rcm_model',
+            'bias_adjustment',
+            'time_frequency',
+            'file_period'
+        )
+    },
+    'directory_structure': {
+        'template': 'CORDEX-Adjust/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+        'collections': (
+            'product',
+            'domain',
+            'institute',
+            'driving_model',
+            'experiment',
+            'ensemble',
+            'rcm_model',
+            'bias_adjustment',
+            'time_frequency',
+            'variable',
+            'dataset_version'
+        )
+    },
+    'dataset_id': {
+        'template': 'cordex-adjust.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+        'collections': (
+            'product',
+            'domain',
+            'institute',
+            'driving_model',
+            'experiment',
+            'ensemble',
+            'rcm_name',
+            'bias_adjustment',
+            'time_frequency',
+            'variable',
+            'dataset_version'
+        )
+    }
 }
 
 
 def yield_domain(ctx):
-	"""Yields domain information to be converted to pyessv terms.
+    """Yields domain information to be converted to pyessv terms.
 
-	"""
-	for domain_name, domain_description in ctx.ini_section.get_option('domain_description_map', '\n', '|'):
-		yield domain_name, domain_name, domain_description
+    """
+    for domain_name, domain_description in ctx.ini_section.get_option('domain_description_map', '\n', '|'):
+        yield domain_name, domain_name, domain_description
 
 
 def yield_las_time_delta(ctx):
-	"""Yields las time delta information to be converted to pyessv terms.
+    """Yields las time delta information to be converted to pyessv terms.
 
-	"""
-	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta
+    """
+    for time_frequency, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
+        src_namespace = 'wcrp:cordex-adjust:time-frequency:{}'.format(time_frequency.lower().replace('_', '-'))
+        yield src_namespace, las_time_delta
 
 
 def yield_rcm_name(ctx):
-	"""Yields rcm name information to be converted to pyessv terms.
+    """Yields rcm name information to be converted to pyessv terms.
 
-	"""
-	for _, rcm_name in ctx.ini_section.get_option('rcm_name_map', '\n', '|'):
-		yield rcm_name
+    """
+    for rcm_model, rcm_name in ctx.ini_section.get_option('rcm_name_map', '\n', '|'):
+        src_namespace = 'wcrp:cordex-adjust:rcm_model:{}'.format(rcm_model.lower().replace('_', '-'))
+        yield src_namespace, rcm_name

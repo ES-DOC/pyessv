@@ -68,13 +68,15 @@ def yield_variable(ctx):
 	"""Yields institute information to be converted to pyessv terms.
 
 	"""
-	for var, _ in ctx.ini_section.get_option('variable_map', '\n', '|'):
-		yield var
+	for var, variable in ctx.ini_section.get_option('variable_map', '\n', '|'):
+		src_namespace = 'wcrp:obs4mips:var:{}'.format(var.lower().replace('_','-'))
+		yield src_namespace, variable
 
 
 def yield_las_time_delta(ctx):
 	"""Yields las time delta information to be converted to pyessv terms.
 
 	"""
-	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta
+	for time_frequency, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
+		src_namespace = 'wcrp:obs4mips:time-frequency:{}'.format(time_frequency.lower().replace('_', '-'))
+		yield src_namespace, las_time_delta
