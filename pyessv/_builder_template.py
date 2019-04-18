@@ -70,6 +70,12 @@ class TemplateBuilder(object):
                 if term.collection == collection:
                     break
 
+            # Append term from associations.
+            if not term:
+                for term in [association for association in t.associations for t in terms]:
+                    if term.collection == collection:
+                        break
+
             # Verify collection is found among terms.
             if not term:
                 raise TemplateValueError('Collection not found among terms :: {}'.format(collection))
