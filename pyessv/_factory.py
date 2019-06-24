@@ -132,7 +132,7 @@ def create_collection(
     :param list alternative_names: Collection of associated alternative names.
     :param str|tuple term_regex: Regular expression information to be applied to terms.
 
-    :returns: A vocabulary collection, e.g. insitution-id.
+    :returns: A vocabulary collection, e.g. institution-id.
     :rtype: pyessv.Collection
 
     """

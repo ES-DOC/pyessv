@@ -67,6 +67,12 @@ _MODULES = {
     map_tamip
     }
 
+# Set of mapping modules specific to ECMWF.
+_MODULES_ECMWF = {
+    map_c3s_cmip5,
+    map_c3s_cordex,
+    map_cc4e,
+}
 
 def _main(args):
     """Main entry point.
@@ -86,6 +92,7 @@ def _main(args):
     #    url='https://www.ecmwf.int/',
     #    create_date=_CREATE_DATE
     #)
+
     # Process project modules:
     for module in _MODULES:
         # Set project.
@@ -95,12 +102,13 @@ def _main(args):
         ini_section = _IniSection(project, args.source)
 
         # Load authority & create scope.
-        if project in ['cc4e', 'c3s-cmip5', 'c3s-cordex']:
-            authority = pyessv.load('ecmwf')
+        if module in _MODULES_ECMWF:
+            authority = _create_authority_ecmwf()
             scope = pyessv.load('ecmwf:{}'.format(project))
         else:
             authority = pyessv.load('wcrp')
             scope = pyessv.load('wcrp:{}'.format(project))
+
         if not scope:
             scope = _create_scope(authority, project)
 
@@ -184,6 +192,19 @@ class _IniSection(object):
         return data
 
 
+def _create_authority_ecmwf():
+    """Writes ECMWF authority.
+
+    """
+    return pyessv.load('ecmwf', verbose=False) or pyessv.create_authority(
+        'ECMWF',
+        'European Center for Medium-Range Weather Forecasts',
+        label='ECMWF',
+        url='https://www.ecmwf.int',
+        create_date=_CREATE_DATE
+        )
+
+
 def _create_scope(authority, project):
     """Factory method to return vocabulary scope.
 
@@ -193,11 +214,12 @@ def _create_scope(authority, project):
         project,
         description='ESGF publisher controlled Vocabularies (CVs) for use in {}'.format(project.upper()),
         label=project.upper(),
-        url='https://esgf.llnl.gov'
+        url='https://esgf.llnl.gov',
+        create_date=_CREATE_DATE
     )
 
 
-def _create_collection(module, scope, collection_id, term_regex=None):
+def _create_collection(module, scope, collection_id, term_regex=None, term_composed=[]):
     """Factory method to return vocabulary collection.
 
     """
@@ -205,22 +227,25 @@ def _create_collection(module, scope, collection_id, term_regex=None):
         data = module.COLLECTION_DATA[collection_id]
     except (AttributeError, KeyError):
         data = None
+
     if collection_id.lower().replace('_', '-') in [collection.name for collection in scope.collections]:
         collection = scope[collection_id.lower().replace('_', '-')]
         collection.description = "ESGF publisher-config CV collection: ".format(collection_id),
         collection.label = collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR')
         collection.term_regex = term_regex
+        collection.term_composed = term_composed
         collection.data = data
         return collection
-    else:
-        return pyessv.create_collection(
-            scope,
-            collection_id,
-            "ESGF publisher-config CV collection: ".format(collection_id),
-            label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
-            term_regex=term_regex,
-            data=data
-        )
+
+    return pyessv.create_collection(
+        scope,
+        collection_id,
+        "ESGF publisher-config CV collection: ".format(collection_id),
+        label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
+        term_regex=term_regex,
+        term_composed=term_composed,
+        data=data
+    )
 
 
 def _get_term(collection, term_info):

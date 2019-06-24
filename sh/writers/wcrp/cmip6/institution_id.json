@@ -126,6 +126,14 @@
     ]
   },
   {
+    "code": "CSIR-Wits-CSIRO",
+    "name": "Commonwealth Scientific and Industrial Research Organisation - University of the Witwatersrand",
+    "postalAddress": "Wits, Global Change Institute, Johannesburg 2050, South Africa",
+    "coordinates": "-26.183190,28.052737",
+    "homepage": "https://www.wits.ac.za/gci",
+    "consortia": []
+  },
+  {
     "code": "CSIRO",
     "name": "Commonwealth Scientific and Industrial Research Organisation",
     "postalAddress": "Aspendale, Victoria 3195, Australia",
@@ -837,6 +845,14 @@
     "postalAddress": "New York, NY 10025, USA",
     "coordinates": "-73.9674136,40.8054755",
     "homepage": "https://www.giss.nasa.gov",
+    "consortia": []
+  },
+  {
+    "code": "NASA-GSFC",
+    "name": "National Aeronautics and Space Administration - Goddard Space Flight Centre",
+    "postalAddress": "Greenbelt, MD 20771, USA",
+    "coordinates": "-38.998267,76.864800",
+    "homepage": "https://www.nasa.gov/goddard",
     "consortia": []
   },
   {

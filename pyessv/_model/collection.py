@@ -66,8 +66,6 @@ class Collection(IterableNode):
 
         """
         return self.term_regex is not None
-        #return len(self) == 0
-
 
     def get_validators(self):
         """Returns set of validators.
