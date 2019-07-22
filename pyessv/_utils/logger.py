@@ -40,7 +40,7 @@ def _get_formatted_message(msg, level, app):
     if msg is None:
         return _NULL_MSG
     else:
-        return '{} [{}] :: ESDOC-{} :: {}'.format(
+        return '{} [{}] :: {} :: {}'.format(
             str(arrow.get())[0:-6],
             level,
             app,
