@@ -6,7 +6,7 @@
    :platform: Unix, Windows
    :synopsis: Maps obs4MIPs ESGF publisher ini file to normalized pyessv format.
 
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
+.. moduleauthor:: Mark Conway_Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
 from utils import yield_comma_delimited_options
@@ -19,20 +19,48 @@ COLLECTIONS = {
 	('product', yield_comma_delimited_options),
 	('institute', yield_comma_delimited_options),
 	('realm', yield_comma_delimited_options),
-	('variable', lambda: yield_variable),
 	('var', yield_comma_delimited_options),
+	('variable', lambda: yield_variable),
 	('time_frequency', yield_comma_delimited_options),
 	('data_structure', yield_comma_delimited_options),
 	('source_id', yield_comma_delimited_options),
-	('version', r'^v[0-9]*$'),
+	('dataset_version', r'latest|^v[0-9]*$'),
+	('processing_level', r'^[A-Za-z0-9]*$'),
+	('processing_version', r'^[A-Za-z0-9]*$'),
 	('las_time_delta', lambda: yield_las_time_delta),
-	('thredds_exclude_variables', yield_comma_delimited_options)
+	('thredds_exclude_variables', yield_comma_delimited_options),
+	('file_period', r'fixed|^\d+-\d+(-clim)?$')
 }
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'directory_format',
-	'dataset_id'
+	'filename_template': '{}_{}_{}_{}_{}',
+    'filename_collections': (
+		'variable',
+		'source_id',
+		'processing_level',
+		'processing_version',
+		'file_period'
+		),
+	'directory_template': 'obs4MIPs/{}/{}/{}/{}/{}/{}/{}/{}',
+	'directory_collections': (
+		'product',
+		'realm',
+		'var',
+		'time_frequency',
+		'data_structure',
+		'institute',
+		'source_id',
+		'dataset_version'
+		),
+	'dataset_id_template': 'obs4MIPs.{}.{}.{}.{}.{}',
+	'dataset_id_collections': (
+		'institute',
+		'source_id',
+		'variable',
+		'time_frequency',
+		'dataset_version'
+		)
 }
 
 
@@ -40,13 +68,15 @@ def yield_variable(ctx):
 	"""Yields institute information to be converted to pyessv terms.
 
 	"""
-	for var, _ in ctx.ini_section.get_option('variable_map', '\n', '|'):
-		yield var
+	for var, variable in ctx.ini_section.get_option('variable_map', '\n', '|'):
+		src_namespace = 'wcrp:obs4mips:var:{}'.format(var.lower().replace('_','-'))
+		yield src_namespace, variable
 
 
 def yield_las_time_delta(ctx):
 	"""Yields las time delta information to be converted to pyessv terms.
 
 	"""
-	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta
+	for time_frequency, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
+		src_namespace = 'wcrp:obs4mips:time-frequency:{}'.format(time_frequency.lower().replace('_', '-'))
+		yield src_namespace, las_time_delta

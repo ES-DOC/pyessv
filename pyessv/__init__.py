@@ -62,18 +62,26 @@ from pyessv._governance import reject
 from pyessv._governance import reset
 
 from pyessv._initializer import init
+from pyessv._initializer import load_cv
 
 from pyessv._loader import load_random
 from pyessv._loader import load
+from pyessv._loader import all_scopes
 
 from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
 
+from pyessv._builders import build_dataset_identifier
+
 from pyessv._parser import parse
-from pyessv._parsers import parse_dataset_identifer
-from pyessv._parsers import parse_dataset_identifers
+from pyessv._parsers import parse_dataset_identifier
+from pyessv._parsers import parse_dataset_identifiers
+from pyessv._parsers import parse_directory
+from pyessv._parsers import parse_directories
+from pyessv._parsers import parse_filename
+from pyessv._parsers import parse_filenames
 
 from pyessv._utils.logger import log
 from pyessv._utils.logger import log_error

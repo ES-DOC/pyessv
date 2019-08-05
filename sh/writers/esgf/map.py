@@ -24,7 +24,6 @@ import map_cmip5
 import map_cmip6
 import map_cordex
 import map_cordex_adjust
-import map_e3sm
 import map_euclipse
 import map_geomip
 import map_input4mips
@@ -57,7 +56,6 @@ _MODULES = {
     map_cmip6,
     map_cordex,
     map_cordex_adjust,
-    map_e3sm,
     map_euclipse,
     map_geomip,
     map_input4mips,
@@ -83,6 +81,18 @@ def _main(args):
     if not os.path.isdir(args.source):
         raise ValueError('ESGF vocab directory does not exist: {}'.format(args.source))
 
+    # Load vocabulary.
+    pyessv.load_cv()
+
+    # CV authority = ECMWF.
+    #_AUTHORITY = pyessv.create_authority(
+    #    'ECMWF',
+    #    'European Center for Medium-Range Weather Forecasts',
+    #    label='ECMWF',
+    #    url='https://www.ecmwf.int/',
+    #    create_date=_CREATE_DATE
+    #)
+
     # Process project modules:
     for module in _MODULES:
         # Set project.
@@ -103,9 +113,10 @@ def _main(args):
             scope = _create_scope(authority, project)
 
         # Set scope data.
-        scope.data = scope.data or dict()
-        for field in module.SCOPE_DATA:
-            scope.data[field] = ini_section.get_option(field, raw=True)
+        scope.data = module.SCOPE_DATA or dict()
+        #scope.data = scope.data or dict()
+        #for field in module.SCOPE_DATA:
+        #    scope.data[field] = ini_section.get_option(field, raw=True)
 
         # Create regex collections.
         collections = [i for i in module.COLLECTIONS if not inspect.isfunction(i[1])]
@@ -122,7 +133,16 @@ def _main(args):
             except TypeError:
                 pass
             for term_data in term_factory(ctx):
-                _get_term(collection, term_data)
+                try:
+                    term_src, term_dst = term_data
+                    t = _get_term(collection, term_dst)
+                    s = pyessv.load(term_src)
+                    if t not in s.associations:
+                        s.associations.append(t)
+                    if s not in t.associations:
+                        t.associations.append(s)
+                except (ValueError, AttributeError):
+                    _get_term(collection, term_data)
 
     # Add to archive & persist to file system.
     pyessv.archive(authority)
@@ -199,7 +219,7 @@ def _create_scope(authority, project):
     )
 
 
-def _create_collection(module, scope, collection_id, term_regex=None):
+def _create_collection(module, scope, collection_id, term_regex=None, term_composed=[]):
     """Factory method to return vocabulary collection.
 
     """
@@ -209,10 +229,11 @@ def _create_collection(module, scope, collection_id, term_regex=None):
         data = None
 
     if collection_id.lower().replace('_', '-') in [collection.name for collection in scope.collections]:
-        collection = scope[collection_id]
+        collection = scope[collection_id.lower().replace('_', '-')]
         collection.description = "ESGF publisher-config CV collection: ".format(collection_id),
         collection.label = collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR')
         collection.term_regex = term_regex
+        collection.term_composed = term_composed
         collection.data = data
         return collection
 
@@ -222,6 +243,7 @@ def _create_collection(module, scope, collection_id, term_regex=None):
         "ESGF publisher-config CV collection: ".format(collection_id),
         label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
         term_regex=term_regex,
+        term_composed=term_composed,
         data=data
     )
 
@@ -248,11 +270,18 @@ def _get_term(collection, term_info):
 
     alternative_names = [] if synonym is None else [synonym]
 
-    return pyessv.create_term(collection, name,
-        label=label,
-        description=description,
-        alternative_names=alternative_names
-    )
+    if name.lower().replace('_', '-') in [term.name for term in collection.terms]:
+        term = collection[name.lower().replace('_', '-')]
+        term.label = label
+        term.description = description
+        term.alternative_names = alternative_names
+        return term
+    else:
+        return pyessv.create_term(collection, name,
+            label=label,
+            description=description,
+            alternative_names=alternative_names
+        )
 
 
 # Entry point.
