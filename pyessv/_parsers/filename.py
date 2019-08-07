@@ -80,15 +80,17 @@ def parse_filename(project, filename):
         assert project in [scope.name for scope in scopes], 'Unsupported project'
         scope = [scope for scope in scopes if scope.name == project][0]
 
+        assert 'filename' in scope.data.keys(), 'Filename parser not found'
+        assert 'template' in scope.data['filename'].keys(), 'Filename parser template not found'
+        assert 'collections' in scope.data['filename'].keys(), 'Filename parser template collections not found'
+
         # Get template from data scope.
-        assert 'filename_template' in scope.data.keys(), 'Filename template not found'
-        _TEMPLATE = scope.data['filename_template']
+        _TEMPLATE = scope.data['filename']['template']
         assert isinstance(_TEMPLATE, basestring), 'Invalid template'
 
         # Get template collections from data scope.
-        assert 'filename_collections' in scope.data.keys(), 'Filename collections not found'
         _COLLECTIONS = list()
-        for name in scope.data['filename_collections']:
+        for name in scope.data['filename']['collections']:
             _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
         assert _COLLECTIONS, 'Invalid collections'
 

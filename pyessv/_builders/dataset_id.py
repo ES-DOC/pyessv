@@ -55,15 +55,17 @@ def build_dataset_identifier(project, terms):
         assert project in [scope.name for scope in scopes], 'Unsupported project'
         scope = [scope for scope in scopes if scope.name == project][0]
 
+        assert 'dataset_id' in scope.data.keys(), 'Dataset ID parser not found'
+        assert 'template' in scope.data['dataset_id'].keys(), 'Dataset ID parser template not found'
+        assert 'collections' in scope.data['dataset_id'].keys(), 'Dataset ID parser template collections not found'
+
         # Get template from data scope.
-        assert 'dataset_id_template' in scope.data.keys(), 'Dataset ID template not found'
-        _TEMPLATE = scope.data['dataset_id_template']
+        _TEMPLATE = scope.data['dataset_id']['template']
         assert isinstance(_TEMPLATE, basestring), 'Invalid template'
 
         # Get template collections from data scope.
-        assert 'dataset_id_collections' in scope.data.keys(), 'Template collections not found'
         _COLLECTIONS = list()
-        for name in scope.data['dataset_id_collections']:
+        for name in scope.data['dataset_id']['collections']:
             _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
         assert _COLLECTIONS, 'Invalid collections'
 

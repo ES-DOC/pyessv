@@ -84,15 +84,17 @@ def parse_directory(project, directory):
         assert project in [scope.name for scope in scopes], 'Unsupported project'
         scope = [scope for scope in scopes if scope.name == project][0]
 
+        assert 'directory_structure' in scope.data.keys(), 'Directory parser not found'
+        assert 'template' in scope.data['directory_structure'].keys(), 'Directory parser template not found'
+        assert 'collections' in scope.data['directory_structure'].keys(), 'Directory parser template collections not found'
+
         # Get template from data scope.
-        assert 'directory_template' in scope.data.keys(), 'Directory template not found'
-        _TEMPLATE = scope.data['directory_template']
+        _TEMPLATE = scope.data['directory_structure']['template']
         assert isinstance(_TEMPLATE, basestring), 'Invalid template'
 
         # Get template collections from data scope.
-        assert 'directory_collections' in scope.data.keys(), 'Template collections not found'
         _COLLECTIONS = list()
-        for name in scope.data['directory_collections']:
+        for name in scope.data['directory_structure']['collections']:
             _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
         assert _COLLECTIONS, 'Invalid collections'
 

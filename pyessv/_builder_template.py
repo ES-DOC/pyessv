@@ -14,6 +14,8 @@
 from pyessv._model import Collection, Term
 from pyessv._exceptions import TemplateParsingError, TemplateValueError
 from pyessv._constants import BUILDER_FIELDS
+from pyessv._utils.compat import basestring, str
+
 
 class TemplateBuilder(object):
     """A vocabulary template builder.
