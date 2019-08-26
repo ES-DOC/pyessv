@@ -105,6 +105,15 @@ PARSING_STRICTNESS_SET = (
 # Regular expression for validating a canonical name.
 REGEX_CANONICAL_NAME = r'^[a-z0-9\-]*$'
 
+# Builder fields.
+BUILDER_FIELDS = (
+    'name',
+    'canonical_name',
+    'raw_name',
+    'alternative_names',
+    'label'
+    )
+
 # Standard node fields.
 STANDARD_NODE_FIELDS = (
     'alternative_names',

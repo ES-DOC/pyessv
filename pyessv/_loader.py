@@ -26,6 +26,16 @@ from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_string
 
 
+def all_scopes():
+    """Returns all scopes.
+
+    """
+    scopes = set()
+    for authority in load():
+        for scope in authority.scopes:
+            scopes.add(scope)
+    return scopes
+
 
 def load(identifier=None, verbose=True):
     """Loads a vocabulary node from archive.

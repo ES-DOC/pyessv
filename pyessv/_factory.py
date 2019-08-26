@@ -23,6 +23,7 @@ from pyessv._model import Node
 from pyessv._model import Scope
 from pyessv._model import Term
 from pyessv._parser_template import TemplateParser
+from pyessv._builder_template import TemplateBuilder
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_canonical_name
@@ -131,7 +132,7 @@ def create_collection(
     :param list alternative_names: Collection of associated alternative names.
     :param str|tuple term_regex: Regular expression information to be applied to terms.
 
-    :returns: A vocabulary collection, e.g. insitution-id.
+    :returns: A vocabulary collection, e.g. institution-id.
     :rtype: pyessv.Collection
 
     """
@@ -197,13 +198,37 @@ def create_term(
         )
 
 
-def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_2, seperator='.'):
+def create_template_builder(template, collections, strictness=PARSING_STRICTNESS_2, separator='.'):
+    """Instantiates, initialises & returns a template builder.
+
+    :param str template: An expression template.
+    :param tuple collections: Collections that the template maps to.
+    :param int strictness: Strictness level to apply when applying name matching rules.
+    :param str separator: Separator to apply when parsing.
+
+    :returns: A vocabulary expression builder.
+    :rtype: pyessv.TemplateBuilder
+
+    """
+    assert isinstance(template, basestring), 'Invalid template'
+    assert isinstance(collections, tuple), 'Invalid collections'
+    assert len(template) > 0, 'Invalid template'
+    assert template.count('{}') > 0, 'Invalid template'
+    assert len(collections) > 0, 'Invalid collections'
+    assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
+    assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
+    assert isinstance(separator, basestring), 'Invalid separator'
+
+    return TemplateBuilder(template, collections, strictness, separator)
+
+
+def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_2, separator='.'):
     """Instantiates, initialises & returns a template parser.
 
     :param str template: An expression template.
     :param tuple collections: Collections that the template maps to.
     :param int strictness: Strictness level to apply when applying name matching rules.
-    :param str seprarator: Seperator to apply when parsing.
+    :param str separator: Separator to apply when parsing.
 
     :returns: A vocabulary expression parser.
     :rtype: pyessv.TemplateParser
@@ -216,9 +241,9 @@ def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_
     assert len(collections) > 0, 'Invalid collections'
     assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
-    assert isinstance(seperator, basestring), 'Invalid seperator'
+    assert isinstance(separator, basestring), 'Invalid separator'
 
-    return TemplateParser(template, collections, strictness, seperator)
+    return TemplateParser(template, collections, strictness, separator)
 
 
 def _create_node(

@@ -13,44 +13,82 @@ from utils import yield_comma_delimited_options
 from utils import yield_pipe_delimited_options
 
 
-# TODO process map: institute_map = map(model : institute)
-# TODO process map: las_time_delta_map = map(time_frequency : las_time_delta)
-
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
 	('cmor_table', yield_comma_delimited_options),
 	('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
 	('experiment', yield_pipe_delimited_options),
-	('institute', lambda: yield_institute),
-	('las_time_delta', lambda: yield_las_time_delta),
 	('model', yield_comma_delimited_options),
+	('institute', lambda: yield_institute),
 	('time_frequency', yield_comma_delimited_options),
+	('las_time_delta', lambda: yield_las_time_delta),
 	('product', yield_comma_delimited_options),
 	('realm', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('variable', yield_comma_delimited_options),
-	('version', r'^v[0-9]*$')
-}
+	('dataset_version', r'latest|^v[0-9]*$'),
+	('file_period', r'fixed|^\d+-\d+(-clim)?$')
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_format',
-	'directory_format',
-	'dataset_id'
+    'filename': {
+        'template': '{}_{}_{}_{}_{}_{}',
+        'collections': (
+            'variable',
+            'cmor_table',
+            'model',
+            'experiment',
+            'ensemble',
+            'file_period'
+        )
+    },
+    'directory_structure': {
+        'template': 'TAMIP/{}/{}/{}/{}/{}/{}/{}/{}/{}/{}',
+        'collections': (
+            'product',
+            'institute',
+            'model',
+            'experiment',
+            'time_frequency',
+            'realm',
+            'cmor_table',
+            'ensemble',
+            'dataset_version',
+            'variable'
+        ),
+    },
+    'dataset_id': {
+        'template': 'tamip.{}.{}.{}.{}.{}.{}.{}.{}.{}',
+        'collections': (
+            'product',
+            'institute',
+            'model',
+            'experiment',
+            'time_frequency',
+            'realm',
+            'cmor_table',
+            'ensemble',
+            'dataset_version'
+        )
+    }
 }
 
 
-def yield_institute(ctx):
-	"""Yields institute information to be converted to pyessv terms.
-
-	"""
-	for _, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
-		yield institute
-
-
 def yield_las_time_delta(ctx):
-	"""Yields las time delta information to be converted to pyessv terms.
+    """Yields las time delta information to be converted to pyessv terms.
 
-	"""
-	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta
+    """
+    for time_frequency, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
+        src_namespace = 'wcrp:tamip:time-frequency:{}'.format(time_frequency.lower().replace('_', '-'))
+        yield src_namespace, las_time_delta
+
+
+def yield_institute(ctx):
+    """Yields institute information to be converted to pyessv terms.
+
+    """
+    for model, institute in ctx.ini_section.get_option('institute_map', '\n', '|'):
+        src_namespace = 'wcrp:tamip:model:{}'.format(model.lower().replace('_', '-'))
+        yield src_namespace, institute
+

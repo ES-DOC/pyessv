@@ -71,20 +71,28 @@ def delete(target):
         pass
 
 
-def read(archive_dir=DIR_ARCHIVE):
+def read(authority=None, scope=None, archive_dir=DIR_ARCHIVE):
     """Reads vocabularies from archive folder (~/.esdoc/pyessv-archive) upon file system.
 
     :returns: List of vocabulary authorities loaded from archive folder.
     :rtype: list
 
     """
-    return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
+    if authority:
+        assert '{}/{}'.format(archive_dir, authority), 'Invalid authority'
+        if scope:
+            assert '{}/{}/{}'.format(archive_dir, authority, scope), 'Invalid scope'
+            return _read_authority('{}/{}'.format(archive_dir, authority), scope)
+        return _read_authority('{}/{}'.format(archive_dir, authority))
+    else:
+        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
 
-def _read_authority(dpath):
+def _read_authority(dpath, scope=None):
     """Reads authority CV data from file system.
 
     :param str dpath: Path to a directory to which an authority's vocabularies have been written.
+    :param str scope: Select a scope's vocabularies to load (default loads all scopes).
 
     :returns: Authority vocabulary data.
     :rtype: pyessv.Authority
@@ -99,11 +107,18 @@ def _read_authority(dpath):
 
     # Read terms.
     term_cache = {}
-    for scope in authority:
+    try:
+        scope = [s for s in authority if s.name == scope][0]
         for collection in scope:
             for term in _read_terms(dpath, scope, collection, term_cache):
                 term.collection = collection
                 collection.terms.append(term)
+    except IndexError:
+        for scope in authority:
+            for collection in scope:
+                for term in _read_terms(dpath, scope, collection, term_cache):
+                    term.collection = collection
+                    collection.terms.append(term)
 
     # Set inter-term hierarchies.
     for term in term_cache.values():

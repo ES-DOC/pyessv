@@ -188,16 +188,25 @@ _SCOPE_COLLECTIONS = {
             'is_virtual': True,
             'label': None,
             'ommitted': [],
-            'term_regex': r'^[A-Za-z0-9]*$',
+            'term_regex': r'^[A-Za-z0-9]*$'
         },
-        'version': {
+        'dataset_version': {
             'cim_document_type': None,
             'cim_document_type_alternative_name': None,
             'data_factory': None,
             'is_virtual': True,
             'label': None,
             'ommitted': [],
-            'term_regex': r'^[0-9]{8}$',
+            'term_regex': r'latest|^[0-9]{8}$'
+        },
+        'file_period': {
+            'cim_document_type': None,
+            'cim_document_type_alternative_name': None,
+            'data_factory': None,
+            'is_virtual': True,
+            'label': None,
+            'ommitted': [],
+            'term_regex': r'fixed|^\d+-\d+(-clim)?$'
         }
     },
     _SCOPE_GLOBAL: {
@@ -313,7 +322,7 @@ def _get_institution_data(_, name):
 
     """
     obj = _INSTITUTIONAL_DATA.get(name, {})
-    del obj['code']
+    #del obj['code']
 
     return obj
 
