@@ -11,8 +11,6 @@
 
 
 """
-import arrow
-
 from pyessv._constants import NODE_TYPEKEY_AUTHORITY
 from pyessv._constants import NODE_TYPEKEY_COLLECTION
 from pyessv._constants import NODE_TYPEKEY_SCOPE
@@ -101,7 +99,7 @@ def _decode_node(obj, typeof):
     """
     instance = typeof()
     instance.alternative_names = obj.get('alternative_names', [])
-    instance.create_date = arrow.get(obj['create_date']).datetime
+    instance.create_date = convert.str_to_datetime(obj['create_date'])
     instance.data = obj.get('data', dict())
     instance.description = obj.get('description')
     instance.label = obj.get('label', obj['canonical_name'])

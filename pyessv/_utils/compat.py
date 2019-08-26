@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._utils.compay.py
+.. module:: pyessv._utils.compat.py
    :copyright: Copyright "Feb 7, 2013", Earth System Documentation
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -12,6 +12,7 @@
 
 """
 
+import datetime as dt
 import sys
 
 # Syntax sugar.
@@ -66,3 +67,20 @@ elif is_py3:
     basestring = (str, bytes)
     numeric_types = (int, float)
     integer_types = (int,)
+
+
+def to_datetime(val):
+    """Converts input to a datetime.datetime instance.
+
+    :param object val: value to be converted to a datetime.datetime.
+
+    :returns: A datetime.datetime instace.
+    :rtype: datetime.datetime
+
+    """
+    if is_py3:
+        return dt.datetime.fromisoformat(val)
+
+    # Python 2 is trickier.
+    # TODO: process time zone as this returns a naive datetime.
+    return dt.datetime.strptime(val[0:19], '%Y-%m-%d %H:%M:%S')

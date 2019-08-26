@@ -10,7 +10,7 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import arrow
+import datetime as dt
 
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._constants import PARSING_STRICTNESS_2
@@ -239,7 +239,7 @@ def _create_node(
     node = typeof()
     node.alternative_names = alternative_names
     node.canonical_name = format_canonical_name(raw_name)
-    node.create_date = create_date or arrow.utcnow().datetime
+    node.create_date = create_date or dt.datetime.utcnow()
     node.data = data
     node.label = label or format_string(raw_name)
     node.raw_name = format_string(raw_name)

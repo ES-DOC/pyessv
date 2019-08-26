@@ -10,11 +10,11 @@
 
 """
 import argparse
+import datetime as dt
 import inspect
 import os
 from ConfigParser import ConfigParser
 
-import arrow
 import pyessv
 
 import map_c3s_cmip5
@@ -46,7 +46,7 @@ _ARGS.add_argument(
     )
 
 # Ensure we use fixed creation date.
-_CREATE_DATE = arrow.get('2019-04-02 00:00:00.000000+0000').datetime
+CREATE_DATE = dt.datetime(2019, 4, 2)
 
 # Set of mapping modules.
 _MODULES = {

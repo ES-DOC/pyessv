@@ -17,6 +17,7 @@ import json
 import re
 import types
 
+from pyessv._utils.compat import to_datetime
 from pyessv._utils.compat import numeric_types
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
@@ -27,6 +28,17 @@ _ABBREVIATIONS = ('id', 'uid', 'uuid')
 
 # Default string encoding.
 _UTF8 = 'utf-8'
+
+
+"""Converts input to a datetime.datetime instance.
+
+:param object val: value to be converted to a datetime.datetime.
+
+:returns: A datetime.datetime instace.
+:rtype: datetime.datetime
+
+"""
+str_to_datetime = to_datetime
 
 
 def str_to_unicode(val):

@@ -9,14 +9,14 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import arrow
+import datetime as dt
 
 import pyessv
 
 
 
 # Ensure we use fixed creation date.
-CREATE_DATE = arrow.get('2017-06-21 00:00:00.000000+0000').datetime
+CREATE_DATE = dt.datetime(2017, 06, 21)
 
 
 def write_authority():

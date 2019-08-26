@@ -11,7 +11,7 @@
 
 
 """
-import arrow
+import datetime as dt
 
 from pyessv._utils.compat import str
 
@@ -41,7 +41,7 @@ def _get_formatted_message(msg, level, app):
         return _NULL_MSG
     else:
         return '{} [{}] :: {} :: {}'.format(
-            str(arrow.get())[0:-6],
+            str(dt.datetime.utcnow())[0:-6],
             level,
             app,
             str(msg).strip()

@@ -14,8 +14,6 @@
 import collections
 import datetime
 
-import arrow
-
 from pyessv._codecs.dict_codec import encoder as dict_encoder
 from pyessv._utils import convert
 from pyessv._utils.compat import json
@@ -30,7 +28,6 @@ _ENCODE_IGNOREABLE = tuple(list(numeric_types) + [type(None), str])
 # Set of data types to be converted to string when encoding.
 _ENCODE_STRING = (
     basestring,
-    arrow.Arrow,
     datetime.datetime
     )
 

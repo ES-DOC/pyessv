@@ -11,7 +11,6 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import arrow
 import nose
 
 import pyessv as LIB
