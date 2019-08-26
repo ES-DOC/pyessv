@@ -26,14 +26,13 @@ _CONFIG = {
         'cmip5.output2.IPSL.IPSL-CM5A-LR.historicalMisc.mon.ocean.Omon.r2i1p1'
     )),
     ('cmip6', LIB.parse_dataset_identifer, '.', (
-        'cmip6.FAFMIP.IPSL.IPSL-CM6A-LR.amip.r1i1p1f1.Amon.abs550aer.gm',
+        'CMIP6.FAFMIP.IPSL.IPSL-CM6A-LR.amip.r1i1p1f1.Amon.abs550aer.gm',
     )),
     ('cordex', LIB.parse_dataset_identifer, '.', (
         'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.HadGEM3-RA.v1.mon.areacella',
         'cordex.output.EUR-11.SMHI.ICHEC-EC-EARTH.rcp85.r12i1p1.RCA4.v1.sem.rsdt'
     )),
 }
-
 
 
 def test_parse_identifiers():
