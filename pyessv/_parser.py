@@ -26,7 +26,7 @@ from pyessv._utils.compat import str
 def parse(
     namespace,
     strictness=PARSING_STRICTNESS_2,
-    field='canonical_name'
+    field=None
     ):
     """Parses a namespace within a vocabulary hierachy.
 
@@ -36,7 +36,8 @@ def parse(
 
     """
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness'
-    assert field in PARSING_NODE_FIELDS, 'Invalid field'
+    if field:
+        assert field in PARSING_NODE_FIELDS, 'Invalid field'
 
     # Set namespace
     ns = str(namespace).strip().split(':')
@@ -63,8 +64,10 @@ def parse(
         node = load(namespace)
         target.set_node(node)
 
-    return getattr(target.node, field)
-
+    if field:
+        return getattr(target.node, field)
+    else:
+        return target.node
 
 class _NodeInfo(object):
     """Information about a node whose name is being parsed.

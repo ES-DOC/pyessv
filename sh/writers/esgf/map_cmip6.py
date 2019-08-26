@@ -12,11 +12,11 @@
 from utils import yield_comma_delimited_options
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('las_time_delta', lambda: yield_las_time_delta),
     ('model_cohort', lambda: yield_model_cohort),
     ('thredds_exclude_variables', yield_comma_delimited_options),
-}
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {

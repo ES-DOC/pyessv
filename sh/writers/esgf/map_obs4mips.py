@@ -12,10 +12,8 @@
 from utils import yield_comma_delimited_options
 
 
-# TODO process map: las_time_delta_map = map(time_frequency : las_time_delta)
-
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
 	('product', yield_comma_delimited_options),
 	('institute', yield_comma_delimited_options),
 	('realm', yield_comma_delimited_options),
@@ -30,37 +28,43 @@ COLLECTIONS = {
 	('las_time_delta', lambda: yield_las_time_delta),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {
-	'filename_template': '{}_{}_{}_{}_{}',
-    'filename_collections': (
-		'variable',
-		'source_id',
-		'processing_level',
-		'processing_version',
-		'file_period'
-		),
-	'directory_template': 'obs4MIPs/{}/{}/{}/{}/{}/{}/{}/{}',
-	'directory_collections': (
-		'product',
-		'realm',
-		'var',
-		'time_frequency',
-		'data_structure',
-		'institute',
-		'source_id',
-		'dataset_version'
-		),
-	'dataset_id_template': 'obs4MIPs.{}.{}.{}.{}.{}',
-	'dataset_id_collections': (
-		'institute',
-		'source_id',
-		'variable',
-		'time_frequency',
-		'dataset_version'
-		)
+	'filename': {
+		'template': '{}_{}_{}_{}_{}',
+    	'collections': (
+			'variable',
+			'source_id',
+			'processing_level',
+			'processing_version',
+			'file_period'
+			)
+	},
+	'directory_structure': {
+		'template': 'obs4MIPs/{}/{}/{}/{}/{}/{}/{}/{}',
+		'collections': (
+			'product',
+			'realm',
+			'var',
+			'time_frequency',
+			'data_structure',
+			'institute',
+			'source_id',
+			'dataset_version'
+			)
+	},
+	'dataset_id': {
+		'template': 'obs4MIPs.{}.{}.{}.{}.{}',
+		'collections': (
+			'institute',
+			'source_id',
+			'variable',
+			'time_frequency',
+			'dataset_version'
+			)
+	}
 }
 
 

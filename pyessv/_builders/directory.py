@@ -29,13 +29,13 @@ _PROJECT = None
 _BUILDER = None
 
 
-def build_dataset_identifier(project, terms):
-    """Builds a dataset identifier.
+def build_directory(project, terms):
+    """Builds a directory.
 
     :param str project: Project code.
-    :param set terms: Dataset identifier terms.
+    :param set terms: Directory terms.
 
-    :returns: Dataset identifier.
+    :returns: Directory string.
     :rtype: str
 
     """
@@ -51,22 +51,22 @@ def build_dataset_identifier(project, terms):
         assert project in [scope.name for scope in scopes], 'Unsupported project'
         scope = [scope for scope in scopes if scope.name == project][0]
 
-        assert 'dataset_id' in scope.data.keys(), 'Dataset ID parser not found'
-        assert 'template' in scope.data['dataset_id'].keys(), 'Dataset ID parser template not found'
-        assert 'collections' in scope.data['dataset_id'].keys(), 'Dataset ID parser template collections not found'
+        assert 'directory_structure' in scope.data.keys(), 'Directory parser not found'
+        assert 'template' in scope.data['directory_structure'].keys(), 'Directory parser template not found'
+        assert 'collections' in scope.data['directory_structure'].keys(), 'Directory parser template collections not found'
 
         # Get template from data scope.
-        _TEMPLATE = scope.data['dataset_id']['template']
+        _TEMPLATE = scope.data['directory_structure']['template']
         assert isinstance(_TEMPLATE, basestring), 'Invalid template'
 
         # Get template collections from data scope.
         _COLLECTIONS = list()
-        for name in scope.data['dataset_id']['collections']:
+        for name in scope.data['directory_structure']['collections']:
             _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
         assert _COLLECTIONS, 'Invalid collections'
 
         # Instantiate parser JIT.
-        _BUILDER = create_template_builder(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1)
+        _BUILDER = create_template_builder(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1, separator='/')
 
         # Cached project.
         _PROJECT = project

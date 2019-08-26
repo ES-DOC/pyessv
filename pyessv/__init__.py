@@ -74,6 +74,8 @@ from pyessv._model import Scope
 from pyessv._model import Term
 
 from pyessv._builders import build_dataset_identifier
+from pyessv._builders import build_directory
+from pyessv._builders import build_filename
 
 from pyessv._parser import parse
 from pyessv._parsers import parse_dataset_identifier

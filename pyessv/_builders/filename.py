@@ -29,13 +29,13 @@ _PROJECT = None
 _BUILDER = None
 
 
-def build_dataset_identifier(project, terms):
-    """Builds a dataset identifier.
+def build_filename(project, terms):
+    """Builds a filename.
 
     :param str project: Project code.
-    :param set terms: Dataset identifier terms.
+    :param set terms: Filename terms.
 
-    :returns: Dataset identifier.
+    :returns: Filename string.
     :rtype: str
 
     """
@@ -51,22 +51,22 @@ def build_dataset_identifier(project, terms):
         assert project in [scope.name for scope in scopes], 'Unsupported project'
         scope = [scope for scope in scopes if scope.name == project][0]
 
-        assert 'dataset_id' in scope.data.keys(), 'Dataset ID parser not found'
-        assert 'template' in scope.data['dataset_id'].keys(), 'Dataset ID parser template not found'
-        assert 'collections' in scope.data['dataset_id'].keys(), 'Dataset ID parser template collections not found'
+        assert 'filename' in scope.data.keys(), 'Filename parser not found'
+        assert 'template' in scope.data['filename'].keys(), 'Filename parser template not found'
+        assert 'collections' in scope.data['filename'].keys(), 'Filename parser template collections not found'
 
         # Get template from data scope.
-        _TEMPLATE = scope.data['dataset_id']['template']
+        _TEMPLATE = scope.data['filename']['template']
         assert isinstance(_TEMPLATE, basestring), 'Invalid template'
 
         # Get template collections from data scope.
         _COLLECTIONS = list()
-        for name in scope.data['dataset_id']['collections']:
+        for name in scope.data['filename']['collections']:
             _COLLECTIONS.append([collection.namespace for collection in scope.collections if collection.name == name.replace('_','-')][0])
         assert _COLLECTIONS, 'Invalid collections'
 
         # Instantiate parser JIT.
-        _BUILDER = create_template_builder(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1)
+        _BUILDER = create_template_builder(_TEMPLATE, tuple(_COLLECTIONS), PARSING_STRICTNESS_1, separator='_')
 
         # Cached project.
         _PROJECT = project

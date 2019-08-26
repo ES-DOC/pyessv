@@ -14,12 +14,12 @@ from utils import yield_pipe_delimited_options
 
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('cmor_table', yield_comma_delimited_options),
     ('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
     ('experiment', yield_pipe_delimited_options),
-    ('institute', lambda: yield_institute),
     ('model', yield_comma_delimited_options),
+    ('institute', lambda: yield_institute),
     ('time_frequency', yield_comma_delimited_options),
     ('product', yield_comma_delimited_options),
     ('realm', yield_comma_delimited_options),
@@ -27,7 +27,7 @@ COLLECTIONS = {
     ('variable', yield_comma_delimited_options),
     ('dataset_version', r'latest|^v[0-9]*$'),
     ('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Arbitrary data associated with a collection.
 COLLECTION_DATA = {

@@ -322,7 +322,7 @@ def _get_institution_data(_, name):
 
     """
     obj = _INSTITUTIONAL_DATA.get(name, {})
-    del obj['code']
+    #del obj['code']
 
     return obj
 

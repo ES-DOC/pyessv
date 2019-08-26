@@ -13,3 +13,5 @@
 """
 
 from pyessv._builders.dataset_id import build_dataset_identifier
+from pyessv._builders.directory import build_directory
+from pyessv._builders.filename import build_filename

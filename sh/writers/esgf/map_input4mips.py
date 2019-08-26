@@ -13,7 +13,7 @@ from utils import get_ini_option
 from utils import yield_comma_delimited_options
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('variable_id', lambda: yield_variable_id_options),
     ('activity_id', yield_comma_delimited_options),
     ('dataset_category', r'^[A-Za-z0-9]*$'),
@@ -27,7 +27,7 @@ COLLECTIONS = {
     ('thredds_exclude_variables', yield_comma_delimited_options),
     ('dataset_version', r'latest|^v[0_9]{8}$'),
     ('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {

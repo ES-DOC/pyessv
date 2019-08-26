@@ -16,7 +16,7 @@ import datetime
 import arrow
 
 from pyessv._constants import NODE_TYPEKEY_SET
-from pyessv._utils.compat import str
+from pyessv._utils.compat import str, basestring
 from pyessv._utils.formatter import format_io_name
 from pyessv._utils.validation import assert_iterable
 from pyessv._utils.validation import assert_string
@@ -61,6 +61,17 @@ class Node(object):
             except KeyError:
                 raise AttributeError('{} unknown attribute'.format(name))
 
+    def __getstate__(self):
+        """Serializing method used by Pickle.
+
+        """
+        return self.__dict__
+
+    def __setstate__(self, d):
+        """Unserializing used by Pickle.
+
+        """
+        self.__dict__.update(d)
 
     @property
     def name(self):

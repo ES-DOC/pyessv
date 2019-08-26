@@ -33,6 +33,10 @@ import map_obs4mips
 import map_pmip3
 import map_primavera
 import map_tamip
+import warnings
+from arrow.factory import ArrowParseWarning
+
+warnings.simplefilter("ignore", ArrowParseWarning)
 
 # Define command line options.
 _ARGS = argparse.ArgumentParser('Maps ESGF publisher ini files to normalized pyessv vocabulary format.')
@@ -219,7 +223,7 @@ def _create_scope(authority, project):
     )
 
 
-def _create_collection(module, scope, collection_id, term_regex=None, term_composed=[]):
+def _create_collection(module, scope, collection_id, term_regex=None):
     """Factory method to return vocabulary collection.
 
     """
@@ -233,7 +237,6 @@ def _create_collection(module, scope, collection_id, term_regex=None, term_compo
         collection.description = "ESGF publisher-config CV collection: ".format(collection_id),
         collection.label = collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR')
         collection.term_regex = term_regex
-        collection.term_composed = term_composed
         collection.data = data
         return collection
 
@@ -243,7 +246,6 @@ def _create_collection(module, scope, collection_id, term_regex=None, term_compo
         "ESGF publisher-config CV collection: ".format(collection_id),
         label=collection_id.title().replace('_', ' ').replace('Rcm', 'RCM').replace('Cmor', 'CMOR'),
         term_regex=term_regex,
-        term_composed=term_composed,
         data=data
     )
 

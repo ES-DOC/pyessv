@@ -17,6 +17,7 @@ from pyessv import all_scopes
 from pyessv._constants import PARSING_STRICTNESS_1
 from pyessv._exceptions import TemplateParsingError
 from pyessv._factory import create_template_parser
+from pyessv._utils.compat import basestring
 
 # Template extracted from esgf ini file (for reference purpose only).
 _INI_PATTERN = '%(variable)s_%(cmor_table)s_%(model)s_%(experiment)s_%(ensemble)s[_%(period_start)s-%(period_end)s].nc'

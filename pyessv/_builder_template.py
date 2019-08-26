@@ -44,7 +44,6 @@ class TemplateBuilder(object):
                 self.template_parts[idx] = load(collections[collection_idx])
                 collection_idx += 1
 
-
     def build(self, terms, att='label', alt_name=0):
         """Build template instance from a list of pyessv terms.
 
@@ -69,13 +68,13 @@ class TemplateBuilder(object):
             collection = template_part
             term = None
             for term in terms:
-                if term.collection == collection:
+                if term.collection.namespace == collection.namespace:
                     break
 
             # Append term from associations.
             if not term:
                 for term in [association for association in t.associations for t in terms]:
-                    if term.collection == collection:
+                    if term.collection.namespace == collection.namespace:
                         break
 
             # Verify collection is found among terms.

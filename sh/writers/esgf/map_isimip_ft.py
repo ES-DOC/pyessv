@@ -14,7 +14,7 @@ from utils import yield_pipe_delimited_options
 
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('product', yield_comma_delimited_options),
     ('model', yield_comma_delimited_options),
     ('impact_model', yield_comma_delimited_options),
@@ -30,7 +30,7 @@ COLLECTIONS = {
     ('dataset_version', r'latest|^v[0-9]*$'),
     ('thredds_exclude_variables', yield_comma_delimited_options),
     ('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {

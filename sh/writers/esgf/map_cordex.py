@@ -14,23 +14,23 @@ from utils import yield_pipe_delimited_options
 
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('domain', lambda: yield_domain),
     ('driving_model', yield_comma_delimited_options),
     ('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
     ('experiment', yield_pipe_delimited_options),
     ('institute', yield_comma_delimited_options),
+    ('time_frequency', yield_comma_delimited_options),
     ('las_time_delta', lambda: yield_las_time_delta),
     ('product', yield_comma_delimited_options),
-    ('rcm_name', lambda: yield_rcm_name),
     ('rcm_model', yield_comma_delimited_options),
+    ('rcm_name', lambda: yield_rcm_name),
     ('rcm_version', yield_comma_delimited_options),
     ('thredds_exclude_variables', yield_comma_delimited_options),
-    ('time_frequency', yield_comma_delimited_options),
     ('variable', yield_comma_delimited_options),
     ('dataset_version', r'latest|^v[0-9]*$'),
     ('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {

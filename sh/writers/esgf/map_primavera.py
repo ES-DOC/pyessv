@@ -13,10 +13,10 @@ from utils import yield_comma_delimited_options
 from utils import yield_pipe_delimited_options
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('activity', yield_comma_delimited_options),
-    ('institute', lambda: yield_institute),
     ('model', yield_comma_delimited_options),
+    ('institute', lambda: yield_institute),
     ('experiment', yield_pipe_delimited_options),
     ('ensemble', r'r[0-9]+i[0-9]+p[0-9]+f[0-9]+'),
     ('cmor_table', yield_comma_delimited_options),
@@ -25,7 +25,7 @@ COLLECTIONS = {
     ('thredds_exclude_variables', yield_comma_delimited_options),
     ('dataset_version', r'latest|^v[0-9]*$'),
     ('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Fields extracted from ini file & appended as data to the scope.
 SCOPE_DATA = {

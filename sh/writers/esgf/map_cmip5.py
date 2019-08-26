@@ -13,21 +13,21 @@ from utils import yield_comma_delimited_options
 from utils import yield_pipe_delimited_options
 
 # Vocabulary collections extracted from ini file.
-COLLECTIONS = {
+COLLECTIONS = [
     ('cmor_table', yield_comma_delimited_options),
     ('ensemble', r'r[0-9]+i[0-9]+p[0-9]+'),
     ('experiment', yield_pipe_delimited_options),
     ('model', yield_comma_delimited_options),
     ('institute', lambda: yield_institute),
-    ('las_time_delta', lambda: yield_las_time_delta),
     ('time_frequency', yield_comma_delimited_options),
+    ('las_time_delta', lambda: yield_las_time_delta),
     ('product', yield_comma_delimited_options),
     ('realm', yield_comma_delimited_options),
     ('thredds_exclude_variables', yield_comma_delimited_options),
     ('variable', yield_comma_delimited_options),
     ('dataset_version', r'latest|^v[0-9]*$'),
     ('file_period', r'fixed|^\d+-\d+(-clim)?$')
-}
+]
 
 # Arbitrary data associated with a collection.
 COLLECTION_DATA = {
