@@ -13,8 +13,6 @@
 """
 import datetime
 
-import arrow
-
 from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._utils.compat import str
 from pyessv._utils.formatter import format_io_name

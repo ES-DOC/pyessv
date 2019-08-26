@@ -17,8 +17,6 @@ import json
 import re
 import types
 
-import arrow
-
 from pyessv._utils.compat import numeric_types
 from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
