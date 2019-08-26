@@ -96,7 +96,7 @@ def _encode_node(instance):
     obj = dict()
     obj['_type'] = instance.typekey
     obj['canonical_name'] = instance.canonical_name
-    obj['create_date'] = instance.create_date
+    obj['create_date'] = instance.create_date    
     obj['namespace'] = instance.namespace
     if bool(instance.label) and instance.label != instance.canonical_name:
         obj['label'] = instance.label

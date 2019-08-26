@@ -78,6 +78,9 @@ def to_datetime(val):
     :rtype: datetime.datetime
 
     """
+    if isinstance(val, dt.datetime):
+        return val
+
     if is_py3:
         return dt.datetime.fromisoformat(val)
 

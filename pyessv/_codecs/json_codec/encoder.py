@@ -25,13 +25,6 @@ from pyessv._utils.compat import str
 # Set of data types to be ignored when encoding.
 _ENCODE_IGNOREABLE = tuple(list(numeric_types) + [type(None), str])
 
-# Set of data types to be converted to string when encoding.
-_ENCODE_STRING = (
-    basestring,
-    datetime.datetime
-    )
-
-
 def encode(instance):
     """Encodes an instance of a domain model class as a JSON text blob.
 
@@ -67,7 +60,10 @@ def _to_encodable(obj, key_formatter=lambda k: k):
     if isinstance(obj, _ENCODE_IGNOREABLE):
         return obj
 
-    elif isinstance(obj, _ENCODE_STRING):
+    elif isinstance(obj, basestring):
+        return str(obj)
+
+    elif isinstance(obj, datetime.datetime):
         return str(obj)
 
     elif isinstance(obj, collections.Mapping):

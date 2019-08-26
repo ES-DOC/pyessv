@@ -29,13 +29,13 @@ class Node(object):
         """Instance constructor.
 
         """
+        self.alternative_names = list()
         self.canonical_name = None
         self.create_date = None
         self.data = None
         self.description = None
         self.label = None
         self.raw_name = None
-        self.alternative_names = list()
         self.typekey = typekey
         self.url = None
 

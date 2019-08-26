@@ -49,8 +49,7 @@ def test_read():
     assert isinstance(authorities, list)
     for authority in authorities:
         assert isinstance(authority, LIB.Authority)
-
-    dirs = os.listdir(LIB.DIR_ARCHIVE)
+    dirs = [i for i in os.listdir(LIB.DIR_ARCHIVE) if not i.startswith('.')]
     assert len(authorities) == len(dirs)
     assert dirs == [i.canonical_name for i in authorities]
 

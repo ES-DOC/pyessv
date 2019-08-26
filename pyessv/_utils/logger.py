@@ -41,7 +41,7 @@ def _get_formatted_message(msg, level, app):
         return _NULL_MSG
     else:
         return '{} [{}] :: {} :: {}'.format(
-            str(dt.datetime.utcnow())[0:-6],
+            str(dt.datetime.utcnow()),
             level,
             app,
             str(msg).strip()

@@ -109,7 +109,6 @@ REGEX_CANONICAL_NAME = r'^[a-z0-9\-]*$'
 STANDARD_NODE_FIELDS = (
     'alternative_names',
     'canonical_name',
-    'create_date',
     'description',
     'label',
     'raw_name',
