@@ -46,7 +46,7 @@ _ARGS.add_argument(
     )
 
 # Ensure we use fixed creation date.
-CREATE_DATE = dt.datetime(2019, 4, 2)
+_CREATE_DATE = dt.datetime(2019, 4, 2)
 
 # Set of mapping modules.
 _MODULES = {
