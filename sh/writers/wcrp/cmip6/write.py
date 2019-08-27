@@ -313,6 +313,8 @@ def _get_institution_data(_, name):
 
     """
     obj = _INSTITUTIONAL_DATA.get(name, {})
+    if 'code' not in obj:
+        raise ValueError("{} institution must be registered in the institution_id.json file".format(name))
     del obj['code']
 
     return obj

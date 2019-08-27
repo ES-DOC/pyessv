@@ -993,6 +993,78 @@
     ]
   },
   {
+    "code": "RUBISCO",
+    "name": "Reducing Uncertainties in Biogeochemical Interactions through Synthesis and Computation",
+    "postalAddress": "ORNL Climate Change Science Institute, Building 4500N Room F106, 1 Bethel Valley Road, Oak Ridge, TN 37831-6301, USA",
+    "coordinates": "35.931193, -84.309671",
+    "homepage": "https://www.ornl.gov/staff-profile/forrest-m-hoffman",
+    "consortia": [
+      {
+        "code": "ORNL",
+        "name": "Oak Ridge National Laboratory",
+        "postalAddress": "Oak Ridge, TN 37831, USA",
+        "coordinates": "35.931193, -84.309671",
+        "homepage": "https://www.ornl.gov"
+      },
+      {
+        "code": "ANL",
+        "name": "Argonne National Laboratory",
+        "postalAddress": "Argonne, IL 60439, USA",
+        "coordinates": "41.718497, -87.978482",
+        "homepage": "https://www.anl.gov"
+      },
+      {
+        "code": "BNL",
+        "name": "Brookhaven National Laboratory",
+        "postalAddress": "Upton, NY 11973, USA",
+        "coordinates": "40.864409, -72.874224",
+        "homepage": "https://www.bnl.gov"
+      },
+      {
+        "code": "LANL",
+        "name": "Los Alamos National Laboratory",
+        "postalAddress": "Los Alamos, NM 87545",
+        "coordinates": "35.876342, -106.318815",
+        "homepage": "https://www.lanl.gov"
+      },
+      {
+        "code": "LBNL",
+        "name": "Lawrence Berkeley National Laboratory",
+        "postalAddress": "Berkeley, CA 94720, USA",
+        "coordinates": "37.875086, -122.250964",
+        "homepage": "https://www.lbl.gov"
+      },
+      {
+        "code": "NAU",
+        "name": "Northern Arizona University",
+        "postalAddress": "Flagstaff, AZ 86011, USA",
+        "coordinates": "35.180361, -111.653947",
+        "homepage": "https://nau.edu"
+      },
+      {
+        "code": "NCAR",
+        "name": "National Center for Atmospheric Research",
+        "postalAddress": "Boulder, CO 80305, USA",
+        "coordinates": "39.978482, -105.274526",
+        "homepage": "https://ncar.ucar.edu"
+      },
+      {
+        "code": "UCI",
+        "name": "University of California Irvine",
+        "postalAddress": "Irvine, CA 92697, USA",
+        "coordinates": "33.640495, -117.844264",
+        "homepage": "https://uci.edu"
+      },
+      {
+        "code": "UM",
+        "name": "University of Michigan",
+        "postalAddress": "Ann Arbor, MI 48109, USA",
+        "coordinates": "42.278075, -83.738246",
+        "homepage": "https://umich.edu"
+      }
+    ]
+  },
+  {
     "code": "SNU",
     "name": "Seoul National University",
     "postalAddress": "Seoul 08826, South Korea",

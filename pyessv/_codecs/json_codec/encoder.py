@@ -65,7 +65,7 @@ def _to_encodable(obj, key_formatter=lambda k: k):
         return str(obj)
 
     elif isinstance(obj, datetime.datetime):
-        return str(obj)
+        return "{}+00:00".format(str(obj))
 
     elif isinstance(obj, collections.Mapping):
         return {str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
