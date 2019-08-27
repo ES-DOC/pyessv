@@ -40,7 +40,6 @@ def parse(identifier):
     """Parses a CMIP6 dataset identifier.
 
     """
-    print identifier
     # Instantiate parser JIT.
     global _PARSER
     if _PARSER is None:

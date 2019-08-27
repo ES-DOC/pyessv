@@ -18,6 +18,7 @@ from pyessv._codecs.dict_codec import encoder as dict_encoder
 from pyessv._utils import convert
 from pyessv._utils.compat import json
 from pyessv._utils.compat import numeric_types
+from pyessv._utils.compat import basestring
 from pyessv._utils.compat import str
 
 

@@ -1,5 +1,6 @@
 .idea
 .coverage
+.tox
 coverage.xml
 nosetests.xml
 pylint.txt

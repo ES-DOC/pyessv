@@ -15,6 +15,7 @@ import datetime
 
 from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._utils.compat import str
+from pyessv._utils.compat import basestring
 from pyessv._utils.formatter import format_io_name
 from pyessv._utils.validation import assert_iterable
 from pyessv._utils.validation import assert_string
@@ -205,8 +206,9 @@ class IterableNode(Node):
         """Instance iterator initializer.
 
         """
-        return iter(sorted(self._items,
-                           key=lambda i: i if isinstance(i, basestring) else i.canonical_name))
+        sort_key = lambda i: i if isinstance(i, basestring) else i.canonical_name
+
+        return iter(sorted(self._items, key=sort_key))
 
 
     def __len__(self):
