@@ -66,7 +66,7 @@ def assert_namespace(identifier, min_length=1, max_length=4):
 
 
 def assert_pattern(val, info):
-    from pyessv._loader import load
+    from pyessv.loader import load
 
     pattern = info[0]
     collections = []

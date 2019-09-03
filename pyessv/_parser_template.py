@@ -31,7 +31,7 @@ class TemplateParser(object):
         :param str seprarator: Seperator to apply when parsing.
 
         """
-        from pyessv._loader import load
+        from pyessv.loader import load
 
         self.seperator = seperator
         self.template_parts = template.split(seperator)

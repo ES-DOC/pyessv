@@ -63,8 +63,8 @@ from pyessv.governance import reset
 
 from pyessv.initializer import init
 
-from pyessv._loader import load_random
-from pyessv._loader import load
+from pyessv.loader import load_random
+from pyessv.loader import load
 
 from pyessv.model import Authority
 from pyessv.model import Collection

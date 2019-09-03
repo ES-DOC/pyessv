@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._loader.py
+.. module:: pyessv.loader.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
