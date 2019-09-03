@@ -23,7 +23,7 @@ _DATASETS_PATTERNS = {
 }
 
 
-def get_test_datasets(project, existing=[]):
+def get_datasets_for_testing(project='cmip6', existing=[]):
     """Returns a collection of test dataset identifiers.
 
     :param str project: Project code.

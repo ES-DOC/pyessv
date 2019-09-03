@@ -67,7 +67,7 @@ _FUNCS = {
     'create_scope',
     'create_term',
     # ... factory for testing
-    'get_test_datasets',
+    'get_datasets_for_testing',
     # ... governance
     'accept',
     'deprecate',
