@@ -47,13 +47,13 @@ from pyessv.exceptions import TemplateParsingError
 from pyessv.exceptions import ParsingError
 from pyessv.exceptions import ValidationError
 
-from pyessv._factory import create_authority
-from pyessv._factory import create_collection
-from pyessv._factory import create_template_parser
-from pyessv._factory import create_scope
-from pyessv._factory import create_term
+from pyessv.factory import create_authority
+from pyessv.factory import create_collection
+from pyessv.factory import create_template_parser
+from pyessv.factory import create_scope
+from pyessv.factory import create_term
 
-from pyessv._factory_for_testing import get_test_datasets
+from pyessv.factory_for_testing import get_test_datasets
 
 from pyessv.governance import accept
 from pyessv.governance import deprecate

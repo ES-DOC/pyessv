@@ -17,7 +17,7 @@ import uuid
 from pyessv.cache import cache
 from pyessv.cache import getcached
 from pyessv.constants import PARSING_NODE_FIELDS
-from pyessv._factory import create_term
+from pyessv.factory import create_term
 from pyessv.model import Authority
 from pyessv.model import Term
 from pyessv.utils import logger

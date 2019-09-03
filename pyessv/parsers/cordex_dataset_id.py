@@ -10,7 +10,7 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-from pyessv._factory import create_template_parser
+from pyessv.factory import create_template_parser
 from pyessv.constants import PARSING_STRICTNESS_1
 
 
