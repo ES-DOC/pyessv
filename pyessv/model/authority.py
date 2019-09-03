@@ -11,8 +11,8 @@
 
 
 """
-from pyessv._constants import NODE_TYPEKEY_AUTHORITY
-from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv.constants import NODE_TYPEKEY_AUTHORITY
+from pyessv.constants import REGEX_CANONICAL_NAME
 from pyessv.model.node import IterableNode
 from pyessv.model.scope import Scope
 from pyessv.utils.validation import assert_iterable

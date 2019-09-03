@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._validation.py
+.. module:: pyessv.validation.py
    :copyright: Copyright "December 01, 2016', IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -15,9 +15,9 @@ import datetime
 import inspect
 import re
 
-from pyessv._constants import NODE_TYPEKEY_SET
-from pyessv._constants import GOVERNANCE_STATUS_SET
-from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv.constants import NODE_TYPEKEY_SET
+from pyessv.constants import GOVERNANCE_STATUS_SET
+from pyessv.constants import REGEX_CANONICAL_NAME
 from pyessv.model import Node
 
 

@@ -11,10 +11,10 @@
 
 
 """
-from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
-from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
-from pyessv._constants import GOVERNANCE_STATUS_PENDING
-from pyessv._constants import GOVERNANCE_STATUS_REJECTED
+from pyessv.constants import GOVERNANCE_STATUS_ACCEPTED
+from pyessv.constants import GOVERNANCE_STATUS_DEPRECATED
+from pyessv.constants import GOVERNANCE_STATUS_PENDING
+from pyessv.constants import GOVERNANCE_STATUS_REJECTED
 from pyessv.model import IterableNode
 from pyessv.model import Node
 

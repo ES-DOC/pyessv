@@ -13,14 +13,14 @@
 """
 import re
 
-from pyessv._constants import NODE_TYPEKEY_COLLECTION
-from pyessv._constants import PARSING_STRICTNESS_0
-from pyessv._constants import PARSING_STRICTNESS_1
-from pyessv._constants import PARSING_STRICTNESS_2
-from pyessv._constants import PARSING_STRICTNESS_3
-from pyessv._constants import PARSING_STRICTNESS_4
-from pyessv._constants import PARSING_STRICTNESS_SET
-from pyessv._constants import REGEX_CANONICAL_NAME
+from pyessv.constants import NODE_TYPEKEY_COLLECTION
+from pyessv.constants import PARSING_STRICTNESS_0
+from pyessv.constants import PARSING_STRICTNESS_1
+from pyessv.constants import PARSING_STRICTNESS_2
+from pyessv.constants import PARSING_STRICTNESS_3
+from pyessv.constants import PARSING_STRICTNESS_4
+from pyessv.constants import PARSING_STRICTNESS_SET
+from pyessv.constants import REGEX_CANONICAL_NAME
 from pyessv.model.node import IterableNode
 from pyessv.model.term import Term
 from pyessv.utils import compat

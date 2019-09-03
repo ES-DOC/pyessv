@@ -13,8 +13,8 @@
 """
 from pyessv.codecs import dict_codec
 from pyessv.codecs import json_codec
-from pyessv._constants import ENCODING_DICT
-from pyessv._constants import ENCODING_JSON
+from pyessv.constants import ENCODING_DICT
+from pyessv.constants import ENCODING_JSON
 from pyessv.model import Node
 from pyessv.utils import compat
 

@@ -12,8 +12,8 @@
 
 """
 from pyessv.cache import store_memory as _memory_store
-from pyessv._constants import CACHE_STORE_MEMORY
-from pyessv._constants import CACHE_STORE_TYPES
+from pyessv.constants import CACHE_STORE_MEMORY
+from pyessv.constants import CACHE_STORE_TYPES
 from pyessv.model import Authority
 from pyessv.model import Node
 

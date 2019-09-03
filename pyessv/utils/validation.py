@@ -14,7 +14,7 @@
 import inspect
 import re
 
-from pyessv._constants import PARSING_NODE_FIELDS
+from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.utils import compat
 
 

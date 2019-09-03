@@ -17,7 +17,7 @@ import os
 import pyessv
 from pyessv.accessors import ACCESSORS
 from pyessv.cache import cache
-from pyessv._constants import DIR_ARCHIVE
+from pyessv.constants import DIR_ARCHIVE
 from pyessv._io_manager import read
 from pyessv.utils import logger
 
@@ -35,7 +35,7 @@ def init():
 	authorities = _load_authorities()
 
 	# Mixin pseudo-constants.
-	_mixin_constants(authorities)
+	_mixinconstants(authorities)
 
 	# Set scope level accessor functions.
 	_mixin_scopeaccessors(authorities)
@@ -55,7 +55,7 @@ def _load_authorities():
 	return authorities
 
 
-def _mixin_constants(authorities):
+def _mixinconstants(authorities):
 	"""Mixes in authorities as pseudo-constants to pyessv.
 
 	"""

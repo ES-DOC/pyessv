@@ -21,15 +21,15 @@ from os.path import isfile
 
 from pyessv.codecs import decode
 from pyessv.codecs import encode
-from pyessv._constants import DIR_ARCHIVE
-from pyessv._constants import ENCODING_JSON
+from pyessv.constants import DIR_ARCHIVE
+from pyessv.constants import ENCODING_JSON
 from pyessv.model import Authority
 from pyessv.model import Collection
 from pyessv.model import Scope
 from pyessv.model import Term
 from pyessv.model import Node
-from pyessv._validation import get_errors
-from pyessv._validation import is_valid
+from pyessv.validation import get_errors
+from pyessv.validation import is_valid
 
 
 

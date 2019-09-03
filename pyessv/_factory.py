@@ -12,9 +12,9 @@
 """
 import datetime as dt
 
-from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._constants import PARSING_STRICTNESS_2
-from pyessv._constants import PARSING_STRICTNESS_SET
+from pyessv.constants import REGEX_CANONICAL_NAME
+from pyessv.constants import PARSING_STRICTNESS_2
+from pyessv.constants import PARSING_STRICTNESS_SET
 from pyessv.cache import cache
 from pyessv._exceptions import ValidationError
 from pyessv.model import Authority
@@ -26,7 +26,7 @@ from pyessv._parser_template import TemplateParser
 from pyessv.utils import compat
 from pyessv.utils.formatter import format_canonical_name
 from pyessv.utils.formatter import format_string
-from pyessv._validation import validate
+from pyessv.validation import validate
 
 
 

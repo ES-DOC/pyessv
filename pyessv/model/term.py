@@ -11,9 +11,9 @@
 
 
 """
-from pyessv._constants import GOVERNANCE_STATUS_PENDING
-from pyessv._constants import GOVERNANCE_STATUS_SET
-from pyessv._constants import NODE_TYPEKEY_TERM
+from pyessv.constants import GOVERNANCE_STATUS_PENDING
+from pyessv.constants import GOVERNANCE_STATUS_SET
+from pyessv.constants import NODE_TYPEKEY_TERM
 from pyessv.model.node import Node
 from pyessv.utils import compat
 from pyessv.utils.validation import assert_regex

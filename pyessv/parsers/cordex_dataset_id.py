@@ -11,7 +11,7 @@
 
 """
 from pyessv._factory import create_template_parser
-from pyessv._constants import PARSING_STRICTNESS_1
+from pyessv.constants import PARSING_STRICTNESS_1
 
 
 

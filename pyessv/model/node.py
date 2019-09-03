@@ -13,7 +13,7 @@
 """
 import datetime
 
-from pyessv._constants import NODE_TYPEKEY_SET
+from pyessv.constants import NODE_TYPEKEY_SET
 from pyessv.utils import compat
 from pyessv.utils.formatter import format_io_name
 from pyessv.utils.validation import assert_iterable
