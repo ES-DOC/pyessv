@@ -19,7 +19,7 @@ from pyessv._constants import PARSING_STRICTNESS_2
 from pyessv._constants import PARSING_STRICTNESS_3
 from pyessv._constants import PARSING_STRICTNESS_4
 from pyessv._exceptions import ParsingError
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 
 
 
@@ -39,7 +39,7 @@ def parse(
     assert field in PARSING_NODE_FIELDS, 'Invalid field'
 
     # Set namespace
-    ns = str(namespace).strip().split(':')
+    ns = compat.str(namespace).strip().split(':')
     assert len(ns) >= 1 and len(ns) <= 4, 'Invalid namespace'
     ns = ns + [None for i in range(4 - len(ns))]
 
@@ -87,7 +87,7 @@ class _NodeInfo(object):
         if self.node is not None:
             return self.node.canonical_name
         elif self == target:
-            return str(self.name).strip().lower()
+            return compat.str(self.name).strip().lower()
 
 
     def set_node(self, node):
@@ -116,7 +116,7 @@ class _NodeInfo(object):
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_4:
-            name = str(self.name).strip().lower()
+            name = compat.str(self.name).strip().lower()
             if name in [i.lower() for i in node.all_names]:
                 matched = True
 

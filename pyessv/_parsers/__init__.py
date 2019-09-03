@@ -17,7 +17,7 @@ from pyessv._parsers.cmip5_dataset_id import parse as parse_cmip5_dataset_id
 from pyessv._parsers.cmip6_dataset_id import parse as parse_cmip6_dataset_id
 from pyessv._parsers.cordex_dataset_id import parse as parse_cordex_dataset_id
 from pyessv._parsers.input4mips_dataset_id import parse as parse_input4mips_dataset_id
-from pyessv._utils.compat import basestring
+from pyessv._utils import compat
 
 
 
@@ -59,9 +59,9 @@ def parse_dataset_identifer(project, identifier):
     :rtype: set
 
     """
-    assert isinstance(project, basestring), 'Invalid project'
+    assert isinstance(project, compat.basestring), 'Invalid project'
     assert project in _DATASET_ID_PARSERS, 'Unsupported project'
-    assert isinstance(identifier, basestring), 'Invalid identifier'
+    assert isinstance(identifier, compat.basestring), 'Invalid identifier'
 
     parser = _DATASET_ID_PARSERS[project]
 

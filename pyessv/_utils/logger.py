@@ -13,7 +13,7 @@
 """
 import datetime as dt
 
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 
 
 
@@ -41,10 +41,10 @@ def _get_formatted_message(msg, level, app):
         return _NULL_MSG
     else:
         return '{} [{}] :: {} :: {}'.format(
-            str(dt.datetime.utcnow()),
+            compat.str(dt.datetime.utcnow()),
             level,
             app,
-            str(msg).strip()
+            compat.str(msg).strip()
             )
 
 

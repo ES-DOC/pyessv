@@ -15,8 +15,7 @@ from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import NODE_TYPEKEY_TERM
 from pyessv._model.node import Node
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 from pyessv._utils.validation import assert_regex
 from pyessv._utils.validation import assert_string
 
@@ -42,7 +41,7 @@ class Term(Node):
         """Instance membership predicate.
 
         """
-        key = str(key).strip().lower()
+        key = compat.str(key).strip().lower()
 
         return key in self.all_names
 
@@ -79,7 +78,7 @@ class Term(Node):
 
         def _canonical_name():
             assert_string(self.canonical_name)
-            if isinstance(self.collection.term_regex, basestring):
+            if isinstance(self.collection.term_regex, compat.basestring):
                 assert_regex(self.canonical_name, self.collection.term_regex)
 
         def _collection():

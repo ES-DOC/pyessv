@@ -17,10 +17,7 @@ import json
 import re
 import types
 
-from pyessv._utils.compat import to_datetime
-from pyessv._utils.compat import numeric_types
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 
 
 # Values considered to be abbreviations.
@@ -40,15 +37,15 @@ def str_to_unicode(val):
 
     """
     if val is None:
-        return str()
-    if isinstance(val, str):
+        return compat.str()
+    if isinstance(val, compat.str):
         return val
 
-    val = str(val).decode(_UTF8).strip()
+    val = compat.str(val).decode(_UTF8).strip()
     if not len(val):
-        return str()
+        return compat.str()
 
-    return str(val)
+    return compat.str(val)
 
 
 def str_to_camel_case(target, separator='_'):

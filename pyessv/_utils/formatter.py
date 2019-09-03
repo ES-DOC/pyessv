@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 
 
 
@@ -20,10 +20,11 @@ def format_canonical_name(name):
 
     """
     if name is not None:
-        return str(name).strip() \
-                        .replace('_', '-') \
-                        .replace(' ', '-') \
-                        .lower()
+        return compat.str(name) \
+            .strip() \
+            .replace('_', '-') \
+            .replace(' ', '-') \
+            .lower()
 
 
 def format_string(val):
@@ -31,7 +32,7 @@ def format_string(val):
 
     """
     if val is not None:
-        return str(val).strip()
+        return compat.str(val).strip()
 
 
 def format_io_name(name):
@@ -39,7 +40,8 @@ def format_io_name(name):
 
     """
     if name is not None:
-        return str(name).strip() \
-                        .replace('_', '-') \
-                        .replace(' ', '-') \
-                        .lower()
+        return compat.str(name) \
+            .strip() \
+            .replace('_', '-') \
+            .replace(' ', '-') \
+            .lower()

@@ -14,7 +14,7 @@
 from pyessv._exceptions import TemplateParsingError
 from pyessv._model.collection import Collection
 from pyessv._model.term import Term
-from pyessv._utils.compat import  basestring
+from pyessv._utils import  compat
 
 
 
@@ -61,7 +61,7 @@ class TemplateParser(object):
         terms = set()
         for template_part, name in [(self.template_parts[i], j) for i, j in enumerate(parts)]:
             # Verify constant match.
-            if isinstance(template_part, basestring):
+            if isinstance(template_part, compat.basestring):
                 if template_part != name:
                     raise TemplateParsingError('{} :: {}'.format(name, val))
                 continue
