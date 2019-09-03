@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_io_manager.py
+.. module:: testio_manager.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -18,9 +18,9 @@ import nose
 import os
 
 import pyessv as LIB
-from pyessv._io_manager import delete
-from pyessv._io_manager import read
-from pyessv._io_manager import write
+from pyessv.io_manager import delete
+from pyessv.io_manager import read
+from pyessv.io_manager import write
 import tests.utils as tu
 
 

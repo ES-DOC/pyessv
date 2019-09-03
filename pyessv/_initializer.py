@@ -18,7 +18,7 @@ import pyessv
 from pyessv.accessors import ACCESSORS
 from pyessv.cache import cache
 from pyessv.constants import DIR_ARCHIVE
-from pyessv._io_manager import read
+from pyessv.io_manager import read
 from pyessv.utils import logger
 
 

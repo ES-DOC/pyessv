@@ -13,7 +13,7 @@
 """
 from pyessv.cache import cache
 from pyessv.cache import getcached
-from pyessv._io_manager import write
+from pyessv.io_manager import write
 from pyessv.model import Authority
 
 
