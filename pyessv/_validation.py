@@ -19,8 +19,6 @@ from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._model import Node
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import urlparse
 
 
 

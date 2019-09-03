@@ -15,9 +15,7 @@ import inspect
 import re
 
 from pyessv._constants import PARSING_NODE_FIELDS
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
-from pyessv._utils.compat import urlparse
+from pyessv._utils import compat
 
 
 def assert_iterable(val, modifier, typeof=list):
@@ -43,7 +41,7 @@ def assert_string(val):
     """Asserts a string value.
 
     """
-    assert isinstance(val, basestring)
+    assert isinstance(val, compat.basestring)
     assert len(val.strip()) > 0
 
 
@@ -52,7 +50,7 @@ def assert_url(val):
 
     """
     assert_string(val)
-    url = urlparse(val)
+    url = compat.urlparse(val)
     assert url.netloc and url.scheme
 
 
@@ -61,7 +59,7 @@ def assert_namespace(identifier, min_length=1, max_length=4):
 
     """
     assert_string(identifier)
-    parts = str(identifier).split(':')
+    parts = compat.str(identifier).split(':')
     assert len(parts) >= min_length and len(parts) <= max_length
     for part in parts:
         assert_string(part)
