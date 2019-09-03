@@ -20,28 +20,29 @@ from pyessv._utils.compat import str
 
 
 
-def encode(instance):
-    """Encodes an instance of a domain model class as a dictionary.
-
-    :param pyessv.Node instance: A domain model class instance to be encoded as a dictionary.
-
-    :returns: Instance encoded as a simple dictionary.
-    :rtype: dict
-
-    :raises TypeError: If instance is a domain model class instance.
+def _encode_node(instance):
+    """Encodes a node instance to a dictionary representation.
 
     """
-    assert isinstance(instance, Node), 'Invalid type'
+    obj = dict()
+    obj['_type'] = instance.typekey
+    obj['canonical_name'] = instance.canonical_name
+    obj['create_date'] = instance.create_date
+    obj['namespace'] = instance.namespace
+    if bool(instance.label) and instance.label != instance.canonical_name:
+        obj['label'] = instance.label
+    if bool(instance.raw_name) and instance.raw_name != instance.canonical_name:
+        obj['raw_name'] = instance.raw_name
+    if bool(instance.data):
+        obj['data'] = instance.data
+    if bool(instance.description):
+        obj['description'] = instance.description
+    if bool(instance.alternative_names):
+        obj['alternative_names'] = instance.alternative_names
+    if bool(instance.url):
+        obj['url'] = instance.url
 
-    encoders = {
-        Authority: _encode_authority,
-        Collection: _encode_collection,
-        Scope: _encode_scope,
-        Term: _encode_term
-        }
-    encoder = encoders[type(instance)]
-
-    return encoder(instance)
+    return obj
 
 
 def _encode_authority(instance):
@@ -89,26 +90,28 @@ def _encode_term(instance):
     return obj
 
 
-def _encode_node(instance):
-    """Encodes a node instance to a dictionary representation.
+# Map of model type to encoder.
+_ENCODERS = {
+    Authority: _encode_authority,
+    Collection: _encode_collection,
+    Scope: _encode_scope,
+    Term: _encode_term
+    }
+
+
+def encode(instance):
+    """Encodes an instance of a domain model class as a dictionary.
+
+    :param pyessv.Node instance: A domain model class instance to be encoded as a dictionary.
+
+    :returns: Instance encoded as a simple dictionary.
+    :rtype: dict
+
+    :raises TypeError: If instance is a domain model class instance.
 
     """
-    obj = dict()
-    obj['_type'] = instance.typekey
-    obj['canonical_name'] = instance.canonical_name
-    obj['create_date'] = instance.create_date    
-    obj['namespace'] = instance.namespace
-    if bool(instance.label) and instance.label != instance.canonical_name:
-        obj['label'] = instance.label
-    if bool(instance.raw_name) and instance.raw_name != instance.canonical_name:
-        obj['raw_name'] = instance.raw_name
-    if bool(instance.data):
-        obj['data'] = instance.data
-    if bool(instance.description):
-        obj['description'] = instance.description
-    if bool(instance.alternative_names):
-        obj['alternative_names'] = instance.alternative_names
-    if bool(instance.url):
-        obj['url'] = instance.url
+    assert isinstance(instance, Node), 'Invalid type'
 
-    return obj
+    encoder = _ENCODERS[type(instance)]
+
+    return encoder(instance)

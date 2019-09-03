@@ -20,32 +20,25 @@ from pyessv._model import Authority
 from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
-from pyessv._utils import convert
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 
 
 
-def decode(obj):
-    """Decodes a term from a dictionary.
-
-    :param dict obj: Dictionary to be decoded.
-
-    :returns: Decoded term.
-    :rtype: pyessv.Term
+def _decode_node(obj, typeof):
+    """Decodes a node instance from a dictionary representation.
 
     """
-    assert '_type' in obj, 'Invalid type key'
-    assert obj['_type'] in NODE_TYPEKEY_SET, 'Invalid type key'
+    instance = typeof()
+    instance.alternative_names = obj.get('alternative_names', [])
+    instance.create_date = compat.to_datetime(obj['create_date'])
+    instance.data = obj.get('data', dict())
+    instance.description = obj.get('description')
+    instance.label = obj.get('label', obj['canonical_name'])
+    instance.canonical_name = obj['canonical_name']
+    instance.raw_name = obj.get('raw_name', obj['canonical_name'])
+    instance.url = obj.get('url')
 
-    decoders = {
-        NODE_TYPEKEY_AUTHORITY: _decode_authority,
-        NODE_TYPEKEY_COLLECTION: _decode_collection,
-        NODE_TYPEKEY_SCOPE: _decode_scope,
-        NODE_TYPEKEY_TERM: _decode_term
-        }
-    decoder = decoders[obj['_type']]
-
-    return decoder(obj)
+    return instance
 
 
 def _decode_authority(obj):
@@ -93,18 +86,27 @@ def _decode_term(obj):
     return instance
 
 
-def _decode_node(obj, typeof):
-    """Decodes a node instance from a dictionary representation.
+# Map of node type to decoder.
+_DECODERS = {
+    NODE_TYPEKEY_AUTHORITY: _decode_authority,
+    NODE_TYPEKEY_COLLECTION: _decode_collection,
+    NODE_TYPEKEY_SCOPE: _decode_scope,
+    NODE_TYPEKEY_TERM: _decode_term
+    }
+
+
+def decode(obj):
+    """Decodes a term from a dictionary.
+
+    :param dict obj: Dictionary to be decoded.
+
+    :returns: Decoded term.
+    :rtype: pyessv.Term
 
     """
-    instance = typeof()
-    instance.alternative_names = obj.get('alternative_names', [])
-    instance.create_date = convert.to_datetime(obj['create_date'])
-    instance.data = obj.get('data', dict())
-    instance.description = obj.get('description')
-    instance.label = obj.get('label', obj['canonical_name'])
-    instance.canonical_name = obj['canonical_name']
-    instance.raw_name = obj.get('raw_name', obj['canonical_name'])
-    instance.url = obj.get('url')
+    assert '_type' in obj, 'Invalid type key'
+    assert obj['_type'] in NODE_TYPEKEY_SET, 'Invalid type key'
 
-    return instance
+    decoder = _DECODERS[obj['_type']]
+
+    return decoder(obj)

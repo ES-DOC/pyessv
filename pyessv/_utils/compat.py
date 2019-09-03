@@ -33,9 +33,9 @@ except (ImportError, SyntaxError):
     import json
 
 
-# ---------
+# ------------------------------------------------------
 # Python 2
-# ---------
+# ------------------------------------------------------
 if is_py2:
     from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, getproxies, proxy_bypass
     from urlparse import urlparse, urlunparse, urljoin, urlsplit, urldefrag
@@ -43,6 +43,7 @@ if is_py2:
     import cookielib
     from Cookie import Morsel
     from StringIO import StringIO
+    import compat2_datetime
 
     builtin_str = str
     bytes = str
@@ -50,10 +51,12 @@ if is_py2:
     basestring = basestring
     numeric_types = (int, long, float)
     integer_types = (int, long)
+    to_datetime = lambda i: i if isinstance(i, dt.datetime) else compat2_datetime.parse_datetime
 
-# ---------
+
+# ------------------------------------------------------
 # Python 3
-# ---------
+# ------------------------------------------------------
 elif is_py3:
     from urllib.parse import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, unquote, quote_plus, unquote_plus, urldefrag
     from urllib.request import parse_http_list, getproxies, proxy_bypass
@@ -67,23 +70,4 @@ elif is_py3:
     basestring = (str, bytes)
     numeric_types = (int, float)
     integer_types = (int,)
-
-
-def to_datetime(val):
-    """Converts input to a datetime.datetime instance.
-
-    :param object val: value to be converted to a datetime.datetime.
-
-    :returns: A datetime.datetime instace.
-    :rtype: datetime.datetime
-
-    """
-    if isinstance(val, dt.datetime):
-        return val
-
-    if is_py3:
-        return dt.datetime.fromisoformat(val)
-
-    # Python 2 is trickier.
-    # TODO: process time zone as this returns a naive datetime.
-    return dt.datetime.strptime(val[0:19], '%Y-%m-%d %H:%M:%S')
+    to_datetime = lambda i: i if isinstance(i, dt.datetime) else dt.datetime.fromisoformat
