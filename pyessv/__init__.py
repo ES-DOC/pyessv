@@ -72,8 +72,8 @@ from pyessv.model import Scope
 from pyessv.model import Term
 
 from pyessv._parser import parse
-from pyessv._parsers import parse_dataset_identifer
-from pyessv._parsers import parse_dataset_identifers
+from pyessv.parsers import parse_dataset_identifer
+from pyessv.parsers import parse_dataset_identifers
 
 from pyessv._utils.logger import log
 from pyessv._utils.logger import log_error

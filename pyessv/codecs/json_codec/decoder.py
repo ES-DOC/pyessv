@@ -54,7 +54,7 @@ class _JSONDecoder(compat.json.JSONDecoder):
         compat.json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
         self.key_formatter = key_formatter
         self.to_namedtuple = to_namedtuple
-        self.value_parsers = [self._to_datetime]
+        self.valueparsers = [self._to_datetime]
 
 
     def dict_to_object(self, d):
@@ -63,7 +63,7 @@ class _JSONDecoder(compat.json.JSONDecoder):
         """
         # Parse values.
         for k, v in d.items():
-            for parser in self.value_parsers:
+            for parser in self.valueparsers:
                 if parser(d, k, v) == True:
                     break
 

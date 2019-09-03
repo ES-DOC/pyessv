@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._parsers.__init__.py
+.. module:: pyessv.parsers.__init__.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -13,10 +13,10 @@
 """
 import collections
 
-from pyessv._parsers.cmip5_dataset_id import parse as parse_cmip5_dataset_id
-from pyessv._parsers.cmip6_dataset_id import parse as parse_cmip6_dataset_id
-from pyessv._parsers.cordex_dataset_id import parse as parse_cordex_dataset_id
-from pyessv._parsers.input4mips_dataset_id import parse as parse_input4mips_dataset_id
+from pyessv.parsers.cmip5_dataset_id import parse as parse_cmip5_dataset_id
+from pyessv.parsers.cmip6_dataset_id import parse as parse_cmip6_dataset_id
+from pyessv.parsers.cordex_dataset_id import parse as parse_cordex_dataset_id
+from pyessv.parsers.input4mips_dataset_id import parse as parse_input4mips_dataset_id
 from pyessv._utils import compat
 
 
