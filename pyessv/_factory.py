@@ -23,9 +23,9 @@ from pyessv.model import Node
 from pyessv.model import Scope
 from pyessv.model import Term
 from pyessv._parser_template import TemplateParser
-from pyessv._utils import compat
-from pyessv._utils.formatter import format_canonical_name
-from pyessv._utils.formatter import format_string
+from pyessv.utils import compat
+from pyessv.utils.formatter import format_canonical_name
+from pyessv.utils.formatter import format_string
 from pyessv._validation import validate
 
 

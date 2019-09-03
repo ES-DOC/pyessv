@@ -15,7 +15,7 @@ import nose
 import pyessv as LIB
 
 from pyessv import load
-from pyessv._utils.compat import str
+from pyessv.utils.compat import str
 import tests.utils as tu
 
 

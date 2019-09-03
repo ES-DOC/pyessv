@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._utils.compat.py
+.. module:: pyessv.utils.compat.py
    :copyright: Copyright "Feb 7, 2013", Earth System Documentation
    :license: GPL/CeCIL
    :platform: Unix, Windows

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_utils_factory.py
+.. module:: testutils_factory.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -15,7 +15,7 @@ import datetime as dt
 import random
 import uuid
 
-from pyessv._utils.compat import str
+from pyessv.utils.compat import str
 
 
 

@@ -15,9 +15,9 @@ from pyessv._constants import NODE_TYPEKEY_AUTHORITY
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv.model.node import IterableNode
 from pyessv.model.scope import Scope
-from pyessv._utils.validation import assert_iterable
-from pyessv._utils.validation import assert_regex
-from pyessv._utils.validation import assert_string
+from pyessv.utils.validation import assert_iterable
+from pyessv.utils.validation import assert_regex
+from pyessv.utils.validation import assert_string
 
 
 

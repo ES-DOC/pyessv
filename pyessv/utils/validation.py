@@ -15,7 +15,7 @@ import inspect
 import re
 
 from pyessv._constants import PARSING_NODE_FIELDS
-from pyessv._utils import compat
+from pyessv.utils import compat
 
 
 def assert_iterable(val, modifier, typeof=list):

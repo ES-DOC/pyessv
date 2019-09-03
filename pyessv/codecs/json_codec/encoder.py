@@ -15,8 +15,8 @@ import collections
 import datetime
 
 from pyessv.codecs.dict_codec import encoder as dict_encoder
-from pyessv._utils import compat
-from pyessv._utils import convert
+from pyessv.utils import compat
+from pyessv.utils import convert
 
 
 

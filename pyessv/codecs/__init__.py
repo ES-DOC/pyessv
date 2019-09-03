@@ -16,7 +16,7 @@ from pyessv.codecs import json_codec
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
 from pyessv.model import Node
-from pyessv._utils import compat
+from pyessv.utils import compat
 
 
 

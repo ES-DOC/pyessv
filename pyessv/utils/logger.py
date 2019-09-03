@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._utils.logger.py
+.. module:: pyessv.utils.logger.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -13,7 +13,7 @@
 """
 import datetime as dt
 
-from pyessv._utils import compat
+from pyessv.utils import compat
 
 
 

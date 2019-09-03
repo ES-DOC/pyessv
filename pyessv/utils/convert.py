@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._utils.convert.py
+.. module:: pyessv.utils.convert.py
    :copyright: Copyright "Feb 7, 2013", Earth System Documentation
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -17,7 +17,7 @@ import json
 import re
 import types
 
-from pyessv._utils import compat
+from pyessv.utils import compat
 
 
 # Values considered to be abbreviations.

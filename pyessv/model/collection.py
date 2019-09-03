@@ -23,11 +23,11 @@ from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv.model.node import IterableNode
 from pyessv.model.term import Term
-from pyessv._utils import compat
-from pyessv._utils.validation import assert_iterable
-from pyessv._utils.validation import assert_namespace
-from pyessv._utils.validation import assert_regex
-from pyessv._utils.validation import assert_string
+from pyessv.utils import compat
+from pyessv.utils.validation import assert_iterable
+from pyessv.utils.validation import assert_namespace
+from pyessv.utils.validation import assert_regex
+from pyessv.utils.validation import assert_string
 
 
 class Collection(IterableNode):

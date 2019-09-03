@@ -75,9 +75,9 @@ from pyessv._parser import parse
 from pyessv.parsers import parse_dataset_identifer
 from pyessv.parsers import parse_dataset_identifers
 
-from pyessv._utils.logger import log
-from pyessv._utils.logger import log_error
-from pyessv._utils.logger import log_warning
+from pyessv.utils.logger import log
+from pyessv.utils.logger import log_error
+from pyessv.utils.logger import log_warning
 
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid

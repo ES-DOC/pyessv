@@ -19,8 +19,8 @@ from pyessv.codecs import decode
 from pyessv.codecs import encode
 from pyessv._constants import ENCODING_SET
 from pyessv._constants import STANDARD_NODE_FIELDS
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
+from pyessv.utils.compat import basestring
+from pyessv.utils.compat import str
 import tests.utils as tu
 
 

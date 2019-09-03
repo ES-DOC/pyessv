@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_utils_assert.py
+.. module:: testutils_assert.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -15,7 +15,7 @@ import datetime
 import inspect
 import os
 
-from pyessv._utils.compat import str
+from pyessv.utils.compat import str
 
 
 

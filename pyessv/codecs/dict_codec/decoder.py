@@ -20,7 +20,7 @@ from pyessv.model import Authority
 from pyessv.model import Collection
 from pyessv.model import Scope
 from pyessv.model import Term
-from pyessv._utils import compat
+from pyessv.utils import compat
 
 
 

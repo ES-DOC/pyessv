@@ -20,9 +20,9 @@ from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._factory import create_term
 from pyessv.model import Authority
 from pyessv.model import Term
-from pyessv._utils import logger
-from pyessv._utils import compat
-from pyessv._utils.formatter import format_string
+from pyessv.utils import logger
+from pyessv.utils import compat
+from pyessv.utils.formatter import format_string
 
 
 
