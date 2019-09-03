@@ -71,9 +71,9 @@ def get_string(length=31, existing=None):
     """Returns a random string for testing purposes.
 
     """
-    result = str(uuid.uuid1())[:length]
+    result = compat.str(uuid.uuid1())[:length]
     while existing == result:
-        result = str(uuid.uuid1())[:length]
+        result = compat.str(uuid.uuid1())[:length]
     return result
 
 
@@ -81,4 +81,4 @@ def get_uuid():
     """Returns a uuid for testing purposes.
 
     """
-    return string(uuid.uuid1())
+    return compat.str(uuid.uuid1())

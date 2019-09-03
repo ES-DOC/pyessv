@@ -19,8 +19,7 @@ from pyessv.codecs import decode
 from pyessv.codecs import encode
 from pyessv.constants import ENCODING_SET
 from pyessv.constants import STANDARD_NODE_FIELDS
-from pyessv.utils.compat import basestring
-from pyessv.utils.compat import str
+from pyessv.utils import compat
 import tests.utils as tu
 
 
@@ -28,7 +27,7 @@ import tests.utils as tu
 # Types of representation by encoding.
 _ENCODING_REPRESENTATION_TYPE = {
     LIB.ENCODING_DICT: dict,
-    LIB.ENCODING_JSON: basestring,
+    LIB.ENCODING_JSON: compat.basestring,
 }
 
 
