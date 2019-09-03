@@ -11,7 +11,7 @@
 
 
 """
-from pyessv._exceptions import TemplateParsingError
+from pyessv.exceptions import TemplateParsingError
 from pyessv.model.collection import Collection
 from pyessv.model.term import Term
 from pyessv.utils import  compat

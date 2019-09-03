@@ -16,7 +16,7 @@ from pyessv.constants import REGEX_CANONICAL_NAME
 from pyessv.constants import PARSING_STRICTNESS_2
 from pyessv.constants import PARSING_STRICTNESS_SET
 from pyessv.cache import cache
-from pyessv._exceptions import ValidationError
+from pyessv.exceptions import ValidationError
 from pyessv.model import Authority
 from pyessv.model import Collection
 from pyessv.model import Node

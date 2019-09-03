@@ -42,10 +42,10 @@ from pyessv.constants import PARSING_STRICTNESS_3
 from pyessv.constants import PARSING_STRICTNESS_4
 from pyessv.constants import REGEX_CANONICAL_NAME
 
-from pyessv._exceptions import InvalidAssociationError
-from pyessv._exceptions import TemplateParsingError
-from pyessv._exceptions import ParsingError
-from pyessv._exceptions import ValidationError
+from pyessv.exceptions import InvalidAssociationError
+from pyessv.exceptions import TemplateParsingError
+from pyessv.exceptions import ParsingError
+from pyessv.exceptions import ValidationError
 
 from pyessv._factory import create_authority
 from pyessv._factory import create_collection

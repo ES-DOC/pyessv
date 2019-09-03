@@ -18,7 +18,7 @@ from pyessv.constants import PARSING_STRICTNESS_1
 from pyessv.constants import PARSING_STRICTNESS_2
 from pyessv.constants import PARSING_STRICTNESS_3
 from pyessv.constants import PARSING_STRICTNESS_4
-from pyessv._exceptions import ParsingError
+from pyessv.exceptions import ParsingError
 from pyessv.utils import compat
 
 
