@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._cache.store.py
+.. module:: pyessv.cache.store.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,11 +11,11 @@
 
 
 """
-from pyessv._cache import store_memory as _memory_store
+from pyessv.cache import store_memory as _memory_store
 from pyessv._constants import CACHE_STORE_MEMORY
 from pyessv._constants import CACHE_STORE_TYPES
-from pyessv._model import Authority
-from pyessv._model import Node
+from pyessv.model import Authority
+from pyessv.model import Node
 
 
 
@@ -37,7 +37,7 @@ def cache(node):
         store.cache(node)
 
 
-def get_cached(identifier=None, store_type=CACHE_STORE_MEMORY):
+def getcached(identifier=None, store_type=CACHE_STORE_MEMORY):
     """Returns a cached node.
 
     :param str|None|class filter: Cache filter expression.
@@ -49,7 +49,7 @@ def get_cached(identifier=None, store_type=CACHE_STORE_MEMORY):
     """
     assert store_type in CACHE_STORE_TYPES, 'Invalid cache store type'
 
-    return _STORES[store_type].get_cached(identifier)
+    return _STORES[store_type].getcached(identifier)
 
 
 def uncache(identifier):

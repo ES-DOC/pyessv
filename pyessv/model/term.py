@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model.term.py
+.. module:: pyessv.model.term.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -14,7 +14,7 @@
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._constants import GOVERNANCE_STATUS_SET
 from pyessv._constants import NODE_TYPEKEY_TERM
-from pyessv._model.node import Node
+from pyessv.model.node import Node
 from pyessv._utils import compat
 from pyessv._utils.validation import assert_regex
 from pyessv._utils.validation import assert_string
@@ -74,7 +74,7 @@ class Term(Node):
         """Returns set of validators.
 
         """
-        from pyessv._model.scope import Collection
+        from pyessv.model.scope import Collection
 
         def _canonical_name():
             assert_string(self.canonical_name)

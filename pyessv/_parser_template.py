@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model._parser_template.py
+.. module:: pyessv.model._parser_template.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -12,8 +12,8 @@
 
 """
 from pyessv._exceptions import TemplateParsingError
-from pyessv._model.collection import Collection
-from pyessv._model.term import Term
+from pyessv.model.collection import Collection
+from pyessv.model.term import Term
 from pyessv._utils import  compat
 
 

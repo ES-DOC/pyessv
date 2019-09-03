@@ -19,10 +19,10 @@ __copyright__ = 'Copyright 2017 ES-DOC'
 
 from pyessv._archive import archive
 
-from pyessv._cache import get_cached
+from pyessv.cache import getcached
 
-from pyessv._codecs import decode
-from pyessv._codecs import encode
+from pyessv.codecs import decode
+from pyessv.codecs import encode
 
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_DICT
@@ -66,10 +66,10 @@ from pyessv._initializer import init
 from pyessv._loader import load_random
 from pyessv._loader import load
 
-from pyessv._model import Authority
-from pyessv._model import Collection
-from pyessv._model import Scope
-from pyessv._model import Term
+from pyessv.model import Authority
+from pyessv.model import Collection
+from pyessv.model import Scope
+from pyessv.model import Term
 
 from pyessv._parser import parse
 from pyessv._parsers import parse_dataset_identifer

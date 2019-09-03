@@ -14,12 +14,12 @@
 import random
 import uuid
 
-from pyessv._cache import cache
-from pyessv._cache import get_cached
+from pyessv.cache import cache
+from pyessv.cache import getcached
 from pyessv._constants import PARSING_NODE_FIELDS
 from pyessv._factory import create_term
-from pyessv._model import Authority
-from pyessv._model import Term
+from pyessv.model import Authority
+from pyessv.model import Term
 from pyessv._utils import logger
 from pyessv._utils import compat
 from pyessv._utils.formatter import format_string
@@ -38,7 +38,7 @@ def load(identifier=None, verbose=True):
     assert isinstance(identifier, (type(None), compat.basestring))
 
     if identifier is None:
-        return set(get_cached(Authority))
+        return set(getcached(Authority))
 
     identifier = identifier.strip()
     result = _load_by_namespace(identifier)
@@ -60,7 +60,7 @@ def _load_by_namespace(identifier):
     # Skip if identifier is not a namespace.
     ns = compat.str(identifier).split(':')
     if len(ns) == 0:
-        return get_cached(Authority)
+        return getcached(Authority)
     if len(ns) > 4:
         return None
 
@@ -76,7 +76,7 @@ def _load_by_namespace(identifier):
         authority, scope, collection, term = ns
 
     # Walk nodes returning deepest match.
-    for a in get_cached(Authority):
+    for a in getcached(Authority):
         if not _is_matched(a, authority):
             continue
         if scope is None:

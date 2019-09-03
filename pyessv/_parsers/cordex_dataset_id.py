@@ -16,7 +16,7 @@ from pyessv._constants import PARSING_STRICTNESS_1
 
 
 # Template extracted from esgf ini file (for reference purpose only).
-_INI_PATTERN = 'cordex.%(product)s.%(domain)s.%(institute)s.%(driving_model)s.%(experiment)s.%(ensemble)s.%(rcm_name)s.%(rcm_version)s.%(time_frequency)s.%(variable)s'
+_INI_PATTERN = 'cordex.%(product)s.%(domain)s.%(institute)s.%(drivingmodel)s.%(experiment)s.%(ensemble)s.%(rcm_name)s.%(rcm_version)s.%(time_frequency)s.%(variable)s'
 
 # Test identifier (for reference purpose only).
 _TEST_IDENTIFIER = 'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.hadgem3-ra.v1.mon.areacella'

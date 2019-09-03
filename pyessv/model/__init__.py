@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model.__init__.py
+.. module:: pyessv.model.__init__.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,12 +11,12 @@
 
 
 """
-from pyessv._model.authority import Authority
-from pyessv._model.scope import Scope
-from pyessv._model.collection import Collection
-from pyessv._model.node import Node
-from pyessv._model.node import IterableNode
-from pyessv._model.term import Term
+from pyessv.model.authority import Authority
+from pyessv.model.scope import Scope
+from pyessv.model.collection import Collection
+from pyessv.model.node import Node
+from pyessv.model.node import IterableNode
+from pyessv.model.term import Term
 
 # Set of node types.
 NODE_TYPES = {

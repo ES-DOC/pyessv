@@ -16,10 +16,10 @@ from pyessv._constants import NODE_TYPEKEY_COLLECTION
 from pyessv._constants import NODE_TYPEKEY_SCOPE
 from pyessv._constants import NODE_TYPEKEY_SET
 from pyessv._constants import NODE_TYPEKEY_TERM
-from pyessv._model import Authority
-from pyessv._model import Collection
-from pyessv._model import Scope
-from pyessv._model import Term
+from pyessv.model import Authority
+from pyessv.model import Collection
+from pyessv.model import Scope
+from pyessv.model import Term
 from pyessv._utils import compat
 
 

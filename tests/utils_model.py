@@ -16,7 +16,7 @@ import os
 import shutil
 
 import pyessv as LIB
-from pyessv._cache import uncache
+from pyessv.cache import uncache
 from tests.utils_assert import assert_objects
 
 

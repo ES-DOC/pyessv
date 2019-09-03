@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_codecs.py
+.. module:: testcodecs.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -15,8 +15,8 @@ import inspect
 import nose
 
 import pyessv as LIB
-from pyessv._codecs import decode
-from pyessv._codecs import encode
+from pyessv.codecs import decode
+from pyessv.codecs import encode
 from pyessv._constants import ENCODING_SET
 from pyessv._constants import STANDARD_NODE_FIELDS
 from pyessv._utils.compat import basestring

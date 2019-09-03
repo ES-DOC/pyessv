@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._codecs.dict.encoder.py
+.. module:: pyessv.codecs.dict.encoder.py
    :copyright: @2015 IPSL (http://ipsl.fr)
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,11 +11,11 @@
 
 
 """
-from pyessv._model import Authority
-from pyessv._model import Collection
-from pyessv._model import Node
-from pyessv._model import Scope
-from pyessv._model import Term
+from pyessv.model import Authority
+from pyessv.model import Collection
+from pyessv.model import Node
+from pyessv.model import Scope
+from pyessv.model import Term
 
 
 

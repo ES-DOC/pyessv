@@ -1,5 +1,5 @@
-from pyessv._accessors import esdoc_cmip6
-from pyessv._accessors import wcrp_cmip6
+from pyessv.accessors import esdoc_cmip6
+from pyessv.accessors import wcrp_cmip6
 
 
 

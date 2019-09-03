@@ -11,10 +11,10 @@
 
 
 """
-from pyessv._cache import cache
-from pyessv._cache import get_cached
+from pyessv.cache import cache
+from pyessv.cache import getcached
 from pyessv._io_manager import write
-from pyessv._model import Authority
+from pyessv.model import Authority
 
 
 
@@ -23,5 +23,5 @@ def archive(authority):
 
     """
     cache(authority)
-    for authority in get_cached(Authority):
+    for authority in getcached(Authority):
         write(authority)

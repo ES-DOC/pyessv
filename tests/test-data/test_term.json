@@ -1,5 +1,5 @@
 {
-    "_type": "pyessv._model.term",
+    "_type": "pyessv.model.term",
     "typeof": "term",
     "identifiers": {
         "idx": 2,

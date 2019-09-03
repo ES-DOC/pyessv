@@ -1,36 +1,37 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model.authority.py
+.. module:: pyessv.model.scope.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
-   :synopsis: A vocabulary authority, e.g. WGCM.
+   :synopsis: A vocabulary scope, e.g. CMIP6.
 
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 
 """
-from pyessv._constants import NODE_TYPEKEY_AUTHORITY
+from pyessv._constants import NODE_TYPEKEY_SCOPE
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._model.node import IterableNode
-from pyessv._model.scope import Scope
+from pyessv.model.collection import Collection
+from pyessv.model.node import IterableNode
 from pyessv._utils.validation import assert_iterable
 from pyessv._utils.validation import assert_regex
 from pyessv._utils.validation import assert_string
 
 
 
-class Authority(IterableNode):
-    """An authority assuming responsibity for governance of vocabularies.
+class Scope(IterableNode):
+    """A scope managed by an authority.
 
     """
     def __init__(self):
         """Instance constructor.
 
         """
-        self.scopes = []
-        super(Authority, self).__init__(self.scopes, NODE_TYPEKEY_AUTHORITY)
+        self.authority = None
+        self.collections = []
+        super(Scope, self).__init__(self.collections, NODE_TYPEKEY_SCOPE)
 
 
     @property
@@ -38,21 +39,27 @@ class Authority(IterableNode):
         """Gets ancestors within archive hierarchy.
 
         """
-        return []
+        return [self.authority]
 
 
     def get_validators(self):
         """Returns set of validators.
 
         """
+        from pyessv.model.authority import Authority
+
+        def _authority():
+            assert isinstance(self.authority, Authority)
+
         def _canonical_name():
             assert_string(self.canonical_name)
             assert_regex(self.canonical_name, REGEX_CANONICAL_NAME)
 
-        def _scopes():
-            assert_iterable(self.scopes, Scope)
+        def _collections():
+            assert_iterable(self.collections, Collection)
 
-        return super(Authority, self).get_validators() + (
+        return super(Scope, self).get_validators() + (
+            _authority,
             _canonical_name,
-            _scopes
+            _collections
             )

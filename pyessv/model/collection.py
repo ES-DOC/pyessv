@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._model.collection.py
+.. module:: pyessv.model.collection.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -21,8 +21,8 @@ from pyessv._constants import PARSING_STRICTNESS_3
 from pyessv._constants import PARSING_STRICTNESS_4
 from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
-from pyessv._model.node import IterableNode
-from pyessv._model.term import Term
+from pyessv.model.node import IterableNode
+from pyessv.model.term import Term
 from pyessv._utils import compat
 from pyessv._utils.validation import assert_iterable
 from pyessv._utils.validation import assert_namespace
@@ -72,7 +72,7 @@ class Collection(IterableNode):
         """Returns set of validators.
 
         """
-        from pyessv._model.scope import Scope
+        from pyessv.model.scope import Scope
 
         def _canonical_name():
             assert_string(self.canonical_name)

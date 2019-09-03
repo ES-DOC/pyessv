@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._accessors.esdoc_cmip6.py
+.. module:: pyessv.accessors.esdoc_cmip6.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -22,7 +22,7 @@ def _get_scope():
     return pyessv.ESDOC.cmip6
 
 
-def get_model_topics(source_id=None):
+def getmodel_topics(source_id=None):
     """Returns topics to be documented by a source identifier.
 
     """

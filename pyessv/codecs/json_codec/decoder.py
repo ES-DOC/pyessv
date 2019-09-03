@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._codecs.json_codec.decoder.py
+.. module:: pyessv.codecs.json_codec.decoder.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -13,7 +13,7 @@
 """
 import datetime
 
-from pyessv._codecs.dict_codec import decoder as dict_decoder
+from pyessv.codecs.dict_codec import decoder as dict_decoder
 from pyessv._utils import compat
 from pyessv._utils import convert
 

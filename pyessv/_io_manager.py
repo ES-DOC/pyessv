@@ -19,15 +19,15 @@ from os.path import join
 from os.path import isdir
 from os.path import isfile
 
-from pyessv._codecs import decode
-from pyessv._codecs import encode
+from pyessv.codecs import decode
+from pyessv.codecs import encode
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._constants import ENCODING_JSON
-from pyessv._model import Authority
-from pyessv._model import Collection
-from pyessv._model import Scope
-from pyessv._model import Term
-from pyessv._model import Node
+from pyessv.model import Authority
+from pyessv.model import Collection
+from pyessv.model import Scope
+from pyessv.model import Term
+from pyessv.model import Node
 from pyessv._validation import get_errors
 from pyessv._validation import is_valid
 
@@ -99,26 +99,26 @@ def _read_authority(dpath):
         authority = decode(fstream.read(), ENCODING_JSON)
 
     # Read terms.
-    term_cache = {}
+    termcache = {}
     for scope in authority:
         for collection in scope:
-            for term in _read_terms(dpath, scope, collection, term_cache):
+            for term in _read_terms(dpath, scope, collection, termcache):
                 term.collection = collection
                 collection.terms.append(term)
 
     # Set inter-term hierarchies.
-    for term in term_cache.values():
-        if term.parent in term_cache:
-            term.parent = term_cache[term.parent]
+    for term in termcache.values():
+        if term.parent in termcache:
+            term.parent = termcache[term.parent]
 
     # Set intra-term hierarchies.
-    for term in [i for i in term_cache.values() if i.associations]:
-        term.associations = [term_cache[i] if i in term_cache else i for i in term.associations]
+    for term in [i for i in termcache.values() if i.associations]:
+        term.associations = [termcache[i] if i in termcache else i for i in term.associations]
 
     return authority
 
 
-def _read_terms(dpath, scope, collection, term_cache):
+def _read_terms(dpath, scope, collection, termcache):
     """Reads terms from file system.
 
     """
@@ -126,10 +126,10 @@ def _read_terms(dpath, scope, collection, term_cache):
     dpath = join(dpath, collection.io_name)
     dpath = join(dpath, '*')
 
-    return [_read_term(i, collection, term_cache) for i in glob.iglob(dpath)]
+    return [_read_term(i, collection, termcache) for i in glob.iglob(dpath)]
 
 
-def _read_term(fpath, collection, term_cache):
+def _read_term(fpath, collection, termcache):
     """Reads terms from file system.
 
     """
@@ -137,7 +137,7 @@ def _read_term(fpath, collection, term_cache):
         term = decode(fstream.read(), ENCODING_JSON)
     term.collection = collection
 
-    term_cache[term.namespace] = term
+    termcache[term.namespace] = term
 
     return term
 

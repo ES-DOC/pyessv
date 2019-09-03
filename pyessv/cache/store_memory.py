@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._cache.memory.py
+.. module:: pyessv.cache.memory.py
    :copyright: Copyright "December 01, 2016", IPSL
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,8 +11,8 @@
 
 
 """
-from pyessv._model import NODE_TYPES
-from pyessv._model import Authority
+from pyessv.model import NODE_TYPES
+from pyessv.model import Authority
 
 
 
@@ -36,7 +36,7 @@ def cache(node):
             cache(subnode)
 
 
-def get_cached(cache_filter):
+def getcached(cache_filter):
     """Returns a cached node.
 
     :param str|class filter: Cache filter expression.
@@ -50,7 +50,7 @@ def get_cached(cache_filter):
     elif cache_filter in NODE_TYPES:
         return [i for i in _DATA.values() if isinstance(i, cache_filter)]
     elif cache_filter is None:
-        return get_cached(Authority)
+        return getcached(Authority)
 
 
 def uncache(identifier):

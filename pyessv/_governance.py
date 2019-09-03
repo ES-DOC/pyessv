@@ -15,8 +15,8 @@ from pyessv._constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv._constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv._constants import GOVERNANCE_STATUS_PENDING
 from pyessv._constants import GOVERNANCE_STATUS_REJECTED
-from pyessv._model import IterableNode
-from pyessv._model import Node
+from pyessv.model import IterableNode
+from pyessv.model import Node
 
 
 

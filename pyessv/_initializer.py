@@ -15,8 +15,8 @@ import inspect
 import os
 
 import pyessv
-from pyessv._accessors import ACCESSORS
-from pyessv._cache import cache
+from pyessv.accessors import ACCESSORS
+from pyessv.cache import cache
 from pyessv._constants import DIR_ARCHIVE
 from pyessv._io_manager import read
 from pyessv._utils import logger
@@ -38,7 +38,7 @@ def init():
 	_mixin_constants(authorities)
 
 	# Set scope level accessor functions.
-	_mixin_scope_accessors(authorities)
+	_mixin_scopeaccessors(authorities)
 
 
 def _load_authorities():
@@ -64,11 +64,11 @@ def _mixin_constants(authorities):
 		setattr(pyessv, attr_name, authority)
 
 
-def _mixin_scope_accessors(authorities):
+def _mixin_scopeaccessors(authorities):
 	"""Mixes in scope level vocab accessors functions.
 
 	"""
-	# In pyessv._accessors sub-package are modules that expose helper functions for accessing vocabularies,
+	# In pyessv.accessors sub-package are modules that expose helper functions for accessing vocabularies,
 	# here we are ensuring that those functions are easily accessed.
 	targets = []
 	for authority in authorities:

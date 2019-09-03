@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: pyessv._codecs.__init__.py
+.. module:: pyessv.codecs.__init__.py
    :copyright: Copyright "Sep 4, 2013", Earth System Documentation
    :license: GPL/CeCIL
    :platform: Unix, Windows
@@ -11,11 +11,11 @@
 
 
 """
-from pyessv._codecs import dict_codec
-from pyessv._codecs import json_codec
+from pyessv.codecs import dict_codec
+from pyessv.codecs import json_codec
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
-from pyessv._model import Node
+from pyessv.model import Node
 from pyessv._utils import compat
 
 
