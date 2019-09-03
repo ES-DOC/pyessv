@@ -17,7 +17,7 @@ __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'
 
 
-from pyessv._archive import archive
+from pyessv.archive import archive
 
 from pyessv.cache import getcached
 
@@ -61,7 +61,7 @@ from pyessv.governance import destroy
 from pyessv.governance import reject
 from pyessv.governance import reset
 
-from pyessv._initializer import init
+from pyessv.initializer import init
 
 from pyessv._loader import load_random
 from pyessv._loader import load
