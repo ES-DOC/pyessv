@@ -20,6 +20,7 @@ from pyessv.cache import cache
 from pyessv.constants import DIR_ARCHIVE
 from pyessv.io_manager import read
 from pyessv.utils import logger
+from pyessv import io_manager
 
 
 
@@ -47,7 +48,7 @@ def _load_authorities():
 	"""
 	logger.log('Loading vocabularies from {}:'.format(DIR_ARCHIVE))
 	authorities = []
-	for authority in read():
+	for authority in io_manager.read():
 		authorities.append(authority)
 		logger.log('... loaded: {}'.format(authority))
 		cache(authority)
