@@ -55,11 +55,11 @@ from pyessv._factory import create_term
 
 from pyessv._factory_for_testing import get_test_datasets
 
-from pyessv._governance import accept
-from pyessv._governance import deprecate
-from pyessv._governance import destroy
-from pyessv._governance import reject
-from pyessv._governance import reset
+from pyessv.governance import accept
+from pyessv.governance import deprecate
+from pyessv.governance import destroy
+from pyessv.governance import reject
+from pyessv.governance import reset
 
 from pyessv._initializer import init
 
