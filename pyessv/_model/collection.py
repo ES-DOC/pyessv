@@ -23,7 +23,7 @@ from pyessv._constants import PARSING_STRICTNESS_SET
 from pyessv._constants import REGEX_CANONICAL_NAME
 from pyessv._model.node import IterableNode
 from pyessv._model.term import Term
-from pyessv._utils.compat import basestring
+from pyessv._utils import compat
 from pyessv._utils.validation import assert_iterable
 from pyessv._utils.validation import assert_namespace
 from pyessv._utils.validation import assert_regex
@@ -82,11 +82,11 @@ class Collection(IterableNode):
             assert isinstance(self.scope, Scope)
 
         def _term_regex():
-            assert isinstance(self.term_regex, (basestring, tuple))
-            if isinstance(self.term_regex, basestring):
+            assert isinstance(self.term_regex, (compat.basestring, tuple))
+            if isinstance(self.term_regex, compat.basestring):
                 assert_string(self.term_regex)
             else:
-                assert_iterable(self.term_regex, basestring, tuple)
+                assert_iterable(self.term_regex, compat.basestring, tuple)
                 assert len(self.term_regex) > 1
                 assert self.term_regex[0].count('{}') == (len(self.term_regex) - 1)
                 for identifier in self.term_regex[1:]:
@@ -110,7 +110,7 @@ class Collection(IterableNode):
         :param int strictness: Strictness level to apply when applying name matching rules.
 
         """
-        assert isinstance(name, basestring), 'Invalid term name'
+        assert isinstance(name, compat.basestring), 'Invalid term name'
         assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
 
         # Reg-ex match.

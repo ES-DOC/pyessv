@@ -23,8 +23,7 @@ from pyessv._model import Node
 from pyessv._model import Scope
 from pyessv._model import Term
 from pyessv._parser_template import TemplateParser
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 from pyessv._utils.formatter import format_canonical_name
 from pyessv._utils.formatter import format_string
 from pyessv._validation import validate
@@ -209,14 +208,14 @@ def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_
     :rtype: pyessv.TemplateParser
 
     """
-    assert isinstance(template, basestring), 'Invalid template'
+    assert isinstance(template, compat.basestring), 'Invalid template'
     assert isinstance(collections, tuple), 'Invalid collections'
     assert len(template) > 0, 'Invalid template'
     assert template.count('{}') > 0, 'Invalid template'
     assert len(collections) > 0, 'Invalid collections'
     assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
     assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
-    assert isinstance(seperator, basestring), 'Invalid seperator'
+    assert isinstance(seperator, compat.basestring), 'Invalid seperator'
 
     return TemplateParser(template, collections, strictness, seperator)
 

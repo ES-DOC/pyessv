@@ -14,9 +14,8 @@
 import datetime
 
 from pyessv._codecs.dict_codec import decoder as dict_decoder
+from pyessv._utils import compat
 from pyessv._utils import convert
-from pyessv._utils.compat import json
-from pyessv._utils.compat import str
 
 
 
@@ -47,7 +46,7 @@ def decode(as_json):
     return dict_decoder.decode(as_dict)
 
 
-class _JSONDecoder(json.JSONDecoder):
+class _JSONDecoder(compat.json.JSONDecoder):
     """Extends json decoder so as to handle extended types.
 
     """
@@ -55,7 +54,7 @@ class _JSONDecoder(json.JSONDecoder):
         """Instance constructor.
 
         """
-        json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
+        compat.json.JSONDecoder.__init__(self, object_hook=self.dict_to_object)
         self.key_formatter = key_formatter
         self.to_namedtuple = to_namedtuple
         self.value_parsers = [self._to_datetime]
@@ -83,7 +82,7 @@ class _JSONDecoder(json.JSONDecoder):
         """Converts a value to datetime.
 
         """
-        if isinstance(v, str) and len(v):
+        if isinstance(v, compat.str) and len(v):
             try:
                 float(v)
             except ValueError:
@@ -109,12 +108,12 @@ def _decode_blob(val):
 
     """
     if val is None:
-        return str()
-    if isinstance(val, str):
+        return compat.str()
+    if isinstance(val, compat.str):
         return val
 
-    val = str(val).decode(_UTF8).strip()
+    val = compat.str(val).decode(_UTF8).strip()
     if not len(val):
-        return str()
+        return compat.str()
 
-    return str(val)
+    return compat.str(val)

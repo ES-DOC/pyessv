@@ -16,7 +16,7 @@ from pyessv._codecs import json_codec
 from pyessv._constants import ENCODING_DICT
 from pyessv._constants import ENCODING_JSON
 from pyessv._model import Node
-from pyessv._utils.compat import basestring
+from pyessv._utils import compat
 
 
 
@@ -29,7 +29,7 @@ _CODECS = {
 # Map of encodings to allowed input types when decoding.
 _DECODE_TYPE_WHITELIST = {
     ENCODING_DICT : (dict, ),
-    ENCODING_JSON : (basestring, )
+    ENCODING_JSON : (compat.basestring, )
     }
 
 

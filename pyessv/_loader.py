@@ -21,8 +21,7 @@ from pyessv._factory import create_term
 from pyessv._model import Authority
 from pyessv._model import Term
 from pyessv._utils import logger
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
+from pyessv._utils import compat
 from pyessv._utils.formatter import format_string
 
 
@@ -36,7 +35,7 @@ def load(identifier=None, verbose=True):
     :rtype: pyessv.Node | None
 
     """
-    assert isinstance(identifier, (type(None), basestring))
+    assert isinstance(identifier, (type(None), compat.basestring))
 
     if identifier is None:
         return set(get_cached(Authority))
@@ -59,7 +58,7 @@ def _load_by_namespace(identifier):
 
     """
     # Skip if identifier is not a namespace.
-    ns = str(identifier).split(':')
+    ns = compat.str(identifier).split(':')
     if len(ns) == 0:
         return get_cached(Authority)
     if len(ns) > 4:
@@ -140,7 +139,7 @@ def load_random(namespace, field='canonical_name'):
         raise ValueError('Invalid field name')
 
     if collection.is_virtual:
-        return str(uuid.uuid4()).split('-')[0]
+        return compat.str(uuid.uuid4()).split('-')[0]
 
     term = random.choice(collection.terms)
 

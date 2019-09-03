@@ -16,7 +16,6 @@ from pyessv._model import Collection
 from pyessv._model import Node
 from pyessv._model import Scope
 from pyessv._model import Term
-from pyessv._utils.compat import str
 
 
 

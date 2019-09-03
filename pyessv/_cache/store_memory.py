@@ -13,7 +13,6 @@
 """
 from pyessv._model import NODE_TYPES
 from pyessv._model import Authority
-from pyessv._utils.compat import str
 
 
 

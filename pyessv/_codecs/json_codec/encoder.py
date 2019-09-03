@@ -15,16 +15,13 @@ import collections
 import datetime
 
 from pyessv._codecs.dict_codec import encoder as dict_encoder
+from pyessv._utils import compat
 from pyessv._utils import convert
-from pyessv._utils.compat import json
-from pyessv._utils.compat import numeric_types
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
 
 
 
 # Set of data types to be ignored when encoding.
-_ENCODE_IGNOREABLE = tuple(list(numeric_types) + [type(None), str])
+_ENCODE_IGNOREABLE = tuple(list(compat.numeric_types) + [type(None), compat.str])
 
 def encode(instance):
     """Encodes an instance of a domain model class as a JSON text blob.
@@ -39,7 +36,7 @@ def encode(instance):
     obj = dict_encoder.encode(instance)
 
     # Return JSON.
-    return str(dict_to_json(obj))
+    return compat.str(dict_to_json(obj))
 
 
 def dict_to_json(obj):
@@ -51,7 +48,7 @@ def dict_to_json(obj):
     :rtype: str
 
     """
-    return json.dumps(_to_encodable(obj), indent=4, sort_keys=True)
+    return compat.json.dumps(_to_encodable(obj), indent=4, sort_keys=True)
 
 
 def _to_encodable(obj, key_formatter=lambda k: k):
@@ -61,14 +58,14 @@ def _to_encodable(obj, key_formatter=lambda k: k):
     if isinstance(obj, _ENCODE_IGNOREABLE):
         return obj
 
-    elif isinstance(obj, basestring):
-        return str(obj)
+    elif isinstance(obj, compat.basestring):
+        return compat.str(obj)
 
     elif isinstance(obj, datetime.datetime):
-        return "{}+00:00".format(str(obj))
+        return "{}+00:00".format(compat.str(obj))
 
     elif isinstance(obj, collections.Mapping):
-        return {str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
+        return {compat.str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
 
     elif isinstance(obj, collections.Iterable):
         return [_to_encodable(i) for i in obj]
