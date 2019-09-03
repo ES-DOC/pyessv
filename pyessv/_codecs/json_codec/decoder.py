@@ -19,9 +19,6 @@ from pyessv._utils import convert
 
 
 
-# ISO date formats.
-_ISO_DATE_FORMATS = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S']
-
 # Default string encoding.
 _UTF8 = 'utf-8'
 
@@ -67,7 +64,7 @@ class _JSONDecoder(compat.json.JSONDecoder):
         # Parse values.
         for k, v in d.items():
             for parser in self.value_parsers:
-                if parser(d, k, v):
+                if parser(d, k, v) == True:
                     break
 
         # Format keys.
@@ -85,14 +82,14 @@ class _JSONDecoder(compat.json.JSONDecoder):
         if isinstance(v, compat.str) and len(v):
             try:
                 float(v)
-            except ValueError:
-                for format in _ISO_DATE_FORMATS:
-                    try:
-                        v = datetime.datetime.strptime(v, format)
-                    except (ValueError, TypeError):
-                        pass
-                    else:
-                        d[k] = v
+            except (TypeError, ValueError):
+                try:
+                    as_datetime = compat.to_datetime(v)
+                except (ValueError, TypeError):
+                    pass
+                else:
+                    if as_datetime is not None:
+                        d[k] = as_datetime
                         return True
 
         return False

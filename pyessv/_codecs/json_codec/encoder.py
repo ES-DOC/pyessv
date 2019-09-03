@@ -62,10 +62,10 @@ def _to_encodable(obj, key_formatter=lambda k: k):
         return compat.str(obj)
 
     elif isinstance(obj, datetime.datetime):
-        return "{}+00:00".format(compat.str(obj))
+        return compat.str(obj)
 
     elif isinstance(obj, collections.Mapping):
-        return {compat.str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items())}
+        return { compat.str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items()) }
 
     elif isinstance(obj, collections.Iterable):
         return [_to_encodable(i) for i in obj]

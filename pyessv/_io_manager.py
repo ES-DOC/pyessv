@@ -28,6 +28,7 @@ from pyessv._model import Collection
 from pyessv._model import Scope
 from pyessv._model import Term
 from pyessv._model import Node
+from pyessv._validation import get_errors
 from pyessv._validation import is_valid
 
 
@@ -150,7 +151,7 @@ def write(authority, archive_dir=DIR_ARCHIVE):
     # Validate inputs.
     assert isinstance(authority, Authority), 'Invalid authority: unknown type'
     assert isdir(archive_dir), 'Invalid authority directory.'
-    assert is_valid(authority), 'Invalid authority: has validation errors'
+    assert is_valid(authority), 'Invalid authority: {} : {}'.format(authority, get_errors(authority))
 
     # Set directory.
     dpath = join(archive_dir, authority.io_name)

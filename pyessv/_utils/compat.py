@@ -51,7 +51,7 @@ if is_py2:
     basestring = basestring
     numeric_types = (int, long, float)
     integer_types = (int, long)
-    to_datetime = lambda i: i if isinstance(i, dt.datetime) else compat2_datetime.parse_datetime
+    to_datetime = lambda i: i if isinstance(i, dt.datetime) else compat2_datetime.parse_datetime(i)
 
 
 # ------------------------------------------------------
@@ -70,4 +70,4 @@ elif is_py3:
     basestring = (str, bytes)
     numeric_types = (int, float)
     integer_types = (int,)
-    to_datetime = lambda i: i if isinstance(i, dt.datetime) else dt.datetime.fromisoformat
+    to_datetime = lambda i: i if isinstance(i, dt.datetime) else dt.datetime.fromisoformat(i)
