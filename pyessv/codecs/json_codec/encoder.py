@@ -35,8 +35,14 @@ def encode(instance):
     # Convert to dictionary.
     obj = dict_encoder.encode(instance)
 
+
     # Return JSON.
-    return compat.str(dict_to_json(obj))
+    as_json = compat.str(dict_to_json(obj))
+
+    if obj['_type'] == 'authority':
+        print(as_json)
+
+    return as_json
 
 
 def dict_to_json(obj):
@@ -62,7 +68,7 @@ def _to_encodable(obj, key_formatter=lambda k: k):
         return compat.str(obj)
 
     elif isinstance(obj, datetime.datetime):
-        return compat.str(obj)
+        return '{}+00:00'.format(compat.str(obj)[:19])
 
     elif isinstance(obj, collections.Mapping):
         return { compat.str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items()) }
