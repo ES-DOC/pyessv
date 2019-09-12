@@ -16,7 +16,7 @@ import pyessv
 
 
 # Ensure we use fixed creation date.
-CREATE_DATE = dt.datetime(2017, 06, 21)
+CREATE_DATE = dt.datetime(2017, 6, 21)
 
 
 def write_authority():

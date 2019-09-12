@@ -13,9 +13,9 @@ import argparse
 import datetime as dt
 import inspect
 import os
-from ConfigParser import ConfigParser
 
 import pyessv
+from pyessv.utils import compat
 
 import map_c3s_cmip5
 import map_c3s_cordex
@@ -152,7 +152,7 @@ class _IniSection(object):
         fpath = os.path.join(source_dir, 'esg.{}.ini'.format(project))
         if not os.path.isfile(fpath):
             raise ValueError('ESGF ini file does not exist: {}'.format(fpath))
-        self.parser = ConfigParser()
+        self.parser = compat.ConfigParser()
         self.parser.read(fpath)
         self.section = 'project:{}'.format(project)
 
@@ -232,7 +232,7 @@ def _get_term(collection, term_info):
     """
     # Unpack term information.
     name = label = description = synonym = None
-    if isinstance(term_info, basestring):
+    if isinstance(term_info, compat.basestring):
         name = term_info
     else:
         try:
