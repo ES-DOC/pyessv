@@ -37,7 +37,7 @@ def cache(node):
         store.cache(node)
 
 
-def getcached(identifier=None, store_type=CACHE_STORE_MEMORY):
+def get_cached(identifier=None, store_type=CACHE_STORE_MEMORY):
     """Returns a cached node.
 
     :param str|None|class filter: Cache filter expression.
@@ -49,7 +49,7 @@ def getcached(identifier=None, store_type=CACHE_STORE_MEMORY):
     """
     assert store_type in CACHE_STORE_TYPES, 'Invalid cache store type'
 
-    return _STORES[store_type].getcached(identifier)
+    return _STORES[store_type].get_cached(identifier)
 
 
 def uncache(identifier):

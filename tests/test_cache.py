@@ -18,7 +18,7 @@ import pyessv
 
 from pyessv.cache import cache
 from pyessv.cache import uncache
-from pyessv.cache import getcached
+from pyessv.cache import get_cached
 import tests.utils as tu
 
 
@@ -29,7 +29,7 @@ def test_interface():
 	"""
 	assert inspect.isfunction(cache)
 	assert inspect.isfunction(uncache)
-	assert inspect.isfunction(getcached)
+	assert inspect.isfunction(get_cached)
 
 
 @nose.with_setup(tu.create_authority, None)
@@ -37,7 +37,7 @@ def testcache():
 	"""pyessv-tests: caching: cache
 
 	"""
-	assert isinstance(getcached(tu.AUTHORITY_NAME), pyessv.Authority)
+	assert isinstance(get_cached(tu.AUTHORITY_NAME), pyessv.Authority)
 
 
 @nose.with_setup(tu.create_authority, None)
@@ -47,4 +47,4 @@ def test_uncache():
 	"""
 	uncache(tu.AUTHORITY_NAME)
 
-	assert getcached(tu.AUTHORITY_NAME) is None
+	assert get_cached(tu.AUTHORITY_NAME) is None

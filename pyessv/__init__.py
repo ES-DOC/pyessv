@@ -19,7 +19,7 @@ __copyright__ = 'Copyright 2017 ES-DOC'
 
 from pyessv.archive import archive
 
-from pyessv.cache import getcached
+from pyessv.cache import get_cached
 
 from pyessv.codecs import decode
 from pyessv.codecs import encode

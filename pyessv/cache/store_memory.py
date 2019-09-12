@@ -36,7 +36,7 @@ def cache(node):
             cache(subnode)
 
 
-def getcached(cache_filter):
+def get_cached(cache_filter):
     """Returns a cached node.
 
     :param str|class filter: Cache filter expression.
@@ -50,7 +50,7 @@ def getcached(cache_filter):
     elif cache_filter in NODE_TYPES:
         return [i for i in _DATA.values() if isinstance(i, cache_filter)]
     elif cache_filter is None:
-        return getcached(Authority)
+        return get_cached(Authority)
 
 
 def uncache(identifier):
