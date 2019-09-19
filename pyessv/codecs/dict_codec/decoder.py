@@ -105,8 +105,6 @@ def decode(obj):
 
     """
     assert '_type' in obj, 'Invalid type key'
-    # if obj['_type'] not in NODE_TYPEKEY_SET:
-    #     print(obj)
     assert obj['_type'] in NODE_TYPEKEY_SET, 'Invalid domain type key: {}'.format(obj['_type'])
 
     decoder = _DECODERS[obj['_type']]

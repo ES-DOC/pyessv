@@ -39,9 +39,6 @@ def encode(instance):
     # Return JSON.
     as_json = compat.str(dict_to_json(obj))
 
-    if obj['_type'] == 'authority':
-        print(as_json)
-
     return as_json
 
 
