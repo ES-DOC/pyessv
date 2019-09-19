@@ -40,7 +40,7 @@ def parse_dataset_identifers(project, identifiers):
     :rtype: list
 
     """
-    assert isinstance(identifiers, collections.Iterable), 'Invalid identifiers'
+    assert isinstance(identifiers, compat.Iterable), 'Invalid identifiers'
 
     result = set()
     for identifier in identifiers:

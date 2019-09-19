@@ -33,13 +33,13 @@ _ENCODING_REPRESENTATION_TYPE = {
 
 
 # Module level fixture teardown.
-teardown = tu.teardown
+teardown_module = tu.teardown
 
 
 def yield_parameterizations():
     """Test parameterizations.
 
-    """    
+    """
     for node_factory in (
         tu.create_authority,
         tu.create_scope,

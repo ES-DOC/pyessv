@@ -18,14 +18,14 @@ from pyessv import Authority
 from pyessv import Collection
 from pyessv import Scope
 from pyessv import Term
-import tests.utils as tu
+from . import utils as tu
 
 
 # Module level fixture teardown.
-teardown = tu.teardown
+teardown_module = tu.teardown
 
 
-def yield_parameterizations():
+def _yield_parameterizations():
     """Test parameterizations.
 
     """    
@@ -42,13 +42,13 @@ def yield_parameterizations():
         yield factory, typeof
 
 
-@pytest.mark.parametrize("node_factory, node_type", yield_parameterizations())
+@pytest.mark.parametrize("node_factory, node_type", _yield_parameterizations())
 def test_create(node_factory, node_type):
-    """Test creating an authority.
+    """Test instantiation of domain entities.
 
     """
     node = node_factory()
     tu.assert_object(node, node_type)
     loaded = load(node.namespace)
     assert node.namespace == loaded.namespace
-
+    assert repr(node) == repr(loaded)

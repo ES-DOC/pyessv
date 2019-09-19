@@ -57,7 +57,6 @@ from pyessv.factory_for_testing import get_datasets_for_testing
 
 from pyessv.governance import accept
 from pyessv.governance import deprecate
-from pyessv.governance import destroy
 from pyessv.governance import reject
 from pyessv.governance import reset
 

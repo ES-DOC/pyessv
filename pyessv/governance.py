@@ -24,35 +24,28 @@ def accept(target):
     """Marks node as accepted.
 
     """
-    _apply(target, pyessv.GOVERNANCE_STATUS_ACCEPTED)
+    _apply(target, GOVERNANCE_STATUS_ACCEPTED)
 
 
 def deprecate(target):
     """Marks node as deprecated.
 
     """
-    _apply(target, pyessv.GOVERNANCE_STATUS_DEPRECATED)
-
-
-def destroy(target):
-    """Marks node for removal from all persistant state stores.
-
-    """
-    _apply(target, pyessv.GOVERNANCE_STATUS_DEPRECATED)
+    _apply(target, GOVERNANCE_STATUS_DEPRECATED)
 
 
 def reject(target):
     """Marks node as rejected.
 
     """
-    _apply(target, pyessv.GOVERNANCE_STATUS_REJECTED)
+    _apply(target, GOVERNANCE_STATUS_REJECTED)
 
 
 def reset(target):
     """Resets node status.
 
     """
-    _apply(target, pyessv.GOVERNANCE_STATUS_PENDING)
+    _apply(target, GOVERNANCE_STATUS_PENDING)
 
 
 def _apply(target, status):

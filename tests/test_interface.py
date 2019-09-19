@@ -73,7 +73,6 @@ _FUNCS = {
     # ... governance
     'accept',
     'deprecate',
-    'destroy',
     'reject',
     'reset',
     # ... initialisation

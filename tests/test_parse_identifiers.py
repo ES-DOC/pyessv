@@ -12,11 +12,11 @@
 
 """
 import inspect
-import nose
+
+import pytest
 
 import pyessv as LIB
 import tests.utils as tu
-
 
 
 # Test configuration: project, parsing function, template seperator, strictness, identifiers.
@@ -35,33 +35,6 @@ _CONFIG = {
 }
 
 
-def test_parse_identifiers():
-    """pyessv-tests: parsing: identifiers
-
-    """
-    def positive_test(parser, project, identifier):
-        parser(project, identifier)
-
-    @nose.tools.raises(LIB.TemplateParsingError)
-    def negative_test(parser, project, identifier):
-        parser(project, identifier)
-
-    # Iterate identifiers & perform +ve / -ve tests:
-    for project, parser, seperator, identifiers in _CONFIG:
-        assert inspect.isfunction(parser)
-        for identifier in identifiers:
-            # ... +ve test:
-            desc = 'identifier parsing test (+ve) --> {} :: {}'.format(project, identifier)
-            tu.init(positive_test, desc)
-            yield positive_test, parser, project, identifier
-
-            # ... -ve tests:
-            for invalid_identifier in _get_invalid_identifiers(identifier, seperator):
-                desc = 'identifier parsing test (-ve) --> {} :: {}'.format(project, invalid_identifier)
-                tu.init(negative_test, desc)
-                yield negative_test, parser, project, invalid_identifier
-
-
 def _get_invalid_identifiers(identifier, seperator):
     """Returns a set of invalid identifiers by fuxxing a valid identifier.
 
@@ -77,3 +50,27 @@ def _get_invalid_identifiers(identifier, seperator):
         new_parts = list(parts)
         new_parts[idx] = 'X!X!X!X!'
         yield seperator.join(new_parts)
+
+
+def _yield_parameterizations():
+    """pyessv-tests: parsing: identifiers
+
+    """
+    for project, parser, seperator, identifiers in _CONFIG:
+        for identifier in identifiers:
+            yield parser, project, identifier, None
+        for identifier in identifiers:
+            for invalid_identifier in _get_invalid_identifiers(identifier, seperator):
+                yield parser, project, invalid_identifier, LIB.TemplateParsingError
+
+
+@pytest.mark.parametrize("parser, project, identifier, error_class", _yield_parameterizations())
+def test_parse_identifiers(parser, project, identifier, error_class):
+    """pyessv-tests: parsing: identifiers
+
+    """
+    if error_class:
+        with pytest.raises(error_class):
+            parser(project, identifier)  
+    else:      
+        parser(project, identifier)

@@ -14,7 +14,6 @@
 import inspect
 import io
 import json
-import nose
 import os
 
 import pyessv as LIB
@@ -23,6 +22,12 @@ from pyessv.io_manager import read
 from pyessv.io_manager import write
 import tests.utils as tu
 
+
+# Module level fixture teardown.
+teardown_module = tu.teardown
+
+# Module level fixture teardown.
+setup_module = tu.setup
 
 
 def test_interface():
@@ -54,7 +59,6 @@ def test_read():
     assert dirs == [i.canonical_name for i in authorities]
 
 
-@nose.with_setup(tu.setup, tu.teardown)
 def test_write():
     """pyessv-tests: io: write.
 
@@ -93,7 +97,6 @@ def test_write():
             assert isinstance(json.loads(fstream.read()), dict)
 
 
-@nose.with_setup(tu.setup, tu.teardown)
 def test_delete():
     """pyessv-tests: io: delete.
 

@@ -70,8 +70,8 @@ def _to_encodable(obj, key_formatter=lambda k: k):
     elif isinstance(obj, datetime.datetime):
         return '{}+00:00'.format(compat.str(obj)[:19])
 
-    elif isinstance(obj, collections.Mapping):
+    elif isinstance(obj, compat.Mapping):
         return { compat.str(key_formatter(k)): _to_encodable(v) for k, v in iter(obj.items()) }
 
-    elif isinstance(obj, collections.Iterable):
+    elif isinstance(obj, compat.Iterable):
         return [_to_encodable(i) for i in obj]

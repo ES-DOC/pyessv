@@ -11,7 +11,7 @@
 
 
 """
-
+import collections
 import datetime as dt
 import sys
 
@@ -55,6 +55,9 @@ if is_py2:
     integer_types = (int, long)
     to_datetime = lambda i: i if isinstance(i, dt.datetime) else compat2_datetime.parse_datetime(i)
 
+    Mapping = collections.Mapping
+    Iterable = collections.Iterable
+
 
 # ------------------------------------------------------
 # Python 3
@@ -75,3 +78,13 @@ elif is_py3:
     numeric_types = (int, float)
     integer_types = (int,)
     to_datetime = lambda i: i if isinstance(i, dt.datetime) else dt.datetime.fromisoformat(i)
+
+    try:
+        Mapping = collections.abc.Mapping
+    except:
+        Mapping = collections.Mapping
+
+    try:
+        Iterable = collections.abc.Iterable
+    except:
+        Iterable = collections.Iterable

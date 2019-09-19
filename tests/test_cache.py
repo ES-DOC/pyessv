@@ -12,7 +12,6 @@
 
 """
 import inspect
-import nose
 
 import pyessv
 
@@ -21,6 +20,9 @@ from pyessv.cache import uncache
 from pyessv.cache import get_cached
 import tests.utils as tu
 
+
+# Module level fixture teardown.
+setup_module = tu.create_authority
 
 
 def test_interface():
@@ -32,15 +34,13 @@ def test_interface():
 	assert inspect.isfunction(get_cached)
 
 
-@nose.with_setup(tu.create_authority, None)
-def testcache():
+def test_cache():
 	"""pyessv-tests: caching: cache
 
 	"""
 	assert isinstance(get_cached(tu.AUTHORITY_NAME), pyessv.Authority)
 
 
-@nose.with_setup(tu.create_authority, None)
 def test_uncache():
 	"""pyessv-tests: caching: uncache
 

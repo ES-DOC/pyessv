@@ -154,7 +154,7 @@ def dict_keys(as_dict, key_formatter=str_to_pascal_case):
 
     result = {}
     for key, val in as_dict.items():
-        if isinstance(val, collections.Mapping):
+        if isinstance(val, compat.Mapping):
             result[key_formatter(key)] = dict_keys(val, key_formatter)
         elif isinstance(val, list):
             result[key_formatter(key)] = [dict_keys(i, key_formatter) for i in val]
