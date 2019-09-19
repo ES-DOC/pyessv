@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_model.py
+.. module:: testmodel.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -11,32 +11,22 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import nose
+import pytest
 
 import pyessv as LIB
 
-from pyessv._utils.compat import str
 import tests.utils as tu
 import tests.utils_model as tum
 
 
-
-@nose.with_setup(None, tu.teardown)
-def test_iterability():
-    """Test iterability of domain model.
-
-    """
-    def _test(node, keys):
-        """Inner test.
-
-        """
-        assert iter(node)
-        assert len(node) == len(keys)
-        for key in keys:
-            assert key in node
-            assert node[key] is not None
+# Module level fixture teardown.
+teardown_module = tu.teardown
 
 
+def _yield_parameterizations():
+    """Test parameterizations.
+
+    """    
     for node_factory, keys in (
         (tu.create_authority, [tum.SCOPE_NAME]),
         (tu.create_scope, [tum.COLLECTION_01_NAME, tum.COLLECTION_02_NAME, tum.COLLECTION_03_NAME]),
@@ -44,6 +34,16 @@ def test_iterability():
         (tu.create_collection_02, [tum.TERM_02_NAME]),
         (tu.create_collection_03, [tum.TERM_03_NAME]),
         ):
-        desc = 'iterate --> {}'.format(node_factory.__name__[7:])
-        tu.init(_test, desc)
-        yield _test, node_factory(), keys
+        yield node_factory(), keys
+
+
+@pytest.mark.parametrize("node, keys", _yield_parameterizations())
+def test_iterability(node, keys):
+    """Test iterability of domain model.
+
+    """
+    assert iter(node)
+    assert len(node) == len(keys)
+    for key in keys:
+        assert key in node
+        assert node[key] is not None

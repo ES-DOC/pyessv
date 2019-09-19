@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_io_manager.py
+.. module:: testio_manager.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -14,15 +14,20 @@
 import inspect
 import io
 import json
-import nose
 import os
 
 import pyessv as LIB
-from pyessv._io_manager import delete
-from pyessv._io_manager import read
-from pyessv._io_manager import write
+from pyessv.io_manager import delete
+from pyessv.io_manager import read
+from pyessv.io_manager import write
 import tests.utils as tu
 
+
+# Module level fixture teardown.
+teardown_module = tu.teardown
+
+# Module level fixture teardown.
+setup_module = tu.setup
 
 
 def test_interface():
@@ -49,13 +54,11 @@ def test_read():
     assert isinstance(authorities, list)
     for authority in authorities:
         assert isinstance(authority, LIB.Authority)
-
-    dirs = os.listdir(LIB.DIR_ARCHIVE)
+    dirs = [i for i in os.listdir(LIB.DIR_ARCHIVE) if not i.startswith('.')]
     assert len(authorities) == len(dirs)
     assert dirs == [i.canonical_name for i in authorities]
 
 
-@nose.with_setup(tu.setup, tu.teardown)
 def test_write():
     """pyessv-tests: io: write.
 
@@ -94,7 +97,6 @@ def test_write():
             assert isinstance(json.loads(fstream.read()), dict)
 
 
-@nose.with_setup(tu.setup, tu.teardown)
 def test_delete():
     """pyessv-tests: io: delete.
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_codecs.py
+.. module:: testcodecs.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -12,52 +12,34 @@
 
 """
 import inspect
-import nose
 
-import pyessv as LIB
-from pyessv._codecs import decode
-from pyessv._codecs import encode
-from pyessv._constants import ENCODING_SET
-from pyessv._constants import STANDARD_NODE_FIELDS
-from pyessv._utils.compat import basestring
-from pyessv._utils.compat import str
+import pytest
+
+from pyessv.codecs import decode
+from pyessv.codecs import encode
+from pyessv.constants import ENCODING_DICT
+from pyessv.constants import ENCODING_JSON
+from pyessv.constants import ENCODING_SET
+from pyessv.constants import STANDARD_NODE_FIELDS
+from pyessv.utils import compat
 import tests.utils as tu
-
 
 
 # Types of representation by encoding.
 _ENCODING_REPRESENTATION_TYPE = {
-    LIB.ENCODING_DICT: dict,
-    LIB.ENCODING_JSON: basestring,
+    ENCODING_DICT: dict,
+    ENCODING_JSON: compat.basestring,
 }
 
 
-
-def test_interface():
-    """pyessv-tests: codecs: interface.
-
-    """
-    assert inspect.isfunction(decode)
-    assert inspect.isfunction(encode)
+# Module level fixture teardown.
+teardown_module = tu.teardown
 
 
-@nose.with_setup(None, tu.teardown)
-def test_encode():
-    """pyessv-tests: encode.
+def yield_parameterizations():
+    """Test parameterizations.
 
     """
-    def _test(node, encoding):
-        """Inner test.
-
-        """
-        representation = encode(node, encoding)
-        assert isinstance(representation, _ENCODING_REPRESENTATION_TYPE[encoding])
-        decoded = decode(representation, encoding)
-        assert isinstance(decoded, type(node))
-        for field in STANDARD_NODE_FIELDS:
-            assert getattr(decoded, field) == getattr(node, field)
-
-
     for node_factory in (
         tu.create_authority,
         tu.create_scope,
@@ -68,8 +50,18 @@ def test_encode():
         tu.create_term_02,
         tu.create_term_03
         ):
-        node = node_factory()
         for encoding in ENCODING_SET:
-            desc = 'codecs: {} --> {}'.format(node_factory.__name__[7:], encoding)
-            tu.init(_test, desc)
-            yield _test, node, encoding
+            yield node_factory(), encoding
+
+
+@pytest.mark.parametrize("node, encoding", yield_parameterizations())
+def test_encode(node, encoding):
+    """pyessv-tests: encode.
+
+    """
+    representation = encode(node, encoding)
+    assert isinstance(representation, _ENCODING_REPRESENTATION_TYPE[encoding])
+    decoded = decode(representation, encoding)
+    assert isinstance(decoded, type(node))
+    for field in STANDARD_NODE_FIELDS:
+        assert getattr(decoded, field) == getattr(node, field)

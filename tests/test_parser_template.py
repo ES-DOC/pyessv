@@ -11,9 +11,9 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import nose
+import pytest
 
-import pyessv as LIB
+import pyessv
 
 import tests.utils as tu
 
@@ -28,6 +28,20 @@ _TEMPLATES = (
     _TEMPLATE_3
     )
 
+# Valid expressions.
+_VALID = (
+    (_TEMPLATE_1, 'ciclad/cmip6/ipsl/fafmip/ipsl-cm6a-lr/amip/afilename.nc1'),
+    (_TEMPLATE_2, 'ipsl/fafmip/ipsl-cm6a-lr/amip/afilename.nc2'),
+    (_TEMPLATE_3, 'ciclad/cmip6/ipsl/fafmip/ipsl-cm6a-lr/amip')
+)
+
+# Invalid expressions.
+_INVALID = (
+    (_TEMPLATE_1, 'ciclad/cmip6/WWW/XXX/YYY/ZZZ/afilename.nc1'),
+    (_TEMPLATE_2, 'WWW/XXX/YYY/ZZZ/afilename.nc2'),
+    (_TEMPLATE_3, 'ciclad/cmip6/WWW/XXX/YYY/ZZZ'),
+)
+
 # Map of templates to parsers.
 _PARSERS = {
     _TEMPLATE_1: None,
@@ -35,41 +49,8 @@ _PARSERS = {
     _TEMPLATE_3: None
 }
 
-# Map of templates to valid expressions.
-_VALID = {
-    _TEMPLATE_1: 'ciclad/cmip6/ipsl/fafmip/ipsl-cm6a-lr/amip/afilename.nc1',
-    _TEMPLATE_2: 'ipsl/fafmip/ipsl-cm6a-lr/amip/afilename.nc2',
-    _TEMPLATE_3: 'ciclad/cmip6/ipsl/fafmip/ipsl-cm6a-lr/amip'
-}
 
-# Map of templates to invalid expressions.
-_INVALID = {
-    _TEMPLATE_1: 'ciclad/cmip6/WWW/XXX/YYY/ZZZ/afilename.nc1',
-    _TEMPLATE_2: 'WWW/XXX/YYY/ZZZ/afilename.nc2',
-    _TEMPLATE_3: 'ciclad/cmip6/WWW/XXX/YYY/ZZZ'
-}
-
-
-def test_expressions():
-    """pyessv-tests: expression: valid.
-
-    """
-    def _do_positive_test(template, parser):
-        parser.parse(_VALID[template])
-
-    @nose.tools.raises(ValueError)
-    def _do_negative_test(template, parser):
-        parser.parse(_INVALID[template])
-
-    _setup()
-    for template in _TEMPLATES:
-        tu.init(_do_positive_test, 'parse expression (+ve) :: {}'.format(template))
-        yield _do_positive_test, template, _PARSERS[template]
-        tu.init(_do_negative_test, 'parse expression (-ve) :: {}'.format(template))
-        yield _do_negative_test, template, _PARSERS[template]
-
-
-def _setup():
+def setup_module():
     """Unit test setup.
 
     """
@@ -83,4 +64,24 @@ def _setup():
 
     # Set parsers.
     for template in _TEMPLATES:
-        _PARSERS[template] = LIB.create_template_parser(template, collections, seperator='/')
+        _PARSERS[template] = pyessv.create_template_parser(template, collections, seperator='/')
+
+
+@pytest.mark.parametrize("template, expression", _VALID)
+def test_expressions_01(template, expression):
+    """pyessv-tests: expression: valid.
+
+    """
+    parser = _PARSERS[template]
+    parser.parse(expression)
+
+
+@pytest.mark.parametrize("template, expression", _INVALID)
+def test_expressions_02(template, expression):
+    """pyessv-tests: expression: invalid.
+
+    """
+    with pytest.raises(ValueError):
+        parser = _PARSERS[template]
+        parser.parse(expression)
+

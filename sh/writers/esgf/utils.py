@@ -9,10 +9,8 @@
 .. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
 
 """
-import ConfigParser
-
 import pyessv
-
+from pyessv.utils import compat
 
 
 def get_ini_option(ctx):
@@ -26,7 +24,7 @@ def get_ini_option(ctx):
     """
     try:
         return ctx.ini_section.get_option('{}_options'.format(ctx.collection_id))
-    except ConfigParser.NoOptionError:
+    except compat.NoOptionError:
         return ctx.ini_section.get_option(ctx.collection_id)
 
 

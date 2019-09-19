@@ -9,9 +9,6 @@ export PYESSV_LIB_HOME="$( cd "$( dirname "${PYESSV_LIB_HOME[0]}" )" && pwd )"
 # Set python path
 export PYTHONPATH=$PYESSV_LIB_HOME:$PYTHONPATH
 
-# Set pip
-export PYESSV_WS_PIP=pip
-
 # Set archive directory.
 mkdir -p $HOME/.esdoc/pyessv-archive
 
@@ -28,7 +25,6 @@ chmod a+x $PYESSV_LIB_HOME/sh/writers/*/*.sh
 # ###############################################################
 
 # Core commands.
-alias pyessv-exec-tests=$PYESSV_LIB_HOME/runtests.sh
 alias pyessv-list=$PYESSV_LIB_HOME/sh/list.sh
 alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
 alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh

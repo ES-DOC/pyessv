@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. module:: test_utils_assert.py
+.. module:: testutils_assert.py
 
    :copyright: @2013 Earth System Documentation (https://es-doc.org)
    :license: GPL / CeCILL
@@ -15,7 +15,7 @@ import datetime
 import inspect
 import os
 
-from pyessv._utils.compat import str
+from pyessv.utils import compat
 
 
 
@@ -191,8 +191,8 @@ def assert_str(actual, expected, startswith=False):
 
     """
     # Format.
-    actual = str(actual).strip()
-    expected = str(expected).strip()
+    actual = compat.str(actual).strip()
+    expected = compat.str(expected).strip()
 
     # Assert.
     if startswith == False:
@@ -210,8 +210,8 @@ def assert_string(actual, expected):
     :param str expected: Expected string value.
 
     """
-    assert_object(actual, str)
-    assert_object(expected, str)
+    assert_object(actual, compat.str)
+    assert_object(expected, compat.str)
     assert actual == expected, \
            'Unicode mismatch : actual = {0} :: expected = {1}'.format(actual, expected)
 
@@ -263,7 +263,7 @@ def assert_int(actual, expected, assert_type=COMPARE_EXACT, msg=None):
     """
     # Parse actual value.
     # ... convert string
-    if type(actual) == str:
+    if type(actual) == compat.str:
         actual = int(actual)
     # ... collection length checks
     else:

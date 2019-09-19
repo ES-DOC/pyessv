@@ -16,7 +16,7 @@ import os
 import shutil
 
 import pyessv as LIB
-from pyessv._cache import uncache
+from pyessv.cache import uncache
 from tests.utils_assert import assert_objects
 
 
@@ -236,7 +236,7 @@ def create_term_02(collection=None):
 # Test term - 03.
 TERM_03 = None
 TERM_03_DESCRIPTION = 'term-03-description'
-TERM_03_NAME = '{}-TESTING-{}'.format(TERM_01_NAME, TERM_02_NAME)
+TERM_03_NAME = 'term-03'
 TERM_03_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_03_NAME, TERM_03_NAME])
 TERM_03_ALTERNATIVE_NAMES = ['term-03-alternative-name-1', 'term-03-alternative-name-2']
 TERM_03_URL = '{}/{}'.format(COLLECTION_03_URL, TERM_03_NAME)

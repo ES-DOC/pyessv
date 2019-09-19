@@ -11,6 +11,8 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
+import pytest
+
 import pyessv as LIB
 import tests.utils as tu
 
@@ -67,11 +69,10 @@ _FUNCS = {
     'create_scope',
     'create_term',
     # ... factory for testing
-    'get_test_datasets',
+    'get_datasets_for_testing',
     # ... governance
     'accept',
     'deprecate',
-    'destroy',
     'reject',
     'reset',
     # ... initialisation
@@ -94,25 +95,24 @@ _FUNCS = {
 }
 
 
-def test_library_exports():
-    """Test set of exports exposed by library.
+def yield_parameterizations():
+    """Yields test parameterizations.
 
-    """
-    def _test_member(member, member_type):
-        """Test that library exposes the named member.
-
-        """
-        assertor = getattr(tu, 'assert_has_{}'.format(member_type))
-        assertor(LIB, member)
-
-
-    for members, member_type, in (
+    """    
+    for members, member_type in (
         (_CLASSES, 'class'),
         (_CONSTANTS, 'constant'),
         (_EXCEPTIONS, 'exception'),
         (_FUNCS, 'function'),
-        ):
+            ):
         for member in sorted(members):
-            desc = 'library exposes {} --> {}'.format(member_type, member)
-            tu.init(_test_member, desc)
-            yield _test_member, member, member_type
+            yield member_type, member
+
+
+@pytest.mark.parametrize("member_type, member", yield_parameterizations())
+def test_library_exports(member_type, member):
+    """Test set of exports exposed by library.
+
+    """
+    assertor = getattr(tu, 'assert_has_{}'.format(member_type))
+    assertor(LIB, member)

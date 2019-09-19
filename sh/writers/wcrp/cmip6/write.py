@@ -10,9 +10,9 @@
 
 """
 import argparse
+import datetime as dt
 import json
 import os
-import arrow
 
 import pyessv
 
@@ -28,7 +28,7 @@ _ARGS.add_argument(
     )
 
 # Ensure we use fixed creation date.
-_CREATE_DATE = arrow.get('2017-06-21 00:00:00.000000+0000').datetime
+_CREATE_DATE = dt.datetime(2017, 6, 21)
 
 # CMIP6 institutional data.
 with open(os.path.join(os.path.dirname(__file__), 'institution_id.json')) as fstream:
@@ -313,6 +313,8 @@ def _get_institution_data(_, name):
 
     """
     obj = _INSTITUTIONAL_DATA.get(name, {})
+    if 'code' not in obj:
+        raise ValueError("{} institution must be registered in the institution_id.json file".format(name))
     del obj['code']
 
     return obj

@@ -1,1 +1,3 @@
-arrow
+pytest
+tox
+nose2

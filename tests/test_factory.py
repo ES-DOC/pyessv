@@ -11,38 +11,44 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import nose
-import pyessv as LIB
+import pytest
 
 from pyessv import load
-from pyessv._utils.compat import str
-import tests.utils as tu
+from pyessv import Authority
+from pyessv import Collection
+from pyessv import Scope
+from pyessv import Term
+from . import utils as tu
 
 
+# Module level fixture teardown.
+teardown_module = tu.teardown
 
-@nose.with_setup(None, tu.teardown)
-def test_create():
-    """Test creating an authority.
+
+def _yield_parameterizations():
+    """Test parameterizations.
+
+    """    
+    for factory, typeof in (
+        (tu.create_authority, Authority),
+        (tu.create_scope, Scope),
+        (tu.create_collection_01, Collection),
+        (tu.create_collection_02, Collection),
+        (tu.create_collection_03, Collection),
+        (tu.create_term_01, Term),
+        (tu.create_term_02, Term),
+        (tu.create_term_03, Term)
+        ):
+        yield factory, typeof
+
+
+@pytest.mark.parametrize("node_factory, node_type", _yield_parameterizations())
+def test_create(node_factory, node_type):
+    """Test instantiation of domain entities.
 
     """
-    def _test(func, typeof):
-        """Inner test.
-
-        """
-        node = func()
-        tu.assert_object(node, typeof)
-        assert node == load(node.namespace)
-
-
-    for factory, typeof in (
-        (tu.create_authority, LIB.Authority),
-        (tu.create_scope, LIB.Scope),
-        (tu.create_collection_01, LIB.Collection),
-        (tu.create_collection_02, LIB.Collection),
-        (tu.create_collection_03, LIB.Collection),
-        (tu.create_term_01, LIB.Term),
-        (tu.create_term_02, LIB.Term),
-        (tu.create_term_03, LIB.Term)
-        ):
-        tu.init(_test, 'create --> {}'.format(factory.__name__[7:]))
-        yield _test, factory, typeof
+    node = node_factory()
+    tu.assert_object(node, node_type)
+    loaded = load(node.namespace)
+    assert node.namespace == loaded.namespace
+    assert repr(node) == repr(loaded)
