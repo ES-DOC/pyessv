@@ -9,10 +9,9 @@ main()
 	# Reset vocabs.
 	rm -rf ~/.esdoc/pyessv-archive/esdoc
 
-	# Errata vocabularies.
+	# Write vocabularies.
+	source $PYESSV_LIB_HOME/sh/activate_venv.sh
 	python $PYESSV_LIB_HOME/sh/writers/esdoc/write_errata.py
-
-	# CMIP6 vocabularies.
 	python $PYESSV_LIB_HOME/sh/writers/esdoc/write_cmip6.py
 
 	log "ES-DOC vocabs written to "$HOME/.esdoc/esdoc
