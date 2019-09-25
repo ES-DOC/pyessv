@@ -2,7 +2,6 @@
 .coverage
 .tox
 coverage.xml
-nosetests.xml
 pylint.txt
 toy.py
 violations.pyflakes.txt
