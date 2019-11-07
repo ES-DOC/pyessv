@@ -22,7 +22,7 @@ def _get_scope():
     return pyessv.ESDOC.cmip6
 
 
-def getmodel_topics(source_id=None):
+def get_model_topics(source_id=None):
     """Returns topics to be documented by a source identifier.
 
     """

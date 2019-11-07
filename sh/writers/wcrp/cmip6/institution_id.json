@@ -103,6 +103,29 @@
     ]
   },
   {
+    "code": "CSIRO-ARCCSS",
+    "name": "",
+    "postalAddress": "",
+    "coordinates": "",
+    "homepage": "",
+    "consortia": [
+      {
+        "code": "CSIR",
+        "name": "Council for Scientific and Industrial Research - Natural Resources and the Environment",
+        "postalAddress": "Pretoria, 0001, South Africa",
+        "coordinates": "28.2746663,-25.7543385",
+        "homepage": "https://www.csir.co.za"
+      },
+      {
+        "code": "CSIRO",
+        "name": "Commonwealth Scientific and Industrial Research Organisation",
+        "postalAddress": "Aspendale, Victoria 3195, Australia",
+        "coordinates": "145.0435415,-38.0028413",
+        "homepage": "https://www.csiro.au/"
+      }
+    ]
+  },
+  {
     "code": "CSIR-CSIRO",
     "name": "",
     "postalAddress": "",
