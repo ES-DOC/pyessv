@@ -1112,6 +1112,14 @@
     "consortia": []
   },
   {
+    "code": "UCI",
+    "name": "University of California Irvine",
+    "postalAddress": "University of California Irvine, Department of Earth System Science, Irvine, CA 92697, USA",
+    "coordinates": "33.643837,-117.844146",
+    "homepage": "https://www.ess.uci.edu",
+    "consortia": []
+  },
+  {
     "code": "UHH",
     "name": "University of Hamburg",
     "postalAddress": "Hamburg 20148, Germany",
