@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 .. module:: pyessv.codecs.__init__.py
    :copyright: Copyright "Sep 4, 2013", Earth System Documentation

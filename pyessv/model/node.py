@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 .. module:: pyessv.model.node.py
    :copyright: Copyright "December 01, 2016", IPSL
@@ -51,6 +49,8 @@ class Node(object):
         """Instance attribute getter.
 
         """
+        if self.data is None:
+            raise AttributeError('{} unknown attribute'.format(name))
         try:
             return self.data[name]
         except KeyError:

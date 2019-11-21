@@ -11,12 +11,9 @@
 .. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
 
 """
-import inspect
-
 import pytest
 
 import pyessv as LIB
-import tests.utils as tu
 
 
 # Test configuration: project, parsing function, template seperator, strictness, identifiers.
@@ -27,6 +24,9 @@ _CONFIG = {
     )),
     ('cmip6', LIB.parse_dataset_identifer, '.', (
         'CMIP6.FAFMIP.IPSL.IPSL-CM6A-LR.amip.r1i1p1f1.Amon.abs550aer.gm',
+        # 'CMIP6.CMIP.MIROC.MIROC-ES2L.historical.r1i1p1f2.Emon.mrsoLut.gn#v20190823',
+        # 'CMIP6.PMIP.MIROC.MIROC-ES2L.lgm.r1i1p1f2.Emon.mrsoLut.gn#v20191002'
+        # 'CMIP6.cmip.miroc.miroc-es2l.historical.r1i1p1f2.emon.mrsolut.gn'
     )),
     ('cordex', LIB.parse_dataset_identifer, '.', (
         'cordex.output.AFR-44.MOHC.MOHC-HadGEM2-ES.rcp60.r12i1p1.HadGEM3-RA.v1.mon.areacella',
@@ -71,6 +71,6 @@ def test_parse_identifiers(parser, project, identifier, error_class):
     """
     if error_class:
         with pytest.raises(error_class):
-            parser(project, identifier)  
-    else:      
+            parser(project, identifier)
+    else:
         parser(project, identifier)

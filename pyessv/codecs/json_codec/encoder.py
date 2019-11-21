@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 .. module:: json.encoder.py
    :copyright: @2015 IPSL (http://ipsl.fr)

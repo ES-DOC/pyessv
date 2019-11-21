@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 .. module:: pyessv.parsers.cmip6_dataset_id.py
    :copyright: Copyright "December 01, 2016", IPSL
@@ -48,6 +46,6 @@ def parse(identifier):
 
     # Strip version suffix.
     if '#' in identifier:
-      identifier = identifier.split('#')[0]
+        identifier = identifier.split('#')[0]
 
     return _PARSER.parse(identifier)

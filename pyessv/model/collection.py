@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 .. module:: pyessv.model.collection.py
    :copyright: Copyright "December 01, 2016", IPSL

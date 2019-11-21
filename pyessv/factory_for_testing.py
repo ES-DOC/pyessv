@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 .. module:: utils.factory.py
    :license: GPL/CeCIL

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 .. module:: pyessv.__init__.py
 
@@ -11,7 +10,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.8.2.0'
+__version__ = '0.8.3.0'
 __author__ = 'ES-DOC'
 __license__ = 'GPL'
 __copyright__ = 'Copyright 2017 ES-DOC'

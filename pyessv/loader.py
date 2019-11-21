@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 .. module:: pyessv.loader.py
    :copyright: Copyright "December 01, 2016", IPSL
