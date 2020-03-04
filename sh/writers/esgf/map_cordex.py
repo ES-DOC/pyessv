@@ -30,7 +30,7 @@ COLLECTIONS = {
 	('rcm_version', yield_comma_delimited_options),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
-	('variable', yield_comma_delimited_options),
+	# ('variable', yield_comma_delimited_options),
 	('version', r'v^[0-9]*$')
 }
 

@@ -10,9 +10,9 @@ main()
 	rm -rf ~/.esdoc/pyessv-archive/esdoc
 
 	# Write vocabularies.
-	source $PYESSV_LIB_HOME/sh/activate_venv.sh
-	python $PYESSV_LIB_HOME/sh/writers/esdoc/write_errata.py
-	python $PYESSV_LIB_HOME/sh/writers/esdoc/write_cmip6.py
+	pushd $PYESSV_LIB_HOME
+	pipenv run python $PYESSV_LIB_HOME/sh/writers/esdoc/write_errata.py
+	pipenv run python $PYESSV_LIB_HOME/sh/writers/esdoc/write_cmip6.py
 
 	log "ES-DOC vocabs written to "$HOME/.esdoc/esdoc
 }

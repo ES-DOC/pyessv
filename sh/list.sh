@@ -8,8 +8,8 @@ main()
 {
 	log "list archive starts ..."
 
-	source $PYESSV_LIB_HOME/sh/activate_venv.sh
-	python $PYESSV_LIB_HOME/sh/list.py --authority=$1 --scope=$2 --collection=$3 --term=$4
+	pushd $PYESSV_LIB_HOME
+	pipenv run python $PYESSV_LIB_HOME/sh/list.py --authority=$1 --scope=$2 --collection=$3 --term=$4
 }
 
 # Invoke entry point.

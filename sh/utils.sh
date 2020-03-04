@@ -19,3 +19,14 @@ log()
 	    echo -e $now" [INFO] :: ESDOC-PYESSV :: "
 	fi
 }
+
+# Wraps pushd command to suppress stdout.
+function pushd () {
+    command pushd "$@" > /dev/null
+}
+
+# Wraps popd command to suppress stdout.
+function popd () {
+    command popd "$@" > /dev/null
+}
+

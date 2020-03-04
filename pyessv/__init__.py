@@ -12,8 +12,8 @@
 __title__ = 'pyessv'
 __version__ = '0.8.3.0'
 __author__ = 'ES-DOC'
-__license__ = 'GPL'
-__copyright__ = 'Copyright 2017 ES-DOC'
+__license__ = 'COSL'
+__copyright__ = 'Copyright 2020 Casper Labs LLC'
 
 
 from pyessv.archive import archive

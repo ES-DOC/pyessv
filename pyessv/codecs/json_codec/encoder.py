@@ -33,7 +33,6 @@ def encode(instance):
     # Convert to dictionary.
     obj = dict_encoder.encode(instance)
 
-
     # Return JSON.
     as_json = compat.str(dict_to_json(obj))
 
