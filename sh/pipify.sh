@@ -6,8 +6,8 @@ source $PYESSV_LIB_HOME/sh/utils.sh
 # Main entry point.
 main()
 {
-	cd $PYESSV_LIB_HOME
-	python ./setup.py sdist upload
+	pushd $PYESSV_LIB_HOME
+	pipenv run python ./setup.py sdist upload
 	log "library uploaded to pypi"
 }
 
