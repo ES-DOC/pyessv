@@ -993,6 +993,14 @@
     "consortia": []
   },
   {
+    "code": "PNNL-WACCEM",
+    "name": "Pacific Northwest National Laboratory",
+    "postalAddress": "Richland, WA 99352, USA",
+    "coordinates": "46.345291,119.278253",
+    "homepage": "https://www.pnnl.gov",
+    "consortia": []
+  },    
+  {
     "code": "RTE-RRTMGP-Consortium",
     "name": "",
     "postalAddress": "c/o AER, 131 Hartwell Avenue, Lexington, MA 02421, USA",
