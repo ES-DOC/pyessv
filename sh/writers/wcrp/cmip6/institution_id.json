@@ -977,6 +977,14 @@
     "consortia": []
   },
   {
+    "code": "NTU",
+    "name": "National Taiwan University",
+    "postalAddress": "Taipei 10650, Taiwan",
+    "coordinates": "25.013933, 121.540470",
+    "homepage": "https://www.ntu.edu.tw",
+    "consortia": []
+  },
+  {
     "code": "NUIST",
     "name": "Nanjing University of Information Science and Technology",
     "postalAddress": "Nanjing, 210044, China",

@@ -24,3 +24,4 @@ tmp.py
 Untitled.ipynb
 *.key
 *.lock
+.python-version
