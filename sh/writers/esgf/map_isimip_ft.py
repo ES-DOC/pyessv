@@ -29,7 +29,7 @@ COLLECTIONS = {
 	('irrigation_forcing', yield_comma_delimited_options),
 	('land_use_short', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
-	('variable', yield_comma_delimited_options),
+	('variable', r'^[A-Za-z0-9]*$'),
 	('version', r'^v[0-9]*$'),
 	('thredds_exclude_variables', yield_comma_delimited_options)
 }

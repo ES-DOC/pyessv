@@ -15,15 +15,15 @@ from utils import yield_comma_delimited_options
 
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
-	('variable_id', lambda: yield_variable_id_options),
-	('activity_id', yield_comma_delimited_options),
+	('variable_id', r'^[A-Za-z0-9]*$'),
+	('activity', yield_comma_delimited_options),
 	('dataset_category', r'^[A-Za-z0-9]*$'),
-	('target_mip', yield_comma_delimited_options),
-	('source_id', yield_comma_delimited_options),
-	('grid_label', yield_comma_delimited_options),
-	('institution_id', yield_comma_delimited_options),
-	('realm', yield_comma_delimited_options),
-	('frequency', yield_comma_delimited_options),
+	('target_mip', r'^[A-Za-z0-9]*$'),
+	('source_id', r'^[A-Za-z0-9]*$'),
+	('grid_label', r'^[A-Za-z0-9]*$'),
+	('institute', r'^[A-Za-z0-9]*$'),
+	('realm', r'^[A-Za-z0-9]*$'),
+	('frequency', r'^[A-Za-z0-9]*$'),
 	('thredds_exclude_variables', yield_comma_delimited_options),
 	('version', r'^v[0-9]{8}$'),
 }

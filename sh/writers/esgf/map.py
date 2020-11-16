@@ -17,8 +17,8 @@ import os
 import pyessv
 from pyessv.utils import compat
 
-import map_c3s_cmip5
-import map_c3s_cordex
+import map_c3scmip5
+# import map_c3s_cordex
 import map_cc4e
 import map_cmip5
 import map_cmip6
@@ -50,8 +50,8 @@ _CREATE_DATE = dt.datetime(2019, 4, 2)
 
 # Set of mapping modules.
 _MODULES = {
-    map_c3s_cmip5,
-    map_c3s_cordex,
+    map_c3scmip5,
+    # map_c3s_cordex,
     map_cc4e,
     map_cmip5,
     map_cmip6,
@@ -71,8 +71,8 @@ _MODULES = {
 
 # Set of mapping modules specific to ECMWF.
 _MODULES_ECMWF = {
-    map_c3s_cmip5,
-    map_c3s_cordex,
+    map_c3scmip5,
+    # map_c3s_cordex,
     map_cc4e,
 }
 
@@ -94,10 +94,10 @@ def _main(args):
         # Load authority & create scope.
         if module in _MODULES_ECMWF:
             authority = _create_authority_ecmwf()
-            scope = pyessv.load('ecmwf:{}'.format(project))
+            scope = pyessv.load('ecmwf:{}'.format(project), verbose=False)
         else:
             authority = pyessv.load('wcrp')
-            scope = pyessv.load('wcrp:{}'.format(project))
+            scope = pyessv.load('wcrp:{}'.format(project), verbose=False)
 
         if not scope:
             scope = _create_scope(authority, project)

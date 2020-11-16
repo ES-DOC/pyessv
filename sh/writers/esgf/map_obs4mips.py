@@ -20,7 +20,6 @@ COLLECTIONS = {
 	('institute', yield_comma_delimited_options),
 	('realm', yield_comma_delimited_options),
 	('variable', lambda: yield_variable),
-	('var', yield_comma_delimited_options),
 	('time_frequency', yield_comma_delimited_options),
 	('data_structure', yield_comma_delimited_options),
 	('source_id', yield_comma_delimited_options),
