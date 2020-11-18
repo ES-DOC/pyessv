@@ -16,15 +16,13 @@ from utils import yield_comma_delimited_options
 
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
-	('product', yield_comma_delimited_options),
-	('institute', yield_comma_delimited_options),
-	('realm', yield_comma_delimited_options),
-	('variable', lambda: yield_variable),
-	('time_frequency', yield_comma_delimited_options),
-	('data_structure', yield_comma_delimited_options),
+	('product', r'^[A-Za-z0-9]*$'),
+	('institution_id', yield_comma_delimited_options),
+	('realm', r'^[A-Za-z0-9]*$'),
+	('variable', r'^[A-Za-z0-9]*$'),
+	('frequency', yield_comma_delimited_options),
 	('source_id', yield_comma_delimited_options),
 	('version', r'^v[0-9]*$'),
-	('las_time_delta', lambda: yield_las_time_delta),
 	('thredds_exclude_variables', yield_comma_delimited_options)
 }
 
@@ -34,18 +32,3 @@ SCOPE_DATA = {
 	'dataset_id'
 }
 
-
-def yield_variable(ctx):
-	"""Yields institute information to be converted to pyessv terms.
-
-	"""
-	for var, _ in ctx.ini_section.get_option('variable_map', '\n', '|'):
-		yield var
-
-
-def yield_las_time_delta(ctx):
-	"""Yields las time delta information to be converted to pyessv terms.
-
-	"""
-	for _, las_time_delta in ctx.ini_section.get_option('las_time_delta_map', '\n', '|'):
-		yield las_time_delta

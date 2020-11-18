@@ -17,8 +17,8 @@ import os
 import pyessv
 from pyessv.utils import compat
 
-import map_c3scmip5
-# import map_c3s_cordex
+import map_c3s_cmip5
+import map_c3s_cordex
 import map_cc4e
 import map_cmip5
 import map_cmip6
@@ -50,8 +50,8 @@ _CREATE_DATE = dt.datetime(2019, 4, 2)
 
 # Set of mapping modules.
 _MODULES = {
-    map_c3scmip5,
-    # map_c3s_cordex,
+    map_c3s_cmip5,
+    map_c3s_cordex,
     map_cc4e,
     map_cmip5,
     map_cmip6,
@@ -71,8 +71,8 @@ _MODULES = {
 
 # Set of mapping modules specific to ECMWF.
 _MODULES_ECMWF = {
-    map_c3scmip5,
-    # map_c3s_cordex,
+    map_c3s_cmip5,
+    map_c3s_cordex,
     map_cc4e,
 }
 

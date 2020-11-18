@@ -16,12 +16,12 @@ from utils import yield_comma_delimited_options
 # Vocabulary collections extracted from ini file.
 COLLECTIONS = {
 	('variable_id', r'^[A-Za-z0-9]*$'),
-	('activity', yield_comma_delimited_options),
+	('activity_id', yield_comma_delimited_options),
 	('dataset_category', r'^[A-Za-z0-9]*$'),
 	('target_mip', r'^[A-Za-z0-9]*$'),
 	('source_id', r'^[A-Za-z0-9]*$'),
 	('grid_label', r'^[A-Za-z0-9]*$'),
-	('institution_id', r'^[A-Za-z0-9]*$'),
+	('institute', r'^[A-Za-z0-9]*$'),
 	('realm', r'^[A-Za-z0-9]*$'),
 	('frequency', r'^[A-Za-z0-9]*$'),
 	('thredds_exclude_variables', yield_comma_delimited_options),
