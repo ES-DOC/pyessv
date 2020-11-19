@@ -32,6 +32,7 @@ COLLECTIONS = {
 	('version', r'^v[0-9]*$')
 }
 
+
 # Arbitrary data associated with a collection.
 COLLECTION_DATA = {
 	'experiment': {

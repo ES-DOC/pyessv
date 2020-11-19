@@ -10,7 +10,7 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.8.4.2'
+__version__ = '0.8.4.3'
 __author__ = 'ES-DOC'
 __license__ = 'COSL'
 __copyright__ = 'Copyright 2020 Casper Labs LLC'
