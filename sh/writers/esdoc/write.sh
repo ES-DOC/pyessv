@@ -12,6 +12,7 @@ main()
 	# Write vocabularies.
 	pushd $PYESSV_LIB_HOME
 	pipenv run python $PYESSV_LIB_HOME/sh/writers/esdoc/write_errata.py
+	pipenv run python $PYESSV_LIB_HOME/sh/writers/esdoc/write_cordexp.py
 	pipenv run python $PYESSV_LIB_HOME/sh/writers/esdoc/write_cmip6.py
 
 	log "ES-DOC vocabs written to "$HOME/.esdoc/esdoc

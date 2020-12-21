@@ -15,10 +15,9 @@ import utils
 
 
 def _write():
-    """Writes CMIP6 ES-DOC vocabularies to pyessv-archive.
+    """Writes CORDEXP ES-DOC vocabularies to pyessv-archive.
 
     """
-    # Populate esdoc authority with errata vocabs & archive.
     pyessv.archive(_write_authority())
 
 
@@ -36,11 +35,11 @@ def _write_scope(authority):
     """Writes ES-DOC cmip6 scope.
 
     """
-    scope = pyessv.load('esdoc:cmip6', verbose=False) or pyessv.create_scope(authority,
-        'cmip6',
-        'ES-DOC controlled Vocabularies (CVs) for use in cmip6',
+    scope = pyessv.load('esdoc:cordexp', verbose=False) or pyessv.create_scope(authority,
+        'cordexp',
+        'ES-DOC controlled Vocabularies (CVs) for use in cordexp',
         create_date=utils.CREATE_DATE,
-        label='CMIP6',
+        label='CORDEXP',
         url='https://github.com/ES-DOC'
         )
 
@@ -65,11 +64,11 @@ def _write_model_topic(scope):
         label='Top Level'
     )
 
-    for term in pyessv.WCRP.cmip6.realm:
-        pyessv.create_term(collection, term.raw_name,
-            create_date=utils.CREATE_DATE,
-            label=term.description,
-        )
+    pyessv.create_term(collection, 'atmos',
+        create_date=utils.CREATE_DATE,
+        description='Atmosphere',
+        label='Atmosphere'
+    )
 
 
 # Entry point.

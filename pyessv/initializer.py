@@ -44,11 +44,10 @@ def _load_authorities():
 	"""Loads vocabulary authorities from archive.
 
 	"""
-	logger.log('Loading vocabularies from {}:'.format(DIR_ARCHIVE))
+	logger.log('Loading vocabularies from {} ... please wait'.format(DIR_ARCHIVE))
 	authorities = []
 	for authority in io_manager.read():
 		authorities.append(authority)
-		logger.log('... loaded: {}'.format(authority))
 		cache(authority)
 
 	return authorities
