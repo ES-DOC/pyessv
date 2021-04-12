@@ -25,8 +25,3 @@ chmod a+x $PYESSV_LIB_HOME/sh/writers/*/*.sh
 alias pyessv-list=$PYESSV_LIB_HOME/sh/list.sh
 alias pyessv-run-notebooks=$PYESSV_LIB_HOME/sh/run_notebooks.sh
 alias pyessv-pipify=$PYESSV_LIB_HOME/sh/pipify.sh
-
-# Vocabulary writing commands.
-alias pyessv-write-esdoc=$PYESSV_LIB_HOME/sh/writers/esdoc/write.sh
-alias pyessv-write-esgf=$PYESSV_LIB_HOME/sh/writers/esgf/write.sh
-alias pyessv-write-wcrp=$PYESSV_LIB_HOME/sh/writers/wcrp/write.sh
