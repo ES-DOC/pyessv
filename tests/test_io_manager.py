@@ -16,9 +16,10 @@ import io
 import json
 import os
 
+import pytest
+
 import pyessv as LIB
-from pyessv.io_manager import delete
-from pyessv.io_manager import read
+from pyessv import io_manager
 from pyessv.io_manager import write
 import tests.utils as tu
 
@@ -34,9 +35,9 @@ def test_interface():
     """pyessv-tests: io: interface.
 
     """
-    assert inspect.isfunction(delete)
-    assert inspect.isfunction(read)
-    assert inspect.isfunction(write)
+    assert inspect.isfunction(io_manager.delete)
+    assert inspect.isfunction(io_manager.read)
+    assert inspect.isfunction(io_manager.write)
 
 
 def test_directory():
@@ -46,17 +47,41 @@ def test_directory():
     assert os.path.isdir(LIB.DIR_ARCHIVE)
 
 
-def test_read():
+def test_read_all():
     """pyessv-tests: io: read.
 
     """
-    authorities = read()
+    authorities = io_manager.read()
     assert isinstance(authorities, list)
     for authority in authorities:
         assert isinstance(authority, LIB.Authority)
     dirs = [i for i in os.listdir(LIB.DIR_ARCHIVE) if not i.startswith('.') and not i.startswith("README")]
     assert len(authorities) == len(dirs)
     assert dirs == [i.canonical_name for i in authorities]
+
+
+def test_read_one_authority():
+    """pyessv-tests: io: read one authority.
+
+    """
+    assert isinstance(io_manager.read(authority="wcrp"), LIB.Authority)
+
+
+def test_read_one_scope():
+    """pyessv-tests: io: read one scope.
+
+    """
+    authority = io_manager.read(authority="wcrp", scope="cmip6")
+    assert isinstance(authority, LIB.Authority)
+    assert len(authority) == 1
+
+
+def test_read_one_negative():
+    """pyessv-tests: io: read one (negative).
+
+    """
+    with pytest.raises(IOError):
+        io_manager.read(authority="xxx")
 
 
 def test_write():
@@ -82,7 +107,7 @@ def test_write():
     for fpath in fpaths:
         assert not os.path.isfile(fpath)
 
-    write(LIB.load(tu.AUTHORITY_NAME))
+    io_manager.write(LIB.load(tu.AUTHORITY_NAME))
 
     assert len(os.listdir(LIB.DIR_ARCHIVE)) == len(authority_dirs) + 1
     for dpath in dpaths:
@@ -111,7 +136,7 @@ def test_delete():
     term_01_file = os.path.join(collection_01_dir, tu.TERM_01_NAME)
     term_02_file = os.path.join(collection_02_dir, tu.TERM_02_NAME)
     term_03_file = os.path.join(collection_03_dir, tu.TERM_03_NAME)
-    write(LIB.load(tu.AUTHORITY_NAMESPACE))
+    io_manager.write(LIB.load(tu.AUTHORITY_NAMESPACE))
 
     for namespace, npath, predicate in (
         (tu.TERM_01_NAMESPACE, term_01_file, os.path.isfile),
@@ -124,5 +149,5 @@ def test_delete():
         (tu.AUTHORITY_NAMESPACE, authority_dir, os.path.isdir),
         ):
         node = LIB.load(namespace)
-        delete(node)
+        io_manager.delete(node)
         assert not predicate(npath)

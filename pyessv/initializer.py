@@ -34,7 +34,7 @@ def init():
 	authorities = _load_authorities()
 
 	# Mixin pseudo-constants.
-	_mixinconstants(authorities)
+	_mixin_constants(authorities)
 
 	# Set scope level accessor functions.
 	_mixin_scopeaccessors(authorities)
@@ -53,7 +53,7 @@ def _load_authorities():
 	return authorities
 
 
-def _mixinconstants(authorities):
+def _mixin_constants(authorities):
 	"""Mixes in authorities as pseudo-constants to pyessv.
 
 	"""

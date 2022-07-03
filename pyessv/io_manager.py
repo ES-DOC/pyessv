@@ -10,12 +10,10 @@
 
 """
 import glob
-import io
 import os
 import shutil
 from os.path import join
 from os.path import isdir
-from os.path import isfile
 
 from pyessv.codecs import decode
 from pyessv.codecs import encode
@@ -70,35 +68,38 @@ def delete(target):
         pass
 
 
-def read(archive_dir=DIR_ARCHIVE):
+def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
     """Reads vocabularies from archive folder (~/.esdoc/pyessv-archive) upon file system.
 
+    :param archive_dir: Directory hosting vocabulary archive.
+    :param authority: Authority to be loaded (if unspecified then all will be loaded).
+    :param scope: Scope to be loaded (if unspecified then all will be loaded).
     :returns: List of vocabulary authorities loaded from archive folder.
-    :rtype: list
 
     """
-    return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
+    if authority is not None:
+        return _read_authority(f"{archive_dir}/{authority}", scope)
+    else:
+        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
 
-def _read_authority(dpath):
+def _read_authority(dpath, scope_id=None):
     """Reads authority CV data from file system.
 
-    :param str dpath: Path to a directory to which an authority's vocabularies have been written.
-
-    :returns: Authority vocabulary data.
-    :rtype: pyessv.Authority
-
     """
-    assert isfile(join(dpath, _MANIFEST)), 'Invalid authority MANIFEST: {}/MANIFEST'.format(dpath)
-
     # Read authority from manifest.
-    fpath = join(dpath, _MANIFEST)
-    with open(fpath, 'r') as fstream:
-        authority = decode(fstream.read(), ENCODING_JSON)
+    try:
+        with open(join(dpath, _MANIFEST), 'r') as fstream:
+            authority = decode(fstream.read(), ENCODING_JSON)
+    except IOError:
+        raise IOError('Invalid authority MANIFEST: {}/MANIFEST'.format(dpath))
 
     # Read terms.
     termcache = {}
     for scope in authority:
+        if scope_id is not None and scope.canonical_name != scope_id:
+            authority.scopes.remove(scope)
+            continue
         for collection in scope:
             for term in _read_terms(dpath, scope, collection, termcache):
                 term.collection = collection
@@ -133,8 +134,8 @@ def _read_term(fpath, collection, termcache):
     """
     with open(fpath, 'r') as fstream:
         term = decode(fstream.read(), ENCODING_JSON)
-    term.collection = collection
 
+    term.collection = collection
     termcache[term.namespace] = term
 
     return term
@@ -144,9 +145,9 @@ def write(authority, archive_dir=DIR_ARCHIVE):
     """Writes authority CV data to file system.
 
     :param pyessv.Authority authority: Authority class instance to be written to file-system.
+    :param archive_dir: Directory hosting vocabulary archive.
 
     """
-    # Validate inputs.
     assert isinstance(authority, Authority), 'Invalid authority: unknown type'
     assert isdir(archive_dir), 'Invalid authority directory.'
     assert is_valid(authority), 'Invalid authority: {} : {}'.format(authority, get_errors(authority))
