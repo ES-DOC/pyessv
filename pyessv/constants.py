@@ -36,6 +36,9 @@ ENCODING_SET = {
     ENCODING_JSON
 }
 
+# Mode of library initialisation.
+INITIALISATION_MODE = os.getenv("PYESSV_INITIALISATION_MODE", "AUTO")
+
 # Node type key - an authority governing vocabularies.
 NODE_TYPEKEY_AUTHORITY = 'authority'
 

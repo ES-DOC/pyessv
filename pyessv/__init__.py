@@ -34,6 +34,7 @@ from pyessv.constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv.constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv.constants import GOVERNANCE_STATUS_PENDING
 from pyessv.constants import GOVERNANCE_STATUS_REJECTED
+from pyessv.constants import INITIALISATION_MODE
 from pyessv.constants import PARSING_STRICTNESS_0
 from pyessv.constants import PARSING_STRICTNESS_1
 from pyessv.constants import PARSING_STRICTNESS_2
@@ -82,5 +83,6 @@ from pyessv.validation import is_valid
 from pyessv.validation import validate
 
 
-# Auto-initialize.
-init()
+# Auto-initializes by default.
+if INITIALISATION_MODE == "AUTO":
+   init()

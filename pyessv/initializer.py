@@ -22,16 +22,19 @@ from pyessv import io_manager
 
 
 
-def init():
+def init(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
 	"""Library initializer.
+
+    :param authority: Authority to be loaded (if unspecified then all will be loaded).
+    :param scope: Scope to be loaded (if unspecified then all will be loaded).
 
 	"""
 	# Verify archive folder exists.
-	if not os.path.isdir(DIR_ARCHIVE):
-		raise EnvironmentError('{} directory does not exists'.format(DIR_ARCHIVE))
+	if not os.path.isdir(archive_dir):
+		raise EnvironmentError('{} directory does not exists'.format(archive_dir))
 
 	# Load set of authorities from file system.
-	authorities = _load_authorities()
+	authorities = _load_authorities(archive_dir, authority, scope)
 
 	# Mixin pseudo-constants.
 	_mixin_constants(authorities)
@@ -40,13 +43,13 @@ def init():
 	_mixin_scopeaccessors(authorities)
 
 
-def _load_authorities():
+def _load_authorities(archive_dir, authority, scope):
 	"""Loads vocabulary authorities from archive.
 
 	"""
 	logger.log('Loading vocabularies from {} ... please wait'.format(DIR_ARCHIVE))
 	authorities = []
-	for authority in io_manager.read():
+	for authority in io_manager.read(archive_dir, authority, scope):
 		authorities.append(authority)
 		cache(authority)
 
