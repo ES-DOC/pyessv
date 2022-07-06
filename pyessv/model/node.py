@@ -14,6 +14,7 @@ import datetime
 from pyessv.constants import NODE_TYPEKEY_SET
 from pyessv.utils import compat
 from pyessv.utils.formatter import format_io_name
+from pyessv.utils.formatter import format_attribute_name
 from pyessv.utils.validation import assert_iterable
 from pyessv.utils.validation import assert_string
 from pyessv.utils.validation import assert_url
@@ -55,7 +56,7 @@ class Node(object):
             return self.data[name]
         except KeyError:
             try:
-                return self.data[name.replace('_', '-')]
+                return self.data[format_attribute_name(name)]
             except KeyError:
                 raise AttributeError('{} unknown attribute'.format(name))
 
@@ -176,7 +177,7 @@ class IterableNode(Node):
 
         """
         try:
-            return self[name.lower().replace('_', '-')]
+            return self[name]
         except KeyError:
             raise AttributeError('{} unknown attribute'.format(name))
 
@@ -185,20 +186,28 @@ class IterableNode(Node):
         """Returns a child section item.
 
         """
-        # Match against a canonical name.
-        for item in self:
-            if item.canonical_name == key:
-                return item
+        def _get(name):
+            # Match against a canonical name.
+            for item in self:
+                if item.canonical_name == name:
+                    return item
 
-        # Match against a raw name.
-        for item in self:
-            if key == item.raw_name:
-                return item
+            # Match against a raw name.
+            for item in self:
+                if name == item.raw_name:
+                    return item
 
-        # Match against an alternative name.
-        for item in self:
-            if key in item.alternative_names:
-                return item
+            # Match against an alternative name.
+            for item in self:
+                if name in item.alternative_names:
+                    return item
+
+            # Match against a key within arbitrary node data.
+            if self.data and name in self.data:
+                return self.data[name]
+
+        # Seek with raw or formatted key.
+        return _get(key) or _get(format_attribute_name(key))
 
 
     def __iter__(self):

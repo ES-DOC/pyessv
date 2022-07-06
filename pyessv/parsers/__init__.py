@@ -61,6 +61,4 @@ def parse_dataset_identifer(project, identifier):
     assert project in _DATASET_ID_PARSERS, "Unsupported project: {}".format(project)
     assert isinstance(identifier, compat.basestring), 'Invalid identifier'
 
-    parser = _DATASET_ID_PARSERS[project]
-
-    return parser(identifier)
+    return _DATASET_ID_PARSERS[project](identifier)
