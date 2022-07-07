@@ -79,6 +79,22 @@ GOVERNANCE_STATUS_SET = (
     GOVERNANCE_STATUS_DEPRECATED
     )
 
+# Template parser: dataset-id;
+PARSER_TYPE_DATASET_ID = "dataset_id"
+
+# Template parser: dataset-id;
+PARSER_TYPE_DIRECTORY = "directory_format"
+
+# Template parser: dataset-id;
+PARSER_TYPE_FILENAME = "filename_format"
+
+# Set of allowed template parsers.
+PARSER_TYPE_SET = (
+    PARSER_TYPE_DATASET_ID,
+    PARSER_TYPE_DIRECTORY,
+    PARSER_TYPE_FILENAME
+    )
+
 # Parsing strictness: canonical-name;
 PARSING_STRICTNESS_0 = 0
 
@@ -94,7 +110,7 @@ PARSING_STRICTNESS_3 = 3
 # Parsing strictness: 3 + case-insensitive
 PARSING_STRICTNESS_4 = 4
 
-# Set of allowed parsing stricness.
+# Set of allowed parsing strictness.
 PARSING_STRICTNESS_SET = (
     PARSING_STRICTNESS_0,
     PARSING_STRICTNESS_1,

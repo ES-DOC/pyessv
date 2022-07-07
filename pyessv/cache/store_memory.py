@@ -48,7 +48,7 @@ def get_cached(cache_filter):
     elif cache_filter in NODE_TYPES:
         return [i for i in _DATA.values() if isinstance(i, cache_filter)]
     elif cache_filter is None:
-        return get_cached(Authority)
+        return sorted(get_cached(Authority), key=lambda i: i.canonical_name)
 
 
 def uncache(identifier):
