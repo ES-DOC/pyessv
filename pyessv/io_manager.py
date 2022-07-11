@@ -10,6 +10,7 @@
 
 """
 import glob
+import json
 import os
 import shutil
 from os.path import join
@@ -80,7 +81,7 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
     if authority is not None:
         return _read_authority(f"{archive_dir}/{authority}", scope)
     else:
-        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
+        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i) and not i.endswith("_parsers")]
 
 
 def _read_authority(dpath, scope_id=None):
@@ -168,6 +169,32 @@ def write(authority, archive_dir=DIR_ARCHIVE):
         for collection in scope:
             for term in collection:
                 _write_term(dpath, term)
+
+
+def write_scope_parser_config(scope, parser_type, obj, archive_dir=DIR_ARCHIVE):
+    """Writes an identifier parser to the file system.
+
+    :param scope: Scope associated with parser.
+    :param parser_type: Type of parser being processed.
+    :param obj: Config data to be written.
+    :param archive_dir: Directory hosting vocabulary archive.
+
+    """
+    # Inject meta attributes.
+    obj = { **{
+        "parser_type": parser_type,
+        "scope": scope.namespace
+    }, **obj }
+
+    io_path = join(archive_dir, "_parsers")
+    try:
+        os.makedirs(io_path)
+    except OSError:
+        pass
+    io_path = join(io_path, f"{parser_type}__{scope.authority.io_name}__{scope.io_name}.json")
+
+    with open(io_path, 'w') as fstream:
+        fstream.write(json.dumps(obj, indent=4))
 
 
 def _write_term(dpath, term):
