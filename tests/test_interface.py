@@ -88,6 +88,7 @@ _FUNCS = {
     'parse',
     'parse_dataset_identifer',
     'parse_dataset_identifers',
+    'parse_identifer',
     # ... validation
     'get_errors',
     'is_valid',

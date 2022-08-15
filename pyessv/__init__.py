@@ -76,6 +76,8 @@ from pyessv.model import Term
 from pyessv.parser import parse
 from pyessv.parsers import parse_dataset_identifer
 from pyessv.parsers import parse_dataset_identifers
+from pyessv.parsers import generic_parser
+from pyessv.parsing.parser import parse_identifer
 
 from pyessv.utils.logger import log
 from pyessv.utils.logger import log_error

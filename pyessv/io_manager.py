@@ -84,6 +84,83 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
         return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i) and not i.endswith("_parsers")]
 
 
+def read_scope_parser_config(s, parser_type, archive_dir=DIR_ARCHIVE):
+    """Writes an identifier parser to the file system.
+
+    :param s: Scope associated with parser.
+    :param parser_type: Type of parser being processed.
+    :param obj: Config data to be written.
+    :param archive_dir: Directory hosting vocabulary archive.
+
+    """
+    io_path = _get_path_scope_parser_config(s, parser_type, archive_dir)
+    with open(io_path, 'r') as fstream:
+        return json.loads(fstream.read())
+
+
+def write(authority, archive_dir=DIR_ARCHIVE):
+    """Writes authority CV data to file system.
+
+    :param pyessv.Authority authority: Authority class instance to be written to file-system.
+    :param archive_dir: Directory hosting vocabulary archive.
+
+    """
+    assert isinstance(authority, Authority), 'Invalid authority: unknown type'
+    assert isdir(archive_dir), 'Invalid authority directory.'
+    assert is_valid(authority), 'Invalid authority: {} : {}'.format(authority, get_errors(authority))
+
+    # Set directory.
+    dpath = join(archive_dir, authority.io_name)
+    try:
+        os.makedirs(dpath)
+    except OSError:
+        pass
+
+    # Write manifest.
+    with open(join(dpath, _MANIFEST), 'w') as fstream:
+        fstream.write(encode(authority))
+
+    # Write collections/terms.
+    for scope in authority:
+        for collection in scope:
+            for term in collection:
+                _write_term(dpath, term)
+
+
+def write_scope_parser_config(scope, parser_type, cfg, archive_dir=DIR_ARCHIVE):
+    """Writes an identifier parser to the file system.
+
+    :param scope: Scope associated with parser.
+    :param parser_type: Type of parser being processed.
+    :param obj: Config data to be written.
+    :param archive_dir: Directory hosting vocabulary archive.
+
+    """
+    # Inject meta attributes.
+    cfg = { **{
+        "parser_type": parser_type,
+        "scope": scope.namespace
+    }, **cfg }
+
+    # Write to fs.
+    io_path = _get_path_scope_parser_config(scope, parser_type, archive_dir)
+    with open(io_path, 'w') as fstream:
+        fstream.write(json.dumps(cfg, indent=4))
+
+
+def _get_path_scope_parser_config(s, parser_type, archive_dir):
+    """Returns path to a scope parser configuration file.
+
+    """
+    io_path = join(archive_dir, "_parsers")
+    try:
+        os.makedirs(io_path)
+    except OSError:
+        pass
+
+    return join(io_path, f"{parser_type}__{s.authority.io_name}__{s.io_name}.json")
+
+
 def _read_authority(dpath, scope_id=None):
     """Reads authority CV data from file system.
 
@@ -140,61 +217,6 @@ def _read_term(fpath, collection, termcache):
     termcache[term.namespace] = term
 
     return term
-
-
-def write(authority, archive_dir=DIR_ARCHIVE):
-    """Writes authority CV data to file system.
-
-    :param pyessv.Authority authority: Authority class instance to be written to file-system.
-    :param archive_dir: Directory hosting vocabulary archive.
-
-    """
-    assert isinstance(authority, Authority), 'Invalid authority: unknown type'
-    assert isdir(archive_dir), 'Invalid authority directory.'
-    assert is_valid(authority), 'Invalid authority: {} : {}'.format(authority, get_errors(authority))
-
-    # Set directory.
-    dpath = join(archive_dir, authority.io_name)
-    try:
-        os.makedirs(dpath)
-    except OSError:
-        pass
-
-    # Write manifest.
-    with open(join(dpath, _MANIFEST), 'w') as fstream:
-        fstream.write(encode(authority))
-
-    # Write collections/terms.
-    for scope in authority:
-        for collection in scope:
-            for term in collection:
-                _write_term(dpath, term)
-
-
-def write_scope_parser_config(scope, parser_type, obj, archive_dir=DIR_ARCHIVE):
-    """Writes an identifier parser to the file system.
-
-    :param scope: Scope associated with parser.
-    :param parser_type: Type of parser being processed.
-    :param obj: Config data to be written.
-    :param archive_dir: Directory hosting vocabulary archive.
-
-    """
-    # Inject meta attributes.
-    obj = { **{
-        "parser_type": parser_type,
-        "scope": scope.namespace
-    }, **obj }
-
-    io_path = join(archive_dir, "_parsers")
-    try:
-        os.makedirs(io_path)
-    except OSError:
-        pass
-    io_path = join(io_path, f"{parser_type}__{scope.authority.io_name}__{scope.io_name}.json")
-
-    with open(io_path, 'w') as fstream:
-        fstream.write(json.dumps(obj, indent=4))
 
 
 def _write_term(dpath, term):

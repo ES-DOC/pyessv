@@ -17,6 +17,7 @@ from pyessv.parsers.cordex_dataset_id import parse as parse_cordex_dataset_id
 from pyessv.parsers.input4mips_dataset_id import parse as parse_input4mips_dataset_id
 from pyessv.utils import compat
 
+from pyessv.parsers.generic import parse_identifer as generic_parser
 
 
 # Map of dataset id parsers to projects.

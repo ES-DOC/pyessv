@@ -1,35 +1,34 @@
-import argparse
-
 import pyessv
 
+from pyessv import io_manager
 import set_dataset_id
 import set_directory_format
 import set_filename_format
 
 
+# Map: parser type <-> generator.
 _GENERATORS = {
-    pyessv.PARSER_TYPE_DATASET_ID: set_dataset_id.generate,
-    pyessv.PARSER_TYPE_DIRECTORY: set_directory_format.generate,
-    pyessv.PARSER_TYPE_FILENAME: set_filename_format.generate,
+    pyessv.PARSER_TYPE_DATASET_ID: set_dataset_id,
+    pyessv.PARSER_TYPE_DIRECTORY: set_directory_format,
+    pyessv.PARSER_TYPE_FILENAME: set_filename_format,
 }
 
 
-def _main(args: argparse.Namespace):
+def _main():
     """Main entry point.
 
-    :param args: Parsed command line arguments.
-
     """
-    for a in pyessv.get_cached():
-        for s in [i for i in a if i.data]:
-            for parser_type, template in s.data.items():
+    for authority in pyessv.get_cached():
+        for scope in [i for i in authority if i.data]:
+            for parser_type, template in scope.data.items():
                 try:
                     generator = _GENERATORS[parser_type]
                 except KeyError:
                     continue
                 else:
-                    generator(a, s, template)
+                    cfg = generator.get_config(authority, scope, template)
+                    if cfg is not None:
+                        io_manager.write_scope_parser_config(scope, parser_type, cfg)
 
-parser = argparse.ArgumentParser("Maps parsing templates -> configuration files.")
 
-_main(parser.parse_args())
+_main()
