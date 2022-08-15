@@ -1,13 +1,3 @@
-"""
-.. module:: pyessv.parser.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encapsulates parsing of names to match vocabulary entities.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-"""
 from pyessv.loader import load
 from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.constants import PARSING_STRICTNESS_SET
@@ -21,7 +11,7 @@ from pyessv.utils import compat
 
 
 
-def parse(
+def parse_namespace(
     namespace,
     strictness=PARSING_STRICTNESS_2,
     field='canonical_name'

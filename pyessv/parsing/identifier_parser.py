@@ -1,6 +1,6 @@
 from pyessv.constants import PARSING_STRICTNESS_2
 from pyessv.constants import PARSER_TYPE_SET
-from pyessv.parsing.config import get_config
+from pyessv.parsing.identifier_parser_config import get_config
 from pyessv.utils import  compat
 
 

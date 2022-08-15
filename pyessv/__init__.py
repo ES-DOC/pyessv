@@ -53,7 +53,6 @@ from pyessv.exceptions import ValidationError
 
 from pyessv.factory import create_authority
 from pyessv.factory import create_collection
-from pyessv.factory import create_template_parser
 from pyessv.factory import create_scope
 from pyessv.factory import create_term
 
@@ -74,12 +73,10 @@ from pyessv.model import Collection
 from pyessv.model import Scope
 from pyessv.model import Term
 
-from pyessv.parser import parse
-from pyessv.parsers import parse_dataset_identifer
-from pyessv.parsers import parse_dataset_identifers
-from pyessv.parsers import generic_parser
-from pyessv.parsing.parser import parse_identifer
-from pyessv.parsing.parser import parse_identifer_set
+from pyessv.parsing.identifier_parser import parse_identifer
+from pyessv.parsing.identifier_parser import parse_identifer_set
+from pyessv.parsing.namespace_parser import parse_namespace
+from pyessv.parsing.namespace_parser import parse_namespace as parse
 
 from pyessv.utils.logger import log
 from pyessv.utils.logger import log_error

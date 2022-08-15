@@ -193,30 +193,6 @@ def create_term(
         )
 
 
-def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_2, seperator='.'):
-    """Instantiates, initialises & returns a template parser.
-
-    :param str template: An expression template.
-    :param tuple collections: Collections that the template maps to.
-    :param int strictness: Strictness level to apply when applying name matching rules.
-    :param str seprarator: Seperator to apply when parsing.
-
-    :returns: A vocabulary expression parser.
-    :rtype: pyessv.TemplateParser
-
-    """
-    assert isinstance(template, compat.basestring), 'Invalid template'
-    assert isinstance(collections, tuple), 'Invalid collections'
-    assert len(template) > 0, 'Invalid template'
-    assert template.count('{}') > 0, 'Invalid template'
-    assert len(collections) > 0, 'Invalid collections'
-    assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
-    assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
-    assert isinstance(seperator, compat.basestring), 'Invalid seperator'
-
-    return TemplateParser(template, collections, strictness, seperator)
-
-
 def _create_node(
     typeof,
     raw_name,

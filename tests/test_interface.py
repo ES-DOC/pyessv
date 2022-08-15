@@ -65,7 +65,6 @@ _FUNCS = {
     # ... factory
     'create_authority',
     'create_collection',
-    'create_template_parser',
     'create_scope',
     'create_term',
     # ... factory for testing
@@ -86,9 +85,9 @@ _FUNCS = {
     'log_warning',
     # ... parsing
     'parse',
-    'parse_dataset_identifer',
-    'parse_dataset_identifers',
+    'parse_namespace',
     'parse_identifer',
+    'parse_identifer_set',
     # ... validation
     'get_errors',
     'is_valid',
