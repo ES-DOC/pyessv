@@ -1,21 +1,7 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: test_interface.py
-
-   :copyright: @2013 Earth System Documentation (https://es-doc.org)
-   :license: GPL / CeCILL
-   :platform: Unix, Windows
-   :synopsis: Executes pyessv interface tests.
-
-.. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
-
-"""
 import pytest
 
 import pyessv as LIB
 import tests.utils as tu
-
 
 
 # Set of classes exposed by library.
@@ -39,6 +25,11 @@ _CONSTANTS = {
     'GOVERNANCE_STATUS_DEPRECATED',
     'GOVERNANCE_STATUS_PENDING',
     'GOVERNANCE_STATUS_REJECTED',
+    'INITIALISATION_MODE',
+    'PARSER_TYPE_DATASET_ID',
+    'PARSER_TYPE_DIRECTORY',
+    'PARSER_TYPE_FILENAME',
+    'PARSER_TYPE_SET',
     'PARSING_STRICTNESS_0',
     'PARSING_STRICTNESS_1',
     'PARSING_STRICTNESS_2',
@@ -59,6 +50,8 @@ _EXCEPTIONS = {
 _FUNCS = {
     # ... archive
     'archive',
+    # ... cache
+    'get_cached',
     # ... codecs
     'decode',
     'encode',

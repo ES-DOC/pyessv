@@ -10,10 +10,10 @@
 
 """
 __title__ = 'pyessv'
-__version__ = '0.9.0.0'
+__version__ = '0.9.1.0'
 __author__ = 'ES-DOC'
 __license__ = 'COSL'
-__copyright__ = 'Copyright 2020 Casper Labs LLC'
+__copyright__ = 'Copyright 2022 ES-DOC'
 
 
 from pyessv.archive import archive
