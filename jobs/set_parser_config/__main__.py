@@ -8,9 +8,9 @@ import set_filename_format
 
 # Map: parser type <-> generator.
 _GENERATORS = {
-    pyessv.PARSER_TYPE_DATASET_ID: set_dataset_id,
-    pyessv.PARSER_TYPE_DIRECTORY: set_directory_format,
-    pyessv.PARSER_TYPE_FILENAME: set_filename_format,
+    pyessv.IDENTIFIER_TYPE_DATASET_ID: set_dataset_id,
+    pyessv.IDENTIFIER_TYPE_DIRECTORY: set_directory_format,
+    pyessv.IDENTIFIER_TYPE_FILENAME: set_filename_format,
 }
 
 
@@ -20,15 +20,15 @@ def _main():
     """
     for authority in pyessv.get_cached():
         for scope in [i for i in authority if i.data]:
-            for parser_type, template in scope.data.items():
+            for identifier_type, template in scope.data.items():
                 try:
-                    generator = _GENERATORS[parser_type]
+                    generator = _GENERATORS[identifier_type]
                 except KeyError:
                     continue
                 else:
                     cfg = generator.get_config(authority, scope, template)
                     if cfg is not None:
-                        io_manager.write_scope_parser_config(scope, parser_type, cfg)
+                        io_manager.write_scope_parser_config(scope, identifier_type, cfg)
 
 
 _main()

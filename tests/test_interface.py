@@ -26,10 +26,10 @@ _CONSTANTS = {
     'GOVERNANCE_STATUS_PENDING',
     'GOVERNANCE_STATUS_REJECTED',
     'INITIALISATION_MODE',
-    'PARSER_TYPE_DATASET_ID',
-    'PARSER_TYPE_DIRECTORY',
-    'PARSER_TYPE_FILENAME',
-    'PARSER_TYPE_SET',
+    'IDENTIFIER_TYPE_DATASET_ID',
+    'IDENTIFIER_TYPE_DIRECTORY',
+    'IDENTIFIER_TYPE_FILENAME',
+    'IDENTIFIER_TYPE_SET',
     'PARSING_STRICTNESS_0',
     'PARSING_STRICTNESS_1',
     'PARSING_STRICTNESS_2',
@@ -41,8 +41,7 @@ _CONSTANTS = {
 # Set of exceptions exposed by library.
 _EXCEPTIONS = {
     'InvalidAssociationError',
-    'ParsingError',
-    'TemplateParsingError',
+    'NamespaceParsingError',
     'ValidationError'
     }
 

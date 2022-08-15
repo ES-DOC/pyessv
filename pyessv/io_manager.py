@@ -84,16 +84,16 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
         return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i) and not i.endswith("_parsers")]
 
 
-def read_scope_parser_config(s, parser_type, archive_dir=DIR_ARCHIVE):
+def read_scope_parser_config(s, identifier_type, archive_dir=DIR_ARCHIVE):
     """Writes an identifier parser to the file system.
 
     :param s: Scope associated with parser.
-    :param parser_type: Type of parser being processed.
+    :param identifier_type: Type of parser being processed.
     :param obj: Config data to be written.
     :param archive_dir: Directory hosting vocabulary archive.
 
     """
-    io_path = _get_path_scope_parser_config(s, parser_type, archive_dir)
+    io_path = _get_path_scope_parser_config(s, identifier_type, archive_dir)
     with open(io_path, 'r') as fstream:
         return json.loads(fstream.read())
 
@@ -127,28 +127,28 @@ def write(authority, archive_dir=DIR_ARCHIVE):
                 _write_term(dpath, term)
 
 
-def write_scope_parser_config(scope, parser_type, cfg, archive_dir=DIR_ARCHIVE):
+def write_scope_parser_config(scope, identifier_type, cfg, archive_dir=DIR_ARCHIVE):
     """Writes an identifier parser to the file system.
 
     :param scope: Scope associated with parser.
-    :param parser_type: Type of parser being processed.
+    :param identifier_type: Type of parser being processed.
     :param obj: Config data to be written.
     :param archive_dir: Directory hosting vocabulary archive.
 
     """
     # Inject meta attributes.
     cfg = { **{
-        "parser_type": parser_type,
+        "identifier_type": identifier_type,
         "scope": scope.namespace
     }, **cfg }
 
     # Write to fs.
-    io_path = _get_path_scope_parser_config(scope, parser_type, archive_dir)
+    io_path = _get_path_scope_parser_config(scope, identifier_type, archive_dir)
     with open(io_path, 'w') as fstream:
         fstream.write(json.dumps(cfg, indent=4))
 
 
-def _get_path_scope_parser_config(s, parser_type, archive_dir):
+def _get_path_scope_parser_config(s, identifier_type, archive_dir):
     """Returns path to a scope parser configuration file.
 
     """
@@ -158,7 +158,7 @@ def _get_path_scope_parser_config(s, parser_type, archive_dir):
     except OSError:
         pass
 
-    return join(io_path, f"{parser_type}__{s.authority.io_name}__{s.io_name}.json")
+    return join(io_path, f"{identifier_type}__{s.authority.io_name}__{s.io_name}.json")
 
 
 def _read_authority(dpath, scope_id=None):

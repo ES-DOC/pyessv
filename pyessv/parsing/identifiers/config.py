@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 from pyessv import io_manager
 from pyessv import loader
 
@@ -11,11 +10,11 @@ class ParsingConfiguration():
     """Encapsulates parsing configuration.
     
     """
-    def __init__(self, scope_namespace, parser_type, template, template_seperator, collection_namespaces):
+    def __init__(self, scope_namespace, identifier_type, template, template_seperator, collection_namespaces):
         """Instance initializer.
 
         :param scope_namespace: Namespace of scope associated with parser.
-        :param parser_type: Type of parser being used.
+        :param identifier_type: Type of parser being used.
         :param template: Template constraining parsing process.
         :param template_seperator: Seperator isolating slots from each other.
         :param collection_namespaces: Set of pyessv collection namespaces to be injected into template.
@@ -26,7 +25,7 @@ class ParsingConfiguration():
             raise ValueError("Parsing configuration error: collection to template mismatch")
 
         self.collection_namespaces = collection_namespaces
-        self.parser_type = parser_type
+        self.identifier_type = identifier_type
         self.scope_namespace = scope_namespace
         self.template = template
         self.template_seperator = template_seperator
@@ -44,33 +43,33 @@ class ParsingConfiguration():
         """Instance representation.
         
         """
-        return f"parser-config|{self.scope_namespace}::{self.parser_type}::{len(self.template_slots)}"
+        return f"parser-config|{self.scope_namespace}::{self.identifier_type}::{len(self.template_slots)}"
 
 
-def get_config(scope, parser_type):
+def get_config(scope, identifier_type):
     """Returns a parser configuration instance.
 
     :param scope: Scope associated with the identifier to be parsed.
-    :param parser_type: Type of parser to be used.
+    :param identifier_type: Type of parser to be used.
     :returns: Set of terms deconstructed from the identifier.
 
     """
-    cache_key = f"{scope} :: {parser_type}"
+    cache_key = f"{scope} :: {identifier_type}"
     if cache_key not in _CACHE:
-        _encache(cache_key, scope, parser_type)
+        _encache(cache_key, scope, identifier_type)
     
     return _CACHE[cache_key]
 
 
-def _encache(cache_key, scope, parser_type):
+def _encache(cache_key, scope, identifier_type):
     """Encaches a parsing configuration within a simple in-memory cache store.
     
     """
-    cfg = io_manager.read_scope_parser_config(scope, parser_type)
+    cfg = io_manager.read_scope_parser_config(scope, identifier_type)
     _CACHE[cache_key] = \
         ParsingConfiguration(
             cfg["scope"],
-            cfg["parser_type"],
+            cfg["identifier_type"],
             cfg["template"],
             cfg["seperator"],
             cfg["collections"]

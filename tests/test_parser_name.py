@@ -45,12 +45,12 @@ def _yield_parameterizations():
         for alternative_name in alternative_names:
             for name, expected, strictness in [
                 (canonical_name, canonical_name, 0),
-                (canonical_name.upper(), LIB.ParsingError, 1),
-                (canonical_name.upper(), LIB.ParsingError, 2),
+                (canonical_name.upper(), LIB.NamespaceParsingError, 1),
+                (canonical_name.upper(), LIB.NamespaceParsingError, 2),
                 # (canonical_name.upper(), canonical_name, 3),
-                (alternative_name, LIB.ParsingError, 0),
-                (alternative_name, LIB.ParsingError, 1),
-                (alternative_name.upper(), LIB.ParsingError, 2),
+                (alternative_name, LIB.NamespaceParsingError, 0),
+                (alternative_name, LIB.NamespaceParsingError, 1),
+                (alternative_name.upper(), LIB.NamespaceParsingError, 2),
                 # (alternative_name, canonical_name, 2)
             ]:
                 yield typekey, name, expected, strictness, parent
@@ -72,8 +72,8 @@ def test_parse_name(typekey, name, expected, strictness, parent):
 
     try:
         result = LIB.parse(namespace, strictness=strictness)
-    except LIB.ParsingError:
-        result = LIB.ParsingError
+    except LIB.NamespaceParsingError:
+        result = LIB.NamespaceParsingError
 
     assert result == expected, \
            'Name parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typekey, name, result, expected)

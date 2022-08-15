@@ -79,20 +79,20 @@ GOVERNANCE_STATUS_SET = (
     GOVERNANCE_STATUS_DEPRECATED
     )
 
-# Template parser: dataset-id;
-PARSER_TYPE_DATASET_ID = "dataset_id"
+# Identifier type: dataset-id;
+IDENTIFIER_TYPE_DATASET_ID = "dataset_id"
 
-# Template parser: dataset-id;
-PARSER_TYPE_DIRECTORY = "directory_format"
+# Identifier type: directory structure;
+IDENTIFIER_TYPE_DIRECTORY = "directory_format"
 
-# Template parser: dataset-id;
-PARSER_TYPE_FILENAME = "filename_format"
+# Identifier type: filename;
+IDENTIFIER_TYPE_FILENAME = "filename_format"
 
-# Set of allowed template parsers.
-PARSER_TYPE_SET = (
-    PARSER_TYPE_DATASET_ID,
-    PARSER_TYPE_DIRECTORY,
-    PARSER_TYPE_FILENAME
+# Set of supported identifier parsers.
+IDENTIFIER_TYPE_SET = (
+    IDENTIFIER_TYPE_DATASET_ID,
+    IDENTIFIER_TYPE_DIRECTORY,
+    IDENTIFIER_TYPE_FILENAME
     )
 
 # Parsing strictness: canonical-name;

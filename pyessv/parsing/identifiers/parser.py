@@ -1,22 +1,22 @@
 from pyessv.constants import PARSING_STRICTNESS_2
-from pyessv.constants import PARSER_TYPE_SET
-from pyessv.parsing.identifier_parser_config import get_config
+from pyessv.constants import IDENTIFIER_TYPE_SET
+from pyessv.parsing.identifiers.config import get_config
 from pyessv.utils import  compat
 
 
-def parse_identifer(scope, parser_type, identifier, strictness=PARSING_STRICTNESS_2):
+def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRICTNESS_2):
     """Parses an identifier.
 
     :param scope: Scope associated with the identifier to be parsed.
-    :param parser_type: Type of parser to be used.
+    :param identifier_type: Type of parser to be used.
     :param identifier: An identifier to be parsed.
     :param strictness: Strictness level to apply when applying name matching rules.
 
     """
-    assert parser_type in PARSER_TYPE_SET, f"Unsupported parser type: {parser_type}"
+    assert identifier_type in IDENTIFIER_TYPE_SET, f"Unsupported parser type: {identifier_type}"
 
     # Set parser config.
-    cfg = get_config(scope, parser_type)
+    cfg = get_config(scope, identifier_type)
 
     # Split identifier into a set of elements.
     elements = identifier.split(cfg.template_seperator)
@@ -30,11 +30,11 @@ def parse_identifer(scope, parser_type, identifier, strictness=PARSING_STRICTNES
     _validate_step_02(identifier, elements, cfg.template_slots, strictness)
 
 
-def parse_identifer_set(scope, parser_type, identifier_set, strictness=PARSING_STRICTNESS_2):
+def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSING_STRICTNESS_2):
     """Parses a collection of identifiers.
 
     :param scope: Scope associated with the identifier to be parsed.
-    :param parser_type: Type of parser to be used.
+    :param identifier_type: Type of parser to be used.
     :param identifier_set: A set of identifier to be parsed.
     :param strictness: Strictness level to apply when applying name matching rules.
 
@@ -43,7 +43,7 @@ def parse_identifer_set(scope, parser_type, identifier_set, strictness=PARSING_S
 
     result = set()
     for identifier in identifier_set:
-        result = result.union(parse_identifer(scope, parser_type, identifier, strictness))
+        result = result.union(parse_identifer(scope, identifier_type, identifier, strictness))
 
     return result
 

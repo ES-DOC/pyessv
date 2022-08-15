@@ -35,10 +35,10 @@ from pyessv.constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv.constants import GOVERNANCE_STATUS_PENDING
 from pyessv.constants import GOVERNANCE_STATUS_REJECTED
 from pyessv.constants import INITIALISATION_MODE
-from pyessv.constants import PARSER_TYPE_DATASET_ID
-from pyessv.constants import PARSER_TYPE_DIRECTORY
-from pyessv.constants import PARSER_TYPE_FILENAME
-from pyessv.constants import PARSER_TYPE_SET
+from pyessv.constants import IDENTIFIER_TYPE_DATASET_ID
+from pyessv.constants import IDENTIFIER_TYPE_DIRECTORY
+from pyessv.constants import IDENTIFIER_TYPE_FILENAME
+from pyessv.constants import IDENTIFIER_TYPE_SET
 from pyessv.constants import PARSING_STRICTNESS_0
 from pyessv.constants import PARSING_STRICTNESS_1
 from pyessv.constants import PARSING_STRICTNESS_2
@@ -47,8 +47,7 @@ from pyessv.constants import PARSING_STRICTNESS_4
 from pyessv.constants import REGEX_CANONICAL_NAME
 
 from pyessv.exceptions import InvalidAssociationError
-from pyessv.exceptions import TemplateParsingError
-from pyessv.exceptions import ParsingError
+from pyessv.exceptions import NamespaceParsingError
 from pyessv.exceptions import ValidationError
 
 from pyessv.factory import create_authority
@@ -73,10 +72,10 @@ from pyessv.model import Collection
 from pyessv.model import Scope
 from pyessv.model import Term
 
-from pyessv.parsing.identifier_parser import parse_identifer
-from pyessv.parsing.identifier_parser import parse_identifer_set
-from pyessv.parsing.namespace_parser import parse_namespace
-from pyessv.parsing.namespace_parser import parse_namespace as parse
+from pyessv.parsing import parse_identifer
+from pyessv.parsing import parse_identifer_set
+from pyessv.parsing import parse_namespace
+from pyessv.parsing import parse_namespace as parse
 
 from pyessv.utils.logger import log
 from pyessv.utils.logger import log_error
