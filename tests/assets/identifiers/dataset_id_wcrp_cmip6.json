@@ -1,0 +1,9 @@
+{
+    "scope": "wcrp:cmip6",
+    "identifiers": [
+        "CMIP6.FAFMIP.IPSL.IPSL-CM6A-LR.amip.r1i1p1f1.Amon.abs550aer.gm",
+        "CMIP6.CMIP.MIROC.MIROC-ES2L.historical.r1i1p1f2.Emon.mrsoLut.gn#v20190823",
+        "CMIP6.PMIP.MIROC.MIROC-ES2L.lgm.r1i1p1f2.Emon.mrsoLut.gn#v20191002",
+        "CMIP6.cmip.miroc.miroc-es2l.historical.r1i1p1f2.emon.mrsolut.gn"
+    ]
+}

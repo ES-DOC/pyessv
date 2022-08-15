@@ -38,6 +38,7 @@ from pyessv.constants import INITIALISATION_MODE
 from pyessv.constants import PARSER_TYPE_DATASET_ID
 from pyessv.constants import PARSER_TYPE_DIRECTORY
 from pyessv.constants import PARSER_TYPE_FILENAME
+from pyessv.constants import PARSER_TYPE_SET
 from pyessv.constants import PARSING_STRICTNESS_0
 from pyessv.constants import PARSING_STRICTNESS_1
 from pyessv.constants import PARSING_STRICTNESS_2
@@ -78,6 +79,7 @@ from pyessv.parsers import parse_dataset_identifer
 from pyessv.parsers import parse_dataset_identifers
 from pyessv.parsers import generic_parser
 from pyessv.parsing.parser import parse_identifer
+from pyessv.parsing.parser import parse_identifer_set
 
 from pyessv.utils.logger import log
 from pyessv.utils.logger import log_error

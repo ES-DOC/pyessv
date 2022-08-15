@@ -44,7 +44,7 @@ class ParsingConfiguration():
         """Instance representation.
         
         """
-        return f"parser-config|{self.scope_namespace}::{self.parser_type}"
+        return f"parser-config|{self.scope_namespace}::{self.parser_type}::{len(self.template_slots)}"
 
 
 def get_config(scope, parser_type):

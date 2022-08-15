@@ -1,0 +1,7 @@
+{
+    "scope": "wcrp:cmip5",
+    "identifiers": [
+        "cmip5.output1.IPSL.IPSL-CM5A-LR.aqua4K.3hr.atmos.3hr.r2i1p1",
+        "cmip5.output2.IPSL.IPSL-CM5A-LR.historicalMisc.mon.ocean.Omon.r2i1p1"
+    ]
+}
