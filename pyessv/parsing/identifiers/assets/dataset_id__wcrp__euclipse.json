@@ -1,0 +1,17 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:euclipse",
+    "template": "euclipse.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "euclipse.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:euclipse:product",
+        "wcrp:euclipse:institute",
+        "wcrp:euclipse:model",
+        "wcrp:euclipse:experiment",
+        "wcrp:euclipse:time-frequency",
+        "wcrp:euclipse:realm",
+        "wcrp:euclipse:cmor-table",
+        "wcrp:euclipse:ensemble"
+    ]
+}

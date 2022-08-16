@@ -1,0 +1,19 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:cordex-adjust",
+    "template": "cordex-adjust.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "cordex-adjust.%(product)s.%(domain)s.%(institute)s.%(driving_model)s.%(experiment)s.%(ensemble)s.%(rcm_name)s.%(bias_adjustment)s.%(time_frequency)s.%(variable)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:cordex-adjust:product",
+        "wcrp:cordex-adjust:domain",
+        "wcrp:cordex-adjust:institute",
+        "wcrp:cordex-adjust:driving-model",
+        "wcrp:cordex-adjust:experiment",
+        "wcrp:cordex-adjust:ensemble",
+        "wcrp:cordex-adjust:rcm-name",
+        "wcrp:cordex-adjust:bias-adjustment",
+        "wcrp:cordex-adjust:time-frequency",
+        "wcrp:cordex-adjust:variable"
+    ]
+}

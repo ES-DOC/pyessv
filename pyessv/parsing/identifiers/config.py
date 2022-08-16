@@ -66,6 +66,7 @@ def _encache(cache_key, scope, identifier_type):
     
     """
     cfg = io_manager.read_scope_parser_config(scope, identifier_type)
+
     _CACHE[cache_key] = \
         ParsingConfiguration(
             cfg["scope"],

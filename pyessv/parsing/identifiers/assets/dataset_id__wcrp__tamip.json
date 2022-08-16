@@ -1,0 +1,17 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:tamip",
+    "template": "tamip.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "tamip.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:tamip:product",
+        "wcrp:tamip:institute",
+        "wcrp:tamip:model",
+        "wcrp:tamip:experiment",
+        "wcrp:tamip:time-frequency",
+        "wcrp:tamip:realm",
+        "wcrp:tamip:cmor-table",
+        "wcrp:tamip:ensemble"
+    ]
+}

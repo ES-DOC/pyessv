@@ -1,0 +1,17 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:cmip6",
+    "template": "CMIP6.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "%(mip_era)s.%(activity_drs)s.%(institution_id)s.%(source_id)s.%(experiment_id)s.%(member_id)s.%(table_id)s.%(variable_id)s.%(grid_label)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:cmip6:activity-id",
+        "wcrp:cmip6:institution-id",
+        "wcrp:cmip6:source-id",
+        "wcrp:cmip6:experiment-id",
+        "wcrp:cmip6:member-id",
+        "wcrp:cmip6:table-id",
+        "wcrp:cmip6:variable-id",
+        "wcrp:cmip6:grid-label"
+    ]
+}

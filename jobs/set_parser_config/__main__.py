@@ -1,9 +1,9 @@
 import pyessv
 
 from pyessv import io_manager
-import set_dataset_id
-import set_directory_format
-import set_filename_format
+from jobs.set_parser_config import set_dataset_id
+from jobs.set_parser_config import set_directory_format
+from jobs.set_parser_config import set_filename_format
 
 
 # Map: parser type <-> generator.
@@ -29,6 +29,5 @@ def _main():
                     cfg = generator.get_config(authority, scope, template)
                     if cfg is not None:
                         io_manager.write_scope_parser_config(scope, identifier_type, cfg)
-
 
 _main()

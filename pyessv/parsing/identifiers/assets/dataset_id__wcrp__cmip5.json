@@ -1,0 +1,17 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:cmip5",
+    "template": "cmip5.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "cmip5.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:cmip5:product",
+        "wcrp:cmip5:institute",
+        "wcrp:cmip5:model",
+        "wcrp:cmip5:experiment",
+        "wcrp:cmip5:time-frequency",
+        "wcrp:cmip5:realm",
+        "wcrp:cmip5:cmor-table",
+        "wcrp:cmip5:ensemble"
+    ]
+}

@@ -24,6 +24,9 @@ CACHE_STORE_TYPES = (
 # Directory containing vocabulary archive.
 DIR_ARCHIVE = os.getenv('PYESSV_ARCHIVE_HOME', os.path.expanduser('~/.esdoc/pyessv-archive'))
 
+# Directory containing identifier parsing configuration.
+DIR_PARSING_CONFIG = os.getenv('PYESSV_PARSING_CONFIG_HOME', os.path.expanduser('~/.esdoc/pyessv-parsing-config'))
+
 # Dictionary encoding.
 ENCODING_DICT = 'dict'
 

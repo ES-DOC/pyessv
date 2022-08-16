@@ -56,7 +56,7 @@ def test_read_all():
     for authority in authorities:
         assert isinstance(authority, LIB.Authority)
 
-    dirs = [i for i in os.listdir(LIB.DIR_ARCHIVE) if not (i.startswith('.') or i.startswith("README") or i.endswith("_parsers"))]
+    dirs = [i for i in os.listdir(LIB.DIR_ARCHIVE) if not (i.startswith('.') or i.startswith("README"))]
     assert len(authorities) == len(dirs)
     assert dirs == [i.canonical_name for i in authorities]
 

@@ -1,0 +1,17 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:geomip",
+    "template": "geomip.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "geomip.%(product)s.%(institute)s.%(model)s.%(experiment)s.%(time_frequency)s.%(realm)s.%(cmor_table)s.%(ensemble)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:geomip:product",
+        "wcrp:geomip:institute",
+        "wcrp:geomip:model",
+        "wcrp:geomip:experiment",
+        "wcrp:geomip:time-frequency",
+        "wcrp:geomip:realm",
+        "wcrp:geomip:cmor-table",
+        "wcrp:geomip:ensemble"
+    ]
+}

@@ -19,6 +19,7 @@ from os.path import isdir
 from pyessv.codecs import decode
 from pyessv.codecs import encode
 from pyessv.constants import DIR_ARCHIVE
+from pyessv.constants import DIR_PARSING_CONFIG
 from pyessv.constants import ENCODING_JSON
 from pyessv.model import Authority
 from pyessv.model import Collection
@@ -81,19 +82,19 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
     if authority is not None:
         return _read_authority(f"{archive_dir}/{authority}", scope)
     else:
-        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i) and not i.endswith("_parsers")]
+        return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
 
-def read_scope_parser_config(s, identifier_type, archive_dir=DIR_ARCHIVE):
+def read_scope_parser_config(s, identifier_type, config_dir=DIR_PARSING_CONFIG):
     """Writes an identifier parser to the file system.
 
     :param s: Scope associated with parser.
     :param identifier_type: Type of parser being processed.
     :param obj: Config data to be written.
-    :param archive_dir: Directory hosting vocabulary archive.
+    :param config_dir: Directory hosting identifier parsing configuration.
 
     """
-    io_path = _get_path_scope_parser_config(s, identifier_type, archive_dir)
+    io_path = _get_path_to_scope_parser_config(s, identifier_type, config_dir)
     with open(io_path, 'r') as fstream:
         return json.loads(fstream.read())
 
@@ -127,13 +128,13 @@ def write(authority, archive_dir=DIR_ARCHIVE):
                 _write_term(dpath, term)
 
 
-def write_scope_parser_config(scope, identifier_type, cfg, archive_dir=DIR_ARCHIVE):
+def write_scope_parser_config(scope, identifier_type, cfg, config_dir=DIR_PARSING_CONFIG):
     """Writes an identifier parser to the file system.
 
     :param scope: Scope associated with parser.
     :param identifier_type: Type of parser being processed.
     :param obj: Config data to be written.
-    :param archive_dir: Directory hosting vocabulary archive.
+    :param config_dir: Directory hosting identifier parsing configuration.
 
     """
     # Inject meta attributes.
@@ -143,22 +144,23 @@ def write_scope_parser_config(scope, identifier_type, cfg, archive_dir=DIR_ARCHI
     }, **cfg }
 
     # Write to fs.
-    io_path = _get_path_scope_parser_config(scope, identifier_type, archive_dir)
+    io_path = _get_path_to_scope_parser_config(scope, identifier_type, config_dir)
     with open(io_path, 'w') as fstream:
         fstream.write(json.dumps(cfg, indent=4))
 
 
-def _get_path_scope_parser_config(s, identifier_type, archive_dir):
+def _get_path_to_scope_parser_config(s, identifier_type, config_dir):
     """Returns path to a scope parser configuration file.
 
     """
-    io_path = join(archive_dir, "_parsers")
+    io_path = join(config_dir, s.authority.io_name)
+    io_path = join(io_path, s.io_name)
     try:
         os.makedirs(io_path)
     except OSError:
         pass
 
-    return join(io_path, f"{identifier_type}__{s.authority.io_name}__{s.io_name}.json")
+    return join(io_path, f"{identifier_type}.json")
 
 
 def _read_authority(dpath, scope_id=None):

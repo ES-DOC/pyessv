@@ -1,0 +1,17 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:input4mips",
+    "template": "input4mips.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "%(activity_id)s.%(mip_era)s.%(target_mip)s.%(institution_id)s.%(source_id)s.%(realm)s.%(frequency)s.%(variable_id)s.%(grid_label)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:input4mips:mip-era",
+        "wcrp:input4mips:target-mip",
+        "wcrp:input4mips:institution-id",
+        "wcrp:input4mips:source-id",
+        "wcrp:input4mips:realm",
+        "wcrp:input4mips:frequency",
+        "wcrp:input4mips:variable-id",
+        "wcrp:input4mips:grid-label"
+    ]
+}

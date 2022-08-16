@@ -1,0 +1,19 @@
+{
+    "identifier_type": "dataset_id",
+    "scope": "wcrp:cordex",
+    "template": "cordex.{}.{}.{}.{}.{}.{}.{}.{}.{}.{}",
+    "template_raw": "cordex.%(product)s.%(domain)s.%(institute)s.%(driving_model)s.%(experiment)s.%(ensemble)s.%(rcm_name)s.%(rcm_version)s.%(time_frequency)s.%(variable)s",
+    "seperator": ".",
+    "collections": [
+        "wcrp:cordex:product",
+        "wcrp:cordex:domain",
+        "wcrp:cordex:institute",
+        "wcrp:cordex:driving-model",
+        "wcrp:cordex:experiment",
+        "wcrp:cordex:ensemble",
+        "wcrp:cordex:rcm-name",
+        "wcrp:cordex:rcm-version",
+        "wcrp:cordex:time-frequency",
+        "wcrp:cordex:variable"
+    ]
+}
