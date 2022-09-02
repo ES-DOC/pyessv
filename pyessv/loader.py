@@ -12,7 +12,7 @@
 import random
 import uuid
 
-from pyessv.cache import cache
+from pyessv.cache import encache
 from pyessv.cache import get_cached
 from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.factory import create_term

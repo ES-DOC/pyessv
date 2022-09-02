@@ -14,7 +14,7 @@ import os
 
 import pyessv
 from pyessv.accessors import ACCESSORS
-from pyessv.cache import cache
+from pyessv.cache import encache
 from pyessv.constants import DIR_ARCHIVE
 from pyessv.io_manager import read
 from pyessv.utils import logger
@@ -51,7 +51,7 @@ def _load_authorities(archive_dir, authority, scope):
 	authorities = []
 	for authority in io_manager.read(archive_dir, authority, scope):
 		authorities.append(authority)
-		cache(authority)
+		encache(authority)
 
 	return authorities
 

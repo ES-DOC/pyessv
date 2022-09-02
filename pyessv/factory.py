@@ -13,7 +13,7 @@ import datetime as dt
 from pyessv.constants import REGEX_CANONICAL_NAME
 from pyessv.constants import PARSING_STRICTNESS_2
 from pyessv.constants import PARSING_STRICTNESS_SET
-from pyessv.cache import cache
+from pyessv.cache import encache
 from pyessv.exceptions import ValidationError
 from pyessv.model import Authority
 from pyessv.model import Collection
@@ -232,6 +232,6 @@ def _create_node(
         raise ValidationError(errors)
 
     # Cache.
-    cache(node)
+    encache(node)
 
     return node

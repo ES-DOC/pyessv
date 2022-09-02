@@ -3,7 +3,7 @@ import os
 import shutil
 
 import pyessv as LIB
-from pyessv.cache import uncache
+from pyessv.cache import decache
 from tests.utils_assert import assert_objects
 
 
@@ -308,7 +308,7 @@ def teardown():
     global TERM_02
     global TERM_03
 
-    uncache(AUTHORITY)
+    decache(AUTHORITY)
 
     AUTHORITY = None
     SCOPE = None
