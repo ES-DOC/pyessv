@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: setup.py
-
-   :license: GPL / CeCILL
-   :platform: Unix
-   :synopsis: pyessv setup.
-
-.. moduleauthor:: ES-DOC <dev@esdocumentation.org>
-
-"""
 import os
 import re
 from codecs import open

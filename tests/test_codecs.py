@@ -1,16 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: testcodecs.py
-
-   :copyright: @2013 Earth System Documentation (https://es-doc.org)
-   :license: GPL / CeCILL
-   :platform: Unix, Windows
-   :synopsis: Executes pyessv encoding / decoding tests.
-
-.. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
-
-"""
 import inspect
 
 import pytest

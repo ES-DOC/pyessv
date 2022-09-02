@@ -1,16 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: testutils_assert.py
-
-   :copyright: @2013 Earth System Documentation (https://es-doc.org)
-   :license: GPL / CeCILL
-   :platform: Unix, Windows
-   :synopsis: Exposes test assertion utility functions.
-
-.. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
-
-"""
 import datetime
 import inspect
 import os
