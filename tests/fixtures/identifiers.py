@@ -28,6 +28,22 @@ def dataset_identifiers_invalid() -> typing.Tuple[pyessv.Scope, str]:
     return list(_yield_invalid_identifiers(pyessv.IDENTIFIER_TYPE_DATASET_ID))
 
 
+@pytest.fixture(scope="session")
+def filename_identifiers() -> typing.Tuple[pyessv.Scope, str]:
+    """Yields set of valid file identifiers for testing purposes. 
+
+    """
+    return list(_yield_valid_identifiers(pyessv.IDENTIFIER_TYPE_FILENAME))
+
+
+@pytest.fixture(scope="session")
+def filename_identifiers_invalid() -> typing.Tuple[pyessv.Scope, str]:
+    """Yields set of invalid dataset identifiers for testing purposes. 
+
+    """
+    return list(_yield_invalid_identifiers(pyessv.IDENTIFIER_TYPE_FILENAME))
+
+
 def _yield_valid_identifiers(identifier_type: str) -> typing.Iterator[typing.Tuple[pyessv.Scope, str]]:
     """Yields set of valid test identifier fixtures. 
     
