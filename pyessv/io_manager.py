@@ -19,8 +19,9 @@ from os.path import isdir
 from pyessv.codecs import decode
 from pyessv.codecs import encode
 from pyessv.constants import DIR_ARCHIVE
-from pyessv.constants import DIR_PARSING_CONFIG
+from pyessv.constants import DIR_CONFIG
 from pyessv.constants import ENCODING_JSON
+from pyessv.constants import IDENTIFIER_TYPE_SET
 from pyessv.model import Authority
 from pyessv.model import Collection
 from pyessv.model import Scope
@@ -85,7 +86,7 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
         return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
 
-def read_scope_parser_config(s, identifier_type, config_dir=DIR_PARSING_CONFIG):
+def read_scope_parser_config(s, identifier_type, config_dir=DIR_CONFIG):
     """Writes an identifier parser to the file system.
 
     :param s: Scope associated with parser.
@@ -128,7 +129,7 @@ def write(authority, archive_dir=DIR_ARCHIVE):
                 _write_term(dpath, term)
 
 
-def write_scope_parser_config(scope, identifier_type, cfg, config_dir=DIR_PARSING_CONFIG):
+def write_scope_parser_config(scope, identifier_type, cfg, config_dir=DIR_CONFIG):
     """Writes an identifier parser to the file system.
 
     :param scope: Scope associated with parser.
@@ -137,6 +138,8 @@ def write_scope_parser_config(scope, identifier_type, cfg, config_dir=DIR_PARSIN
     :param config_dir: Directory hosting identifier parsing configuration.
 
     """
+    assert identifier_type in IDENTIFIER_TYPE_SET
+
     # Inject meta attributes.
     cfg = { **{
         "identifier_type": identifier_type,

@@ -24,8 +24,8 @@ CACHE_STORE_TYPES = (
 # Directory containing vocabulary archive.
 DIR_ARCHIVE = os.getenv('PYESSV_ARCHIVE_HOME', os.path.expanduser('~/.esdoc/pyessv-archive'))
 
-# Directory containing identifier parsing configuration.
-DIR_PARSING_CONFIG = os.getenv('PYESSV_PARSING_CONFIG_HOME', os.path.expanduser('~/.esdoc/pyessv-parsing-config'))
+# Directory containing configuration.
+DIR_CONFIG = os.getenv('PYESSV_CONFIG_HOME', os.path.expanduser('~/.esdoc/pyessv-config'))
 
 # Dictionary encoding.
 ENCODING_DICT = 'dict'
@@ -83,17 +83,17 @@ GOVERNANCE_STATUS_SET = (
     )
 
 # Identifier type: dataset-id;
-IDENTIFIER_TYPE_DATASET_ID = "dataset_id"
+IDENTIFIER_TYPE_DATASET = "dataset"
 
 # Identifier type: directory structure;
-IDENTIFIER_TYPE_DIRECTORY = "directory_format"
+IDENTIFIER_TYPE_DIRECTORY = "directory"
 
 # Identifier type: filename;
-IDENTIFIER_TYPE_FILENAME = "filename_format"
+IDENTIFIER_TYPE_FILENAME = "filename"
 
 # Set of supported identifier parsers.
 IDENTIFIER_TYPE_SET = (
-    IDENTIFIER_TYPE_DATASET_ID,
+    IDENTIFIER_TYPE_DATASET,
     IDENTIFIER_TYPE_DIRECTORY,
     IDENTIFIER_TYPE_FILENAME
     )

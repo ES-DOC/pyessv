@@ -1,0 +1,7 @@
+{
+    "scope": "wcrp:cmip6",
+    "template": "%(root)s/%(mip_era)s/%(activity_drs)s/%(institution_id)s/%(source_id)s/%(experiment_id)s/%(member_id)s/%(table_id)s/%(variable_id)s/%(grid_label)s/%(version)s",
+    "identifiers": [
+        "cmip6/c4mip/bnu/access-om2/1pctco2-rad/r1i1p1f2/aerday/lon/gm/v12345678"
+    ]
+}

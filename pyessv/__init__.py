@@ -35,7 +35,7 @@ from pyessv.constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv.constants import GOVERNANCE_STATUS_PENDING
 from pyessv.constants import GOVERNANCE_STATUS_REJECTED
 from pyessv.constants import INITIALISATION_MODE
-from pyessv.constants import IDENTIFIER_TYPE_DATASET_ID
+from pyessv.constants import IDENTIFIER_TYPE_DATASET
 from pyessv.constants import IDENTIFIER_TYPE_DIRECTORY
 from pyessv.constants import IDENTIFIER_TYPE_FILENAME
 from pyessv.constants import IDENTIFIER_TYPE_SET

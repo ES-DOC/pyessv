@@ -52,7 +52,6 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
             if not load_collection(spec).is_matched(element, strictness):
                 raise ValueError('Invalid identifier - failed vocab check. Element #{} ({}) is invalid. Scope = {}. Identifier={}'.format(idx + 1, element, scope, identifier))
 
-
 def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSING_STRICTNESS_2):
     """Parses a collection of identifiers.
 
@@ -70,11 +69,14 @@ def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSI
 
     return result
 
-
 def _get_elements(identifier_type, identifier, seperator):
+    """Returns set of elements to be parsed.
+    
+    """
     elements = identifier.split(seperator)
+
+    # Filenames have a filetype suffix. 
     if identifier_type == IDENTIFIER_TYPE_FILENAME:
-        elements = elements[:-1] + elements[-1].split(".")
-        print(elements)
+        return elements[:-1] + elements[-1].split(".")
 
     return elements

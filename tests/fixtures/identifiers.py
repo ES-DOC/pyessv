@@ -7,48 +7,36 @@ import pytest
 import pyessv
 
 
-
 # Path to test assets folder.
 _ASSETS: pathlib.Path = pathlib.Path(os.path.dirname(__file__)).parent / "assets" / "identifiers"
 
-
 @pytest.fixture(scope="session")
 def dataset_identifiers() -> typing.Tuple[pyessv.Scope, str]:
-    """Yields set of valid dataset identifiers for testing purposes. 
-
-    """
-    return list(_yield_valid_identifiers(pyessv.IDENTIFIER_TYPE_DATASET_ID))
-
+    return list(_yield_valid_identifiers(pyessv.IDENTIFIER_TYPE_DATASET))
 
 @pytest.fixture(scope="session")
 def dataset_identifiers_invalid() -> typing.Tuple[pyessv.Scope, str]:
-    """Yields set of invalid dataset identifiers for testing purposes. 
+    return list(_yield_invalid_identifiers(pyessv.IDENTIFIER_TYPE_DATASET))
 
-    """
-    return list(_yield_invalid_identifiers(pyessv.IDENTIFIER_TYPE_DATASET_ID))
+@pytest.fixture(scope="session")
+def directory_identifiers() -> typing.Tuple[pyessv.Scope, str]:
+    return list(_yield_valid_identifiers(pyessv.IDENTIFIER_TYPE_DIRECTORY))
 
+@pytest.fixture(scope="session")
+def directory_identifiers_invalid() -> typing.Tuple[pyessv.Scope, str]:
+    return list(_yield_invalid_identifiers(pyessv.IDENTIFIER_TYPE_DIRECTORY))
 
 @pytest.fixture(scope="session")
 def filename_identifiers() -> typing.Tuple[pyessv.Scope, str]:
-    """Yields set of valid file identifiers for testing purposes. 
-
-    """
     return list(_yield_valid_identifiers(pyessv.IDENTIFIER_TYPE_FILENAME))
-
 
 @pytest.fixture(scope="session")
 def filename_identifiers_invalid() -> typing.Tuple[pyessv.Scope, str]:
-    """Yields set of invalid dataset identifiers for testing purposes. 
-
-    """
     return list(_yield_invalid_identifiers(pyessv.IDENTIFIER_TYPE_FILENAME))
 
-
 def _yield_valid_identifiers(identifier_type: str) -> typing.Iterator[typing.Tuple[pyessv.Scope, str]]:
-    """Yields set of valid test identifier fixtures. 
-    
-    """
     fpath: pathlib.Path = _ASSETS
+    print(_ASSETS)
     if not fpath.exists():
         return []
 
@@ -60,11 +48,7 @@ def _yield_valid_identifiers(identifier_type: str) -> typing.Iterator[typing.Tup
         for identifier in fixture["identifiers"]:
             yield scope, identifier
 
-
 def _yield_invalid_identifiers(identifier_type: str):
-    """Yields set of invalid test identifier fixtures. 
-    
-    """
     for scope, identifier in _yield_valid_identifiers(identifier_type):
         elements = identifier.split(".")
 
