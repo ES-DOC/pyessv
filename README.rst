@@ -25,7 +25,7 @@ A documentation eco-system is only as good as the available vocabularies.  ES-DO
 Who uses pyessv ?
 --------------------------------------
 
-Developers building value added software on top of the ES-DOC eco-system.
+Developers building value added software ontop of the ES-DOC eco-system.
 
 
 Further Information ?
