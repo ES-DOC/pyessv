@@ -1,5 +1,10 @@
+import re
+
 from pyessv.constants import PARSING_STRICTNESS_2
+from pyessv.constants import PARSING_STRICTNESS_4
 from pyessv.constants import IDENTIFIER_TYPE_SET
+from pyessv.constants import IDENTIFIER_TYPE_FILENAME
+from pyessv.loader import load as load_collection
 from pyessv.parsing.identifiers.config import get_config
 from pyessv.utils import  compat
 
@@ -15,19 +20,37 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     """
     assert identifier_type in IDENTIFIER_TYPE_SET, f"Unsupported parser type: {identifier_type}"
 
-    # Set parser config.
+    # Set parsing configuration.
     cfg = get_config(scope, identifier_type)
 
     # Split identifier into a set of elements.
-    elements = identifier.split(cfg.template_seperator)
+    elements = _get_elements(identifier_type, identifier, cfg.seperator)
+    if len(elements) != len(cfg.specs):
+        raise ValueError('Invalid identifier. Element count is invalid. Expected={}. Actual={}. Identifier = {}'.format(len(cfg.specs), len(elements), identifier))
 
-    # Strip identifier version suffix.
+    # Strip suffix ... TODO circle back on this.
     if '#' in elements[-1]:
         elements[-1] = elements[-1].split("#")[0]
 
-    # Execute validators.
-    _validate_step_01(identifier, elements, cfg.template_slots)
-    _validate_step_02(identifier, elements, cfg.template_slots, strictness)
+    # For each identifier element, execute relevant parse. 
+    for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
+        # ... constants.
+        if spec.startswith("const"):
+            expected = spec.split(":")[1]
+            if element != expected:
+                raise ValueError('Invalid identifier - failed constant check. Element #{} ({}) is invalid. Expected={}. Scope = {}. Identifier={}'.format(idx + 1, element, expected, scope, identifier))
+
+        # ... regular expressions.
+        elif spec.startswith("regex"):
+            if strictness >= PARSING_STRICTNESS_4:
+                element = str(element).strip().lower()
+            if re.compile(spec.split(":")[1]).match(element) is None:
+                raise ValueError('Invalid identifier - failed regex check. Element #{} ({}) is invalid. Scope = {}. Identifier={}'.format(idx + 1, element, scope, identifier))
+
+        # ... vocabulary collection members.
+        else:
+            if not load_collection(spec).is_matched(element, strictness):
+                raise ValueError('Invalid identifier - failed vocab check. Element #{} ({}) is invalid. Scope = {}. Identifier={}'.format(idx + 1, element, scope, identifier))
 
 
 def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSING_STRICTNESS_2):
@@ -48,30 +71,10 @@ def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSI
     return result
 
 
-def _validate_step_01(identifier, elements, slots):
-    """Validates that length of identifier elements is equivalent to length of template slots.
-    
-    """
-    if len(elements) != len(slots):
-        raise ValueError('Invalid identifier: {}: Number of elements is {}, expected {}'.format(identifier, len(elements), len(slots)))
+def _get_elements(identifier_type, identifier, seperator):
+    elements = identifier.split(seperator)
+    if identifier_type == IDENTIFIER_TYPE_FILENAME:
+        elements = elements[:-1] + elements[-1].split(".")
+        print(elements)
 
-
-def _validate_step_02(identifier, elements, slots, strictness):
-    """Validates the set of identifier elements against the set of template slots.
-    
-    """
-    # Iterate each identifier element & validate accordingly.
-    for idx, element in enumerate(elements):
-        # Set validation slot associated with element being validated.
-        slot = slots[idx]
-
-        # Validate element against a constant.
-        if isinstance(slot, compat.basestring):
-            if element != slot:
-                raise ValueError(f"Invalid identifier :: element = {element} :: identifier = {identifier}")
-
-        # Validate element against a vocabulary collection.
-        else:
-            term = slot.is_matched(element, strictness=strictness)
-            if term == False:
-                raise ValueError(f"Invalid identifier :: element = {element} :: identifier = {identifier}")
+    return elements

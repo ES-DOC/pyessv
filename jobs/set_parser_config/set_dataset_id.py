@@ -4,21 +4,20 @@ from pyessv import Authority
 from pyessv import Scope
 
 
-def get_config(a: Authority, s: Scope, template_raw: str):
+def get_config(a: Authority, s: Scope, template: str):
     """Returns dataset identifier parser configuration information derived from a previously declared parsing template.
 
     :param a: A vocabulary authority.
     :param s: A vocabulary scope.
-    :param template_raw: A raw dataset id parsing template.
+    :param template: A raw dataset id parsing template.
     
     """
-    # Set slots, i.e. set of vocabulary nodes embedded in the template.
-    slots: typing.List[str] = \
-        [f"{i[2:-2]}".replace("_", "-") for i in template_raw.split(".")[1:]]
+    # Set specs, i.e. set of parser specification embedded in the template.
+    specs: typing.List[str] = [f"{i[2:-2]}".replace("_", "-") for i in template.split(".")[1:]]
 
-    # Set slot overrides.
+    # Set spec overrides.
     if s.namespace == "wcrp:cmip6":
-        slots[0] = "activity-id"
+        specs[0] = "activity-id"
 
     # Set template prefix.
     if s.namespace in ("ecmwf:cc4e", "wcrp:cmip6"):
@@ -26,12 +25,8 @@ def get_config(a: Authority, s: Scope, template_raw: str):
     else:
         prefix = s.canonical_name
 
-    # Set template.
-    template: str = f"{prefix}." + ".".join(["{}" for i in slots])
-
     return {
         "template": template,
-        "template_raw": template_raw,
         "seperator": ".",
-        "collections": [f"{s}:{i}" for i in slots]
+        "specs": [f"const:{prefix}"] + [f"{s}:{i}" for i in specs]
     }
