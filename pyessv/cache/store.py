@@ -1,24 +1,13 @@
-"""
-.. module:: pyessv.cache.store.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Manages cache stores.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.cache import store_memory as _memory_store
 from pyessv.constants import CACHE_STORE_MEMORY
 from pyessv.constants import CACHE_STORE_TYPES
-from pyessv.model import Authority
 from pyessv.model import Node
 
 # Cache stores.
 _STORES = {
     CACHE_STORE_MEMORY: _memory_store
 }
+
 
 def decache(identifier):
     """Uncaches a node.
@@ -28,6 +17,7 @@ def decache(identifier):
     """
     for store in _STORES.values():
         store.decache(identifier)
+
 
 def encache(node):
     """Caches a vocabulary node.
@@ -39,6 +29,7 @@ def encache(node):
 
     for store in _STORES.values():
         store.cache(node)
+
 
 def get_cached(identifier=None, store_type=CACHE_STORE_MEMORY):
     """Returns a cached node.

@@ -1,17 +1,5 @@
-"""
-.. module:: pyessv.cache.memory.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Simple in-memory cache store.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.model import NODE_TYPES
 from pyessv.model import Authority
-
 
 
 # Cached loaded vocabulary authorities objects.

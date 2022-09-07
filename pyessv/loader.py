@@ -1,27 +1,13 @@
-"""
-.. module:: pyessv.loader.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Orchestrates reading & caching of entities.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import random
 import uuid
 
-from pyessv.cache import encache
 from pyessv.cache import get_cached
 from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.factory import create_term
 from pyessv.model import Authority
-from pyessv.model import Term
 from pyessv.utils import logger
 from pyessv.utils import compat
 from pyessv.utils.formatter import format_string
-
 
 
 def load(identifier=None, verbose=True):

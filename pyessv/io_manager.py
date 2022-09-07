@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.io_manager.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: I/O manager.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import glob
 import json
 import os
@@ -29,7 +18,6 @@ from pyessv.model import Term
 from pyessv.model import Node
 from pyessv.validation import get_errors
 from pyessv.validation import is_valid
-
 
 
 # Manifest file name.
@@ -107,9 +95,12 @@ def write(authority, archive_dir=DIR_ARCHIVE):
     :param archive_dir: Directory hosting vocabulary archive.
 
     """
-    assert isinstance(authority, Authority), 'Invalid authority: unknown type'
-    assert isdir(archive_dir), 'Invalid authority directory.'
-    assert is_valid(authority), 'Invalid authority: {} : {}'.format(authority, get_errors(authority))
+    assert isinstance(authority, Authority), \
+        'Invalid authority: unknown type'
+    assert isdir(archive_dir), \
+        'Invalid authority directory.'
+    assert is_valid(authority), \
+        'Invalid authority: {} : {}'.format(authority, get_errors(authority))
 
     # Set directory.
     dpath = join(archive_dir, authority.io_name)
@@ -141,10 +132,10 @@ def write_scope_parser_config(scope, identifier_type, cfg, config_dir=DIR_CONFIG
     assert identifier_type in IDENTIFIER_TYPE_SET
 
     # Inject meta attributes.
-    cfg = { **{
+    cfg = {**{
         "identifier_type": identifier_type,
         "scope": scope.namespace
-    }, **cfg }
+    }, **cfg}
 
     # Write to fs.
     io_path = _get_path_to_scope_parser_config(scope, identifier_type, config_dir)

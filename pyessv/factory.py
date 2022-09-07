@@ -1,30 +1,15 @@
-"""
-.. module:: pyessv.factory.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encapsulates creation of domain model class instances.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-"""
 import datetime as dt
 
 from pyessv.constants import REGEX_CANONICAL_NAME
-from pyessv.constants import PARSING_STRICTNESS_2
-from pyessv.constants import PARSING_STRICTNESS_SET
 from pyessv.cache import encache
 from pyessv.exceptions import ValidationError
 from pyessv.model import Authority
 from pyessv.model import Collection
-from pyessv.model import Node
 from pyessv.model import Scope
 from pyessv.model import Term
-from pyessv.utils import compat
 from pyessv.utils.formatter import format_canonical_name
 from pyessv.utils.formatter import format_string
 from pyessv.validation import validate
-
 
 
 def create_authority(
@@ -35,7 +20,7 @@ def create_authority(
     create_date=None,
     data=None,
     alternative_names=[]
-    ):
+):
     """Instantiates, initialises & returns a term authority.
 
     :param str name: Canonical name.
@@ -71,7 +56,7 @@ def create_scope(
     create_date=None,
     data=None,
     alternative_names=[]
-    ):
+):
     """Instantiates, initialises & returns a term scope.
 
     :param pyessv.Authority authority: CV authority to which scope is bound.
@@ -114,7 +99,7 @@ def create_collection(
     data=None,
     alternative_names=[],
     term_regex=None
-    ):
+):
     """Instantiates, initialises & returns a regular expression term collection.
 
     :param pyessv.Scope scope: CV scope to which collection is bound.
@@ -151,6 +136,7 @@ def create_collection(
         callback=_callback
         )
 
+
 def create_term(
     collection,
     name,
@@ -160,7 +146,7 @@ def create_term(
     create_date=None,
     data=None,
     alternative_names=[]
-    ):
+):
     """Instantiates, initialises & returns a term.
 
     :param pyessv.Collection collection: The collection to which the term belongs.
@@ -202,8 +188,8 @@ def _create_node(
     create_date,
     alternative_names,
     data,
-    callback = None
-    ):
+    callback=None
+):
     """Instantiates, initialises & returns a node.
 
     """

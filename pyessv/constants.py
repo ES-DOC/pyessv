@@ -1,16 +1,4 @@
-"""
-.. module:: pyessv.constants.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Package constants.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import os
-import re
 
 
 # In memory cache type.

@@ -1,21 +1,9 @@
-"""
-.. module:: pyessv.governance.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encapsulate govenerance features.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.constants import GOVERNANCE_STATUS_ACCEPTED
 from pyessv.constants import GOVERNANCE_STATUS_DEPRECATED
 from pyessv.constants import GOVERNANCE_STATUS_PENDING
 from pyessv.constants import GOVERNANCE_STATUS_REJECTED
 from pyessv.model import IterableNode
 from pyessv.model import Node
-
 
 
 def accept(target):

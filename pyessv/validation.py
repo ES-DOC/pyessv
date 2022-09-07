@@ -1,17 +1,4 @@
-"""
-.. module:: pyessv.validation.py
-   :copyright: Copyright "December 01, 2016', IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encpasulates domain model class instance validation.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
-
 from pyessv.model import Node
-
 
 
 def is_valid(instance):
@@ -49,7 +36,7 @@ def validate(instance):
     for validator in instance.get_validators():
         try:
             validator()
-        except AssertionError as err:
+        except AssertionError:
             typekey = instance.__class__.__name__
             field = validator.__name__[1:]
             val = getattr(instance, field)
