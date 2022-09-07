@@ -14,7 +14,7 @@ def parse_namespace(
     namespace,
     strictness=PARSING_STRICTNESS_2,
     field='canonical_name'
-    ):
+):
     """Parses a namespace within a vocabulary hierachy.
 
     :param str namespace: Vocabulary namespace, e.g. wcrp.
@@ -66,7 +66,6 @@ class _NodeInfo(object):
         self.strictness = strictness
         self.typekey = typekey
 
-
     def get_name(self, target):
         """Gets parsing relative name.
 
@@ -75,7 +74,6 @@ class _NodeInfo(object):
             return self.node.canonical_name
         elif self == target:
             return compat.str(self.name).strip().lower()
-
 
     def set_node(self, node):
         """Sets node returned from archive search.
@@ -99,7 +97,8 @@ class _NodeInfo(object):
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_3:
-            if self.name in {node.canonical_name, node.raw_name}.union(set(node.alternative_names)):
+            names = {node.canonical_name, node.raw_name}.union(set(node.alternative_names))
+            if self.name in names:
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_4:
@@ -108,7 +107,7 @@ class _NodeInfo(object):
                 matched = True
 
         # Raise parsing error if appropriate.
-        if matched == False:
+        if matched is False:
             raise NamespaceParsingError(self.typekey, self.name)
 
         self.node = node

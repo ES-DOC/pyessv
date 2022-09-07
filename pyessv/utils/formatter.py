@@ -1,20 +1,8 @@
-"""
-.. module:: pyessv.utils.formatter.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encapsulates name formatting operations.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.utils import compat
 
 
-
 def format_attribute_name(name):
-    """Formats an attribute name prior to accessing either a managed collection or arbitrary data.
+    """Formats an attribute name prior to accessing either a collection or arbitrary data.
 
     """
     if name is not None:
