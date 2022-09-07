@@ -108,14 +108,18 @@ class Collection(IterableNode):
         :param int strictness: Strictness level to apply when applying name matching rules.
 
         """
+
         assert isinstance(name, compat.basestring), 'Invalid term name'
         assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
+
+        from pyessv.factory import create_term
 
         # Reg-ex match.
         if self.is_virtual:
             if strictness >= PARSING_STRICTNESS_4:
                 name = str(name).strip().lower()
-            return re.compile(self.term_regex).match(name) is not None
+            if re.compile(self.term_regex).match(name) is not None:
+                return create_term(self, name, append=False)
 
         # Match by term.
         for term in self:

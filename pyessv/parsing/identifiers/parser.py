@@ -28,10 +28,11 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     if len(elements) != len(cfg.specs):
         raise ValueError('Invalid identifier. Element count is invalid. Expected={}. Actual={}. Identifier = {}'.format(len(cfg.specs), len(elements), identifier))
 
-    # Strip suffix ... TODO circle back on this.
+    # Strip suffix ...
     if '#' in elements[-1]:
         elements[-1] = elements[-1].split("#")[0]
 
+    result = set()
     # For each identifier element, execute relevant parse. 
     for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
         # ... constants.
@@ -49,8 +50,13 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
 
         # ... vocabulary collection members.
         else:
-            if not load_collection(spec).is_matched(element, strictness):
+            found_term = load_collection(spec).is_matched(element, strictness)
+            if not found_term:
                 raise ValueError('Invalid identifier - failed vocab check. Element #{} ({}) is invalid. Scope = {}. Identifier={}'.format(idx + 1, element, scope, identifier))
+            result.add(found_term)
+
+    return result
+
 
 def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSING_STRICTNESS_2):
     """Parses a collection of identifiers.

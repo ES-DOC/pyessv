@@ -159,7 +159,8 @@ def create_term(
     url=None,
     create_date=None,
     data=None,
-    alternative_names=[]
+    alternative_names=[],
+    append=True
     ):
     """Instantiates, initialises & returns a term.
 
@@ -171,6 +172,7 @@ def create_term(
     :param datetime create_date: Creation date.
     :param dict data: Arbirtrary data.
     :param list alternative_names: Collection of associated alternative names.
+    :param append: bool : cache the term or not
 
     :returns: A vocabulary term, e.g. ipsl.
     :rtype: pyessv.Term
@@ -178,7 +180,8 @@ def create_term(
     """
     def _callback(instance):
         instance.collection = collection
-        collection.terms.append(instance)
+        if append:
+            collection.terms.append(instance)
 
     return _create_node(
         typeof=Term,
