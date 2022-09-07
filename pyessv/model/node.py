@@ -38,13 +38,11 @@ class Node(object):
         self.typekey = typekey
         self.url = None
 
-
     def __repr__(self):
         """Instance representation.
 
         """
         return self.namespace
-
 
     def __getattr__(self, name):
         """Instance attribute getter.
@@ -60,14 +58,12 @@ class Node(object):
             except KeyError:
                 raise AttributeError('{} unknown attribute'.format(name))
 
-
     @property
     def name(self):
         """Helper attribute to return canonical_name.
 
         """
         return self.canonical_name
-
 
     @property
     def all_names(self):
@@ -79,14 +75,12 @@ class Node(object):
 
         return set(sorted(result))
 
-
     @property
     def hierarchy(self):
         """Gets hierachy within archive.
 
         """
         return self.ancestors + [self]
-
 
     @property
     def namespace(self):
@@ -95,14 +89,12 @@ class Node(object):
         """
         return ":".join([i.canonical_name for i in self.hierarchy])
 
-
     @property
     def io_name(self):
         """Returns name formatted for I/O operations.
 
         """
         return format_io_name(self.canonical_name)
-
 
     def get_validators(self):
         """Returns set of validators.
@@ -157,20 +149,17 @@ class IterableNode(Node):
         self._items = items
         super(IterableNode, self).__init__(typekey)
 
-
     def __add__(self, other):
         """Add operator.
 
         """
         return self._items + other._items
 
-
     def __contains__(self, key):
         """Instance membership predicate.
 
         """
         return self[key] is not None
-
 
     def __getattr__(self, name):
         """Instance attribute getter.
@@ -180,7 +169,6 @@ class IterableNode(Node):
             return self[name]
         except KeyError:
             raise AttributeError('{} unknown attribute'.format(name))
-
 
     def __getitem__(self, key):
         """Returns a child section item.
@@ -209,15 +197,14 @@ class IterableNode(Node):
         # Seek with raw or formatted key.
         return _get(key) or _get(format_attribute_name(key))
 
-
     def __iter__(self):
         """Instance iterator initializer.
 
         """
-        sort_key = lambda i: i if isinstance(i, compat.basestring) else i.canonical_name
-
-        return iter(sorted(self._items, key=sort_key))
-
+        return iter(sorted(
+            self._items,
+            key=lambda i: i if isinstance(i, compat.basestring) else i.canonical_name
+            ))
 
     def __len__(self):
         """Returns number of items in managed collection.

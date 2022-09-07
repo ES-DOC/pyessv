@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.model.term.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: A vocabulary term, e.g. IPSL.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.constants import GOVERNANCE_STATUS_PENDING
 from pyessv.constants import GOVERNANCE_STATUS_SET
 from pyessv.constants import NODE_TYPEKEY_TERM
@@ -16,7 +5,6 @@ from pyessv.model.node import Node
 from pyessv.utils import compat
 from pyessv.utils.validation import assert_regex
 from pyessv.utils.validation import assert_string
-
 
 
 class Term(Node):
@@ -34,7 +22,6 @@ class Term(Node):
         self.parent = None
         self.status = GOVERNANCE_STATUS_PENDING
 
-
     def __contains__(self, key):
         """Instance membership predicate.
 
@@ -43,14 +30,12 @@ class Term(Node):
 
         return key in self.all_names
 
-
     @property
     def ancestors(self):
         """Gets ancestors within archive hierarchy.
 
         """
         return [self.authority, self.scope, self.collection]
-
 
     @property
     def authority(self):
@@ -59,14 +44,12 @@ class Term(Node):
         """
         return self.scope.authority
 
-
     @property
     def scope(self):
         """Gets governing scope.
 
         """
         return self.collection.scope
-
 
     def get_validators(self):
         """Returns set of validators.

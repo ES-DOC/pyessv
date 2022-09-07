@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.model.collection.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: A vocabulary collection, e.g. institute-id.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import re
 
 from pyessv.constants import NODE_TYPEKEY_COLLECTION
@@ -41,14 +30,12 @@ class Collection(IterableNode):
         self.term_regex = None
         super(Collection, self).__init__(self.terms, NODE_TYPEKEY_COLLECTION)
 
-
     @property
     def ancestors(self):
         """Gets ancestors within archive hierarchy.
 
         """
         return [self.authority, self.scope]
-
 
     @property
     def authority(self):
@@ -57,14 +44,13 @@ class Collection(IterableNode):
         """
         return self.scope.authority
 
-
     @property
     def is_virtual(self):
-        """Gets flag indicating whether the collection is a virtual one (i.e. simply constrained by a reg-ex).
+        """Gets flag indicating whether the collection is a virtual one
+        (i.e. simply constrained by a reg-ex).
 
         """
         return len(self) == 0
-
 
     def get_validators(self):
         """Returns set of validators.
@@ -100,7 +86,6 @@ class Collection(IterableNode):
             _terms
             )
 
-
     def is_matched(self, name, strictness=PARSING_STRICTNESS_2):
         """Gets flag indicating whether a matching term can be found.
 
@@ -108,8 +93,10 @@ class Collection(IterableNode):
         :param int strictness: Strictness level to apply when applying name matching rules.
 
         """
-        assert isinstance(name, compat.basestring), 'Invalid term name'
-        assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
+        assert isinstance(name, compat.basestring), \
+            'Invalid term name'
+        assert strictness in PARSING_STRICTNESS_SET, \
+            'Invalid parsing strictness: {}'.format(strictness)
 
         # Reg-ex match.
         if self.is_virtual:
@@ -136,7 +123,8 @@ class Collection(IterableNode):
 
             # match by: alternative_name
             if strictness == PARSING_STRICTNESS_3:
-                if name in {term.canonical_name, term.raw_name}.union(set(term.alternative_names)):
+                names = {term.canonical_name, term.raw_name}.union(set(term.alternative_names))
+                if name in names:
                     return term
 
             # match by: all (case-insensitive)
