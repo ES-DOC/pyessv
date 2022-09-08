@@ -56,8 +56,8 @@ def _mixin_scopeaccessors(authorities):
     """Mixes in scope level vocab accessors functions.
 
     """
-    # In pyessv.accessors sub-package are modules that expose helper 
-    # functions for accessing vocabularies, here we are ensuring 
+    # In pyessv.accessors sub-package are modules that expose helper
+    # functions for accessing vocabularies, here we are ensuring
     # that those functions are easily accessed.
     targets = []
     for authority in authorities:

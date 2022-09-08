@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.__init__.py
-
-   :copyright: @2015 IPSL (http://ipsl.fr)
-   :license: GPL / CeCILL
-   :platform: Unix
-   :synopsis: Python Earth Science Standard Vocabulary library intializer.
-
-.. moduleauthor:: IPSL (ES-DOC) <dev@esdocumentation.org>
-
-"""
 __title__ = 'pyessv'
 __version__ = '0.9.1.0'
 __author__ = 'ES-DOC'
@@ -57,6 +46,7 @@ from pyessv.governance import reset
 from pyessv.initializer import init
 from pyessv.loader import load_random
 from pyessv.loader import load
+from pyessv.matcher import match_term
 from pyessv.model import Authority
 from pyessv.model import Collection
 from pyessv.model import Scope
@@ -93,6 +83,7 @@ __all__ = [
     get_errors,
     init,
     is_valid,
+    match_term,
     load_random,
     load,
     log,

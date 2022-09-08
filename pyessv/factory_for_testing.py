@@ -1,13 +1,3 @@
-"""
-.. module:: utils.factory.py
-   :license: GPL/CeCIL
-   :platform: Unix
-   :synopsis: Test issue factory.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import pyessv
 
 

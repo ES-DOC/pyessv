@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.model.node.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: A node within the pyessv domain model.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import datetime
 
 from pyessv.constants import NODE_TYPEKEY_SET

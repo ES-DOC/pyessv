@@ -71,6 +71,8 @@ _FUNCS = {
     # ... loader
     'load_random',
     'load',
+    # ... matcher
+    'match_term',
     # ... logging
     'log',
     'log_error',

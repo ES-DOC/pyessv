@@ -145,26 +145,27 @@ def create_term(
     url=None,
     create_date=None,
     data=None,
-    alternative_names=[]
+    alternative_names=[],
+    append=True
 ):
     """Instantiates, initialises & returns a term.
 
-    :param pyessv.Collection collection: The collection to which the term belongs.
-    :param str name: Canonical name.
-    :param str description: Informative description.
-    :param str label: Label for UI purposes.
-    :param str url: Further information URL.
-    :param datetime create_date: Creation date.
-    :param dict data: Arbirtrary data.
-    :param list alternative_names: Collection of associated alternative names.
-
+    :param collection: The collection to which the term belongs.
+    :param name: Canonical name.
+    :param description: Informative description.
+    :param label: Label for UI purposes.
+    :param url: Further information URL.
+    :param create_date: Creation date.
+    :param data: Arbirtrary data.
+    :param alternative_names: Collection of associated alternative names.
+    :param append: Flag indicating whether collection termset is to be extended.
     :returns: A vocabulary term, e.g. ipsl.
-    :rtype: pyessv.Term
 
     """
     def _callback(instance):
         instance.collection = collection
-        collection.terms.append(instance)
+        if append is True:
+            collection.terms.append(instance)
 
     return _create_node(
         typeof=Term,

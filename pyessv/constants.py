@@ -36,7 +36,7 @@ NODE_TYPEKEY_AUTHORITY = 'authority'
 # Node type key: a scope constraining collection of vocabularies.
 NODE_TYPEKEY_SCOPE = 'scope'
 
-# Node type key: a collection constraining collection of terms by composing keys from other collections.
+# Node type key: a collection of terms by composing keys from other collections.
 NODE_TYPEKEY_COLLECTION = 'collection'
 
 # Node type key: a term.
