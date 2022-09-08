@@ -9,6 +9,7 @@ def get_config(a: Authority, s: Scope, template_raw: str):
     :param a: A vocabulary authority.
     :param s: A vocabulary scope.
     :param template_raw: A raw dataset id parsing template.
+    :returns: File name parser configuration information.
 
     """
     # Skip ill-defined.
@@ -18,8 +19,9 @@ def get_config(a: Authority, s: Scope, template_raw: str):
     # Discard period start/end + file type.
     template = template_raw.split("[")[0]
 
-    # Set core specs.
+    # Set specs.
     specs = [i.split(")")[0] for i in template.split("%(")[1:]]
+    specs = [i.replace("_", "-") for i in specs]
     specs = [f"{s}:{i}" for i in specs]
 
     # Set spec overrides.

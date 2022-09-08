@@ -1,3 +1,5 @@
+import typing
+
 from pyessv import Authority
 from pyessv import Scope
 
@@ -9,14 +11,17 @@ def get_config(a: Authority, s: Scope, template_raw: str):
     :param a: A vocabulary authority.
     :param s: A vocabulary scope.
     :param template_raw: A raw dataset id parsing template.
+    :returns: Directory name parser configuration information.
 
     """
     # Skip ill-defined.
     if s.namespace == "wcrp:e3sm":
         return
 
-    # Set raw specs.
-    specs = [i.split(")")[0] for i in template_raw.split("%(")[2:]]
+    # Set specs.
+    specs: typing.List[str] = template_raw.split("%(")[2:]
+    specs = [i.split(")")[0] for i in specs]
+    specs = [i.replace("_", "-") for i in specs]
 
     # Set spec overrides.
     if s.namespace == "wcrp:cmip6":

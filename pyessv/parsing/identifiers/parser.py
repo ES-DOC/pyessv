@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 import re
 
 from pyessv.constants import PARSING_STRICTNESS_2
@@ -30,9 +31,9 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
         msg = 'Invalid identifier. Element count mismatch. Expected={}. Actual={}. Identifier={}'
         raise ValueError(msg.format(len(cfg.specs), len(elements), identifier))
 
-    # Strip suffix - specific to dataset version identifiers.
-    if '#' in elements[-1]:
-        elements[-1] = elements[-1].split("#")[0]
+    # Strip suffixes.
+    if cfg.suffix is not None and cfg.suffix in elements[-1]:
+        elements[-1] = elements[-1].split(cfg.suffix)[0]
 
     # For each identifier element, execute relevant parse.
     result = set()

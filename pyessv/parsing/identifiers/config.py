@@ -15,7 +15,8 @@ class ParsingConfiguration():
         scope_namespace,
         template,
         seperator,
-        specs
+        specs,
+        suffix
     ):
         """Instance initializer.
 
@@ -24,12 +25,14 @@ class ParsingConfiguration():
         :param template: Template constraining parsing process.
         :param seperator: Seperator isolating slots from each other.
         :param specs: Set of processing instructions when parsing.
+        :param suffix: A suffix to be stripped from the identifier when parsing.
 
         """
         self.identifier_type = identifier_type
         self.scope_namespace = scope_namespace
         self.seperator = seperator
         self.specs = specs
+        self.suffix = suffix
         self.template = template
 
     def __repr__(self):
@@ -66,5 +69,6 @@ def _encache(cache_key, scope, identifier_type):
             cfg["scope"],
             cfg["template"],
             cfg["seperator"],
-            cfg["specs"]
+            cfg["specs"],
+            cfg.get("suffix")
         )
