@@ -21,6 +21,7 @@ _GENERATORS = {
     constants.IDENTIFIER_TYPE_FILENAME: set_filename_id
 }
 
+
 def _main():
     """Main entry point.
 
@@ -41,5 +42,6 @@ def _main():
                     cfg = generator.get_config(a, s, template)
                     if cfg is not None:
                         io_manager.write_scope_parser_config(s, identifier_type, cfg)
+
 
 _main()

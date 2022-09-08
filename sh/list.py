@@ -3,7 +3,6 @@ import argparse
 import pyessv
 
 
-
 # Define command line options.
 _ARGS = argparse.ArgumentParser('Writes an authority"s vocabularies to stdout.')
 _ARGS.add_argument(
@@ -33,6 +32,7 @@ _ARGS.add_argument(
     type=str,
     default=None
     )
+
 
 def _main(args):
     """Main entry point.

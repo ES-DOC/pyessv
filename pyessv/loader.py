@@ -2,16 +2,13 @@ import random
 import uuid
 
 from pyessv import matcher
-from pyessv.cache import encache
 from pyessv.cache import get_cached
 from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.factory import create_term
 from pyessv.model import Authority
-from pyessv.model import Term
 from pyessv.utils import logger
 from pyessv.utils import compat
 from pyessv.utils.formatter import format_string
-
 
 
 def load(identifier=None, verbose=True):
