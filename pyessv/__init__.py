@@ -77,6 +77,8 @@ from pyessv.parsing import parse_identifer_set
 from pyessv.parsing import parse_namespace
 from pyessv.parsing import parse_namespace as parse
 
+from pyessv.parsing import build_identifier
+
 from pyessv.utils.logger import log
 from pyessv.utils.logger import log_error
 from pyessv.utils.logger import log_warning

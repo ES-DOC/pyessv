@@ -6,7 +6,7 @@ from pyessv.constants import IDENTIFIER_TYPE_SET
 from pyessv.constants import IDENTIFIER_TYPE_FILENAME
 from pyessv.loader import load as load_collection
 from pyessv.parsing.identifiers.config import get_config
-from pyessv.utils import  compat
+from pyessv.utils import compat
 
 
 def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRICTNESS_2):
