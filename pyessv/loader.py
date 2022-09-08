@@ -83,7 +83,7 @@ def _load_by_namespace(identifier):
                     if _is_matched(t, term):
                         return t
                 # ... terms (virtual)
-                if matcher.match_term(c, term):
+                if matcher.match_term(c, term) is not False:
                     return create_term(c, term)
 
 

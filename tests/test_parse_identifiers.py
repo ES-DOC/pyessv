@@ -36,4 +36,6 @@ def _assert_invalid_identifier_set(identifier_type, identifier_set):
 
 def _assert_invalid_identifier(scope, identifier_type, identifier):
     with pytest.raises(ValueError):
+        result = pyessv.parse_identifer(scope, identifier_type, identifier)
+        print(identifier, result)
         pyessv.parse_identifer(scope, identifier_type, identifier)

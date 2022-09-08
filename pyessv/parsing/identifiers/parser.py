@@ -55,11 +55,11 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
 
         # ... vocabulary collection members.
         else:
-            term = match_term(load_collection(spec), element, strictness)
-            if term is None:
+            match_result = match_term(load_collection(spec), element, strictness)
+            if match_result is False:
                 msg = 'Invalid identifier - failed vocab check. Element=#{}::({}). Identifier={}'
                 raise ValueError(msg.format(idx + 1, element, identifier))
-            result.add(term)
+            result.add(match_result)
 
     return result
 
