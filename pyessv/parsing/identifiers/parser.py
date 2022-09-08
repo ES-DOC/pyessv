@@ -30,11 +30,12 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
         msg = 'Invalid identifier. Element count mismatch. Expected={}. Actual={}. Identifier={}'
         raise ValueError(msg.format(len(cfg.specs), len(elements), identifier))
 
-    # Strip suffix ... TODO circle back on this.
+    # Strip suffix - specific to dataset version identifiers.
     if '#' in elements[-1]:
         elements[-1] = elements[-1].split("#")[0]
 
     # For each identifier element, execute relevant parse.
+    result = set()
     for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
         # ... constants.
         if spec.startswith("const"):
@@ -53,9 +54,13 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
 
         # ... vocabulary collection members.
         else:
-            if not match_term(load_collection(spec), element, strictness):
+            term = match_term(load_collection(spec), element, strictness)
+            if term is None:
                 msg = 'Invalid identifier - failed vocab check. Element=#{}::({}). Identifier={}'
                 raise ValueError(msg.format(idx + 1, element, identifier))
+            result.add(term)
+
+    return result
 
 
 def parse_identifer_set(scope, identifier_type, identifier_set, strictness=PARSING_STRICTNESS_2):
