@@ -23,9 +23,13 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     # Set parsing configuration.
     cfg = get_config(scope, identifier_type)
 
+    # retrieve optional collection in spec
+    all_optional_template_str = re.findall("\[(.+?)\]", cfg.template)
+    optional_template_part = [it for sub in [re.findall("%\((\w+)\)s", opt_col) for opt_col in all_optional_template_str] for it in sub]
+    
     # Split identifier into a set of elements.
     elements = _get_elements(identifier_type, identifier, cfg.seperator)
-    if len(elements) != len(cfg.specs):
+    if len(elements) < len(cfg.specs)-len(optional_template_part) and len(elements) < len(cfg.specs)+len(optional_template_part):
         raise ValueError('Invalid identifier. Element count is invalid. Expected={}. Actual={}. Identifier = {}'.format(len(cfg.specs), len(elements), identifier))
 
     # Strip suffix ...
