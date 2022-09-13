@@ -11,6 +11,7 @@ class Scope(IterableNode):
     """A scope managed by an authority.
 
     """
+
     def __init__(self):
         """Instance constructor.
 

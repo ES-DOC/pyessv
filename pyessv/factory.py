@@ -1,12 +1,26 @@
+"""
+.. module:: pyessv.factory.py
+   :copyright: Copyright "December 01, 2016", IPSL
+   :license: GPL/CeCIL
+   :platform: Unix, Windows
+   :synopsis: Encapsulates creation of domain model class instances.
+
+.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
+
+"""
 import datetime as dt
 
 from pyessv.constants import REGEX_CANONICAL_NAME
+from pyessv.constants import PARSING_STRICTNESS_2
+from pyessv.constants import PARSING_STRICTNESS_SET
 from pyessv.cache import encache
 from pyessv.exceptions import ValidationError
 from pyessv.model import Authority
 from pyessv.model import Collection
+from pyessv.model import Node
 from pyessv.model import Scope
 from pyessv.model import Term
+from pyessv.utils import compat
 from pyessv.utils.formatter import format_canonical_name
 from pyessv.utils.formatter import format_string
 from pyessv.validation import validate
@@ -20,7 +34,7 @@ def create_authority(
     create_date=None,
     data=None,
     alternative_names=[]
-):
+    ):
     """Instantiates, initialises & returns a term authority.
 
     :param str name: Canonical name.
@@ -56,7 +70,7 @@ def create_scope(
     create_date=None,
     data=None,
     alternative_names=[]
-):
+    ):
     """Instantiates, initialises & returns a term scope.
 
     :param pyessv.Authority authority: CV authority to which scope is bound.
@@ -99,7 +113,7 @@ def create_collection(
     data=None,
     alternative_names=[],
     term_regex=None
-):
+    ):
     """Instantiates, initialises & returns a regular expression term collection.
 
     :param pyessv.Scope scope: CV scope to which collection is bound.
@@ -136,7 +150,6 @@ def create_collection(
         callback=_callback
         )
 
-
 def create_term(
     collection,
     name,
@@ -147,24 +160,25 @@ def create_term(
     data=None,
     alternative_names=[],
     append=True
-):
+    ):
     """Instantiates, initialises & returns a term.
 
-    :param collection: The collection to which the term belongs.
-    :param name: Canonical name.
-    :param description: Informative description.
-    :param label: Label for UI purposes.
-    :param url: Further information URL.
-    :param create_date: Creation date.
-    :param data: Arbirtrary data.
-    :param alternative_names: Collection of associated alternative names.
-    :param append: Flag indicating whether collection termset is to be extended.
+    :param pyessv.Collection collection: The collection to which the term belongs.
+    :param str name: Canonical name.
+    :param str description: Informative description.
+    :param str label: Label for UI purposes.
+    :param str url: Further information URL.
+    :param datetime create_date: Creation date.
+    :param dict data: Arbirtrary data.
+    :param list alternative_names: Collection of associated alternative names.
+
     :returns: A vocabulary term, e.g. ipsl.
+    :rtype: pyessv.Term
 
     """
     def _callback(instance):
         instance.collection = collection
-        if append is True:
+        if append:
             collection.terms.append(instance)
 
     return _create_node(

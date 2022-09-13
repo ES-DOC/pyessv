@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 import re
 
 from pyessv.constants import PARSING_STRICTNESS_2
@@ -25,18 +24,21 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     # Set parsing configuration.
     cfg = get_config(scope, identifier_type)
 
+    # retrieve optional collection in spec
+    all_optional_template_str = re.findall("\[(.+?)\]", cfg.template)
+    optional_template_part = [it for sub in [re.findall("%\((\w+)\)s", opt_col) for opt_col in all_optional_template_str] for it in sub]
+
     # Split identifier into a set of elements.
     elements = _get_elements(identifier_type, identifier, cfg.seperator)
-    if len(elements) != len(cfg.specs):
-        msg = 'Invalid identifier. Element count mismatch. Expected={}. Actual={}. Identifier={}'
-        raise ValueError(msg.format(len(cfg.specs), len(elements), identifier))
+    if len(cfg.specs)-len(optional_template_part) > len(elements) > len(cfg.specs)+len(optional_template_part):
+        raise ValueError('Invalid identifier. Element count is invalid. Expected={}. Actual={}. Identifier = {}'.format(len(cfg.specs), len(elements), identifier))
 
-    # Strip suffixes.
-    if cfg.suffix is not None and cfg.suffix in elements[-1]:
-        elements[-1] = elements[-1].split(cfg.suffix)[0]
+    # Strip suffix ...
+    if '#' in elements[-1]:
+        elements[-1] = elements[-1].split("#")[0]
 
-    # For each identifier element, execute relevant parse.
     result = set()
+    # For each identifier element, execute relevant parse.
     for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
         # ... constants.
         if spec.startswith("const"):
