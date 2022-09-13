@@ -12,12 +12,27 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     :param terms: Set of known term.
     :param regex_terms: Dictionary of terms matching the regex term in spec : {term:value,...}
 
+    :return: str of identifer according to template and input terms
+    :rtype: str | ValueError
+
+    Note : currently, if a term is optional in the template (i.e in bracket []) and if there is no input term
+    corresponding : this function return the result with all known term but the identifier could be invalid
+
+    Note 2 :  currently, the regex for time period is NOT dependant of the time frequency whereas in fact there are.
+    A possible upgrade would be to find a method to take into account the time_frequency either in config, or in pyessv
+    or let the pyessv client to deal with it
     """
 
     assert identifier_type in IDENTIFIER_TYPE_SET, f"Unsupported parser type: {identifier_type}"
 
     # Set parsing configuration.
     cfg = get_config(scope, identifier_type)
+
+    # retrieve optional collection in spec
+    all_optional_template_str = re.findall("\[(.+?)\]", cfg.template)
+    optional_template_part = [it for sub in
+                              [re.findall("%\((\w+)\)s", opt_col) for opt_col in all_optional_template_str] for it in
+                              sub]
 
     # Template split from configuration
     template_part = re.findall("%\((\w*)\)s", cfg.template)
@@ -32,7 +47,7 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     known_terms = set.union(*known_terms)
     # print(set.union(*known_terms))
     for idx, spec in enumerate(cfg.specs):
-        if not spec.startswith("const"):
+        if not spec.startswith("const") and template_part[idx] not in optional_template_part:
             if spec.startswith("regex"):
                 if template_part[idx] not in known_terms:
                     msg = f'Invalid known terms : missing {template_part[idx]} to build {identifier_type}'
@@ -50,7 +65,8 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
 
         # ... regular expressions
         elif spec.startswith("regex"):
-            identifier_part.append(regex_terms[template_part[idx]])
+            if template_part[idx] in regex_terms.keys():
+                identifier_part.append(regex_terms[template_part[idx]])
 
         # ... collection members.
         else:
