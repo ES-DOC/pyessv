@@ -30,7 +30,7 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
 
     # Split identifier into a set of elements.
     elements = _get_elements(identifier_type, identifier, cfg.seperator)
-    if len(cfg.specs)-len(optional_template_part) > len(elements) or len(elements) > len(cfg.specs)+len(optional_template_part):
+    if len(cfg.specs)-len(optional_template_part) > len(elements) or len(elements) > len(cfg.specs):
         raise ValueError('Invalid identifier. Element count is invalid. Expected={}. Actual={}. Identifier = {}'.format(len(cfg.specs), len(elements), identifier))
 
     # Strip suffix ...
@@ -92,6 +92,6 @@ def _get_elements(identifier_type, identifier, seperator):
 
     # Filenames have a filetype suffix.
     if identifier_type == IDENTIFIER_TYPE_FILENAME:
-        return elements[:-1] + elements[-1].split(".")
+        return elements[:-1] + elements[-1].split(".")[:-1]
 
     return elements
