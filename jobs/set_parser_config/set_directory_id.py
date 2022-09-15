@@ -4,6 +4,17 @@ from pyessv import Authority
 from pyessv import Scope
 
 
+# Map: project namespace -> project drs prefix.
+_PROJECT_PREFIX = {
+    "ecmwf:c3s-cmip5": "c3s-cmip5",
+    "ecmwf:c3s-cordex": "c3s-cordex",
+    "wcrp:cordex-adjust": "CORDEX-adjust",
+    "wcrp:geomip": "GeoMIP", 
+    "wcrp:input4mips": "input4MIPs", 
+    "wcrp:obs4mips": "obs4MIPs", 
+}
+
+
 def get_config(a: Authority, s: Scope, template_raw: str):
     """Returns directory identifier parser configuration information derived
        from a previously declared parsing template.
@@ -27,15 +38,14 @@ def get_config(a: Authority, s: Scope, template_raw: str):
     if s.namespace == "wcrp:cmip6":
         specs[1] = "activity-id"
 
-    if specs[0] == "project" or s.namespace != "wcrp:cmip6":
-        specs = [f"const:{s.canonical_name}"] + [f"{s}:{i}" for i in specs[1:]]
-    elif s.namespace == "wcrp:cmip6":
-        specs = ["wcrp:global:mip-era"] + [f"{s}:{i}" for i in specs[1:]]
-    else:
-        specs = [f"{s}:{i}" for i in specs]
+    # Set directory prefix. 
+    try:
+        prefix: str = _PROJECT_PREFIX[s.namespace]
+    except KeyError:
+        prefix = s.canonical_name.upper()
 
     return {
         "template": template_raw,
         "seperator": "/",
-        "specs": specs
+        "specs": [f"const:{prefix}"] + [f"{s}:{i}" for i in specs[1:]]
     }
