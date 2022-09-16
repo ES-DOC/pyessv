@@ -74,6 +74,7 @@ if INITIALISATION_MODE == "AUTO":
 __all__ = [
     accept,
     archive,
+    build_identifier,
     create_authority,
     create_collection,
     create_scope,

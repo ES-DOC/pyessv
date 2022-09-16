@@ -36,7 +36,6 @@ def filename_identifiers_invalid() -> typing.Tuple[pyessv.Scope, str]:
 
 def _yield_valid_identifiers(identifier_type: str) -> typing.Iterator[typing.Tuple[pyessv.Scope, str]]:
     fpath: pathlib.Path = _ASSETS
-    print(_ASSETS)
     if not fpath.exists():
         return []
 
@@ -45,7 +44,7 @@ def _yield_valid_identifiers(identifier_type: str) -> typing.Iterator[typing.Tup
             fixture: dict = json.loads(fstream.read())
 
         scope = pyessv.load(fixture["scope"])
-        for identifier in fixture["identifiers"]:
+        for identifier in [i for i in fixture["identifiers"] if i]:
             yield scope, identifier
 
 def _yield_invalid_identifiers(identifier_type: str):
