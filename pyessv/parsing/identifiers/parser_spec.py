@@ -61,19 +61,19 @@ class RegExParsingSpecification(ParsingSpecification):
     """Encapsulates specification information related to a regex element parser.
 
     """
-    def __init__(self, regex, is_required):
+    def __init__(self, expression, is_required):
         """Instance initializer.
 
-        :param regex: A regular expression against which an identifier element will be validated.
+        :param expression: A regular expression against which an identifier element will be validated.
         :param is_required: Flag indicating whether the identifier element must exist.
 
         """
         super(RegExParsingSpecification, self).__init__("regex", is_required)
-        self.regex = regex
+        self.expression = expression
 
 
     def __repr__(self):
         """Instance representation.
 
         """
-        return f"parser-spec|regex::{self.regex}::{self.is_required}"
+        return f"parser-spec|regex::{self.expression}::{self.is_required}"

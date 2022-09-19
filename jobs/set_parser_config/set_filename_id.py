@@ -1,42 +1,66 @@
-from pyessv import Authority
+import re
+
 from pyessv import Scope
 
 
-def get_config(a: Authority, s: Scope, template_raw: str):
+def get_config(s: Scope, template_raw: str) -> dict:
     """Returns directory identifier parser configuration information derived
        from a previously declared parsing template.
 
-    :param a: A vocabulary authority.
     :param s: A vocabulary scope.
     :param template_raw: A raw dataset id parsing template.
     :returns: File name parser configuration information.
 
     """
-    # Skip ill-defined.
     if s.namespace == "wcrp:e3sm":
         return
 
-    # Discard period start/end + file type.
-    template = template_raw.split("[")[0]
-
-    # Set specs.
-    specs = [i.split(")")[0] for i in template.split("%(")[1:]]
-    specs = [i.replace("_", "-") for i in specs]
-    specs = [f"{s}:{i}" for i in specs]
-
-    # Set spec overrides.
-    if s.namespace == "ecmwf:cc4e":
-        specs[0] = "const:cc4e"
-
-    # Append period start - end regex.
-    if s.namespace != "wcrp:input4mips":
-        specs.append("regex:^[0-9]{4}-[0-9]{4}$")
-
-    # Append file type.
-    specs.append("regex:^nc$")
+    parts = [i.replace("_", "-") for i in re.findall("%\((\w*)\)s", template_raw)]
+    if parts[-2] == "period-start" and parts[-1] == "period-end":
+        parts = parts[:-2] + ["time_range"]
 
     return {
-        "template": template_raw,
         "seperator": "_",
-        "specs": specs
+        "template": template_raw,
+        "specs": [_get_part_spec(s, i) for i in parts] + [_get_suffix_spec()]
+    }
+
+
+def _get_part_spec(s: Scope, part: str) -> dict:
+    """Maps a template part to a collection specifiction.
+    
+    """
+    if s.namespace == "wcrp:cmip6" and part == "activity-drs":
+        part = "activity-id"
+
+    if s.namespace == "ecmwf:cc4e" and part == "project":
+        return {
+            "type": "const",
+            "value": "cc4e",
+            "is_required": True
+        }
+
+    elif part == "time_range":
+        return {
+            "type": "regex",
+            "expression": "^[0-9]{4}-[0-9]{4}$",
+            "is_required": False
+        }
+
+    else:
+        return {
+            "type": "collection",
+            "namespace": f"{s.namespace}:{part}",
+            "is_required": True
+        }
+
+
+def _get_suffix_spec() -> dict:
+    """Maps a scope to a constant specifiction acting as identifier prefix.
+    
+    """
+    return {
+        "type": "regex",
+        "expression": "^nc$",
+        "is_required": True
     }

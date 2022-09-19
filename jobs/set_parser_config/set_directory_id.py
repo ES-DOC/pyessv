@@ -1,6 +1,5 @@
-import typing
+import re
 
-from pyessv import Authority
 from pyessv import Scope
 
 
@@ -15,11 +14,10 @@ _PROJECT_PREFIX = {
 }
 
 
-def get_config(a: Authority, s: Scope, template_raw: str):
+def get_config(s: Scope, template_raw: str) -> dict:
     """Returns directory identifier parser configuration information derived
        from a previously declared parsing template.
 
-    :param a: A vocabulary authority.
     :param s: A vocabulary scope.
     :param template_raw: A raw dataset id parsing template.
     :returns: Directory name parser configuration information.
@@ -29,23 +27,41 @@ def get_config(a: Authority, s: Scope, template_raw: str):
     if s.namespace == "wcrp:e3sm":
         return
 
-    # Set specs.
-    specs: typing.List[str] = template_raw.split("%(")[2:]
-    specs = [i.split(")")[0] for i in specs]
-    specs = [i.replace("_", "-") for i in specs]
+    parts = [i.replace("_", "-") for i in re.findall("%\((\w*)\)s", template_raw)[2:]]
 
-    # Set spec overrides.
-    if s.namespace == "wcrp:cmip6":
-        specs[1] = "activity-id"
+    return {
+        "seperator": "/",
+        "template": template_raw,
+        "specs": [_get_prefix_spec(s)] + [_get_part_spec(s, i) for i in parts],
+        "suffix": "#"
+    }
 
-    # Set directory prefix. 
+
+def _get_prefix_spec(s: Scope) -> dict:
+    """Maps a scope to a constant specifiction acting as identifier prefix.
+    
+    """
     try:
         prefix: str = _PROJECT_PREFIX[s.namespace]
     except KeyError:
         prefix = s.canonical_name.upper()
 
     return {
-        "template": template_raw,
-        "seperator": "/",
-        "specs": [f"const:{prefix}"] + [f"{s}:{i}" for i in specs[1:]]
+        "type": "const",
+        "value": prefix,
+        "is_required": True
+    }
+
+
+def _get_part_spec(s: Scope, part: str) -> dict:
+    """Maps a template part to a collection specifiction.
+    
+    """
+    if s.namespace == "wcrp:cmip6" and part == "activity-drs":
+        part = "activity-id"
+
+    return {
+        "type": "collection",
+        "namespace": f"{s.namespace}:{part}",
+        "is_required": True
     }

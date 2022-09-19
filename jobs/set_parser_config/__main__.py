@@ -18,7 +18,7 @@ _IDENTIFIER_TYPES = {
 _GENERATORS = {
     constants.IDENTIFIER_TYPE_DATASET: set_dataset_id,
     constants.IDENTIFIER_TYPE_DIRECTORY: set_directory_id,
-    constants.IDENTIFIER_TYPE_FILENAME: set_filename_id
+    constants.IDENTIFIER_TYPE_FILENAME: set_filename_id,
 }
 
 
@@ -27,8 +27,8 @@ def _main():
 
     """
     for a in pyessv.get_cached():
-        for s in [i for i in a if i.data]:
-            for identifier_type, template in s.data.items():
+        for scope in [i for i in a if i.data]:
+            for identifier_type, template in scope.data.items():
                 try:
                     identifier_type = _IDENTIFIER_TYPES[identifier_type]
                 except KeyError:
@@ -38,10 +38,10 @@ def _main():
                     generator = _GENERATORS[identifier_type]
                 except KeyError:
                     continue
-                else:
-                    cfg = generator.get_config(a, s, template)
-                    if cfg is not None:
-                        io_manager.write_scope_parser_config(s, identifier_type, cfg)
+
+                cfg = generator.get_config(scope, template)
+                if cfg is not None:
+                    io_manager.write_scope_parser_config(scope, identifier_type, cfg)
 
 
 _main()
