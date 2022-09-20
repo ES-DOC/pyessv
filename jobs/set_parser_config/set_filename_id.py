@@ -43,7 +43,7 @@ def _get_part_spec(s: Scope, part: str) -> dict:
     elif part == "time_range":
         return {
             "type": "regex",
-            "expression": "^[0-9]{4}-[0-9]{4}$",
+            "expression": "^[0-9]*-[0-9]*$",
             "is_required": False
         }
 
