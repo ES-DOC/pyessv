@@ -1,4 +1,7 @@
 from pyessv import io_manager
+from pyessv.parsing.identifiers.spec import CollectionParsingSpecification
+from pyessv.parsing.identifiers.spec import ConstantParsingSpecification
+from pyessv.parsing.identifiers.spec import RegExParsingSpecification
 
 
 # Map: scope:parser-type <-> configuration.
@@ -52,23 +55,45 @@ def get_config(scope, identifier_type):
     """
     cache_key = f"{scope} :: {identifier_type}"
     if cache_key not in _CACHE:
-        _encache(cache_key, scope, identifier_type)
+        _CACHE[cache_key] = _get_config(scope, identifier_type)
 
     return _CACHE[cache_key]
 
 
-def _encache(cache_key, scope, identifier_type):
+def _get_config(scope, identifier_type):
     """Encaches a parsing configuration within a simple in-memory cache store.
 
     """
     cfg = io_manager.read_scope_parser_config(scope, identifier_type)
 
-    _CACHE[cache_key] = \
-        ParsingConfiguration(
-            cfg["identifier_type"],
-            cfg["scope"],
-            cfg["template"],
-            cfg["seperator"],
-            cfg["specs"],
-            cfg.get("suffix")
+    return ParsingConfiguration(
+        cfg["identifier_type"],
+        cfg["scope"],
+        cfg["template"],
+        cfg["seperator"],
+        [_get_spec(i) for i in cfg["specs"]],
+        cfg.get("suffix")
+    )
+
+
+def _get_spec(obj):
+    """Returns an identifier element validation specification.
+
+    """
+    if obj["type"] == "const":
+        return ConstantParsingSpecification(
+            obj["value"],
+            obj["is_required"]
         )
+    elif obj["type"] == "collection":
+        return CollectionParsingSpecification(
+            obj["namespace"],
+            obj["is_required"]
+        )
+    elif obj["type"] == "regex":
+        return RegExParsingSpecification(
+            obj["expression"],
+            obj["is_required"]
+        )
+    else:
+        raise ValueError("Unsupported spec type")

@@ -27,7 +27,6 @@ class ConstantParsingSpecification(ParsingSpecification):
         super(ConstantParsingSpecification, self).__init__("constant", is_required)
         self.value = value
 
-
     def __repr__(self):
         """Instance representation.
 
@@ -42,13 +41,12 @@ class CollectionParsingSpecification(ParsingSpecification):
     def __init__(self, namespace, is_required):
         """Instance initializer.
 
-        :param namespace: Namespace of pyessv collection against which identifier element will be validated.
+        :param namespace: Namespace of a pyessv collection.
         :param is_required: Flag indicating whether the identifier element must exist.
 
         """
         super(CollectionParsingSpecification, self).__init__("collection", is_required)
         self.namespace = namespace
-
 
     def __repr__(self):
         """Instance representation.
@@ -64,13 +62,12 @@ class RegExParsingSpecification(ParsingSpecification):
     def __init__(self, expression, is_required):
         """Instance initializer.
 
-        :param expression: A regular expression against which an identifier element will be validated.
+        :param expression: A regular expression constraining set of valid elements.
         :param is_required: Flag indicating whether the identifier element must exist.
 
         """
         super(RegExParsingSpecification, self).__init__("regex", is_required)
         self.expression = expression
-
 
     def __repr__(self):
         """Instance representation.

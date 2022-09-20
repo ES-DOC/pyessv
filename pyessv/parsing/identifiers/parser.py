@@ -7,6 +7,9 @@ from pyessv.constants import IDENTIFIER_TYPE_FILENAME
 from pyessv.loader import load as load_collection
 from pyessv.matcher import match_term
 from pyessv.parsing.identifiers.config import get_config
+from pyessv.parsing.identifiers.spec import CollectionParsingSpecification
+from pyessv.parsing.identifiers.spec import ConstantParsingSpecification
+from pyessv.parsing.identifiers.spec import RegExParsingSpecification
 from pyessv.utils import compat
 
 
@@ -37,31 +40,34 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     if '#' in elements[-1]:
         elements[-1] = elements[-1].split("#")[0]
 
-    result = set()
     # For each identifier element, execute relevant parse.
+    result = set()
     for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
+        print(111, idx, element, spec)
         # ... constants.
-        if spec.startswith("const"):
-            expected = spec.split(":")[1]
-            if element != expected:
+        if isinstance(spec, ConstantParsingSpecification):
+            if element != spec.value:
                 msg = 'Invalid identifier - failed const check. Element=#{}::({}). Identifier={}'
-                raise ValueError(msg.format(idx + 1, element, expected, identifier))
+                raise ValueError(msg.format(idx + 1, element, spec.value, identifier))
 
         # ... regular expressions.
-        elif spec.startswith("regex"):
+        elif isinstance(spec, RegExParsingSpecification):
             if strictness >= PARSING_STRICTNESS_4:
                 element = str(element).strip().lower()
-            if re.compile(spec.split(":")[1]).match(element) is None:
+            if re.compile(spec.expression).match(element) is None:
                 msg = 'Invalid identifier - failed regex check. Element=#{}::({}). Identifier={}'
                 raise ValueError(msg.format(idx + 1, element, identifier))
 
         # ... vocabulary collection members.
-        else:
-            match_result = match_term(load_collection(spec), element, strictness)
+        elif isinstance(spec, CollectionParsingSpecification):
+            match_result = match_term(load_collection(spec.namespace), element, strictness)
             if match_result is False:
                 msg = 'Invalid identifier - failed vocab check. Element=#{}::({}). Identifier={}'
                 raise ValueError(msg.format(idx + 1, element, identifier))
             result.add(match_result)
+
+        else:
+            raise ValueError("Unsupported specification type")
 
     return result
 
