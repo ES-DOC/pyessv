@@ -7,9 +7,9 @@ from pyessv.constants import IDENTIFIER_TYPE_FILENAME
 from pyessv.loader import load as load_collection
 from pyessv.matcher import match_term
 from pyessv.parsing.identifiers.config import get_config
-from pyessv.parsing.identifiers.spec import CollectionParsingSpecification
-from pyessv.parsing.identifiers.spec import ConstantParsingSpecification
-from pyessv.parsing.identifiers.spec import RegExParsingSpecification
+from pyessv.parsing.identifiers.config import CollectionParsingSpecification
+from pyessv.parsing.identifiers.config import ConstantParsingSpecification
+from pyessv.parsing.identifiers.config import RegExParsingSpecification
 from pyessv.utils import compat
 
 
@@ -40,10 +40,9 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     if '#' in elements[-1]:
         elements[-1] = elements[-1].split("#")[0]
 
-    # For each identifier element, execute relevant parse.
+    # For each identifier element, execute relevant vaidator.
     result = set()
     for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
-        print(111, idx, element, spec)
         # ... constants.
         if isinstance(spec, ConstantParsingSpecification):
             if element != spec.value:
