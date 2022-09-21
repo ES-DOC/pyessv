@@ -1,9 +1,6 @@
 import pytest
 
-import pyessv as LIB
-
 import tests.utils as tu
-import tests.utils_model as tum
 
 
 # Module level fixture teardown.
@@ -13,14 +10,14 @@ teardown_module = tu.teardown
 def _yield_parameterizations():
     """Test parameterizations.
 
-    """    
+    """
     for node_factory, keys in (
-        (tu.create_authority, [tum.SCOPE_NAME]),
-        (tu.create_scope, [tum.COLLECTION_01_NAME, tum.COLLECTION_02_NAME, tum.COLLECTION_03_NAME]),
-        (tu.create_collection_01, [tum.TERM_01_NAME]),
-        (tu.create_collection_02, [tum.TERM_02_NAME]),
-        (tu.create_collection_03, [tum.TERM_03_NAME]),
-        ):
+        (tu.create_authority, [tu.SCOPE_NAME]),
+        (tu.create_scope, [tu.COLLECTION_01_NAME, tu.COLLECTION_02_NAME, tu.COLLECTION_03_NAME]),
+        (tu.create_collection_01, [tu.TERM_01_NAME]),
+        (tu.create_collection_02, [tu.TERM_02_NAME]),
+        (tu.create_collection_03, [tu.TERM_03_NAME]),
+    ):
         yield node_factory(), keys
 
 

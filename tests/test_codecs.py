@@ -1,5 +1,3 @@
-import inspect
-
 import pytest
 
 from pyessv.codecs import decode
@@ -36,7 +34,7 @@ def yield_parameterizations():
         tu.create_term_01,
         tu.create_term_02,
         tu.create_term_03
-        ):
+    ):
         for encoding in ENCODING_SET:
             yield node_factory(), encoding
 

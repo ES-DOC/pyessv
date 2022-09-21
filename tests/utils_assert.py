@@ -1,9 +1,10 @@
 import datetime
 import inspect
 import os
+import uuid
 
 from pyessv.utils import compat
-
+from tests.utils_factory import get_date
 
 
 # Integer assertion constants.
@@ -129,7 +130,9 @@ def assert_none(instance):
 
     """
     assert instance is None, \
-           'Instance null mismatch : actual = {0} - {1} :: expected = None'.format(type(instance), instance)
+           'Instance null mismatch: actual = {0}-{1} :: expected = None'.format(
+                type(instance), instance
+            )
 
 
 def assert_object(instance, instance_type=None):
@@ -142,7 +145,9 @@ def assert_object(instance, instance_type=None):
     assert instance is not None, 'Instance is none'
     if instance_type is not None:
         assert isinstance(instance, instance_type), \
-               'Instance type mismatch : actual = {0} :: expected = {1}'.format(type(instance), instance_type)
+               'Instance type mismatch : actual = {0} :: expected = {1}'.format(
+                    type(instance), instance_type
+                )
 
 
 def assert_objects(instance1, instance2, instance_type=None):
@@ -182,12 +187,12 @@ def assert_str(actual, expected, startswith=False):
     expected = compat.str(expected).strip()
 
     # Assert.
-    if startswith == False:
+    if startswith is False:
         assert actual == expected, \
-               'String mismatch : actual = {0} :: expected = {1}'.format(actual, expected)
+               'String mismatch: actual={0} :: expected={1}'.format(actual, expected)
     else:
-        assert actual.startswith(expected) == True, \
-               'String startswith mismatch : actual = {0} :: expected = {1}'.format(actual, expected)
+        assert actual.startswith(expected) is True, \
+               'String startswith mismatch: actual= {0} :: expected={1}'.format(actual, expected)
 
 
 def assert_string(actual, expected):
@@ -298,9 +303,9 @@ def assert_uuid(actual, expected):
     :param str expected: Expected uuid value.
 
     """
-    if isinstance(actual, uuid.UUID) == False:
+    if isinstance(actual, uuid.UUID) is False:
         actual = uuid.UUID(actual)
-    if isinstance(expected, uuid.UUID) == False:
+    if isinstance(expected, uuid.UUID) is False:
         expected = uuid.UUID(expected)
 
     assert actual == expected, '{0} != {1}'.format(actual, expected)

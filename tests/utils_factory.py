@@ -2,8 +2,7 @@ import datetime as dt
 import random
 import uuid
 
-from pyessv.utils.compat import str
-
+from pyessv.utils import compat
 
 
 def get_boolean():

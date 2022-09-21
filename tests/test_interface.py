@@ -92,7 +92,7 @@ _FUNCS = {
 def yield_parameterizations():
     """Yields test parameterizations.
 
-    """    
+    """
     for members, member_type in (
         (_CLASSES, 'class'),
         (_CONSTANTS, 'constant'),

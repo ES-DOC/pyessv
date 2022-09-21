@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 import pyessv
 from pyessv.parsing.identifiers.config import get_config
 from pyessv.parsing.identifiers.config import ParsingConfiguration

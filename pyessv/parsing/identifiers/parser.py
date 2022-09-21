@@ -43,8 +43,16 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
     # For each identifier element, execute relevant vaidator.
     result = set()
     for idx, (element, spec) in enumerate(zip(elements, cfg.specs)):
+        # ... vocabulary collection members.
+        if isinstance(spec, CollectionParsingSpecification):
+            match_result = match_term(load_collection(spec.namespace), element, strictness)
+            if match_result is False:
+                msg = 'Invalid identifier - failed vocab check. Element=#{}::({}). Identifier={}'
+                raise ValueError(msg.format(idx + 1, element, identifier))
+            result.add(match_result)
+
         # ... constants.
-        if isinstance(spec, ConstantParsingSpecification):
+        elif isinstance(spec, ConstantParsingSpecification):
             if element != spec.value:
                 msg = 'Invalid identifier - failed const check. Element=#{}::({}). Identifier={}'
                 raise ValueError(msg.format(idx + 1, element, spec.value, identifier))
@@ -56,14 +64,6 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
             if re.compile(spec.expression).match(element) is None:
                 msg = 'Invalid identifier - failed regex check. Element=#{}::({}). Identifier={}'
                 raise ValueError(msg.format(idx + 1, element, identifier))
-
-        # ... vocabulary collection members.
-        elif isinstance(spec, CollectionParsingSpecification):
-            match_result = match_term(load_collection(spec.namespace), element, strictness)
-            if match_result is False:
-                msg = 'Invalid identifier - failed vocab check. Element=#{}::({}). Identifier={}'
-                raise ValueError(msg.format(idx + 1, element, identifier))
-            result.add(match_result)
 
         else:
             raise ValueError("Unsupported specification type")

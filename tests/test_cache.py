@@ -12,25 +12,25 @@ setup_module = tu.create_authority
 
 
 def test_interface():
-	"""pyessv-tests: caching: interface.
+    """pyessv-tests: caching: interface.
 
-	"""
-	assert inspect.isfunction(encache)
-	assert inspect.isfunction(decache)
-	assert inspect.isfunction(get_cached)
+    """
+    assert inspect.isfunction(encache)
+    assert inspect.isfunction(decache)
+    assert inspect.isfunction(get_cached)
 
 
 def test_cache():
-	"""pyessv-tests: caching: cache
+    """pyessv-tests: caching: cache
 
-	"""
-	assert isinstance(get_cached(tu.AUTHORITY_NAME), pyessv.Authority)
+    """
+    assert isinstance(get_cached(tu.AUTHORITY_NAME), pyessv.Authority)
 
 
 def test_decache():
-	"""pyessv-tests: caching: decache
+    """pyessv-tests: caching: decache
 
-	"""
-	decache(tu.AUTHORITY_NAME)
+    """
+    decache(tu.AUTHORITY_NAME)
 
-	assert get_cached(tu.AUTHORITY_NAME) is None
+    assert get_cached(tu.AUTHORITY_NAME) is None

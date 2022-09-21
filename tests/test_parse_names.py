@@ -13,21 +13,61 @@ teardown_module = tu.teardown
 
 # Test inputs.
 _INPUTS = (
-    (LIB.NODE_TYPEKEY_AUTHORITY, tu.AUTHORITY_NAME, tu.AUTHORITY_ALTERNATIVE_NAMES, None),
-    (LIB.NODE_TYPEKEY_SCOPE, tu.SCOPE_NAME, tu.SCOPE_ALTERNATIVE_NAMES, None),
-    (LIB.NODE_TYPEKEY_COLLECTION, tu.COLLECTION_01_NAME, tu.COLLECTION_01_ALTERNATIVE_NAMES, None),
-    (LIB.NODE_TYPEKEY_COLLECTION, tu.COLLECTION_02_NAME, tu.COLLECTION_02_ALTERNATIVE_NAMES, None),
-    (LIB.NODE_TYPEKEY_COLLECTION, tu.COLLECTION_03_NAME, tu.COLLECTION_03_ALTERNATIVE_NAMES, None),
-    (LIB.NODE_TYPEKEY_TERM, tu.TERM_01_NAME, tu.TERM_01_ALTERNATIVE_NAMES, tu.COLLECTION_01_NAME),
-    (LIB.NODE_TYPEKEY_TERM, tu.TERM_02_NAME, tu.TERM_02_ALTERNATIVE_NAMES, tu.COLLECTION_02_NAME),
-    (LIB.NODE_TYPEKEY_TERM, tu.TERM_03_NAME, tu.TERM_03_ALTERNATIVE_NAMES, tu.COLLECTION_03_NAME)
+    (
+        LIB.NODE_TYPEKEY_AUTHORITY,
+        tu.AUTHORITY_NAME,
+        tu.AUTHORITY_ALTERNATIVE_NAMES,
+        None
+    ),
+    (
+        LIB.NODE_TYPEKEY_SCOPE,
+        tu.SCOPE_NAME,
+        tu.SCOPE_ALTERNATIVE_NAMES,
+        None
+    ),
+    (
+        LIB.NODE_TYPEKEY_COLLECTION,
+        tu.COLLECTION_01_NAME,
+        tu.COLLECTION_01_ALTERNATIVE_NAMES,
+        None
+    ),
+    (
+        LIB.NODE_TYPEKEY_COLLECTION,
+        tu.COLLECTION_02_NAME,
+        tu.COLLECTION_02_ALTERNATIVE_NAMES,
+        None
+    ),
+    (
+        LIB.NODE_TYPEKEY_COLLECTION,
+        tu.COLLECTION_03_NAME,
+        tu.COLLECTION_03_ALTERNATIVE_NAMES,
+        None
+    ),
+    (
+        LIB.NODE_TYPEKEY_TERM,
+        tu.TERM_01_NAME,
+        tu.TERM_01_ALTERNATIVE_NAMES,
+        tu.COLLECTION_01_NAME
+    ),
+    (
+        LIB.NODE_TYPEKEY_TERM,
+        tu.TERM_02_NAME,
+        tu.TERM_02_ALTERNATIVE_NAMES,
+        tu.COLLECTION_02_NAME
+    ),
+    (
+        LIB.NODE_TYPEKEY_TERM,
+        tu.TERM_03_NAME,
+        tu.TERM_03_ALTERNATIVE_NAMES,
+        tu.COLLECTION_03_NAME
+    )
     )
 
 
 def _yield_parameterizations():
     """Test parameterizations.
 
-    """    
+    """
     for typekey, canonical_name, alternative_names, parent in _INPUTS:
         for alternative_name in alternative_names:
             for name, expected, strictness in [
@@ -43,7 +83,9 @@ def _yield_parameterizations():
                 yield typekey, name, expected, strictness, parent
 
 
-@pytest.mark.parametrize("typekey, name, expected, strictness, parent", _yield_parameterizations())
+@pytest.mark.parametrize(
+    "typekey, name, expected, strictness, parent", _yield_parameterizations()
+    )
 def test_parse_name(typekey, name, expected, strictness, parent):
     """Test parsing of names at various levels.
 
@@ -63,4 +105,6 @@ def test_parse_name(typekey, name, expected, strictness, parent):
         result = LIB.NamespaceParsingError
 
     assert result == expected, \
-           'Name parsing error: node-type={}.  name={}.  actual = {}.  expected {}.'.format(typekey, name, result, expected)
+           'Name parsing error: node-type={}. name={}. actual = {}. expected {}.'.format(
+                typekey, name, result, expected
+            )

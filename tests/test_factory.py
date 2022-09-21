@@ -15,7 +15,7 @@ teardown_module = tu.teardown
 def _yield_parameterizations():
     """Test parameterizations.
 
-    """    
+    """
     for factory, typeof in (
         (tu.create_authority, Authority),
         (tu.create_scope, Scope),
@@ -25,7 +25,7 @@ def _yield_parameterizations():
         (tu.create_term_01, Term),
         (tu.create_term_02, Term),
         (tu.create_term_03, Term)
-        ):
+    ):
         yield factory, typeof
 
 

@@ -2,6 +2,9 @@ import re
 
 from pyessv import IDENTIFIER_TYPE_SET, IDENTIFIER_TYPE_FILENAME
 from pyessv.parsing.identifiers.config import get_config
+from pyessv.parsing.identifiers.config import CollectionParsingSpecification
+from pyessv.parsing.identifiers.config import ConstantParsingSpecification
+from pyessv.parsing.identifiers.config import RegExParsingSpecification
 
 
 def build_identifier(scope, identifier_type, terms, regex_terms={}):
@@ -46,34 +49,39 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     known_terms.extend(set([(name,) for name in regex_terms.keys()]))  # hack to fake multiple name in regex_term
     known_terms = set.union(*known_terms)
     # print(set.union(*known_terms))
+
     for idx, spec in enumerate(cfg.specs):
-        if not spec.startswith("const") and template_part[idx] not in optional_template_part:
-            if spec.startswith("regex"):
+        if not isinstance(spec, ConstantParsingSpecification) and \
+           template_part[idx] not in optional_template_part:
+            if isinstance(spec, RegExParsingSpecification):
                 if template_part[idx] not in known_terms:
                     msg = f'Invalid known terms : missing {template_part[idx]} to build {identifier_type}'
                     raise ValueError(msg)
-            elif spec.split(":")[-1] not in known_terms:
-                msg = f'Invalid known terms : missing {spec.split(":")[-1]} to build {identifier_type}'
+            elif spec.namespace.split(":")[-1] not in known_terms:
+                msg = f'Invalid known terms : missing {spec.namespace.split(":")[-1]} to build {identifier_type}'
                 raise ValueError(msg)
 
     # Building the identifier
     identifier_part = list()
     for idx, spec in enumerate(cfg.specs):
+        # ... collection members.
+        if isinstance(spec, CollectionParsingSpecification):
+            for term in terms:
+                if spec.namespace.replace(term.scope.namespace + ":", "") in term.collection.all_names:
+                    identifier_part.append(term.raw_name)
+                    break
+
         # ... constants.
-        if spec.startswith("const"):
-            identifier_part.append(spec.split(":")[1])
+        elif isinstance(spec, ConstantParsingSpecification):
+            identifier_part.append(spec.value)
 
         # ... regular expressions
-        elif spec.startswith("regex"):
+        elif isinstance(spec, RegExParsingSpecification):
             if template_part[idx] in regex_terms.keys():
                 identifier_part.append(regex_terms[template_part[idx]])
 
-        # ... collection members.
         else:
-            for term in terms:
-                if spec.replace(term.scope.namespace + ":", "") in term.collection.all_names:
-                    identifier_part.append(term.raw_name)
-                    break
+            raise ValueError("Unsupported specification type")
 
     result = cfg.seperator.join(identifier_part)
 

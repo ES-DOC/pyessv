@@ -4,7 +4,6 @@ import shutil
 
 import pyessv as LIB
 from pyessv.cache import decache
-from tests.utils_assert import assert_objects
 
 
 # Test authority.
@@ -73,7 +72,10 @@ COLLECTION_01 = None
 COLLECTION_01_DESCRIPTION = 'collection-01-description'
 COLLECTION_01_NAME = 'collection-01'
 COLLECTION_01_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_01_NAME])
-COLLECTION_01_ALTERNATIVE_NAMES = ['collection-01-alternative-name-1', 'collection-01-alternative-name-2']
+COLLECTION_01_ALTERNATIVE_NAMES = [
+    'collection-01-alternative-name-1',
+    'collection-01-alternative-name-2'
+    ]
 COLLECTION_01_URL = '{}/{}'.format(SCOPE_URL, COLLECTION_01_NAME)
 
 
@@ -103,7 +105,10 @@ COLLECTION_02 = None
 COLLECTION_02_DESCRIPTION = 'collection-02-description'
 COLLECTION_02_NAME = 'collection-02'
 COLLECTION_02_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_02_NAME])
-COLLECTION_02_ALTERNATIVE_NAMES = ['collection-02-alternative-name-1', 'collection-02-alternative-name-2']
+COLLECTION_02_ALTERNATIVE_NAMES = [
+    'collection-02-alternative-name-1',
+    'collection-02-alternative-name-2'
+    ]
 COLLECTION_02_TERM_REGEX = r'^[A-z0-9\-]*$'
 COLLECTION_02_URL = '{}/{}'.format(SCOPE_URL, COLLECTION_02_NAME)
 
@@ -135,7 +140,10 @@ COLLECTION_03 = None
 COLLECTION_03_DESCRIPTION = 'collection-03-description'
 COLLECTION_03_NAME = 'collection-03'
 COLLECTION_03_NAMESPACE = ":".join([AUTHORITY_NAME, SCOPE_NAME, COLLECTION_03_NAME])
-COLLECTION_03_ALTERNATIVE_NAMES = ['collection-03-alternative-name-1', 'collection-03-alternative-name-2']
+COLLECTION_03_ALTERNATIVE_NAMES = [
+    'collection-03-alternative-name-1',
+    'collection-03-alternative-name-2'
+    ]
 COLLECTION_03_TERM_REGEX = r'^[A-z0-9\-]*$'
 COLLECTION_03_URL = '{}/{}'.format(SCOPE_URL, COLLECTION_03_NAME)
 
@@ -291,7 +299,7 @@ def setup():
         create_term_01,
         create_term_02,
         create_term_03
-        ):
+    ):
         func()
 
 

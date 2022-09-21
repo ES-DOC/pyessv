@@ -2,8 +2,6 @@ import pytest
 
 import pyessv
 import tests.utils as tu
-import tests.utils_model as tum
-
 
 
 # Node level test information.
@@ -37,7 +35,7 @@ _TEST_INFO = {
 def _yield_parameterizations():
     """Test parameterizations.
 
-    """  
+    """
     for node_factory in (
         tu.create_authority,
         tu.create_scope,
@@ -47,7 +45,7 @@ def _yield_parameterizations():
         tu.create_term_01,
         tu.create_term_02,
         tu.create_term_03
-        ):
+    ):
         node = node_factory()
         for attr, invalid in _TEST_INFO[type(node)]:
             yield node, attr, invalid
@@ -61,9 +59,9 @@ def test_node_attr(node, attr, invalid_values):
     valid_value = getattr(node, attr)
     for value in invalid_values:
         setattr(node, attr, value)
-        assert pyessv.is_valid(node) == False, (attr, value)
+        assert pyessv.is_valid(node) is False, (attr, value)
         assert len(pyessv.get_errors(node)) >= 1, (pyessv.get_errors(node), attr, value)
 
     setattr(node, attr, valid_value)
-    assert pyessv.is_valid(node) == True, (pyessv.get_errors(node), attr, valid_value)
+    assert pyessv.is_valid(node) is True, (pyessv.get_errors(node), attr, valid_value)
     assert len(pyessv.get_errors(node)) == 0
