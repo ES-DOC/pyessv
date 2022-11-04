@@ -41,7 +41,7 @@ class ConstantParsingSpecification(ParsingSpecification):
         """Instance representation.
 
         """
-        return f"parser-spec|const::{self.value}::{self.is_required}"
+        return "parser-spec|const::{}::{}".format(self.value, self.is_required)
 
 
 class CollectionParsingSpecification(ParsingSpecification):
@@ -62,7 +62,7 @@ class CollectionParsingSpecification(ParsingSpecification):
         """Instance representation.
 
         """
-        return f"parser-spec|collection::{self.namespace}::{self.is_required}"
+        return "parser-spec|collection::{}::{}".format(self.namespace, self.is_required)
 
 
 class RegExParsingSpecification(ParsingSpecification):
@@ -83,7 +83,7 @@ class RegExParsingSpecification(ParsingSpecification):
         """Instance representation.
 
         """
-        return f"parser-spec|regex::{self.expression}::{self.is_required}"
+        return "parser-spec|regex::{}::{}".format(self.expression, self.is_required)
 
 
 class ParsingConfiguration():
@@ -120,7 +120,7 @@ class ParsingConfiguration():
         """Instance representation.
 
         """
-        return f"parser-config|{self.scope_namespace}::{self.identifier_type}::{len(self.specs)}"
+        return "parser-config|{}::{}::{}".format(self.scope_namespace, self.identifier_type, len(self.specs))
 
 
 def get_config(scope, identifier_type):
@@ -133,7 +133,7 @@ def get_config(scope, identifier_type):
     """
     if isinstance(scope, compat.basestring):
         scope = loader.load(scope)
-    cache_key = f"{scope} :: {identifier_type}"
+    cache_key = "{scope} :: {identifier_type}".format(scope, identifier_type)
     if cache_key not in _CACHE:
         _CACHE[cache_key] = _get_config(scope, identifier_type)
 
