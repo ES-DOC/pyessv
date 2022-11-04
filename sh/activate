@@ -15,7 +15,6 @@ mkdir -p $HOME/.esdoc/pyessv-archive
 
 # Ensure shell scripts are executable.
 chmod a+x $PYESSV_LIB_HOME/sh/*.sh
-chmod a+x $PYESSV_LIB_HOME/sh/writers/*/*.sh
 
 # ###############################################################
 # STANDARD-SECTION: ALIASES
