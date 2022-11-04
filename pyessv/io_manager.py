@@ -78,7 +78,7 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
 
     """
     if authority is not None:
-        return _read_authority(f"{archive_dir}/{authority}", scope)
+        return _read_authority("{}/{}".format(archive_dir, authority), scope)
     else:
         return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
