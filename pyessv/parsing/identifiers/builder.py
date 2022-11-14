@@ -26,7 +26,7 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     or let the pyessv client to deal with it
     """
 
-    assert identifier_type in IDENTIFIER_TYPE_SET, f"Unsupported parser type: {identifier_type}"
+    assert identifier_type in IDENTIFIER_TYPE_SET, "Unsupported parser type: {}".format(identifier_type)
 
     # Set parsing configuration.
     cfg = get_config(scope, identifier_type)

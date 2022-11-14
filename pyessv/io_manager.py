@@ -69,7 +69,7 @@ def read(archive_dir=DIR_ARCHIVE, authority=None, scope=None):
 
     """
     if authority is not None:
-        return _read_authority(f"{archive_dir}/{authority}", scope)
+        return _read_authority("{}/{}".format(archive_dir, authority), scope)
     else:
         return [_read_authority(i) for i in glob.glob('{}/*'.format(archive_dir)) if isdir(i)]
 
@@ -154,7 +154,7 @@ def _get_path_to_scope_parser_config(s, identifier_type, config_dir):
     except OSError:
         pass
 
-    return join(io_path, f"{identifier_type}.json")
+    return join(io_path, "{}.json".format(identifier_type))
 
 
 def _read_authority(dpath, scope_id=None):
