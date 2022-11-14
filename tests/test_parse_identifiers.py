@@ -5,7 +5,7 @@ import pyessv
 def test_parse_dataset_identifiers(dataset_identifiers):
     """Asserts that test identifiers are valid."""
     _assert_valid_identifier_set(pyessv.IDENTIFIER_TYPE_DATASET, dataset_identifiers)
-    raise ValueError()
+    # raise ValueError()
 
 
 def test_parse_dataset_identifiers_invalid(dataset_identifiers_invalid):
@@ -48,4 +48,5 @@ def _assert_invalid_identifier_set(identifier_type, identifier_set):
 
 def _assert_invalid_identifier(scope, identifier_type, identifier):
     with pytest.raises(ValueError):
-        pyessv.parse_identifer(scope, identifier_type, identifier)
+        a = pyessv.parse_identifer(scope, identifier_type, identifier)
+        print(a)

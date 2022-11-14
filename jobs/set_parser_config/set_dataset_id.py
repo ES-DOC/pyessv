@@ -12,7 +12,7 @@ def get_config(s: Scope, template_raw: str) -> dict:
     :returns: Dataset id parser configuration information.
 
     """
-    parts = [i.replace("_", "-") for i in re.findall("%\((\w*)\)s", template_raw)]
+    parts = [i for i in re.findall("%\((\w*)\)s", template_raw)]
     if s.namespace == "wcrp:input4mips":
         parts = parts[1:]
 
@@ -44,11 +44,22 @@ def _get_prefix_spec(s: Scope) -> dict:
 
 def _get_part_spec(s: Scope, part: str) -> dict:
     """Maps a template part to a collection specifiction.
-    
+    "part" is the facet name found in DRS template but this facet name could be in alternative name in pyessv collection
+    therefore we have to check every alternative collection name of this "Scope" to find this "part"
+    and write config file according to pyessv collection name.
     """
+    ''' # useless if check alternatives names with a complete archive .. 
     if s.namespace == "wcrp:cmip6" and part == "activity-drs":
         part = "activity-id"
-
+    '''
+    for c in s :
+        if part in c.all_names:
+            return {
+                    "type": "collection",
+                    "namespace": f"{c}",
+                    "is_required": True
+                }
+    print(f"Pyessv doesn't know this collection : {part} for this scope : {s}")
     return {
         "type": "collection",
         "namespace": f"{s.namespace}:{part}",

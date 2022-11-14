@@ -2,6 +2,7 @@ import inspect
 import io
 import json
 import os
+import random
 
 import pytest
 
@@ -54,14 +55,17 @@ def test_read_one_authority():
     """pyessv-tests: io: read one authority.
 
     """
-    assert isinstance(io_manager.read(authority="wcrp"), LIB.Authority)
+    auth = random.choice(os.listdir(LIB.DIR_ARCHIVE))
+    assert isinstance(io_manager.read(authority=auth), LIB.Authority)
 
 
 def test_read_one_scope():
     """pyessv-tests: io: read one scope.
 
     """
-    authority = io_manager.read(authority="wcrp", scope="cmip6")
+    auth = random.choice(os.listdir(LIB.DIR_ARCHIVE))
+    scope = random.choice(os.listdir(LIB.DIR_ARCHIVE+"/"+auth))
+    authority = io_manager.read(authority=auth, scope=scope)
     assert isinstance(authority, LIB.Authority)
     assert len(authority) == 1
 

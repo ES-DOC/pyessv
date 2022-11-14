@@ -23,7 +23,8 @@ def parse_identifer(scope, identifier_type, identifier, strictness=PARSING_STRIC
 
     """
     assert identifier_type in IDENTIFIER_TYPE_SET, f"Unsupported parser type: {identifier_type}"
-
+    if identifier_type == IDENTIFIER_TYPE_FILENAME and identifier[-3:]!=".nc":
+            raise ValueError("filename extension have to be .nc")
     # Set parsing configuration.
     cfg = get_config(scope, identifier_type)
 

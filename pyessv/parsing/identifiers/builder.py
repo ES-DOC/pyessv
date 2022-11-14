@@ -15,7 +15,7 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     :param terms: Set of known term.
     :param regex_terms: Dictionary of terms matching the regex term in spec : {term:value,...}
 
-    :return: str of identifer according to template and input terms
+    :return: str of identifier according to template and input terms
     :rtype: str | ValueError
 
     Note : currently, if a term is optional in the template (i.e in bracket []) and if there is no input term
@@ -40,8 +40,16 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     # Template split from configuration
     template_part = re.findall("%\((\w*)\)s", cfg.template)
     ("root" in template_part) and template_part.remove("root")  # remove root from template_part if exist
+
+    # template_part does not contain const part .. so .. we need to find it at start if it exists ..
+    if cfg.template[0] != "%":
+        template_part= [cfg.template[:cfg.template.index(cfg.seperator)] ]+ template_part
+
     if len(template_part) != len(cfg.specs):
-        msg = f'Invalid config file for identifier : {identifier_type} : different count between template and spec'
+        msg = f'Invalid config file for identifier : {identifier_type} : ' \
+              f'different count between template({len(template_part)}) and spec({len(cfg.specs)})' \
+              f' \n    template_part = {template_part} \n    cfg.template = {cfg.specs}'
+
         raise ValueError(msg)
 
     # Check if all cfg.spec are in terms or in regex_terms
@@ -49,7 +57,6 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
     known_terms.extend(set([(name,) for name in regex_terms.keys()]))  # hack to fake multiple name in regex_term
     known_terms = set.union(*known_terms)
     # print(set.union(*known_terms))
-
     for idx, spec in enumerate(cfg.specs):
         if not isinstance(spec, ConstantParsingSpecification) and \
            template_part[idx] not in optional_template_part:
@@ -58,6 +65,7 @@ def build_identifier(scope, identifier_type, terms, regex_terms={}):
                     msg = f'Invalid known terms : missing {template_part[idx]} to build {identifier_type}'
                     raise ValueError(msg)
             elif spec.namespace.split(":")[-1] not in known_terms:
+                print(spec.namespace.split(":")[-1], known_terms)
                 msg = f'Invalid known terms : missing {spec.namespace.split(":")[-1]} to build {identifier_type}'
                 raise ValueError(msg)
 

@@ -15,8 +15,8 @@ def get_config(s: Scope, template_raw: str) -> dict:
     if s.namespace == "wcrp:e3sm":
         return
 
-    parts = [i.replace("_", "-") for i in re.findall("%\((\w*)\)s", template_raw)]
-    if parts[-2] == "period-start" and parts[-1] == "period-end":
+    parts = [i for i in re.findall("%\((\w*)\)s", template_raw)]
+    if parts[-2] == "period_start" and parts[-1] == "period_end":
         parts = parts[:-2] + ["time_range"]
 
     return {
@@ -48,11 +48,19 @@ def _get_part_spec(s: Scope, part: str) -> dict:
         }
 
     else:
-        return {
-            "type": "collection",
-            "namespace": f"{s.namespace}:{part}",
-            "is_required": True
-        }
+        for c in s:
+            if part in c.all_names:
+                return {
+                    "type": "collection",
+                    "namespace": f"{c}",
+                    "is_required": True
+                }
+        print(f"Pyessv doesn't know this collection : {part} for this scope : {s}")
+    return {
+        "type": "collection",
+        "namespace": f"{s.namespace}:{part}",
+        "is_required": True
+    }
 
 
 def _get_suffix_spec() -> dict:

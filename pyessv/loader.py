@@ -105,6 +105,10 @@ def _is_matched(node, identifier):
     elif identifier in [format_string(i).lower() for i in node.alternative_names]:
         return True
 
+    # Tru fixing spec matching in collection alternative name for config_parser
+    elif identifier in [format_string(i).lower().replace("_","-") for i in node.alternative_names]:
+        return True
+
     return False
 
 
