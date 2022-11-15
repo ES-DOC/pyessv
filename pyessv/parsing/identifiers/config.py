@@ -133,7 +133,7 @@ def get_config(scope, identifier_type):
     """
     if isinstance(scope, compat.basestring):
         scope = loader.load(scope)
-    cache_key = "{scope} :: {identifier_type}".format(scope, identifier_type)
+    cache_key = "{} :: {}".format(scope, identifier_type)
     if cache_key not in _CACHE:
         _CACHE[cache_key] = _get_config(scope, identifier_type)
 
