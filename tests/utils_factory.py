@@ -1,22 +1,8 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: testutils_factory.py
-
-   :copyright: @2013 Earth System Documentation (https://es-doc.org)
-   :license: GPL / CeCILL
-   :platform: Unix, Windows
-   :synopsis: Exposes test factory utility functions.
-
-.. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
-
-"""
 import datetime as dt
 import random
 import uuid
 
-from pyessv.utils.compat import str
-
+from pyessv.utils import compat
 
 
 def get_boolean():

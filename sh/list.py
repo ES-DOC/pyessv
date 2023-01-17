@@ -1,18 +1,6 @@
-    # -*- coding: utf-8 -*-
-
-"""
-.. module:: list.py
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Lists an authority's vocabulary entities.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-"""
 import argparse
 
 import pyessv
-
 
 
 # Define command line options.
@@ -44,6 +32,7 @@ _ARGS.add_argument(
     type=str,
     default=None
     )
+
 
 def _main(args):
     """Main entry point.

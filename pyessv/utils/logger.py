@@ -1,18 +1,6 @@
-"""
-.. module:: pyessv.utils.logger.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Package logging utility functions.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import datetime as dt
 
 from pyessv.utils import compat
-
 
 
 # Set of logging levels.

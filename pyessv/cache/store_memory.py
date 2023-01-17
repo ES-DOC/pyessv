@@ -1,21 +1,21 @@
-"""
-.. module:: pyessv.cache.memory.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Simple in-memory cache store.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.model import NODE_TYPES
 from pyessv.model import Authority
 
 
-
 # Cached loaded vocabulary authorities objects.
 _DATA = {}
+
+
+def decache(identifier):
+    """Uncaches a node.
+
+    :param str identifier: A vocabulary node identifier.
+
+    """
+    try:
+        del _DATA[identifier]
+    except KeyError:
+        pass
 
 
 def cache(node):
@@ -48,16 +48,4 @@ def get_cached(cache_filter):
     elif cache_filter in NODE_TYPES:
         return [i for i in _DATA.values() if isinstance(i, cache_filter)]
     elif cache_filter is None:
-        return get_cached(Authority)
-
-
-def uncache(identifier):
-    """Uncaches a node.
-
-    :param str identifier: A vocabulary node identifier.
-
-    """
-    try:
-        del _DATA[identifier]
-    except KeyError:
-        pass
+        return sorted(get_cached(Authority), key=lambda i: i.canonical_name)

@@ -1,14 +1,3 @@
-"""
-.. module:: dict.decoder.py
-   :copyright: @2015 IPSL (http://ipsl.fr)
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Decodes a term from a python dictionary.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.constants import NODE_TYPEKEY_AUTHORITY
 from pyessv.constants import NODE_TYPEKEY_COLLECTION
 from pyessv.constants import NODE_TYPEKEY_SCOPE
@@ -19,7 +8,6 @@ from pyessv.model import Collection
 from pyessv.model import Scope
 from pyessv.model import Term
 from pyessv.utils import compat
-
 
 
 def _decode_node(obj, typeof):

@@ -1,16 +1,4 @@
-"""
-.. module:: pyessv.accessors.wcrp_cmip6.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encapsulates access to WCRP CMIP6 vocabs.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import pyessv
-
 
 
 def _get_scope():

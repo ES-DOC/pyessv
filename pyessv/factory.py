@@ -11,21 +11,15 @@
 import datetime as dt
 
 from pyessv.constants import REGEX_CANONICAL_NAME
-from pyessv.constants import PARSING_STRICTNESS_2
-from pyessv.constants import PARSING_STRICTNESS_SET
-from pyessv.cache import cache
+from pyessv.cache import encache
 from pyessv.exceptions import ValidationError
 from pyessv.model import Authority
 from pyessv.model import Collection
-from pyessv.model import Node
 from pyessv.model import Scope
 from pyessv.model import Term
-from pyessv.parser_template import TemplateParser
-from pyessv.utils import compat
 from pyessv.utils.formatter import format_canonical_name
 from pyessv.utils.formatter import format_string
 from pyessv.validation import validate
-
 
 
 def create_authority(
@@ -36,7 +30,7 @@ def create_authority(
     create_date=None,
     data=None,
     alternative_names=[]
-    ):
+):
     """Instantiates, initialises & returns a term authority.
 
     :param str name: Canonical name.
@@ -72,7 +66,7 @@ def create_scope(
     create_date=None,
     data=None,
     alternative_names=[]
-    ):
+):
     """Instantiates, initialises & returns a term scope.
 
     :param pyessv.Authority authority: CV authority to which scope is bound.
@@ -115,7 +109,7 @@ def create_collection(
     data=None,
     alternative_names=[],
     term_regex=None
-    ):
+):
     """Instantiates, initialises & returns a regular expression term collection.
 
     :param pyessv.Scope scope: CV scope to which collection is bound.
@@ -152,6 +146,7 @@ def create_collection(
         callback=_callback
         )
 
+
 def create_term(
     collection,
     name,
@@ -160,8 +155,9 @@ def create_term(
     url=None,
     create_date=None,
     data=None,
-    alternative_names=[]
-    ):
+    alternative_names=[],
+    append=True
+):
     """Instantiates, initialises & returns a term.
 
     :param pyessv.Collection collection: The collection to which the term belongs.
@@ -179,7 +175,8 @@ def create_term(
     """
     def _callback(instance):
         instance.collection = collection
-        collection.terms.append(instance)
+        if append:
+            collection.terms.append(instance)
 
     return _create_node(
         typeof=Term,
@@ -194,30 +191,6 @@ def create_term(
         )
 
 
-def create_template_parser(template, collections, strictness=PARSING_STRICTNESS_2, seperator='.'):
-    """Instantiates, initialises & returns a template parser.
-
-    :param str template: An expression template.
-    :param tuple collections: Collections that the template maps to.
-    :param int strictness: Strictness level to apply when applying name matching rules.
-    :param str seprarator: Seperator to apply when parsing.
-
-    :returns: A vocabulary expression parser.
-    :rtype: pyessv.TemplateParser
-
-    """
-    assert isinstance(template, compat.basestring), 'Invalid template'
-    assert isinstance(collections, tuple), 'Invalid collections'
-    assert len(template) > 0, 'Invalid template'
-    assert template.count('{}') > 0, 'Invalid template'
-    assert len(collections) > 0, 'Invalid collections'
-    assert template.count('{}') == len(collections), 'Invalid template: collection count mismatch'
-    assert strictness in PARSING_STRICTNESS_SET, 'Invalid parsing strictness: {}'.format(strictness)
-    assert isinstance(seperator, compat.basestring), 'Invalid seperator'
-
-    return TemplateParser(template, collections, strictness, seperator)
-
-
 def _create_node(
     typeof,
     raw_name,
@@ -227,8 +200,8 @@ def _create_node(
     create_date,
     alternative_names,
     data,
-    callback = None
-    ):
+    callback=None
+):
     """Instantiates, initialises & returns a node.
 
     """
@@ -257,6 +230,6 @@ def _create_node(
         raise ValidationError(errors)
 
     # Cache.
-    cache(node)
+    encache(node)
 
     return node

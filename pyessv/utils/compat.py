@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.utils.compat.py
-   :copyright: Copyright "Feb 7, 2013", Earth System Documentation
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: python 2 to 3 compatibilty extensions.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import collections
 import datetime as dt
 import sys
@@ -37,7 +26,8 @@ except (ImportError, SyntaxError):
 if is_py2:
     from ConfigParser import ConfigParser
     from ConfigParser import NoOptionError
-    from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, getproxies, proxy_bypass
+    from urllib import \
+        quote, unquote, quote_plus, unquote_plus, urlencode, getproxies, proxy_bypass
     from urlparse import urlparse, urlunparse, urljoin, urlsplit, urldefrag
     from urllib2 import parse_http_list
     import cookielib
@@ -51,11 +41,12 @@ if is_py2:
     basestring = basestring
     numeric_types = (int, long, float)
     integer_types = (int, long)
-    to_datetime = lambda i: i if isinstance(i, dt.datetime) else compat2_datetime.parse_datetime(i)
+    to_datetime = \
+        lambda i: i if isinstance(i, dt.datetime) else \
+        compat2_datetime.parse_datetime(i)
 
     Mapping = collections.Mapping
     Iterable = collections.Iterable
-
 
 # ------------------------------------------------------
 # Python 3
@@ -79,10 +70,10 @@ elif is_py3:
 
     try:
         Mapping = collections.abc.Mapping
-    except:
+    except AttributeError:
         Mapping = collections.Mapping
 
     try:
         Iterable = collections.abc.Iterable
-    except:
+    except AttributeError:
         Iterable = collections.Iterable

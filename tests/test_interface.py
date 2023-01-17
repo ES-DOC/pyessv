@@ -1,21 +1,7 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: test_interface.py
-
-   :copyright: @2013 Earth System Documentation (https://es-doc.org)
-   :license: GPL / CeCILL
-   :platform: Unix, Windows
-   :synopsis: Executes pyessv interface tests.
-
-.. moduleauthor:: Earth System Documentation (ES-DOC) <dev@es-doc.org>
-
-"""
 import pytest
 
 import pyessv as LIB
 import tests.utils as tu
-
 
 
 # Set of classes exposed by library.
@@ -39,6 +25,11 @@ _CONSTANTS = {
     'GOVERNANCE_STATUS_DEPRECATED',
     'GOVERNANCE_STATUS_PENDING',
     'GOVERNANCE_STATUS_REJECTED',
+    'INITIALISATION_MODE',
+    'IDENTIFIER_TYPE_DATASET',
+    'IDENTIFIER_TYPE_DIRECTORY',
+    'IDENTIFIER_TYPE_FILENAME',
+    'IDENTIFIER_TYPE_SET',
     'PARSING_STRICTNESS_0',
     'PARSING_STRICTNESS_1',
     'PARSING_STRICTNESS_2',
@@ -50,8 +41,7 @@ _CONSTANTS = {
 # Set of exceptions exposed by library.
 _EXCEPTIONS = {
     'InvalidAssociationError',
-    'ParsingError',
-    'TemplateParsingError',
+    'NamespaceParsingError',
     'ValidationError'
     }
 
@@ -59,13 +49,14 @@ _EXCEPTIONS = {
 _FUNCS = {
     # ... archive
     'archive',
+    # ... cache
+    'get_cached',
     # ... codecs
     'decode',
     'encode',
     # ... factory
     'create_authority',
     'create_collection',
-    'create_template_parser',
     'create_scope',
     'create_term',
     # ... factory for testing
@@ -80,14 +71,17 @@ _FUNCS = {
     # ... loader
     'load_random',
     'load',
+    # ... matcher
+    'match_term',
     # ... logging
     'log',
     'log_error',
     'log_warning',
     # ... parsing
     'parse',
-    'parse_dataset_identifer',
-    'parse_dataset_identifers',
+    'parse_namespace',
+    'parse_identifer',
+    'parse_identifer_set',
     # ... validation
     'get_errors',
     'is_valid',
@@ -98,7 +92,7 @@ _FUNCS = {
 def yield_parameterizations():
     """Yields test parameterizations.
 
-    """    
+    """
     for members, member_type in (
         (_CLASSES, 'class'),
         (_CONSTANTS, 'constant'),

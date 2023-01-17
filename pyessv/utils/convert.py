@@ -1,19 +1,4 @@
-"""
-.. module:: pyessv.utils.convert.py
-   :copyright: Copyright "Feb 7, 2013", Earth System Documentation
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Set of library conversion functions.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
-import collections
-import datetime
-import json
 import re
-import types
 
 from pyessv.utils import compat
 

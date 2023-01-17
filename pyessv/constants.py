@@ -1,16 +1,4 @@
-"""
-.. module:: pyessv.constants.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Package constants.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import os
-import re
 
 
 # In memory cache type.
@@ -23,6 +11,9 @@ CACHE_STORE_TYPES = (
 
 # Directory containing vocabulary archive.
 DIR_ARCHIVE = os.getenv('PYESSV_ARCHIVE_HOME', os.path.expanduser('~/.esdoc/pyessv-archive'))
+
+# Directory containing configuration.
+DIR_CONFIG = os.getenv('PYESSV_CONFIG_HOME', os.path.expanduser('~/.esdoc/pyessv-config'))
 
 # Dictionary encoding.
 ENCODING_DICT = 'dict'
@@ -39,16 +30,16 @@ ENCODING_SET = {
 # Mode of library initialisation.
 INITIALISATION_MODE = os.getenv("PYESSV_INITIALISATION_MODE", "AUTO")
 
-# Node type key - an authority governing vocabularies.
+# Node type key: an authority governing vocabularies.
 NODE_TYPEKEY_AUTHORITY = 'authority'
 
-# Node type key - a scope constraining collection of vocabularies.
+# Node type key: a scope constraining collection of vocabularies.
 NODE_TYPEKEY_SCOPE = 'scope'
 
-# Node type key - a collection constraining collection of terms by composing keys from other collections.
+# Node type key: a collection of terms by composing keys from other collections.
 NODE_TYPEKEY_COLLECTION = 'collection'
 
-# Node type key - a term.
+# Node type key: a term.
 NODE_TYPEKEY_TERM = 'term'
 
 # Set of allowed name types.
@@ -79,6 +70,22 @@ GOVERNANCE_STATUS_SET = (
     GOVERNANCE_STATUS_DEPRECATED
     )
 
+# Identifier type: dataset-id;
+IDENTIFIER_TYPE_DATASET = "dataset"
+
+# Identifier type: directory structure;
+IDENTIFIER_TYPE_DIRECTORY = "directory"
+
+# Identifier type: filename;
+IDENTIFIER_TYPE_FILENAME = "filename"
+
+# Set of supported identifier parsers.
+IDENTIFIER_TYPE_SET = (
+    IDENTIFIER_TYPE_DATASET,
+    IDENTIFIER_TYPE_DIRECTORY,
+    IDENTIFIER_TYPE_FILENAME
+    )
+
 # Parsing strictness: canonical-name;
 PARSING_STRICTNESS_0 = 0
 
@@ -94,7 +101,7 @@ PARSING_STRICTNESS_3 = 3
 # Parsing strictness: 3 + case-insensitive
 PARSING_STRICTNESS_4 = 4
 
-# Set of allowed parsing stricness.
+# Set of allowed parsing strictness.
 PARSING_STRICTNESS_SET = (
     PARSING_STRICTNESS_0,
     PARSING_STRICTNESS_1,

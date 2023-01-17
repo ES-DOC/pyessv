@@ -1,27 +1,14 @@
-"""
-.. module:: pyessv.loader.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Orchestrates reading & caching of entities.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import random
 import uuid
 
-from pyessv.cache import cache
+from pyessv import matcher
 from pyessv.cache import get_cached
 from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.factory import create_term
 from pyessv.model import Authority
-from pyessv.model import Term
 from pyessv.utils import logger
 from pyessv.utils import compat
 from pyessv.utils.formatter import format_string
-
 
 
 def load(identifier=None, verbose=True):
@@ -96,7 +83,7 @@ def _load_by_namespace(identifier):
                     if _is_matched(t, term):
                         return t
                 # ... terms (virtual)
-                if c.is_matched(term):
+                if matcher.match_term(c, term) is not False:
                     return create_term(c, term)
 
 
@@ -116,6 +103,10 @@ def _is_matched(node, identifier):
 
     # Matched by alternative names.
     elif identifier in [format_string(i).lower() for i in node.alternative_names]:
+        return True
+
+    # Tru fixing spec matching in collection alternative name for config_parser
+    elif identifier in [format_string(i).lower().replace("_","-") for i in node.alternative_names]:
         return True
 
     return False

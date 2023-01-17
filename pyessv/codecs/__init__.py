@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.codecs.__init__.py
-   :copyright: Copyright "Sep 4, 2013", Earth System Documentation
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encpasulates transformations of terms from one format to another.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 from pyessv.codecs import dict_codec
 from pyessv.codecs import json_codec
 from pyessv.constants import ENCODING_DICT
@@ -17,17 +6,17 @@ from pyessv.model import Node
 from pyessv.utils import compat
 
 
-
 # Codecs mapped by encoding.
 _CODECS = {
-	ENCODING_DICT: dict_codec,
-	ENCODING_JSON: json_codec
+    ENCODING_DICT: dict_codec,
+    ENCODING_JSON: json_codec
     }
+
 
 # Map of encodings to allowed input types when decoding.
 _DECODE_TYPE_WHITELIST = {
-    ENCODING_DICT : (dict, ),
-    ENCODING_JSON : (compat.basestring, )
+    ENCODING_DICT: (dict, ),
+    ENCODING_JSON: (compat.basestring, )
     }
 
 

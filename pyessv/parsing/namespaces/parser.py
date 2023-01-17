@@ -1,13 +1,3 @@
-"""
-.. module:: pyessv.parser.py
-   :copyright: Copyright "December 01, 2016", IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Encapsulates parsing of names to match vocabulary entities.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-"""
 from pyessv.loader import load
 from pyessv.constants import PARSING_NODE_FIELDS
 from pyessv.constants import PARSING_STRICTNESS_SET
@@ -16,16 +6,15 @@ from pyessv.constants import PARSING_STRICTNESS_1
 from pyessv.constants import PARSING_STRICTNESS_2
 from pyessv.constants import PARSING_STRICTNESS_3
 from pyessv.constants import PARSING_STRICTNESS_4
-from pyessv.exceptions import ParsingError
+from pyessv.exceptions import NamespaceParsingError
 from pyessv.utils import compat
 
 
-
-def parse(
+def parse_namespace(
     namespace,
     strictness=PARSING_STRICTNESS_2,
     field='canonical_name'
-    ):
+):
     """Parses a namespace within a vocabulary hierachy.
 
     :param str namespace: Vocabulary namespace, e.g. wcrp.
@@ -77,7 +66,6 @@ class _NodeInfo(object):
         self.strictness = strictness
         self.typekey = typekey
 
-
     def get_name(self, target):
         """Gets parsing relative name.
 
@@ -87,13 +75,12 @@ class _NodeInfo(object):
         elif self == target:
             return compat.str(self.name).strip().lower()
 
-
     def set_node(self, node):
         """Sets node returned from archive search.
 
         """
         if node is None:
-            raise ParsingError(self.typekey, self.name)
+            raise NamespaceParsingError(self.typekey, self.name)
 
         # Confirm match based upon the level of parsing strictness perform test.
         matched = False
@@ -110,7 +97,8 @@ class _NodeInfo(object):
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_3:
-            if self.name in {node.canonical_name, node.raw_name}.union(set(node.alternative_names)):
+            names = {node.canonical_name, node.raw_name}.union(set(node.alternative_names))
+            if self.name in names:
                 matched = True
 
         elif self.strictness == PARSING_STRICTNESS_4:
@@ -119,7 +107,7 @@ class _NodeInfo(object):
                 matched = True
 
         # Raise parsing error if appropriate.
-        if matched == False:
-            raise ParsingError(self.typekey, self.name)
+        if matched is False:
+            raise NamespaceParsingError(self.typekey, self.name)
 
         self.node = node

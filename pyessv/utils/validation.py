@@ -1,14 +1,3 @@
-"""
-.. module:: pyessv.utils.validation.py
-   :copyright: Copyright "December 01, 2016', IPSL
-   :license: GPL/CeCIL
-   :platform: Unix, Windows
-   :synopsis: Validation utility functions.
-
-.. moduleauthor:: Mark Conway-Greenslade <momipsl@ipsl.jussieu.fr>
-
-
-"""
 import inspect
 import re
 
@@ -66,7 +55,6 @@ def assert_namespace(identifier, min_length=1, max_length=4):
 def assert_pattern(val, info):
     from pyessv.loader import load
 
-    pattern = info[0]
     collections = []
     for defn in info[1:]:
         parts = defn.split(':')
