@@ -1,5 +1,5 @@
 {
-    "scope": "compil:euclipse",
+    "scope": "wcrp:euclipse",
     "identifiers": [
         "euclipse.output.IPSL.IPSL-CM5A-LR.offpblamip.mon.atmos.cfMon.r1i1p1",
         "euclipse.output.IPSL.IPSL-CM5A-LR.convoffaqua4K.day.atmos.day.r1i1p1",

@@ -1,5 +1,5 @@
 {
-    "scope": "compil:cmip5",
+    "scope": "wcrp:cmip5",
     "identifiers": [
         "cmip5.output1.LASG-IAP.FGOALS-s2.1pctCO2.fx.ocean.fx.r0i0p0",
         "cmip5.output1.CSIRO-QCCCE.CSIRO-Mk3-6-0.1pctCO2.fx.atmos.fx.r0i0p0",

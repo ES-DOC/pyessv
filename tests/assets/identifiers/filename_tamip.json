@@ -1,5 +1,5 @@
 {
-    "scope": "compil:tamip",
+    "scope": "wcrp:tamip",
     "identifiers": [
         "ua_3hrPlev_IPSL-CM5A-LR_tamip200901_r12i1p1_200901281930-200902021630.nc",
         "ps_3hrMlev_IPSL-CM5A-LR_tamip200907_r11i1p1_200907271330-200908011030.nc",

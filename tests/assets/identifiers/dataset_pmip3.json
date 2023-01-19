@@ -1,5 +1,5 @@
 {
-    "scope": "compil:pmip3",
+    "scope": "wcrp:pmip3",
     "identifiers": [
         "pmip3.output.NASA-GISS.GISS-E2-R.midHolocene.monClim.atmos.Aclim.r1i1p1",
         "pmip3.output.MPI-M.MPI-ESM-P.piControl.monClim.seaIce.OIclim.r1i1p1",

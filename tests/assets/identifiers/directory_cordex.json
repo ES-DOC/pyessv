@@ -1,5 +1,5 @@
 {
-    "scope": "compil:cordex",
+    "scope": "wcrp:cordex",
     "identifiers": [
         "CORDEX/output/CAM-44i/SMHI/MOHC-HadGEM2-ES/rcp85/r1i1p1/SMHI-RCA4/v1/mon/mrso/v20141105",
         "CORDEX/output/ANT-44/KNMI/MOHC-HadGEM2-ES/rcp85/r1i1p1/KNMI-RACMO21P/v2/mon/mrso/v20160802",

@@ -1,5 +1,5 @@
 {
-    "scope": "compil:cmip6",
+    "scope": "wcrp:cmip6",
     "identifiers": [
         "CMIP6/GeoMIP/MOHC/UKESM1-0-LL/G1/r2i2p1f2/AERmon/od550aer/gn/v20190923",
         "CMIP6/GMMIP/AS-RCEC/TaiESM1/amip-hist/r2i1p1f1/CFday/ps/gn/v20201209",

@@ -1,5 +1,5 @@
 {
-    "scope": "compil:pmip3",
+    "scope": "wcrp:pmip3",
     "identifiers": [
         "vas_Aclim_GISS-E2-R_midHolocene_r1i1p1_250001-259912-clim.nc",
         "strairy_OIclim_MPI-ESM-P_piControl_r1i1p1_185001-300512-clim.nc",

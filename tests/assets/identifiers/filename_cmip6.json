@@ -1,5 +1,5 @@
 {
-    "scope": "compil:cmip6",
+    "scope": "wcrp:cmip6",
     "identifiers": [
         "od550aer_AERmon_UKESM1-0-LL_G1_r2i2p1f2_gn_185001-194912.nc",
         "ps_CFday_TaiESM1_amip-hist_r2i1p1f1_gn_19500101-19591231.nc",
