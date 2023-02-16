@@ -3,8 +3,8 @@ import pyessv, json
 from pyessv import IDENTIFIER_TYPE_FILENAME, IDENTIFIER_TYPE_DATASET, IDENTIFIER_TYPE_DIRECTORY
 
 # need acces to /bdd to parse directory and filename with pyessv and create list identifiers files
-pyessv.load("compil")
-auth = pyessv.COMPIL
+pyessv.load("wcrp")
+auth = pyessv.WCRP
 mountdir = "/home/ltroussellier/Bureau/CicladMount" # sshfs spirit:.  Bureau/CicladMount -o follow_symlinks
 
 def getnextrandompath(path):
@@ -133,7 +133,7 @@ def create_all(nb):
     create_all_json_for_project("TAMIP", nb)
     create_all_json_for_project("EUCLIPSE", nb)
     create_all_json_for_project("PMIP3", nb)
-    # create_all_json_for_project("input4MIPs", nb) NOT in COMPIL scope
-    # create_all_json_for_project("obs4MIPS", nb)   NOT in COMPIL scope
+    # create_all_json_for_project("input4MIPs", nb) NOT in WCRP scope
+    # create_all_json_for_project("obs4MIPS", nb)   NOT in WCRP scope
 
 create_all(100)

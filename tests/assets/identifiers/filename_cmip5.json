@@ -1,5 +1,5 @@
 {
-    "scope": "compil:cmip5",
+    "scope": "wcrp:cmip5",
     "identifiers": [
         "areacello_fx_FGOALS-s2_1pctCO2_r0i0p0.nc",
         "orog_fx_CSIRO-Mk3-6-0_1pctCO2_r0i0p0.nc",

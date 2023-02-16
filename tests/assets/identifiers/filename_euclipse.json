@@ -1,5 +1,5 @@
 {
-    "scope": "compil:euclipse",
+    "scope": "wcrp:euclipse",
     "identifiers": [
         "rlut4co2_cfMon_IPSL-CM5A-LR_offpblamip_r1i1p1_199901-200712.nc",
         "hfss_day_IPSL-CM5A-LR_convoffaqua4K_r1i1p1_19790101-19851230.nc",

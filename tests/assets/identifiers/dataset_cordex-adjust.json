@@ -1,5 +1,5 @@
 {
-    "scope": "compil:cordex-adjust",
+    "scope": "wcrp:cordex-adjust",
     "identifiers": [
         "cordex-adjust.bias-adjusted-output.EUR-11.MPI-CSC.MPI-M-MPI-ESM-LR.rcp45.r1i1p1.REMO2009.v1-LSCE-IPSL-CDFt-EOBS10-1971-2005.day.tasAdjust",
         "cordex-adjust.bias-adjusted-output.EUR-25.DMI.ICHEC-EC-EARTH.rcp45.r3i1p1.HIRHAM5.v1-IPSL-CDFT22-ERA5-1980-2018.day.prAdjust",
