@@ -28,6 +28,19 @@ Who uses pyessv ?
 Developers building value added software ontop of the ES-DOC eco-system.
 
 
+How to install pyessv ?
+--------------------------------------
+Install `pyessv` using pip::
+
+  pip install pyessv
+
+ 
+and clone the `pyessv-archive` GitHub repository to home folder::
+
+  mkdir -p ~/.esdoc 
+  git clone https://github.com/ES-DOC/pyessv-archive.git ~/.esdoc/pyessv-archive
+
+
 Further Information ?
 --------------------------------------
 
