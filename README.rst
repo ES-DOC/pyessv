@@ -35,7 +35,7 @@ Install `pyessv` using pip::
   pip install pyessv
 
  
-and lone the `pyessv-archive` GitHub repository to home folder::
+and clone the `pyessv-archive` GitHub repository to home folder::
 
   mkdir -p ~/.esdoc 
   git clone https://github.com/ES-DOC/pyessv-archive.git ~/.esdoc/pyessv-archive
